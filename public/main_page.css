@@ -1,0 +1,44 @@
+body {
+    font-family: 'Exo', sans-serif;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.container-width {
+    width : 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboards-container-title {
+    margin-left: 45px;
+    margin-top: 20px;
+}
+
+.dashboards-container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+}
+
+.dashboard {
+    width: 260px;
+    height: 190px;
+    margin: 10px;
+    border: 2px solid #fbb8b8a1;
+    border-radius: 15px;
+    box-shadow: 0 0 15px 0px #c19259;
+}
+
+.dashboard.active {
+    border: 2px solid #c7f5c638;
+    box-shadow: 0 0 20px 0px #5af35e;
+}
+
+.dashboard-title {
+    margin-left: 20px;
+}
+

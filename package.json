@@ -1,0 +1,23 @@
+{
+  "name": "2020_1_sibirskaya_korona",
+  "version": "1.0.0",
+  "description": "Репозиторий фронтенда",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd ./public && browser-sync start --server --files '*.css, *.html'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.26.7"
+  },
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme"
+}
