@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+
+.board {
+    display: flex;
+    overflow-x: auto;
+}
+
+.board > .card {
+    background: chocolate;
+    border-radius: 5px;
+    padding: 4px;
+    width: 272px;
+    height: fit-content;
+    min-width: 272px;
+    margin-right: 10px;
+}
+
+.board > .card > .header {
+    font-size: 24px;
+}
+
+.board > .card > .task-list {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.board > .card > .task-list > .task {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: darkgray;
+
+
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.board > .card > .task-list > .task > * {
+    margin-bottom: 5px;
+}
+
+
+.board > .card > .task-list > .task > .label {
+    background: greenyellow;
+    width: fit-content;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.board > .card > .task-list > .task > .description {
+    background: white;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.board > .card > .task-list > .task > .assignee {
+    float: right;
+}
+
+.board > .card > .task-list > .task > .assignee img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    float: right;
+}
+
