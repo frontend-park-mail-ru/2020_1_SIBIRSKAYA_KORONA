@@ -1,0 +1,70 @@
+.board > .card-container {
+    display: flex;
+    overflow-x: auto;
+    padding-left: 8px;
+}
+
+.board > .card-container > .card {
+    background: chocolate;
+    border-radius: 5px;
+    height: fit-content;
+    min-width: 272px;
+    margin-right: 8px;
+    padding-bottom: 8px;
+}
+
+.board > .card-container > .card > .header {
+    padding-left: 8px;
+    font-size: 24px;
+}
+
+.board > .card-container > .card > .task-list {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    overflow-y: auto;
+    max-height: 80vh;
+    margin: 0 4px;
+    padding: 0 4px;
+}
+
+.board > .card-container > .card > .task-list > .task {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: darkgray;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.board > .card-container > .card > .task-list > .task:last-child {
+    margin-bottom: 0;
+}
+
+
+.board > .card-container > .card > .task-list > .task > .label {
+    background: greenyellow;
+    width: fit-content;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.board > .card-container > .card > .task-list > .task > .description {
+    background: white;
+    border-radius: 2px;
+    padding: 4px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.board > .card-container > .card > .task-list > .task > .assignee {
+    float: right;
+}
+
+.board > .card-container > .card > .task-list > .task > .assignee img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    float: right;
+}
