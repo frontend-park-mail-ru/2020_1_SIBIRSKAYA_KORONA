@@ -96,7 +96,7 @@ button.danger:hover {
     flex-flow: wrap;
     justify-content: center;
     position: relative;
-    padding-bottom: 64px;
+    height: 100vh;
 }
 
 .top-pic::after {
