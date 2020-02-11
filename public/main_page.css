@@ -3,8 +3,54 @@ body {
     margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
     margin: 0;
+}
+
+input:focus,
+button:focus,
+a:focus {
+    outline: none;
+}
+
+button {
+    height: 35px;
+    border: none;
+    border-radius: 15px;
+    font-size: 14pt;
+    padding: 0 15px;
+    color: white;
+    cursor: pointer;
+}
+
+button.primary {
+    background-color: #4CAF50;
+    box-shadow: 0 0 7px 1px #1c6d09;
+}
+
+button.primary:hover {
+    background-color: #1c861c;
+    box-shadow: 0 0 7px 2px #133c01;
+}
+
+button.secondary {
+    background-color: #03A9F4;
+    box-shadow: 0 0 7px 1px #172a53;
+}
+
+button.secondary:hover {
+    background-color: #3939e5;
+    box-shadow: 0 0 7px 2px #041a55;
+}
+
+button.danger {
+    background-color: #E91E63;
+    box-shadow: 0 0 7px 1px #320c19;
+}
+
+button.danger:hover {
+    background-color: #ce0000;
+    box-shadow: 0 0 7px 2px #4a0214;
 }
 
 .container-width {
@@ -42,3 +88,67 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 20px;
 }
 
+
+/*   Landing   */
+.top-pic {
+    display: flex;
+    flex-direction: column;
+    flex-flow: wrap;
+    justify-content: center;
+    position: relative;
+    padding-bottom: 64px;
+}
+
+.top-pic::after {
+    content: "";
+    background: url(./pics/work_hard.png);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.title {
+    font-size: 72px;
+    word-spacing: 1px;
+    line-height: 90px;
+    text-transform: none;
+    letter-spacing: -3px;
+    color: #000000;
+    text-align: center;
+    text-shadow: 0px 0px 1px black;
+}
+
+.description {
+    width: 50%;
+    border-radius: 42px;
+    background-color: #790affa6;
+    box-shadow: 0px 7px 15px #f9cbad8f;
+    padding: 10px;
+    margin: 35px auto 0 auto;
+}
+
+.promo {
+    font-size: 20pt;
+    color: white;
+    margin: 10px;
+}
+
+.start-title {
+    font-size: 25pt;
+    text-align: center;
+    color: white;
+}
+
+.link-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px 20%;
+}
