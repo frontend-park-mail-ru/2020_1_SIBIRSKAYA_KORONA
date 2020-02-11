@@ -1,16 +1,5 @@
 body {
     font-family: 'Exo', sans-serif;
-    margin: 0;
-}
-
-h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-}
-
-input:focus,
-button:focus,
-a:focus {
-    outline: none;
 }
 
 button {
@@ -85,7 +74,10 @@ button.danger:hover {
 }
 
 .dashboard-title {
+    margin-top: 10px;
     margin-left: 20px;
+    font-size: 14pt;
+    font-weight: bold;
 }
 
 
