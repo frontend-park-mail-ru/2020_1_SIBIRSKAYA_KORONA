@@ -1,5 +1,5 @@
 body {
-    font-family: 'Exo', sans-serif;
+    font-family: 'Scada', sans-serif;
 }
 
 button {
@@ -51,6 +51,8 @@ button.danger:hover {
 .dashboards-container-title {
     margin-left: 45px;
     margin-top: 20px;
+    font-size: 20pt;
+    font-weight: 700;
 }
 
 .dashboards-container {
@@ -93,7 +95,7 @@ button.danger:hover {
 
 .top-pic::after {
     content: "";
-    background: url(./pics/work_hard.png);
+    background: url(../static/work_hard.png);
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -108,18 +110,18 @@ button.danger:hover {
 
 .title {
     font-size: 72px;
-    word-spacing: 1px;
+    word-spacing: 30px;
     line-height: 90px;
-    text-transform: none;
-    letter-spacing: -3px;
+    text-transform: uppercase;
+    letter-spacing: 10px;
     color: #000000;
     text-align: center;
-    text-shadow: 0px 0px 1px black;
+    text-shadow: 0px 0px 3px palevioletred;
 }
 
 .description {
     width: 50%;
-    border-radius: 42px;
+    border-radius: 17px;
     background-color: #790affa6;
     box-shadow: 0px 7px 15px #f9cbad8f;
     padding: 10px;
@@ -142,5 +144,9 @@ button.danger:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin: 10px 20%;
+    margin: 15px 20%;
+}
+
+.auth {
+    margin: 0 25px;
 }

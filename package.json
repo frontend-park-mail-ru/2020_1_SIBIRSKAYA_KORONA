@@ -4,7 +4,7 @@
   "description": "Репозиторий фронтенда",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./public && browser-sync start --server --files '*.css, *.html, pics/*'",
+    "start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
