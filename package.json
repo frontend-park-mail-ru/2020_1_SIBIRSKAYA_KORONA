@@ -4,7 +4,7 @@
   "description": "SignUp/LogIn frontend implementation",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./static && browser-sync start --server --index 'sign_up.html' --files '*.html, *.css'",
+    "start": "cd ./static && browser-sync start --server --index 'LogInSignUp.html' --files '*.html, *.css'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
