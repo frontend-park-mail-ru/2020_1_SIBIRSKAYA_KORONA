@@ -1,7 +1,7 @@
 .board > .card-container {
     display: flex;
     overflow-x: auto;
-    padding-left: 8px;
+    padding: 0 8px;
 }
 
 .board > .card-container > .card {
@@ -15,6 +15,9 @@
 
 .board > .card-container > .card > .header {
     font-size: 24px;
+
+    word-wrap: break-word;
+    max-width: calc(100% - 2 * 5px);
 }
 
 .board > .card-container > .card > .task-list {
@@ -46,6 +49,9 @@
     width: fit-content;
     border-radius: 2px;
     padding: 4px;
+
+    word-wrap: break-word;
+    max-width: calc(100% - 2 * 5px);
 }
 
 .board > .card-container > .card > .task-list > .task > .description {
@@ -54,6 +60,9 @@
     padding: 4px;
     margin-top: 5px;
     margin-bottom: 5px;
+
+    word-wrap: break-word;
+    max-width: calc(100% - 2 * 5px);
 }
 
 .board > .card-container > .card > .task-list > .task > .assignee {
