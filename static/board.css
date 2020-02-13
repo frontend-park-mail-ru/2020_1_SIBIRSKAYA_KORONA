@@ -16,9 +16,9 @@
 
 .card > .card-header {
     font-size: 24px;
-
+    margin: 0 5px;
     word-wrap: break-word;
-    max-width: calc(100% - 2 * 5px);
+    max-width: 100%;
 }
 
 .task-list {
@@ -50,9 +50,9 @@
     width: fit-content;
     border-radius: 2px;
     padding: 4px;
-
     word-wrap: break-word;
-    max-width: calc(100% - 2 * 5px);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .task-mini > .task-description-mini {
@@ -63,14 +63,15 @@
     margin-bottom: 5px;
 
     word-wrap: break-word;
-    max-width: calc(100% - 2 * 5px);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .member-container {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    max-width: calc(100% - 2 * 5px);
+    max-width: 100%;
 }
 
 .member-container > .member > img {
