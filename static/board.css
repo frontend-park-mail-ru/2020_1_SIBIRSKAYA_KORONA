@@ -1,26 +1,27 @@
-.board > .card-container {
+.card-container {
     display: flex;
     overflow-x: auto;
     padding: 0 8px;
 }
 
-.board > .card-container > .card {
+.card {
     background: chocolate;
     border-radius: 5px;
     height: fit-content;
     min-width: 272px;
+    max-width: 272px;
     margin-right: 8px;
     padding: 0 4px 8px;
 }
 
-.board > .card-container > .card > .header {
+.card > .card-header {
     font-size: 24px;
 
     word-wrap: break-word;
     max-width: calc(100% - 2 * 5px);
 }
 
-.board > .card-container > .card > .task-list {
+.task-list {
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -29,7 +30,7 @@
     padding: 0 4px;
 }
 
-.board > .card-container > .card > .task-list > .task {
+.task-mini {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -39,12 +40,12 @@
     margin-bottom: 10px;
 }
 
-.board > .card-container > .card > .task-list > .task:last-child {
+.task-mini:last-child {
     margin-bottom: 0;
 }
 
 
-.board > .card-container > .card > .task-list > .task > .label {
+.task-mini > .task-label-mini {
     background: greenyellow;
     width: fit-content;
     border-radius: 2px;
@@ -54,7 +55,7 @@
     max-width: calc(100% - 2 * 5px);
 }
 
-.board > .card-container > .card > .task-list > .task > .description {
+.task-mini > .task-description-mini {
     background: white;
     border-radius: 2px;
     padding: 4px;
@@ -65,14 +66,14 @@
     max-width: calc(100% - 2 * 5px);
 }
 
-.board > .card-container > .card > .task-list > .task > .member-container {
+.member-container {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
     max-width: calc(100% - 2 * 5px);
 }
 
-.board > .card-container > .card > .task-list > .task > .member-container > .member > img {
+.member-container > .member > img {
     border-radius: 50%;
     height: 30px;
     width: 30px;
