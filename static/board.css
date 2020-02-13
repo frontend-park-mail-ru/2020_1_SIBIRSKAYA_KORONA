@@ -65,13 +65,15 @@
     max-width: calc(100% - 2 * 5px);
 }
 
-.board > .card-container > .card > .task-list > .task > .assignee {
-    float: right;
+.board > .card-container > .card > .task-list > .task > .member-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    max-width: calc(100% - 2 * 5px);
 }
 
-.board > .card-container > .card > .task-list > .task > .assignee img {
+.board > .card-container > .card > .task-list > .task > .member-container > .member > img {
     border-radius: 50%;
     height: 30px;
     width: 30px;
-    float: right;
 }
