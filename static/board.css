@@ -1,0 +1,114 @@
+
+.board-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: fit-content;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.board-header > div {
+    margin: 0 5px;
+}
+
+.board-title {
+    font-size: 24px;
+}
+
+.board-header > .member-container {
+    max-width: 30%;
+}
+
+.board-settings {
+    padding: 5px;
+    border-radius: 3px;
+    color: black;
+    float: right;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.card-container {
+    display: flex;
+    overflow-x: auto;
+    width: fit-content;
+}
+
+.card-container > .card {
+    margin: 0 5px;
+}
+
+.card {
+    background: chocolate;
+    border-radius: 5px;
+    height: fit-content;
+    min-width: 272px;
+    max-width: 272px;
+    padding: 0 4px 8px;
+}
+
+.card > .card-header {
+    font-size: 24px;
+    margin: 5px;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    overflow-y: auto;
+    max-height: 80vh;
+    padding: 0 4px;
+}
+
+.task-mini {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: darkgray;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.task-mini:last-child {
+    margin-bottom: 0;
+}
+
+
+.task-mini > .task-label-mini {
+    background: greenyellow;
+    width: fit-content;
+    border-radius: 2px;
+    padding: 4px;
+    word-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.task-mini > .task-description-mini {
+    background: white;
+    border-radius: 2px;
+    padding: 4px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    word-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.member-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.member-container > .member > img {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+}
