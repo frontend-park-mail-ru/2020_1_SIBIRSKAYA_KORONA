@@ -1,0 +1,38 @@
+.profile_main {
+	text-align: center;
+	background: lightgrey;
+}
+
+.profile_name {
+    font-weight: 800;
+    margin: 8px;
+    font-size: 18pt;
+}
+
+.profile_nickname {
+    margin: 8px;
+    font-size: 13pt;
+}
+
+.button_main {
+	width: 80px;
+    padding: 10px;
+    margin: 2px;
+}
+
+.profile_settings {
+	margin-top: 20px;
+	margin-left: 545px;
+}
+
+.input_profile_settings {
+    margin-top: 7px;
+    margin-bottom: 7px; 
+}
+
+.button_save {
+	width: 80px;
+    padding: 5px;
+    background: limegreen;
+    color: white;
+}
