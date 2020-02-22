@@ -43,7 +43,7 @@ button.danger:hover {
 }
 
 .container-width {
-    width : 100%;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -95,9 +95,7 @@ button.danger:hover {
 
 .top-pic::after {
     content: "";
-    background: url(../static/work_hard.png);
-    background-position: top;
-    background-repeat: no-repeat;
+    background: url(pics/work_hard.png) no-repeat top;
     background-size: cover;
     opacity: 0.2;
     top: 0;
@@ -116,14 +114,14 @@ button.danger:hover {
     letter-spacing: 10px;
     color: #000000;
     text-align: center;
-    text-shadow: 0px 0px 3px palevioletred;
+    text-shadow: 0 0 3px palevioletred;
 }
 
 .description {
     width: 50%;
     border-radius: 17px;
     background-color: #790affa6;
-    box-shadow: 0px 7px 15px #f9cbad8f;
+    box-shadow: 0 7px 15px #f9cbad8f;
     padding: 10px;
     margin: 35px auto 0 auto;
 }
