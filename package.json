@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA/issues"
   },
-  "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme"
+  "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme",
+  "devDependencies": {
+    "ip": "^1.1.5"
+  }
 }
