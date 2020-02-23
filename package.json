@@ -4,7 +4,8 @@
   "description": "Репозиторий фронтенда",
   "main": "index.js",
   "scripts": {
-    "start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
+    "start": "node server/server.js",
+    "sync_start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,10 +15,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browser-sync": "^2.26.7"
+    "browser-sync": "^2.26.7",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
   },
   "bugs": {
     "url": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA/issues"
   },
-  "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme"
+  "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme",
+  "devDependencies": {
+    "ip": "^1.1.5"
+  }
 }
