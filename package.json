@@ -14,7 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browser-sync": "^2.26.7"
+    "browser-sync": "^2.26.7",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
   },
   "bugs": {
     "url": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA/issues"
