@@ -64,6 +64,10 @@ input {
     transition: 0.3s;
 }
 
+textarea {
+
+}
+
 .title {
     font-weight: 800;
     font-family: 'Scada', sans-serif;
@@ -76,15 +80,81 @@ input {
     z-index: 10;
 }
 
+.avatar-round {
+    border-radius:  50%;
+}
+
 .form {
     border-radius: 10px;
     box-shadow: 0 4px 16px #ccc;
+    padding: 32px;
+    margin-bottom: 35px;
+    background-color: #f8f8ff;
 }
 
-.container-width {
+.form-input {
+    background-color: transparent;
+    margin: 0px auto 30px;
+}
+
+.form-input:focus {
+    margin: 0px auto 30px;
+    padding-left: 5%;
+    width: 95%;
+    border-color: #1a73a8;
+}
+
+.group-title {
+    font-size: 20pt;
+    font-weight: 700;
+}
+
+.input-group {
+    margin: 30px 15px;
+}
+
+.hr-width-2 {
+    height: 2px;
+    width: 100%;
+    background-color: #4d4d4d;
+    margin: 10px 0px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: fit-content;
+    padding: 8px 10px;
+}
+
+.header div:last-child {
+    display: flex;
+    align-content: flex-end;
+}
+
+.container-width-1200 {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.container-width-1000 {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.container-width-800 {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.container-2cols {
+    display: flex;
+    flex-flow: wrap-reverse;
 }
 /*     END COMMON     */
 
@@ -93,8 +163,6 @@ input {
 .dashboards-container-title {
     margin-left: 45px;
     margin-top: 20px;
-    font-size: 20pt;
-    font-weight: 700;
 }
 
 .dashboards-container {
@@ -231,8 +299,6 @@ input {
 
 .auth-form {
     width: 400px;
-    padding: 32px;
-    background-color: #f8f8ff;
 }
 
 .auth-form-title {
@@ -243,16 +309,6 @@ input {
 }
 
 .auth-form-input {
-    background-color: transparent;
-    margin: 0px auto 30px;
-}
-
-.auth-form-input:focus {
-    margin: 0px auto 30px;
-    border-color: #1a73a8;
-    padding-left: 5%;
-    width: 95%;
-    border-color: #1a73a8;
 }
 
 .auth-form-bottom-panel {
@@ -275,16 +331,15 @@ input {
 }
 
 .board-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: fit-content;
-    padding: 8px 10px;
     background-color: #4f6dffbd;
 }
 
+.board-header button {
+    margin: 0 5px;
+}
+
 .board-header-title {
+    width: 33%;
     font-size: 35px;
     color: #ffeaea;
 }
@@ -294,6 +349,13 @@ input {
     overflow-x: auto;
     width: fit-content;
     padding-top: 10px;
+}
+
+.board-header-buttons {
+    float: right;
+    min-width: 33%;
+    display: flex;
+    place-content: flex-end;
 }
 
 .board-card {
@@ -321,7 +383,7 @@ input {
     height: fit-content;
     overflow-y: auto;
     max-height: 80vh;
-    padding: 4px;
+    padding: 0 4px;
 }
 
 .board-task-mini {
@@ -332,7 +394,6 @@ input {
     padding: 9px;
     margin-bottom: 10px;
     background: #d4d5fa8a;
-    box-shadow: #8997a4c2 0px 0px 10px 0px;
 }
 
 .board-task-mini:last-child {
@@ -355,7 +416,6 @@ input {
     padding: 4px;
     margin-top: 5px;
     margin-bottom: 5px;
-
     word-wrap: break-word;
     max-width: 100%;
     box-sizing: border-box;
@@ -366,17 +426,61 @@ input {
     flex-flow: row-reverse;
     overflow-x: auto;
     max-width: 100%;
-
 }
 
 .board-member-link {
 }
 
-
-
 .board-member {
-    border-radius: 50%;
     height: 30px;
     width: 30px;
 }
 /*       END BOARD        */
+
+
+/*       PROFILE        */
+.profile-header {
+    background-color: #4f6dffbd;
+    margin-bottom: 10px;
+}
+
+.profile-header div:last-child {
+    place-content: flex-end;
+}
+
+.profile-header-title {
+    min-width: 33%;
+    color: white;
+    font-size: 20pt;
+}
+
+.profile-header-avatar {
+    height: 50px;
+    width: 50px;
+}
+
+.profile {
+    padding: 32px 32px 5px 32px;
+    margin-bottom: 30px;
+}
+
+.profile-input-group {
+    max-width: 450px;
+}
+
+.profile-mini-group-title {
+    margin: 20px 0;
+}
+
+.profile-avatar-column {
+    margin: 0 auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-avatar {
+    width: 156px;
+    height: 156px;
+}
+/*      END PROFILE     */
