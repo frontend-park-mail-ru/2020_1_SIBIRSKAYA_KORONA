@@ -1,4 +1,4 @@
-class EventBus {
+export default class EventBus {
     constructor(signals) {
         this.signalHandlers = new Map;
 
