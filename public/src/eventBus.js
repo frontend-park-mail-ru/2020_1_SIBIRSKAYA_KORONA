@@ -11,7 +11,7 @@ export default class EventBus {
         if (this.signalHandlers.has(signal)) {
             const currHandler = this.signalHandlers.get(signal);
 
-            if (currHandler == null) {
+            if (currHandler === null) {
                 this.signalHandlers.set(signal, handler);
             } else {
                 console.log(`Signal ${signal} already bound`);
