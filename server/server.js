@@ -5,11 +5,9 @@ const ip = require("ip");
 
 const app = express();
 const publicFolder = path.resolve(__dirname, '..', 'public');
-const staticFolder = path.resolve(__dirname, '..', 'static');
 
 app.use(morgan('dev'));
 app.use(express.static(publicFolder));
-app.use('/static', express.static(staticFolder));
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve(publicFolder, 'index.html'));
