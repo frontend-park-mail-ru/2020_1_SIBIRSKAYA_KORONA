@@ -22,7 +22,6 @@ export default class EventBus {
         }
     }
 
-
     call(signal, ...args) {
         if (this.signalHandlers.has(signal)) {
             this.signalHandlers.get(signal)(...args);
@@ -30,6 +29,4 @@ export default class EventBus {
             console.log(`No such signal '${signal}' in event bus`);
         }
     }
-
-
 }
