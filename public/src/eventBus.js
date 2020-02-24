@@ -2,17 +2,17 @@ class EventBus {
     constructor(signals) {
         this.signalHandlers = new Map;
 
-        for (let s of signals) {
-            this.signalHandlers.set(s, null)
+        for (const signal of signals) {
+            this.signalHandlers.set(signal, null)
         }
     }
 
     subscribe(signal, handler) {
         if (this.signalHandlers.has(signal)) {
-            const currHandler = this.signalHandlers[signal];
+            const currHandler = this.signalHandlers.get(signal);
 
             if (currHandler == null) {
-                this.signalHandlers[signal] = handler;
+                this.signalHandlers.set(signal, handler);
             } else {
                 console.log(`Signal ${signal} already bound`);
             }
@@ -23,9 +23,9 @@ class EventBus {
     }
 
 
-    call(signal) {
+    call(signal, ...args) {
         if (this.signalHandlers.has(signal)) {
-            this.signalHandlers[signal]()
+            this.signalHandlers.get(signal)(...args);
         } else {
             console.log(`No such signal '${signal}' in event bus`);
         }
