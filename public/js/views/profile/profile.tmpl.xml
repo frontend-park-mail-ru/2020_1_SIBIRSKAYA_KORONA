@@ -1,0 +1,106 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div>
+        <div class="header profile-header">
+            <div class="title profile-header-title">
+                <fest:value>data.name</fest:value>
+            </div>
+            <div class="profile-header-item">
+                <img class="avatar-round profile-header-avatar">
+                    <fest:attributes>
+                        <fest:attribute name="src">
+                            <fest:value>data.avatar</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </img>
+            </div>
+            <div class="title profile-header-title">
+                <fest:value>'@'+data.nickname</fest:value>
+            </div>
+        </div>
+        <div class="container-width-800">
+            <div class="form profile">
+                <div class="group-title">
+                    <div class="title">О нас</div>
+                    <div class="hr-width-2"/>
+                </div>
+                <div class="container-2cols">
+                    <div class="input-group profile-input-group">
+                        <form action="">
+                            <div class="form-input-label">Полное имя</div>
+                            <input class="form-input" type="text" name="user_fullname" placeholder="Полное имя"
+                                   autocomplete="off">
+                                <fest:attributes>
+                                    <fest:attribute name="value">
+                                        <fest:value>data.name</fest:value>
+                                    </fest:attribute>
+                                </fest:attributes>
+                            </input>
+                            <div class="form-input-label">Инициалы</div>
+                            <input class="form-input" type="text" name="user_initials" placeholder="Инациалы"
+                                   autocomplete="off">
+                                <fest:attributes>
+                                    <fest:attribute name="value">
+                                        <fest:value>data.initials</fest:value>
+                                    </fest:attribute>
+                                </fest:attributes>
+                            </input>
+                            <div class="form-input-label">Никнейм</div>
+                            <input class="form-input" type="text" name="user_nickname" placeholder="Никнейм"
+                                   autocomplete="off">
+                                <fest:attributes>
+                                    <fest:attribute name="value">
+                                        <fest:value>data.nickname</fest:value>
+                                    </fest:attribute>
+                                </fest:attributes>
+                            </input>
+                            <button class="primary">Сохранить</button>
+                        </form>
+                    </div>
+                    <div class="profile-avatar-column">
+                        <div class="title profile-mini-group-title">Аватар</div>
+                        <img class="avatar-round profile-avatar" alt="MyName"
+                             title="MyName">
+                            <fest:attributes>
+                                <fest:attribute name="src">
+                                    <fest:value>data.avatar</fest:value>
+                                </fest:attribute>
+                            </fest:attributes>
+                        </img>
+                        <button class="secondary">Изменить</button>
+                    </div>
+                </div>
+                <div class="group-title">
+                    <div class="title">Безопасность</div>
+                    <div class="hr-width-2"/>
+                </div>
+                <div class="input-group profile-input-group">
+                    <form action="">
+                        <div class="form-input-label">Смена пароля</div>
+                        <input class="form-input" type="password" name="user_oldpassword" placeholder="Старый пароль"
+                               autocomplete="off"/>
+                        <input class="form-input" type="password" name="user_newpassowrd" placeholder="Новый пароль"
+                               autocomplete="off"/>
+                        <input class="form-input" type="password" name="user_newpasswordrepeat"
+                               placeholder="Повтор пароля"
+                               autocomplete="off"/>
+                        <button class="secondary">Изменить</button>
+                    </form>
+                </div>
+                <div class="input-group profile-input-group">
+                    <form action="">
+                        <div class="form-input-label">Смена email</div>
+                        <input class="form-input" type="email" name="user_email" placeholder="Новый email"
+                               autocomplete="off">
+                            <fest:attributes>
+                                <fest:attribute name="value">
+                                    <fest:value>data.email</fest:value>
+                                </fest:attribute>
+                            </fest:attributes>
+                        </input>
+                        <button class="secondary">Изменить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</fest:template>
