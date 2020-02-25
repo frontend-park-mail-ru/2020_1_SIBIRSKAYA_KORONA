@@ -26,9 +26,10 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme",
   "devDependencies": {
-    "ip": "^1.1.5",
     "browser-sync": "^2.26.7",
     "eslint": "^6.8.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "ip": "^1.1.5",
+    "jsdoc": "^3.6.3"
   }
 }
