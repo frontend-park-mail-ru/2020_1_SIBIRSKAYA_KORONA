@@ -1,6 +1,6 @@
 'use strict';
 
-import {fetchGetJson, fetchPostJson} from './httpUtils.js'
+import {fetchGetJson, fetchPostJson} from './httpUtils.js';
 
 export default class ApiService {
     constructor(address) {

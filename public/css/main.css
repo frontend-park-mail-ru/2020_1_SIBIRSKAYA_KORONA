@@ -13,6 +13,8 @@ a:hover {
 }
 
 button {
+    display: flex;
+    align-items: center;
     height: 35px;
     border: none;
     border-radius: 15px;

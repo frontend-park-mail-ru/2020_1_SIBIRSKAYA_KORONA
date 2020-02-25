@@ -4,11 +4,11 @@
             <div class="title auth-form-title">
                 Вход
             </div>
-                <input class="form-input auth-form-input" type="email" placeholder="Email"/>
-                <input class="form-input auth-form-input" type="password" placeholder="Пароль"/>
+            <input class="form-input auth-form-input" type="email" placeholder="Email"/>
+            <input class="form-input auth-form-input" type="password" placeholder="Пароль"/>
             <div class="auth-form-bottom-panel">
-                <button class="primary">Войти</button>
-                <a class="auth-form-link" href="">Забыли пароль?</a>
+                <div class="button primary">Войти</div>
+                <a class="auth-form-link" href="join">Забыли пароль?</a>
             </div>
         </form>
     </div>
