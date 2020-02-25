@@ -13,13 +13,18 @@ export default class Router {
         this.routeMap = new Map();
         this.handleMouseClick = this.handleMouseClick.bind(this);
         this.root.addEventListener('click', this.handleMouseClick);
+        window.addEventListener('popstate', () => {
+            const pathname = window.location.pathname;
+            this.go(pathname);
+        });
     }
 
     /**
      * Switch current route
      * @param {string} route - route to go
+     * @param params
      */
-    go(route,...params) {
+    go(route, ...params) {
         /*window.location.pathname = route;*/
         if (this.routeMap.has(route)) {
             this.routeMap.get(route)(...params);

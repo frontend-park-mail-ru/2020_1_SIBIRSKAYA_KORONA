@@ -6,19 +6,12 @@ export default class JoinModel {
         this.eventBus = eventBus;
         this.router = router;
 
-        this.join = this.join.bind(this);
-        this.validateSurname = this.validateSurname.bind(this);
-        this.validateNickname = this.validateNickname.bind(this);
-        this.validateName = this.validateName.bind(this);
-        this.validatePassword = this.validatePassword.bind(this);
-        this.validatePasswordRepeat = this.validatePasswordRepeat.bind(this);
-
-        this.eventBus.subscribe('submit', this.join);
-        this.eventBus.subscribe('inputSurname', this.validateSurname);
-        this.eventBus.subscribe('inputNickname', this.validateNickname);
-        this.eventBus.subscribe('inputName', this.validateName);
-        this.eventBus.subscribe('inputPassword', this.validatePassword);
-        this.eventBus.subscribe('inputPasswordRepeat', this.validatePasswordRepeat);
+        this.eventBus.subscribe('submit', this.join.bind(this));
+        this.eventBus.subscribe('inputSurname', this.validateSurname.bind(this));
+        this.eventBus.subscribe('inputNickname', this.validateNickname.bind(this));
+        this.eventBus.subscribe('inputName', this.validateName.bind(this));
+        this.eventBus.subscribe('inputPassword', this.validatePassword.bind(this));
+        this.eventBus.subscribe('inputPasswordRepeat', this.validatePasswordRepeat.bind(this));
     }
 
     validatePasswordRepeat(data) {
@@ -51,7 +44,7 @@ export default class JoinModel {
         return this.api.join(userInfo).then((response) => {
             if (response['status'] === 308) {
                 console.log(this);
-                this.router.go('/', {});
+                this.router.go('/profile', {});
                 console.log('ОГОНЬ');
             } else {
                 console.log('НЕ огонь');
