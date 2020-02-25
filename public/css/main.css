@@ -12,7 +12,9 @@ a:hover {
     text-decoration: underline;
 }
 
-button {
+div.button {
+    display: flex;
+    align-items: center;
     height: 35px;
     border: none;
     border-radius: 15px;
@@ -23,32 +25,32 @@ button {
     transition: 0.3s;
 }
 
-button.primary {
+div.button.primary {
     background-color: #00c12c;
     box-shadow: 0 0 7px 1px #1c6d09;
 }
 
-button.primary:hover {
+div.button.primary:hover {
     background-color: #10a213;
     box-shadow: 0 0 7px 2px #007c05;
 }
 
-button.secondary {
+div.button.secondary {
     background-color: #03A9F4;
     box-shadow: 0 0 7px 1px #172a53;
 }
 
-button.secondary:hover {
+div.button.secondary:hover {
     background-color: #4040ff;
     box-shadow: 0 0 7px 2px #041a55;
 }
 
-button.danger {
+div.button.danger {
     background-color: #E91E63;
     box-shadow: 0 0 7px 1px #320c19;
 }
 
-button.danger:hover {
+div.button.danger:hover {
     background-color: #ce0000;
     box-shadow: 0 0 7px 2px #4a0214;
 }

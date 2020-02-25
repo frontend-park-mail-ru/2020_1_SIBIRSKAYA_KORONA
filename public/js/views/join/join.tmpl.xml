@@ -8,8 +8,8 @@
             <input class="form-input auth-form-input" type="password" placeholder="Пароль"/>
             <input class="form-input auth-form-input" type="password" placeholder="Повторите пароль"/>
             <div class="auth-form-bottom-panel">
-                <button class="primary">Зарегистрироваться</button>
-                <a class="auth-form-link" href="">Уже есть аккаунт?</a>
+                <div class="button primary">Зарегистрироваться</div>
+                <a class="auth-form-link" href="login">Уже есть аккаунт?</a>
             </div>
         </form>
     </div>

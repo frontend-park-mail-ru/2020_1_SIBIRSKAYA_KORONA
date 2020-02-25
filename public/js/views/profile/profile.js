@@ -3,10 +3,10 @@ import './profile.tmpl.js';
 class ProfileView {
     constructor(root) {
         this.root = root;
+        this.render = this.render.bind(this);
     }
 
     render(data) {
-        console.log(data);
         this.root.innerHTML = window.fest['js/views/profile/profile.tmpl'](data);
     }
 }

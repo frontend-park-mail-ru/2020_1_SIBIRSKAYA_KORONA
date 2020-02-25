@@ -16,7 +16,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browser-sync": "^2.26.7",
     "express": "^4.17.1",
     "fest": "^0.12.1",
     "morgan": "^1.9.1"
@@ -26,6 +25,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme",
   "devDependencies": {
-    "ip": "^1.1.5"
+    "ip": "^1.1.5",
+    "browser-sync": "^2.26.7"
   }
 }
