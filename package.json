@@ -4,6 +4,7 @@
   "description": "Репозиторий фронтенда",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint --fix . && echo '  LINT OK, NO GOVNOKOD DETECTED'",
     "start": "node server/server.js",
     "prestart": "./node_modules/.bin/fest-build --dir=public",
     "sync_start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
@@ -26,6 +27,8 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme",
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
     "ip": "^1.1.5"
   }
 }

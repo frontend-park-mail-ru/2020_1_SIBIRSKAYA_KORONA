@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
-const ip = require("ip");
+const ip = require('ip');
 
 const app = express();
 const publicFolder = path.resolve(__dirname, '..', 'public');
@@ -17,5 +17,5 @@ const PORT = process.env.PORT || 5757;
 app.listen(PORT, () => {
     console.log(`Server working at:
     http://${ip.address()}:${PORT}
-    http://localhost:${PORT}`)
+    http://localhost:${PORT}`);
 });
