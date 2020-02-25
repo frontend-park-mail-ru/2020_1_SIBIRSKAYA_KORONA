@@ -12,19 +12,22 @@ export const fetchGetJson = (url, paramsObj) => {
         mode: 'cors',
         credentials: 'include',
     }).then((res) => res.json())
-        .catch((err) => console.log(err));
 };
 
 export const fetchPostJson = (url, jsonObj = null) => {
     const postUrl = new URL(url);
 
+    let body = null;
+    if (jsonObj !== null) {
+        body = JSON.stringify(jsonObj);
+    }
+
     return fetch(postUrl.href, {
         method: 'POST',
         mode: 'cors',
         credentials: 'include',
-        body: JSON.stringify(jsonObj),
+        body: body,
     }).then((res) => res.json())
-        .catch((err) => console.log(err));
 };
 
 

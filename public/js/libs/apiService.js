@@ -31,9 +31,16 @@ export default class ApiService {
         return fetchPostJson(apiUrl, userInfo);
     }
 
-    // TODO(Alexandr): logout
+    /**
+     * @description Logout user
+     * @returns {Promise<* | void>}
+     */
+    logout() {
+        const apiUrl = new URL('logout', this.address);
+        return fetchPostJson(apiUrl);
+    }
 
-    // TODO(Alexandr): postUser jsdoc
+    // TODO(Alexandr): check if works
     /**
      * @description Update profile info
      * @param {Object} userInfo -
