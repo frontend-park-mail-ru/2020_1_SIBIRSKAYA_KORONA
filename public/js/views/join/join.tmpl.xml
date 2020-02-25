@@ -4,11 +4,14 @@
             <div class="title auth-form-title">
                 Регистрация
             </div>
-            <input class="form-input auth-form-input" type="email" placeholder="Email"/>
-            <input class="form-input auth-form-input" type="password" placeholder="Пароль"/>
-            <input class="form-input auth-form-input" type="password" placeholder="Повторите пароль"/>
+            <input class="form-input auth-form-input" type="text" placeholder="Имя" id="user_name"/>
+            <input class="form-input auth-form-input" type="text" placeholder="Фамилия" id="user_surname"/>
+            <input class="form-input auth-form-input" type="text" placeholder="Ник" id="user_nickname"/>
+            <input class="form-input auth-form-input" type="password" placeholder="Пароль" id="user_password"/>
+            <input class="form-input auth-form-input" type="password" placeholder="Повторите пароль"
+                   id="user_password_repeat"/>
             <div class="auth-form-bottom-panel">
-                <button class="primary">Зарегистрироваться</button>
+                <button class="primary" id="submit_button">Зарегистрироваться</button>
                 <a class="auth-form-link" href="">Уже есть аккаунт?</a>
             </div>
         </form>
