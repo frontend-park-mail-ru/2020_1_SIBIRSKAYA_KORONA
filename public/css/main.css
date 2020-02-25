@@ -1,6 +1,6 @@
 /*   COMMON   */
 body {
-    font-family: 'Exo', sans-serif;
+    font-family: 'Fox', sans-serif;
 }
 
 a {
@@ -70,7 +70,6 @@ textarea {
 
 .title {
     font-weight: 800;
-    font-family: 'Scada', sans-serif;
 }
 
 .popup {
@@ -81,7 +80,7 @@ textarea {
 }
 
 .avatar-round {
-    border-radius:  50%;
+    border-radius: 50%;
 }
 
 .form {
@@ -90,6 +89,15 @@ textarea {
     padding: 32px;
     margin-bottom: 35px;
     background-color: #f8f8ff;
+}
+
+
+.form-input-label {
+    margin-bottom: 10px;
+    font-size: 11pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+    word-spacing: 5px;
 }
 
 .form-input {
@@ -156,6 +164,7 @@ textarea {
     display: flex;
     flex-flow: wrap-reverse;
 }
+
 /*     END COMMON     */
 
 
@@ -191,6 +200,7 @@ textarea {
     font-size: 14pt;
     font-weight: bold;
 }
+
 /*     END DASHBOARDS     */
 
 
@@ -206,7 +216,7 @@ textarea {
 
 .top-pic::after {
     content: "";
-    background: url(pics/work_hard.png) no-repeat top;
+    background: url(../img/work_hard.png) no-repeat top;
     background-size: cover;
     opacity: 0.2;
     top: 0;
@@ -259,6 +269,7 @@ textarea {
 .landing-auth {
     margin: 0 25px;
 }
+
 /*      END LANDING      */
 
 
@@ -285,6 +296,7 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, .3);
 }
+
 /*      END SCROLLBARS     */
 
 
@@ -435,6 +447,7 @@ textarea {
     height: 30px;
     width: 30px;
 }
+
 /*       END BOARD        */
 
 
@@ -480,7 +493,9 @@ textarea {
 }
 
 .profile-avatar {
-    width: 156px;
-    height: 156px;
+    width: 220px;
+    height: 220px;
+    margin-bottom: 10px;
 }
+
 /*      END PROFILE     */

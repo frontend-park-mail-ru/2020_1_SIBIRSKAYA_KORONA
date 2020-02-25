@@ -1,0 +1,16 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="popup auth-popup">
+        <form action="" class="form auth-form">
+            <div class="title auth-form-title">
+                Регистрация
+            </div>
+            <input class="form-input auth-form-input" type="email" placeholder="Email"/>
+            <input class="form-input auth-form-input" type="password" placeholder="Пароль"/>
+            <input class="form-input auth-form-input" type="password" placeholder="Повторите пароль"/>
+            <div class="auth-form-bottom-panel">
+                <button class="primary">Зарегистрироваться</button>
+                <a class="auth-form-link" href="">Уже есть аккаунт?</a>
+            </div>
+        </form>
+    </div>
+</fest:template>
