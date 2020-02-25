@@ -12,10 +12,10 @@ const application = document.getElementById('application');
 
 const router = new Router(application);
 
-const joinController = new JoinController();
+const joinController = new JoinController(router);
 
 // router.setRoute('/login', loginView.render);
 // router.setRoute('/profile', profileView.render);
 router.setRoute('/join', joinController.view.render);
 
-router.go('/join');
+router.go('/join',{});

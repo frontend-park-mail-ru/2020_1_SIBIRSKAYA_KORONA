@@ -11,9 +11,7 @@ export default class JoinView {
     constructor(eventBus) {
         this.eventBus = eventBus;
         this.root = document.getElementById('application');
-        this.inputedData = {};
-
-        // this.eventBus.subscribe('inputError', this.render);
+        this.inputtedData = {};
 
         this.render = this.render.bind(this);
         this.getUserData = this.getUserData.bind(this);
@@ -27,33 +25,79 @@ export default class JoinView {
      */
     render(data) {
         this.root.innerHTML = window.fest['js/views/join/joinView.tmpl'](data);
+
         const submitButton = document.getElementById('submit_button');
-        submitButton.addEventListener('click', this.handleSubmit)
+        submitButton.addEventListener('click', this.handleSubmit);
+
         const formElements = document.getElementById('joinForm').elements;
-        for (let i = 0; i !== formElements.length; i++) {
-            if (formElements[i].nodeName === 'INPUT') {
-                formElements[i].addEventListener('blur', this.handleUserInput);
-                /* formElements[i].addEventListener('input', (e) => {
-                    // console.log('timeout');
-                    // setTimeout(this.handleUserInput, 500, e);
-                });*/
+        /*for (let i = 0; i !== formElements.length; i++) {*/
+        for (let element of formElements) {
+            if (element.nodeName === 'INPUT') {
+                element.addEventListener('input', this.handleUserInput);
+                element.addEventListener('blur', this.handleUserInput);
+
+                const errorInputSignal = element.id + 'Error';
+                const errorInputHandler = this[errorInputSignal + 'Handler'];
+                console.log(errorInputSignal + 'Handler');
+                this.eventBus.subscribe(errorInputSignal, errorInputHandler);
             }
         }
     }
 
+    inputNameErrorHandler(error) {
+        const errorLabel = document.getElementById('inputNameError');
+        if (error) {
+            errorLabel.classList.remove('hidden');
+        } else {
+            errorLabel.classList.add('hidden');
+        }
+    }
+
+    inputSurnameErrorHandler(error) {
+        const errorLabel = document.getElementById('inputSurnameError');
+        if (error) {
+            errorLabel.classList.remove('hidden');
+        } else {
+            errorLabel.classList.add('hidden');
+        }
+    }
+
+    inputNicknameErrorHandler(error) {
+        const errorLabel = document.getElementById('inputNicknameError');
+        if (error) {
+            errorLabel.classList.remove('hidden');
+        } else {
+            errorLabel.classList.add('hidden');
+        }
+    }
+
+    inputPasswordErrorHandler(error) {
+        const errorLabel = document.getElementById('inputPasswordError');
+        if (error) {
+            errorLabel.classList.remove('hidden');
+        } else {
+            errorLabel.classList.add('hidden');
+        }
+    }
+
+    inputPasswordRepeatErrorHandler(error) {
+        const errorLabel = document.getElementById('inputPasswordRepeatError');
+        if (error) {
+            errorLabel.classList.remove('hidden');
+        } else {
+            errorLabel.classList.add('hidden');
+        }
+    }
+
+
     handleUserInput(e) {
         const inputField = e.target;
-        this.inputedData[inputField.id] = inputField.value;
+        this.inputtedData[inputField.id] = inputField.value;
+        console.log(inputField.id);
 
-        this.eventBus.call('userInput', this.inputedData[inputField.id]);
-
-        /* const formElements = document.getElementById('joinForm').elements;
-        console.log(form);
-        for (let i = 0; i !== formElements.length; i++) {
-            if (formElements[i].nodeName === 'INPUT') {
-                this.inputedData[formElements[i].id] = formElements[i].value;
-            }
-        }*/
+        const eventBusValidateSignal = inputField.id;
+        const dataToValidate = this.inputtedData[inputField.id];
+        this.eventBus.call(eventBusValidateSignal, dataToValidate);
     }
 
     handleSubmit(e) {
@@ -66,12 +110,12 @@ export default class JoinView {
      * @return {{password: *, surname: *, name: *, nickname: *}}
      */
     getUserData() {
-        // return this.inputedData;
+        // return this.inputtedData;
         return {
-            name: document.getElementById('userName').value,
-            surname: document.getElementById('userSurname').value,
-            nickname: document.getElementById('userNickname').value,
-            password: document.getElementById('userPassword').value,
+            name: document.getElementById('inputName').value,
+            surname: document.getElementById('inputSurname').value,
+            nickname: document.getElementById('inputNickname').value,
+            password: document.getElementById('inputPassword').value,
         };
     }
 }

@@ -19,9 +19,10 @@ export default class Router {
      * Switch current route
      * @param {string} route - route to go
      */
-    go(route) {
+    go(route,...params) {
+        /*window.location.pathname = route;*/
         if (this.routeMap.has(route)) {
-            this.routeMap.get(route)();
+            this.routeMap.get(route)(...params);
         }
     }
 
@@ -31,10 +32,9 @@ export default class Router {
      */
     handleMouseClick(e) {
         if (e.target.tagName.toLowerCase() === 'a') {
-            e.stopPropagation();
             e.preventDefault();
             this.go(e.target.pathname);
-        } else if (e.target.tagName.toLowerCase() === 'button') {
+        } else if (e.target.tagName === 'BUTTON') {
             e.preventDefault();
         }
     }

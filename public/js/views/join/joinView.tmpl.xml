@@ -4,17 +4,43 @@
             <div class="title auth-form-title">
                 Регистрация
             </div>
-            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Имя" id="userName"/>
-            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Фамилия" id="userSurname"/>
-            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Ник" id="userNickname"/>
-            <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль" id="userPassword"/>
+            <div id="inputNameError" class="input-error hidden">ERROR</div>
+            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Имя"
+                   id="inputName">
+                <fest:attributes>
+                    <fest:attribute name="value">
+                        <fest:value>data.name</fest:value>
+                    </fest:attribute>
+                </fest:attributes>
+            </input>
+            <div id="inputSurnameError" class="input-error hidden">ERROR</div>
+            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Фамилия"
+                   id="inputSurname">
+                <fest:attributes>
+                    <fest:attribute name="value">
+                        <fest:value>data.surname</fest:value>
+                    </fest:attribute>
+                </fest:attributes>
+            </input>
+            <div id="inputNicknameError" class="input-error hidden">ERROR</div>
+            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Ник"
+                   id="inputNickname">
+                <fest:attributes>
+                    <fest:attribute name="value">
+                        <fest:value>data.nickname</fest:value>
+                    </fest:attribute>
+                </fest:attributes>
+            </input>
+            <div id="inputPasswordError" class="input-error hidden">ERROR</div>
+            <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль"
+                   id="inputPassword"/>
+            <div id="inputPasswordRepeatError" class="input-error hidden">ERROR</div>
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
-                   id="userPasswordRepeat"/>
+                   id="inputPasswordRepeat"/>
             <div class="auth-form-bottom-panel">
                 <button class="primary" id="submit_button">Зарегистрироваться</button>
                 <a class="auth-form-link" href="">Уже есть аккаунт?</a>
             </div>
-
         </form>
     </div>
 </fest:template>

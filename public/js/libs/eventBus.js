@@ -10,7 +10,6 @@ export default class EventBus {
     subscribe(signal, handler) {
         if (this.signalHandlers.has(signal)) {
             if (!this.signalHandlers.get(signal)) {
-                console.log(signal);
                 this.signalHandlers.set(signal, handler);
             } else {
                 console.log(`Signal ${signal} already bound`);

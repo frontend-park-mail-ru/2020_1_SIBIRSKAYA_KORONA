@@ -5,21 +5,20 @@ import JoinView from '../views/join/joinView.js';
 import EventBus from '../libs/eventBus.js';
 
 export default class JoinController {
-    constructor() {
-        // this.eventBus = new EventBus(['submitData', 'submitDataOk', 'submitDataBad']);
+    constructor(router) {
         this.eventBus = new EventBus([
             'submit',
-            'inputEmail',           'inputEmailError',
-            'inputNickname',        'inputNicknameError',
             'inputName',            'inputNameError',
+            'inputSurname',         'inputSurnameError',
+            'inputNickname',        'inputNicknameError',
             'inputPassword',        'inputPasswordError',
             'inputPasswordRepeat',  'inputPasswordRepeatError',
         ]);
         this.view = new JoinView(this.eventBus);
-        this.model = new JoinModel(this.eventBus);
+        this.model = new JoinModel(this.eventBus, router);
 
-        // this.view.render();
-        /*          this.eventBus.subscribe('submitData', () => {
+        /* this.view.render();
+                  this.eventBus.subscribe('submitData', () => {
                     const userData = this.view.getUserData();
 
                     this.model.join(userData)

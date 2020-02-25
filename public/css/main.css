@@ -167,6 +167,9 @@ textarea {
     flex-flow: wrap-reverse;
 }
 
+.hidden {
+    display: none;
+}
 /*     END COMMON     */
 
 
