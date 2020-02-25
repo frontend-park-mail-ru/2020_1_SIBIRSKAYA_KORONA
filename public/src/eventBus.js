@@ -3,7 +3,7 @@ export default class EventBus {
         this.signalHandlers = new Map;
 
         for (const signal of signals) {
-            this.signalHandlers.set(signal, null)
+            this.signalHandlers.set(signal, null);
         }
     }
 
@@ -14,7 +14,6 @@ export default class EventBus {
             } else {
                 console.log(`Signal ${signal} already bound`);
             }
-
         } else {
             console.log(`No such signal '${signal}' in event bus`);
         }
