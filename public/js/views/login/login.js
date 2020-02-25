@@ -1,6 +1,6 @@
 import './login.tmpl.js';
 
-class LoginView {
+export default class LoginView {
     constructor(root) {
         this.root = root;
     }
@@ -9,5 +9,3 @@ class LoginView {
         this.root.innerHTML = window.fest['js/views/login/login.tmpl']();
     }
 }
-
-export default LoginView;

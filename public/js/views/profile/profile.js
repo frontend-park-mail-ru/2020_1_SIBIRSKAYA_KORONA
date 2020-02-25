@@ -1,6 +1,6 @@
 import './profile.tmpl.js';
 
-class ProfileView {
+export default class ProfileView {
     constructor(root) {
         this.root = root;
     }
@@ -10,5 +10,3 @@ class ProfileView {
         this.root.innerHTML = window.fest['js/views/profile/profile.tmpl'](data);
     }
 }
-
-export default ProfileView;
