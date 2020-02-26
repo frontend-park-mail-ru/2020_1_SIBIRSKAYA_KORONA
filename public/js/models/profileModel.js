@@ -43,13 +43,12 @@ export default class JoinModel {
     getUser() {
         console.log('profile get user');
         this.api.getUser({}).then((response) => {
-            console.log(response.status);
-/*            if (response[status] === 200) {
+            if (response.status === 200) {
                 console.log('ОГОНЬ');
-                this.eventBus.call('gotData', {"s": "sasasasasasa"});
+                this.eventBus.call('gotData', response.body.user);
             } else {
                 console.log('НЕ огонь');
-            }*/
+            }
         });
     }
 }
