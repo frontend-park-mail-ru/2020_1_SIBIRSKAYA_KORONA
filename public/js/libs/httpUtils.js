@@ -1,35 +1,57 @@
 'use strict';
 
-export const fetchGetJson = (url, paramsObj) => {
-    let getUrl = new URL(url);
+/**
+ * @description Fetch used for CORS
+ * @param {string|URL} url - fetch url
+ * @param {string} method - POST, GET, etc.
+ * @param {any} body - request body
+ * @param {Object} headersObj
+ * @param {Object} queryObj - "GET" parameters for query string
+ * @returns {Promise<Response>}
+ */
+export const fetchCors = (url, {
+    method = 'POST',
+    body,
+    headersObj = {},
+    queryObj = {}
+}) => {
+    const urlObj = new URL(url);
 
-    for (const [key, value] of Object.entries(paramsObj)) {
-        getUrl.searchParams.append(key, value);
+    for (const [key, value] of Object.entries(queryObj)) {
+        urlObj.searchParams.append(key, value);
     }
 
-    return fetch(getUrl.href, {
-        method: 'GET',
+    return fetch(urlObj.href, {
+        method,
+        headers: headersObj,
+        body,
         mode: 'cors',
         credentials: 'include',
-    }).then(
-        res => res.json(),
-        err => console.log(err)
-    )
+    })
+};
+
+/*************** SHORTCUTS ****************/
+
+/**
+ * @description Shortcut for parsing json response
+ * @param {string|URL} url - fetch url
+ * @param {Object} queryObj - "GET" parameters for query string
+ * @returns {Promise<any>}
+ */
+export const fetchGetJson = (url, queryObj) => {
+    return fetchCors(url, {method: 'GET', queryObj})
+        .then((res) => res.json())
 };
 
 
-export const fetchPostJson = (url, jsonObj = null) => {
-    let postUrl = new URL(url);
-
-    return fetch(postUrl.href, {
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'include',
-        body: JSON.stringify(jsonObj),
-    }).then(
-        res => res.json(),
-        err => console.log(err)
-    )
+/**
+ * @description Shortcut for sending json request and parsing json response
+ * @param {string|URL} url - fetch url
+ * @param {Object} body - object
+ * @returns {Promise<any>}
+ */
+export const fetchPostJson = (url, body) => {
+    return fetchCors(url, {method: 'POST', body: JSON.stringify(body)})
+        .then((res) => res.json())
+        .catch((err) => console.log(err));
 };
-
-

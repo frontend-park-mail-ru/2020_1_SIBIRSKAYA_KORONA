@@ -1,16 +1,20 @@
 'use strict';
 
-import {fetchGetJson, fetchPostJson} from './httpUtils.js';
+import {fetchCors, fetchGetJson, fetchPostJson} from './httpUtils.js';
 
+/** Used for communicating with backend */
 export default class ApiService {
+    /**
+     * @param {string|URL} address - backend api address
+     */
     constructor(address) {
         this.address = address;
     }
 
     /**
      * @description Register user
-     * @param userInfo - user info object (name, surname, nickname, password)
-     * @returns {Promise<Response>}
+     * @param {Object} userInfo - user info object (name, surname, nickname, password)
+     * @return {Promise<any>}
      */
     join(userInfo) {
         const apiUrl = new URL('join', this.address);
@@ -19,35 +23,41 @@ export default class ApiService {
 
     /**
      * @description Login user; create user session
-     * @param userInfo - user info object (nickname, password)
-     * @returns {Promise<Response>}
+     * @param {Object} userInfo - user info object (nickname, password)
+     * @return {Promise<any>}
      */
     login(userInfo) {
         const apiUrl = new URL('login', this.address);
         return fetchPostJson(apiUrl, userInfo);
     }
 
-    // TODO(Alexandr): logout
+    /**
+     * @description Logout user
+     * @returns {Promise<* | void>}
+     */
+    logout() {
+        const apiUrl = new URL('logout', this.address);
+        return fetchCors(apiUrl, {method: 'DELETE'});
+    }
 
-    // TODO(Alexandr): postUser jsdoc
     /**
      * @description Update profile info
-     * @param userInfo -
-     * @returns {Promise<Response>}
+     * @param {FormData} userForm - form with new user data
+     * @return {Promise<Response | any>}
      */
-    postUser(userInfo) {
+    putUser(userForm) {
         const apiUrl = new URL('profile', this.address);
-        return fetchPostJson(apiUrl, userInfo)
+        return fetchCors(apiUrl, {method: 'PUT', body: userForm});
     }
 
     /**
      * @description Get profile info
-     * @param userInfo - user info object (nickname)
-     * @returns {Promise<Response>}
+     * @param {Object} userInfo - user info object (nickname)
+     * @return {Promise<Response | any>}
      */
-    getUser(userInfo) {
+    getUser(userInfo = {}) {
         const apiUrl = new URL('profile', this.address);
-        return fetchGetJson(apiUrl, userInfo)
+        return fetchGetJson(apiUrl, userInfo);
     }
 
 }

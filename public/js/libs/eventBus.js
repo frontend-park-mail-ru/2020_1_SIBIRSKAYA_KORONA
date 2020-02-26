@@ -1,4 +1,9 @@
+/** EventBus is used for connecting signals to handlers */
 export default class EventBus {
+    /**
+     * @description Creates event bus with passed signals
+     * @param {...string} signals - signals used by event bus
+     */
     constructor(signals) {
         this.signalHandlers = new Map;
 
@@ -7,6 +12,11 @@ export default class EventBus {
         }
     }
 
+    /**
+     * @description Add handler for signal
+     * @param {string} signal - signal at which handler will be executed
+     * @param {function} handler - function which will be called on signal
+     */
     subscribe(signal, handler) {
         if (this.signalHandlers.has(signal)) {
             if (!this.signalHandlers.get(signal)) {
@@ -19,6 +29,11 @@ export default class EventBus {
         }
     }
 
+    /**
+     * @description Executes signal handler with passed arguments
+     * @param {string} signal - signal at which handler will be executed
+     * @param {...*} args - arguments which will be passed to handler
+     */
     call(signal, ...args) {
         if (this.signalHandlers.has(signal)) {
             if (this.signalHandlers.get(signal)) {
