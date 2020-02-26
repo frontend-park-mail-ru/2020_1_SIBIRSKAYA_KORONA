@@ -12,7 +12,7 @@ export default class ProfileView {
         this.eventBus = eventBus;
         this.root = document.getElementById('application');
         this.inputtedData = {
-            inputPasswordRepeat : "",
+            inputPasswordRepeat: "",
         };
 
         this.render = this.render.bind(this);
@@ -29,21 +29,19 @@ export default class ProfileView {
      */
     render(data) {
         console.log("render profile");
-        // data = data || this.inputtedData;
-
         this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
         this.addEventListeners();
     }
 
     addEventListeners() {
-        const submitAbout = document.getElementById('submitAbout');
-        submitAbout.addEventListener('click', this.handleSubmitAbout);
-
-        const submitPasswords = document.getElementById('submitPasswords');
-        submitPasswords.addEventListener('click', this.handleSubmitPasswords);
-
-        const submitEmail = document.getElementById('submitEmail');
-        submitEmail.addEventListener('click', this.handleSubmitEmail);
+        const submitButtons = [
+            document.getElementById('submitAbout'),
+            document.getElementById('submitPasswords'),
+            document.getElementById('submitEmail'),
+        ];
+        submitButtons.forEach((button) => {
+            button.addEventListener('click', this.handleSubmit);
+        });
 
         const inputs = [
             document.getElementById('inputName'),
@@ -52,20 +50,20 @@ export default class ProfileView {
             document.getElementById('inputOldPassword'),
             document.getElementById('inputPassword'),
         ];
-        for (let element of inputs) {
-            element.addEventListener('input', this.handleUserInput);
-            element.addEventListener('blur', this.handleUserInput);
+        inputs.forEach((input) => {
+            input.addEventListener('input', this.handleUserInput);
+            input.addEventListener('blur', this.handleUserInput);
 
-            const errorInputSignal = element.id + 'Error';
+            const errorInputSignal = input.id + 'Error';
             const errorInputHandler = this[errorInputSignal + 'Handler'];
             this.eventBus.subscribe(errorInputSignal, errorInputHandler);
-        }
+        });
 
         const inputPasswordRepeat = document.getElementById('inputPasswordRepeat');
         inputPasswordRepeat.addEventListener('input', this.handleUserInputPasswordRepeat);
         inputPasswordRepeat.addEventListener('blur', this.handleUserInputPasswordRepeat);
 
-        this.eventBus.subscribe('inputPasswordRepeatError',this.inputPasswordRepeatErrorHandler);
+        this.eventBus.subscribe('inputPasswordRepeatError', this.inputPasswordRepeatErrorHandler);
     }
 
     handleUserInput(e) {
@@ -112,19 +110,12 @@ export default class ProfileView {
         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
-    handleSubmitAbout() {
-
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log('submit');
     }
 
-    handleSubmitPasswords() {
-
-    }
-
-    handleSubmitEmail() {
-
-    }
-
-    getUserData() {
+    getUserInput() {
         return {
             name: document.getElementById('inputName').value,
             surname: document.getElementById('inputSurname').value,

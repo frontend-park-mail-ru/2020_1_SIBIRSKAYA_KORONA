@@ -45,7 +45,9 @@ export default class JoinModel {
         this.api.getUser({}).then((response) => {
             if (response.status === 200) {
                 console.log('ОГОНЬ');
-                this.eventBus.call('gotData', response.body.user);
+                const data = response.body.user;
+                data.avatar = data.avatar ||'/img/default_avatar.png';
+                this.eventBus.call('gotData', data);
             } else {
                 console.log('НЕ огонь');
             }
