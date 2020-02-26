@@ -7,10 +7,10 @@ import EventBus from '../libs/eventBus.js';
 export default class LoginController {
     constructor(router) {
         this.eventBus = new EventBus([
-            'submit1',
-            'submit2',
-            'submit3',
-            'submit4',
+            'submitAbout',
+            'submitPasswords',
+            'submitEmail',
+            'submitImg',
             'getData',
             'gotData',
             'inputName',

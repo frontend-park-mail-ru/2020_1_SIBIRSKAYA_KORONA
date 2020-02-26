@@ -11,11 +11,10 @@ export default class ProfileView {
     constructor(eventBus) {
         this.eventBus = eventBus;
         this.root = document.getElementById('application');
-        this.inputtedData = {
-            inputPasswordRepeat: "",
-        };
+        this.inputtedData = {};
 
         this.render = this.render.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
         this.handleUserInputPasswordRepeat = this.handleUserInputPasswordRepeat.bind(this);
 
@@ -38,6 +37,7 @@ export default class ProfileView {
             document.getElementById('submitAbout'),
             document.getElementById('submitPasswords'),
             document.getElementById('submitEmail'),
+            document.getElementById('submitImg'),
         ];
         submitButtons.forEach((button) => {
             button.addEventListener('click', this.handleSubmit);
@@ -68,7 +68,6 @@ export default class ProfileView {
     handleUserInput(e) {
         const inputField = e.target;
         this.inputtedData[inputField.id] = inputField.value;
-        console.log(inputField.id);
 
         const eventBusValidateSignal = inputField.id;
         const dataToValidate = this.inputtedData[inputField.id];
@@ -110,9 +109,32 @@ export default class ProfileView {
     }
 
     handleSubmit(e) {
+        console.log(this.inputtedData);
         e.preventDefault();
-        console.log('submit');
+        let data = {};
+        switch (e.target.id) {
+            case 'submitAbout':
+                console.log('submitAbout');
+                data.newName = this.inputtedData.inputName;
+                data.newSurname = this.inputtedData.inputSurname;
+                break;
+            case 'submitEmail':
+                console.log('submitEmail');
+                data.newEmail = this.inputtedData.inputEmail;
+                break;
+            case 'submitPasswords':
+                data.oldPassword  = this.inputtedData.inputOldPassword;
+                data.newPassword  = this.inputtedData.inputPassword;
+                console.log('submitPasswords');
+                break;
+            case 'submitImg':
+                console.log('submitImg');
+                break;
+        }
+        const eventBusSubmitSignal = e.target.id;
+        this.eventBus.call(eventBusSubmitSignal, data);
     }
+
 
     getUserInput() {
         return {

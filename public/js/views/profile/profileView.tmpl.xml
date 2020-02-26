@@ -68,7 +68,7 @@
                                 </fest:attribute>
                             </fest:attributes>
                         </img>
-                        <button class="secondary">Изменить</button>
+                        <button id="submitImg" class="secondary">Изменить</button>
                     </div>
                 </div>
                 <div class="group-title">

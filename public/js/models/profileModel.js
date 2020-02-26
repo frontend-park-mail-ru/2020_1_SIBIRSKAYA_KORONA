@@ -2,8 +2,8 @@ import ApiService from '../libs/apiService.js';
 
 export default class JoinModel {
     constructor(eventBus, router) {
-        // this.api = new ApiService('http://localhost:8080/');
-        this.api = new ApiService('http://89.208.197.150:8080/');
+        this.api = new ApiService('http://localhost:8080/');
+        // this.api = new ApiService('http://89.208.197.150:8080/');
         this.eventBus = eventBus;
         this.router = router;
 
@@ -14,6 +14,12 @@ export default class JoinModel {
         this.eventBus.subscribe('inputPassword', this.validatePassword.bind(this));
         this.eventBus.subscribe('inputPasswordRepeat', this.validatePasswordRepeat.bind(this));
         this.eventBus.subscribe('inputEmail', this.validateEmail.bind(this));
+
+        this.putUser = this.putUser.bind(this);
+        this.eventBus.subscribe('submitAbout', this.putUser);
+        this.eventBus.subscribe('submitPasswords', this.putUser);
+        this.eventBus.subscribe('submitEmail', this.putUser);
+        this.eventBus.subscribe('submitImg', this.putUser);
     }
 
     validatePasswordRepeat(data) {
@@ -42,6 +48,7 @@ export default class JoinModel {
     }
 
     putUser() {
+        console.log(this.in);
         const data = {};
         this.api.postUser(data).then((response) => {
             console.log(response.status);
@@ -70,10 +77,11 @@ export default class JoinModel {
                     console.log('ОГОНЬ');
                     const data = response.body.user;
                     console.log(data);
-                    data.avatar = data.avatar || '/img/default_avatar.png';
+                    data.avatar = (data.avatar === "defoultIMG") ? '/img/default_avatar.png' : data.avatar;
                     this.eventBus.call('gotData', data);
                     break;
                 case 303: // - SeeOther (не авторизован, случай без query string)
+                    this.router.go('/login');
                     break;
                 case 400: // - BadRequest (неверный запрос)
                     break;
