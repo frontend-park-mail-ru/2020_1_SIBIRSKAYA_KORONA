@@ -9,30 +9,69 @@ const application = document.getElementById('application');
 // const loginView = new LoginView(application);
 const profileView = new ProfileView(application);
 
-const user = {
-    name: 'Вася Пупкин',
-    initials: 'ВП',
-    nickname: 'Uasesapupa',
-    avatar: 'img/default_avatar.png',
-    email: 'pupkin@mail.ru',
-};
-
 // profileView.render(user);
 const api = new ApiService('http://localhost:8080/');
 
 const submitButton = document.getElementById('submit_button');
-const fileField = document.getElementById('myfile');
+
+const avatarField = document.getElementById('avatar');
+const nameInput = document.getElementById('newName');
+const surnameInput = document.getElementById('newSurname');
+const nicknameInput = document.getElementById('newNickname');
+const emailInput = document.getElementById('newEmail');
+const newPasswordInput = document.getElementById('newPassword');
+const oldPasswordInput = document.getElementById('oldPassword');
+
+const user = {
+    name: "Gopher",
+    nickname: "JSLover",
+    surname: "Golang",
+    password: "HateGoLoveJS",
+    email: "duck@mail.ru",
+}
+
+api.join(user)
+    .then(res => {
+        console.log('Результат регистрации')
+        console.log(res)
+    })
+
+    .then(() => api.login(user))
+    .then(res => {
+        console.log('Результат авторизации')
+        console.log(res)
+    })
+
+    .then(() => api.getUser(user))
+    .then(res => {
+        console.log('Результат получения профиля')
+        console.log(res)
+    })
+
 
 submitButton.addEventListener('click', (e) => {
     e.preventDefault();
-    const file = fileField.files[0];
-    console.log(file);
-
+    const avatar = avatarField.files[0];
+    console.log(avatar);
 
     const formData = new FormData();
-    formData.append('avatar', file);
-    formData.append('name', file.name);
+    formData.append('newName', nameInput.value);
+    formData.append('newSurname', surnameInput.value);
+    formData.append('newNickname', nicknameInput.value);
+    formData.append('newEmail', emailInput.value);
+    formData.append('newPassword', newPasswordInput.value);
+    formData.append('oldPassword', oldPasswordInput.value);
+
+    formData.append('avatar', avatar);
 
     api.sendFile(formData)
-        .then(res => console.log(res));
+        .then(res => res.text())
+        .then(res=>console.log(res))
+
+        .then(() => api.getUser(user))
+        .then(res => {
+            console.log('Результат получения профиля')
+            console.log(res)
+        })
+    
 });
