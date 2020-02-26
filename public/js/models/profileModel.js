@@ -6,17 +6,17 @@ export default class JoinModel {
         this.eventBus = eventBus;
         this.router = router;
 
-        this.eventBus.subscribe('submit', this.join.bind(this));
+        this.eventBus.subscribe('getData', this.getUser.bind(this));
         this.eventBus.subscribe('inputSurname', this.validateSurname.bind(this));
-        this.eventBus.subscribe('inputNickname', this.validateNickname.bind(this));
         this.eventBus.subscribe('inputName', this.validateName.bind(this));
+        this.eventBus.subscribe('inputOldPassword', this.validatePassword.bind(this));
         this.eventBus.subscribe('inputPassword', this.validatePassword.bind(this));
         this.eventBus.subscribe('inputPasswordRepeat', this.validatePasswordRepeat.bind(this));
+        this.eventBus.subscribe('inputEmail', this.validateEmail.bind(this));
     }
 
     validatePasswordRepeat(data) {
-        console.log(data);
-        const error = (data === "");
+        const error = (data[0] !== data[1]);
         this.eventBus.call('inputPasswordRepeatError', error);
     }
 
@@ -30,14 +30,18 @@ export default class JoinModel {
         this.eventBus.call('inputNameError', error);
     }
 
-    validateNickname(data) {
-        const error = (data === "");
-        this.eventBus.call('inputNicknameError', error);
-    }
-
     validateSurname(data) {
         const error = (data === "");
         this.eventBus.call('inputSurnameError', error);
+    }
+
+    validateEmail(data) {
+        const error = (data === "");
+        this.eventBus.call('inputSurnameError', error);
+    }
+
+    getUser() {
+        this.eventBus.call('gotData', "sasasasasasa");
     }
 
     join(userInfo) {
@@ -51,5 +55,4 @@ export default class JoinModel {
             }
         });
     }
-
 }

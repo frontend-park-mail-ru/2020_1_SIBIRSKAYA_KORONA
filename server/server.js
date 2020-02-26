@@ -9,7 +9,7 @@ const publicFolder = path.resolve(__dirname, '..', 'public');
 app.use(morgan('dev'));
 app.use(express.static(publicFolder));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.resolve(publicFolder, 'index.html'));
 });
 

@@ -2,7 +2,7 @@ import ApiService from '../libs/apiService.js';
 
 export default class LoginModel {
     constructor(eventBus, router) {
-        this.api = new ApiService('http://localhost:8080/login');
+        this.api = new ApiService('http://localhost:8080/');
         this.eventBus = eventBus;
         this.router = router;
 
@@ -26,7 +26,6 @@ export default class LoginModel {
             if (response['status'] === 308) {
                 console.log(this);
                 this.router.go('/profile', {});
-                console.log('ОГОНЬ');
             } else {
                 console.log('НЕ огонь');
             }

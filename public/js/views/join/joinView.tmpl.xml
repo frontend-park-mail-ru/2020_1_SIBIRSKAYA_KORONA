@@ -39,7 +39,7 @@
                    id="inputPasswordRepeat"/>
             <div class="auth-form-bottom-panel">
                 <button class="primary" id="submit_button">Зарегистрироваться</button>
-                <a class="auth-form-link" href="">Уже есть аккаунт?</a>
+                <a class="auth-form-link" href="/login">Уже есть аккаунт?</a>
             </div>
         </form>
     </div>

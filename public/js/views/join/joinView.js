@@ -23,6 +23,7 @@ export default class JoinView {
      * @param {object} data - render data
      */
     render(data) {
+        data = data || {};
         this.root.innerHTML = window.fest['js/views/join/joinView.tmpl'](data);
         this.addEventListeners();
     }
