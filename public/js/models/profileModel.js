@@ -2,7 +2,8 @@ import ApiService from '../libs/apiService.js';
 
 export default class JoinModel {
     constructor(eventBus, router) {
-        this.api = new ApiService('http://localhost:8080/');
+        // this.api = new ApiService('http://localhost:8080/');
+        this.api = new ApiService('http://89.208.197.150:8080/');
         this.eventBus = eventBus;
         this.router = router;
 
@@ -40,16 +41,46 @@ export default class JoinModel {
         this.eventBus.call('inputSurnameError', error);
     }
 
+    putUser() {
+        const data = {};
+        this.api.postUser(data).then((response) => {
+            console.log(response.status);
+            switch (response.status) {
+                case 200: // - OK (успешный запрос)
+                    this.getUser();
+                    break;
+                case 401: // - Unauthorized (не авторизован)
+                    break;
+                case 403: // - Forbidden (нет прав)
+                    break;
+                case 404: // - NotFound (нет пользвателя с указанным ником)
+                    break;
+                default:
+                    console.log('Пора орать на бекендеров!!!');
+            }
+        });
+    }
+
     getUser() {
         console.log('profile get user');
         this.api.getUser({}).then((response) => {
-            if (response.status === 200) {
-                console.log('ОГОНЬ');
-                const data = response.body.user;
-                data.avatar = data.avatar ||'/img/default_avatar.png';
-                this.eventBus.call('gotData', data);
-            } else {
-                console.log('НЕ огонь');
+            console.log(response.status);
+            switch (response.status) {
+                case 200: // - OK (успешный запрос)
+                    console.log('ОГОНЬ');
+                    const data = response.body.user;
+                    console.log(data);
+                    data.avatar = data.avatar || '/img/default_avatar.png';
+                    this.eventBus.call('gotData', data);
+                    break;
+                case 303: // - SeeOther (не авторизован, случай без query string)
+                    break;
+                case 400: // - BadRequest (неверный запрос)
+                    break;
+                case 404: // - NotFound (нет пользвателя с указанным ником)
+                    break;
+                default:
+                    console.log('Пора идти орать на бекендеров!!');
             }
         });
     }

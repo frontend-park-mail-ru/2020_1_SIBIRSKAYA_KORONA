@@ -62,7 +62,6 @@ export default class ProfileView {
         const inputPasswordRepeat = document.getElementById('inputPasswordRepeat');
         inputPasswordRepeat.addEventListener('input', this.handleUserInputPasswordRepeat);
         inputPasswordRepeat.addEventListener('blur', this.handleUserInputPasswordRepeat);
-
         this.eventBus.subscribe('inputPasswordRepeatError', this.inputPasswordRepeatErrorHandler);
     }
 
