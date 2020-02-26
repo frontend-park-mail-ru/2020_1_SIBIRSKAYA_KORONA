@@ -40,8 +40,9 @@ export default class JoinModel {
         this.eventBus.call('inputSurnameError', error);
     }
 
-    getUser() {
-        this.eventBus.call('gotData', "sasasasasasa");
+    getUser(data) {
+        data.a = 23;
+
     }
 
     join(userInfo) {

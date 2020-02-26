@@ -28,7 +28,7 @@ export default class LoginController {
             'inputEmail',
             'inputEmailError',
         ]);
-        this.view = new ProfileView(this.eventBus);
         this.model = new ProfileModel(this.eventBus, router);
+        this.view = new ProfileView(this.eventBus);
     }
 }

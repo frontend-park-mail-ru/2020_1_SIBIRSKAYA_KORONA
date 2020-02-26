@@ -19,8 +19,7 @@ export default class ProfileView {
         this.handleUserInput = this.handleUserInput.bind(this);
         this.handleUserInputPasswordRepeat = this.handleUserInputPasswordRepeat.bind(this);
 
-        eventBus.subscribe('gotData', this.render);
-        this.eventBus.call('getData');
+        // this.eventBus.subscribe('gotData', this.render);
     }
 
     /**
@@ -29,8 +28,11 @@ export default class ProfileView {
      */
     render(data) {
         // data = data || this.inputtedData;
-        console.log(data);
-        this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
+        // TODO асинхронынй запрос данных
+        let gotData = {};
+        this.eventBus.call('getData', gotData);
+        console.log(gotData);
+        this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](gotData);
         this.addEventListeners();
     }
 
