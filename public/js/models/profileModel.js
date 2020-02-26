@@ -41,18 +41,15 @@ export default class JoinModel {
     }
 
     getUser() {
-        this.eventBus.call('gotData', "sasasasasasa");
-    }
-
-    join(userInfo) {
-        return this.api.join(userInfo).then((response) => {
-            if (response['status'] === 308) {
-                console.log(this);
-                this.router.go('/profile', {});
+        console.log('profile get user');
+        this.api.getUser({}).then((response) => {
+            console.log(response.status);
+/*            if (response[status] === 200) {
                 console.log('ОГОНЬ');
+                this.eventBus.call('gotData', {"s": "sasasasasasa"});
             } else {
                 console.log('НЕ огонь');
-            }
+            }*/
         });
     }
 }

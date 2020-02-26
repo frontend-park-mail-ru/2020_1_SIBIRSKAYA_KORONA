@@ -23,8 +23,8 @@ export default class LoginModel {
 
     login(userInfo) {
         return this.api.login(userInfo).then((response) => {
-            if (response['status'] === 308) {
-                console.log(this);
+            console.log(response.status);
+            if (response.status === 200) {
                 this.router.go('/profile', {});
             } else {
                 console.log('НЕ огонь');

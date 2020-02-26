@@ -14,11 +14,9 @@ const joinController = new JoinController(router);
 const loginController = new LoginController(router);
 const profileController = new ProfileController(router);
 
-
 router.setRoute('/', loginController.view.render);
 router.setRoute('/login', loginController.view.render);
 router.setRoute('/profile', profileController.view.render);
 router.setRoute('/join', joinController.view.render);
-
 
 router.go(window.location.pathname,{});

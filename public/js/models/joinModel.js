@@ -42,8 +42,8 @@ export default class JoinModel {
 
     join(userInfo) {
         return this.api.join(userInfo).then((response) => {
-            if (response['status'] === 308) {
-                console.log(this);
+            console.log(response.status);
+            if (response.status === 200) {
                 this.router.go('/profile', {});
                 console.log('ОГОНЬ');
             } else {

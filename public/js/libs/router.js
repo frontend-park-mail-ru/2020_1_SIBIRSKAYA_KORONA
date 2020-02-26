@@ -25,7 +25,7 @@ export default class Router {
      * @param params
      */
     go(route, ...params) {
-        window.history.replaceState({},'',route);
+        window.history.replaceState({}, '', route);
         if (this.routeMap.has(route)) {
             this.routeMap.get(route)(...params);
         } else {
