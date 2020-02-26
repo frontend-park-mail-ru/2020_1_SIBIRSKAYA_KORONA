@@ -1,6 +1,6 @@
 'use strict';
 
-import {fetchGetJson, fetchPostJson} from './httpUtils.js';
+import {fetchCors, fetchGetJson, fetchPostJson} from './httpUtils.js';
 
 /** Used for communicating with backend */
 export default class ApiService {
@@ -14,7 +14,7 @@ export default class ApiService {
     /**
      * @description Register user
      * @param {Object} userInfo - user info object (name, surname, nickname, password)
-     * @return {Promise<Response>}
+     * @return {Promise<any>}
      */
     join(userInfo) {
         const apiUrl = new URL('join', this.address);
@@ -24,7 +24,7 @@ export default class ApiService {
     /**
      * @description Login user; create user session
      * @param {Object} userInfo - user info object (nickname, password)
-     * @return {Promise<Response>}
+     * @return {Promise<any>}
      */
     login(userInfo) {
         const apiUrl = new URL('login', this.address);
@@ -37,40 +37,27 @@ export default class ApiService {
      */
     logout() {
         const apiUrl = new URL('logout', this.address);
-        return fetchPostJson(apiUrl);
+        return fetchCors(apiUrl, {method: 'DELETE'});
     }
 
-    // TODO(Alexandr): check if works
     /**
      * @description Update profile info
-     * @param {Object} userInfo -
-     * @return {Promise<Response>}
+     * @param {FormData} userForm - form with new user data
+     * @return {Promise<Response | any>}
      */
-    postUser(userInfo) {
+    putUser(userForm) {
         const apiUrl = new URL('profile', this.address);
-        return fetchPostJson(apiUrl, userInfo);
+        return fetchCors(apiUrl, {method: 'PUT', body: userForm});
     }
 
     /**
      * @description Get profile info
      * @param {Object} userInfo - user info object (nickname)
-     * @return {Promise<Response>}
+     * @return {Promise<Response | any>}
      */
-    getUser(userInfo) {
+    getUser(userInfo = {}) {
         const apiUrl = new URL('profile', this.address);
         return fetchGetJson(apiUrl, userInfo);
-    }
-
-    sendFile(file) {
-        const apiUrl = new URL('multipart', this.address);
-
-        return fetch(apiUrl.href, {
-            method: 'POST',
-            mode:'cors',
-            credentials: 'include',
-
-            body: file
-        })
     }
 
 }
