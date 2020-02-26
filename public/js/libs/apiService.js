@@ -1,6 +1,6 @@
 'use strict';
 
-import {fetchGetJson, fetchPostJson} from './httpUtils.js';
+import {fetchPutJson, fetchDelete, fetchGetJson, fetchPostJson} from './httpUtils.js';
 
 /** Used for communicating with backend */
 export default class ApiService {
@@ -37,7 +37,7 @@ export default class ApiService {
      */
     logout() {
         const apiUrl = new URL('logout', this.address);
-        return fetchPostJson(apiUrl);
+        return fetchDelete(apiUrl);
     }
 
     // TODO(Alexandr): check if works
@@ -46,9 +46,9 @@ export default class ApiService {
      * @param {Object} userInfo -
      * @return {Promise<Response>}
      */
-    postUser(userInfo) {
+    putUser(userInfo) {
         const apiUrl = new URL('profile', this.address);
-        return fetchPostJson(apiUrl, userInfo);
+        return fetchPutJson(apiUrl, userInfo);
     }
 
     /**

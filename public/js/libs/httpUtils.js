@@ -1,5 +1,26 @@
 'use strict';
 
+export const fetchDelete = (url) => {
+    const delUrl = new URL(url);
+
+    return fetch(delUrl.href, {
+        method: 'DELETE',
+        mode: 'cors',
+        credentials: 'include',
+    })
+};
+
+export const fetchPutJson = (url, body) => {
+    const putUrl = new URL(url);
+
+    return fetch(putUrl.href, {
+        method: 'PUT',
+        mode: 'cors',
+        credentials: 'include',
+        body: JSON.stringify(body),
+    }).then((res) => res.json())
+};
+
 export const fetchGetJson = (url, paramsObj) => {
     const getUrl = new URL(url);
 
