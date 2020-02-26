@@ -60,4 +60,17 @@ export default class ApiService {
         const apiUrl = new URL('profile', this.address);
         return fetchGetJson(apiUrl, userInfo);
     }
+
+    sendFile(file) {
+        const apiUrl = new URL('multipart', this.address);
+
+        return fetch(apiUrl.href, {
+            method: 'POST',
+            mode:'cors',
+            credentials: 'include',
+
+            body: file
+        })
+    }
+
 }

@@ -1,5 +1,22 @@
 'use strict';
 
+
+export const fetchGet = (url, paramsObj) => {
+    const getUrl = new URL(url);
+
+    for (const [key, value] of Object.entries(paramsObj)) {
+        getUrl.searchParams.append(key, value);
+    }
+
+    return fetch(getUrl.href, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+    }).catch((err) => {
+        console.log(err)
+    })
+};
+
 export const fetchGetJson = (url, paramsObj) => {
     const getUrl = new URL(url);
 
