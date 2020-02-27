@@ -23,12 +23,12 @@ const newPasswordInput = document.getElementById('newPassword');
 const oldPasswordInput = document.getElementById('oldPassword');
 
 const user = {
-    name: "Gopher",
-    nickname: "JSLover",
-    surname: "Golang",
-    password: "HateGoLoveJS",
-    email: "duck@mail.ru",
-}
+    name: "kek",
+    nickname: "kek",
+    surname: "kek",
+    password: "kek",
+    email: "kek@kek.ru",
+};
 
 api.join(user)
     .then(res => {
@@ -63,14 +63,16 @@ submitButton.addEventListener('click', (e) => {
     formData.append('oldPassword', oldPasswordInput.value);
 
     formData.append('avatar', avatar);
+    formData.append('avatarName', avatar.name);
 
-    api.sendFile(formData)
+
+    api.putUser(formData)
         .then(res => res.text())
         .then(res=>console.log(res))
 
         .then(() => api.getUser(user))
         .then(res => {
-            console.log('Результат получения профиля')
+            console.log('Результат получения профиля');
             console.log(res)
         })
     
