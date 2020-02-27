@@ -2,62 +2,55 @@
 
 import {fetchCors, fetchGetJson, fetchPostJson} from './httpUtils.js';
 
-/** Used for communicating with backend */
-export default class ApiService {
-    /**
-     *
-     */
-    constructor() {
-        this.address = 'http://localhost:8080/';
-        // this.address = 'http://89.208.197.150:8080/';
-    }
 
-    /**
-     * @description Register user
-     * @param {Object} userInfo - user info object (name, surname, nickname, password)
-     * @return {Promise<any>}
-     */
-    join(userInfo) {
-        const apiUrl = new URL('join', this.address);
-        return fetchPostJson(apiUrl, userInfo);
-    }
+const BACKEND_ADDRESS = 'http://localhost:8080/';
 
-    /**
-     * @description Login user; create user session
-     * @param {Object} userInfo - user info object (nickname, password)
-     * @return {Promise<any>}
-     */
-    login(userInfo) {
-        const apiUrl = new URL('login', this.address);
-        return fetchPostJson(apiUrl, userInfo);
-    }
+/**
+ * @description Register user
+ * @param {Object} userInfo - user info object
+ * @return {Promise<any>}
+ */
+export const apiJoin = (userInfo) => {
+    const apiUrl = new URL('join', BACKEND_ADDRESS);
+    return fetchPostJson(apiUrl, userInfo);
+};
 
-    /**
-     * @description Logout user
-     * @return {Promise<* | void>}
-     */
-    logout() {
-        const apiUrl = new URL('logout', this.address);
-        return fetchCors(apiUrl, {method: 'DELETE'});
-    }
+/**
+ * @description Login user; create user session
+ * @param {Object} userInfo - user info object
+ * @return {Promise<any>}
+ */
+export const apiLogin = (userInfo) => {
+    const apiUrl = new URL('login', BACKEND_ADDRESS);
+    return fetchPostJson(apiUrl, userInfo);
+};
 
-    /**
-     * @description Update profile info
-     * @param {FormData} userForm - form with new user data
-     * @return {Promise<Response | any>}
-     */
-    putUser(userForm) {
-        const apiUrl = new URL('profile', this.address);
-        return fetchCors(apiUrl, {method: 'PUT', body: userForm});
-    }
+/**
+ * @description Logout user
+ * @return {Promise<* | void>}
+ */
+export const apiLogout = () => {
+    const apiUrl = new URL('logout', BACKEND_ADDRESS);
+    return fetchCors(apiUrl, {method: 'DELETE'});
+};
 
-    /**
-     * @description Get profile info
-     * @param {Object} userInfo - user info object (nickname)
-     * @return {Promise<Response | any>}
-     */
-    getUser(userInfo = {}) {
-        const apiUrl = new URL('profile', this.address);
-        return fetchGetJson(apiUrl, userInfo);
-    }
-}
+/**
+ * @description Update profile info
+ * @param {FormData} userForm - form with new user data
+ * @return {Promise<Response | any>}
+ */
+export const apiPutUser = (userForm) => {
+    const apiUrl = new URL('profile', BACKEND_ADDRESS);
+    return fetchCors(apiUrl, {method: 'PUT', body: userForm});
+};
+
+/**
+ * @description Get profile info
+ * @param {Object} userInfo - user info object (nickname)
+ * @return {Promise<Response | any>}
+ */
+export const apiGetUser = (userInfo = {}) => {
+    const apiUrl = new URL('profile', BACKEND_ADDRESS);
+    return fetchGetJson(apiUrl, userInfo);
+};
+

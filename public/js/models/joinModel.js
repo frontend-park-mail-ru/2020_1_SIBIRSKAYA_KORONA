@@ -1,9 +1,7 @@
-import ApiService from '../libs/apiService.js';
+import {apiJoin} from '../libs/apiService.js';
 
 export default class JoinModel {
     constructor(eventBus, router) {
-        this.api = new ApiService();
-
         this.eventBus = eventBus;
         this.router = router;
 
@@ -42,7 +40,7 @@ export default class JoinModel {
     }
 
     join(userInfo) {
-        return this.api.join(userInfo).then((response) => {
+        return apiJoin(userInfo).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
                 this.router.go('/profile', {});

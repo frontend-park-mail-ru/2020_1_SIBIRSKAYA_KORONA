@@ -1,8 +1,7 @@
-import ApiService from '../libs/apiService.js';
+import {apiLogin} from '../libs/apiService.js';
 
 export default class LoginModel {
     constructor(eventBus, router) {
-        this.api = new ApiService();
         this.eventBus = eventBus;
         this.router = router;
 
@@ -22,7 +21,7 @@ export default class LoginModel {
     }
 
     login(userInfo) {
-        return this.api.login(userInfo).then((response) => {
+        return apiLogin(userInfo).then((response) => {
             console.log(response.status);
             if (response.status === 200) {
                 this.router.go('/profile', {});
