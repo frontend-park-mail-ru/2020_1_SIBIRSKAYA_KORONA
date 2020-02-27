@@ -18,16 +18,23 @@ export default class ProfileView {
         this.handleUserInput = this.handleUserInput.bind(this);
         this.handleUserInputPasswordRepeat = this.handleUserInputPasswordRepeat.bind(this);
 
-        eventBus.subscribe('gotData', this.render);
-        this.eventBus.call('getData');
+        eventBus.subscribe('gotData', this.renderUserData.bind(this));
     }
+
+
 
     /**
      * Render view method
      * @param {object} data user data to render
      */
     render(data) {
+        this.eventBus.call('getData');
         console.log("render profile");
+        this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
+        this.addEventListeners();
+    }
+
+    renderUserData(data) {
         this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
         this.addEventListeners();
     }
