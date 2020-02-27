@@ -109,28 +109,10 @@ export default class ProfileView {
     }
 
     handleSubmit(e) {
-        console.log(this.inputtedData);
         e.preventDefault();
-/*        let data = {};
-        switch (e.target.id) {
-            case 'submitAbout':
-                console.log('submitAbout');
-                data.newName = this.inputtedData.inputName;
-                data.newSurname = this.inputtedData.inputSurname;
-                break;
-            case 'submitEmail':
-                console.log('submitEmail');
-                data.newEmail = this.inputtedData.inputEmail;
-                break;
-            case 'submitPasswords':
-                data.oldPassword  = this.inputtedData.inputOldPassword;
-                data.newPassword  = this.inputtedData.inputPassword;
-                console.log('submitPasswords');
-                break;
-            case 'submitImg':
-                console.log('submitImg');
-                break;
-        }*/
+        console.log(this.inputtedData);
+        this.inputtedData.inputNickname = document.getElementById('inputNickname').value;
+
         const eventBusSubmitSignal = e.target.id;
         this.eventBus.call(eventBusSubmitSignal, this.inputtedData);
     }

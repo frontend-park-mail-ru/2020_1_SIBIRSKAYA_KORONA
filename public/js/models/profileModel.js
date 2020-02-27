@@ -51,11 +51,12 @@ export default class JoinModel {
         console.log(data);
         const formData = new FormData();
         // TODO(Alex) Саня помоги
-        formData.append('newName', data.inputName);
-        formData.append('newSurname', data.inputSurname);
-        formData.append('newEmail', data.inputEmail);
-        formData.append('oldPassword', data.inputOldPassword);
-        formData.append('newPassword', data.inputPassword);
+        formData.append('newName', data.inputName || '');
+        formData.append('newSurname', data.inputSurname || '');
+        formData.append('newNickname', data.inputNickname);
+        formData.append('newEmail', data.inputEmail || '');
+        formData.append('oldPassword', data.inputOldPassword || '');
+        formData.append('newPassword', data.inputPassword || '');
 
 //        formData.append('avatar', avatar);
 
@@ -78,14 +79,14 @@ export default class JoinModel {
     }
 
     getUser() {
-        console.log('profile get user');
         this.api.getUser({}).then((response) => {
-            console.log(response.status);
+            console.log('profile get user' + response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                    console.log('ОГОНЬ');
+                    console.log(response);
+
                     const data = response.body.user;
-                    data.avatar = (data.avatar === "defoultIMG") ? '/img/default_avatar.png' : data.avatar;
+                    data.avatar = (data.avatar === 'avatars/kek.jpg') ? '/img/default_avatar.png' : data.avatar;
                     console.log(data);
                     this.eventBus.call('gotData', data);
                     break;
