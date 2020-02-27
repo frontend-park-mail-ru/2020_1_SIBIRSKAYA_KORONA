@@ -1,5 +1,4 @@
 import Router from './libs/router.js';
-
 import JoinController from './controllers/joinControl.js';
 import LoginController from './controllers/loginControl.js';
 import ProfileController from './controllers/profileControl.js';

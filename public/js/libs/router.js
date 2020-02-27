@@ -13,10 +13,6 @@ export default class Router {
         this.routeMap = new Map();
         this.handleMouseClick = this.handleMouseClick.bind(this);
         this.root.addEventListener('click', this.handleMouseClick);
-        /* window.addEventListener('popstate', () => {
-            const pathname = window.location.pathname;
-            this.go(pathname);
-        });*/
     }
 
     /**
@@ -40,11 +36,9 @@ export default class Router {
      * @param {object} e - mouse event
      */
     handleMouseClick(e) {
-        if (e.target.tagName.toLowerCase() === 'a') {
+        if (e.target.tagName === 'a') {
             e.preventDefault();
             this.go(e.target.pathname);
-        } else if (e.target.tagName === 'BUTTON') {
-            e.preventDefault();
         }
     }
 

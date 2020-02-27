@@ -8,8 +8,8 @@ export default class ApiService {
      *
      */
     constructor() {
-        // this.address = 'http://localhost:8080/';
-        this.address = 'http://89.208.197.150:8080/';
+        this.address = 'http://localhost:8080/';
+        // this.address = 'http://89.208.197.150:8080/';
     }
 
     /**

@@ -2,7 +2,7 @@
 export default class EventBus {
     /**
      * @description Creates event bus with passed signals
-     * @param {...string} signals - signals used by event bus
+     * @param {string[]} signals - signals used by event bus
      */
     constructor(signals) {
         this.signalHandlers = new Map;
