@@ -2,7 +2,6 @@
 
 import {fetchCors, fetchGetJson, fetchPostJson} from './httpUtils.js';
 
-
 const BACKEND_ADDRESS = 'http://localhost:8080/';
 
 /**
@@ -46,7 +45,7 @@ export const apiPutUser = (userForm) => {
 
 /**
  * @description Get profile info
- * @param {Object} userInfo - user info object (nickname)
+ * @param {Object} userInfo - user info object
  * @return {Promise<Response | any>}
  */
 export const apiGetUser = (userInfo = {}) => {
