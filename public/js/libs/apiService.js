@@ -5,10 +5,11 @@ import {fetchCors, fetchGetJson, fetchPostJson} from './httpUtils.js';
 /** Used for communicating with backend */
 export default class ApiService {
     /**
-     * @param {string|URL} address - backend api address
+     *
      */
-    constructor(address) {
-        this.address = address;
+    constructor() {
+        // this.address = 'http://localhost:8080/';
+        this.address = 'http://89.208.197.150:8080/';  // tachka
     }
 
     /**

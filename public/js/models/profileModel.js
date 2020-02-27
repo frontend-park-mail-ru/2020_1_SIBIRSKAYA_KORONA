@@ -2,8 +2,7 @@ import ApiService from '../libs/apiService.js';
 
 export default class JoinModel {
     constructor(eventBus, router) {
-        // this.api = new ApiService('http://localhost:8080/');
-        this.api = new ApiService('http://89.208.197.150:8080/');
+        this.api = new ApiService();
         this.eventBus = eventBus;
         this.router = router;
 
@@ -50,7 +49,7 @@ export default class JoinModel {
     putUser(data) {
         console.log(data);
         const formData = new FormData();
-        // TODO(Alex) Саня помоги
+
         formData.append('newName', data.inputName || '');
         formData.append('newSurname', data.inputSurname || '');
         formData.append('newNickname', data.inputNickname);
@@ -58,7 +57,13 @@ export default class JoinModel {
         formData.append('oldPassword', data.inputOldPassword || '');
         formData.append('newPassword', data.inputPassword || '');
 
-//        formData.append('avatar', avatar);
+        // TODO(Roma): i dont know which signal will give me data.avatar,
+        // so now i take it from document every time
+        const avatar = document.getElementById('avatar-input').files[0];
+        if (avatar !== void 0) {
+            formData.append('avatar', avatar);
+            formData.append('avatarExtension', avatar.name.split('.').pop());
+        }
 
         this.api.putUser(formData).then((response) => {
             console.log(response.status);

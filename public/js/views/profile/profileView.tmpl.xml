@@ -68,6 +68,7 @@
                                 </fest:attribute>
                             </fest:attributes>
                         </img>
+                        <input id="avatar-input" type="file" name="name"/>
                         <button id="submitImg" class="secondary">Изменить</button>
                     </div>
                 </div>

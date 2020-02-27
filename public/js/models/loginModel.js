@@ -2,8 +2,7 @@ import ApiService from '../libs/apiService.js';
 
 export default class LoginModel {
     constructor(eventBus, router) {
-        // this.api = new ApiService('http://localhost:8080/');
-        this.api = new ApiService('http://89.208.197.150:8080/');
+        this.api = new ApiService();
         this.eventBus = eventBus;
         this.router = router;
 
