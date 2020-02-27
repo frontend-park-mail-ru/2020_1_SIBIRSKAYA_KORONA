@@ -26,8 +26,6 @@ export default class Router {
             this.routeMap.get(route)(...params);
         } else {
             this.root.innerText = 'PAGE NOT FOUND';
-
-            // this.routeMap.get('/login')();
         }
     }
 
@@ -36,7 +34,7 @@ export default class Router {
      * @param {object} e - mouse event
      */
     handleMouseClick(e) {
-        if (e.target.tagName === 'a') {
+        if (e.target.tagName === 'A') {
             e.preventDefault();
             this.go(e.target.pathname);
         }

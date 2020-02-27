@@ -8,10 +8,7 @@ export default class LoginController {
     constructor(router) {
         this.eventBus = new EventBus([
             'submit',
-            'inputLogin',
-            'inputLoginError',
-            'inputPassword',
-            'inputPasswordError',
+            'inputError',
         ]);
         this.view = new LoginView(this.eventBus);
         this.model = new LoginModel(this.eventBus, router);

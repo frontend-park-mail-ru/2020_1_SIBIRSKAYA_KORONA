@@ -16,15 +16,14 @@ export default class JoinView {
         this.render = this.render.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
+        this.displayError = this.displayError.bind(this);
     }
 
     /**
      * Render view method
-     * @param {object} data - render data
      */
-    render(data) {
-        data = data || {};
-        this.root.innerHTML = window.fest['js/views/join/joinView.tmpl'](data);
+    render() {
+        this.root.innerHTML = window.fest['js/views/join/joinView.tmpl'](this.inputtedData);
         this.addEventListeners();
     }
 
@@ -40,49 +39,66 @@ export default class JoinView {
 
                 const errorInputSignal = element.id + 'Error';
                 const errorInputHandler = this[errorInputSignal + 'Handler'];
-                this.eventBus.subscribe(errorInputSignal, errorInputHandler);
+                // this.eventBus.subscribe(errorInputSignal, errorInputHandler);
+
+                this.eventBus.subscribe('userInputError', this.displayError);
             }
         }
     }
 
+    displayError(display, field, text) {
+        const errorLabel = document.getElementById(field + 'Error');
+        display ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        if (text) {
+            errorLabel.innerText = text;
+        }
+    };
+
+
+    /*
     inputNameErrorHandler(error) {
-        const errorLabel = document.getElementById('inputNameError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        // const errorLabel = document.getElementById('inputNameError');
+        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
     inputSurnameErrorHandler(error) {
-        const errorLabel = document.getElementById('inputSurnameError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        // const errorLabel = document.getElementById('inputSurnameError');
+        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
     inputNicknameErrorHandler(error) {
-        const errorLabel = document.getElementById('inputNicknameError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        // const errorLabel = document.getElementById('inputNicknameError');
+        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
     inputPasswordErrorHandler(error) {
-        const errorLabel = document.getElementById('inputPasswordError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        // const errorLabel = document.getElementById('inputPasswordError');
+        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
     inputPasswordRepeatErrorHandler(error) {
-        const errorLabel = document.getElementById('inputPasswordRepeatError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        // const errorLabel = document.getElementById('inputPasswordRepeatError');
+        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
+*/
 
     handleUserInput(e) {
         const inputField = e.target;
         this.inputtedData[inputField.id] = inputField.value;
-        console.log(inputField.id);
-
-        const eventBusValidateSignal = inputField.id;
-        const dataToValidate = this.inputtedData[inputField.id];
-        this.eventBus.call(eventBusValidateSignal, dataToValidate);
+        if (inputField.id !== 'inputPasswordRepeat') {
+            const type = inputField.id;
+            this.eventBus.call('userInput', type, inputField.value);
+        }
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        this.eventBus.call('submit', this.getUserData());
+        if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
+            this.displayError(false, 'inputPasswordRepeat');
+            this.eventBus.call('submit', this.getUserData());
+        } else {
+            this.displayError(true, 'inputPasswordRepeat', 'Пароли не совпадают');
+        }
     }
 
     /**

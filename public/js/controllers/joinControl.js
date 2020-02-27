@@ -18,6 +18,10 @@ export default class JoinController {
             'inputPasswordError',
             'inputPasswordRepeat',
             'inputPasswordRepeatError',
+
+            'userInput',
+            'userInputError',
+
         ]);
         this.view = new JoinView(this.eventBus);
         this.model = new JoinModel(this.eventBus, router);

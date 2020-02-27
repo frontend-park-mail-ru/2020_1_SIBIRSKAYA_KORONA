@@ -64,17 +64,17 @@ export default class JoinModel {
         this.api.putUser(formData).then((response) => {
             // console.log(response.status);
             switch (response.status) {
-            case 200: // - OK (успешный запрос)
-                this.getUser();
-                break;
-            case 401: // - Unauthorized (не авторизован)
-                break;
-            case 403: // - Forbidden (нет прав)
-                break;
-            case 404: // - NotFound (нет пользвателя с указанным ником)
-                break;
-            default:
-                console.log('Пора орать на бекендеров!!!');
+                case 200: // - OK (успешный запрос)
+                    this.getUser();
+                    break;
+                case 401: // - Unauthorized (не авторизован)
+                    break;
+                case 403: // - Forbidden (нет прав)
+                    break;
+                case 404: // - NotFound (нет пользвателя с указанным ником)
+                    break;
+                default:
+                    console.log('Пора орать на бекендеров!!!');
             }
         });
     }
@@ -83,21 +83,21 @@ export default class JoinModel {
         this.api.getUser({}).then((response) => {
             console.log('profile get user' + response.status);
             switch (response.status) {
-            case 200: // - OK (успешный запрос)
-                // console.log(response);
-                const data = response.body.user;
-                data.avatar = (data.avatar === 'avatars/kek.jpg') ? '/img/default_avatar.png' : data.avatar;
-                this.eventBus.call('gotData', data);
-                break;
-            case 303: // - SeeOther (не авторизован, случай без query string)
-                this.router.go('/login');
-                break;
-            case 400: // - BadRequest (неверный запрос)
-                break;
-            case 404: // - NotFound (нет пользвателя с указанным ником)
-                break;
-            default:
-                console.log('Пора идти орать на бекендеров!!');
+                case 200: // - OK (успешный запрос)
+                    // console.log(response);
+                    const data = response.body.user;
+                    data.avatar = (data.avatar === 'avatars/kek.jpg') ? '/img/default_avatar.png' : data.avatar;
+                    this.eventBus.call('gotData', data);
+                    break;
+                case 303: // - SeeOther (не авторизован, случай без query string)
+                    this.router.go('/login');
+                    break;
+                case 400: // - BadRequest (неверный запрос)
+                    break;
+                case 404: // - NotFound (нет пользвателя с указанным ником)
+                    break;
+                default:
+                    console.log('Пора идти орать на бекендеров!!');
             }
         });
     }

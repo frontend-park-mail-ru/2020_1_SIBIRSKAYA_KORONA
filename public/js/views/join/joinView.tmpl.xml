@@ -4,37 +4,38 @@
             <div class="title auth-form-title">
                 Регистрация
             </div>
-            <div id="inputNameError" class="input-error hidden">ERROR</div>
+            <div id="inputNameError" class="input-error hidden">Недопустимое имя</div>
             <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Имя"
                    id="inputName">
                 <fest:attributes>
                     <fest:attribute name="value">
-                        <fest:value>data.name</fest:value>
+                        <fest:value>data.inputName</fest:value>
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div id="inputSurnameError" class="input-error hidden">ERROR</div>
+            <div id="inputSurnameError" class="input-error hidden">Недопустимая фамилия</div>
             <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Фамилия"
                    id="inputSurname">
                 <fest:attributes>
                     <fest:attribute name="value">
-                        <fest:value>data.surname</fest:value>
+                        <fest:value>data.inputSurname</fest:value>
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div id="inputNicknameError" class="input-error hidden">ERROR</div>
+            <div id="inputNicknameError" class="input-error hidden">Недопустимый ник</div>
+            <div id="nicknameConflictError" class="input-error hidden">Ник уже занят</div>
             <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Ник"
                    id="inputNickname">
                 <fest:attributes>
                     <fest:attribute name="value">
-                        <fest:value>data.nickname</fest:value>
+                        <fest:value>data.inputNickname</fest:value>
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div id="inputPasswordError" class="input-error hidden">ERROR</div>
+            <div id="inputPasswordError" class="input-error hidden">Недопустимый пароль</div>
+            <div id="inputPasswordRepeatError" class="input-error hidden">Пароли не совпадают</div>
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль"
                    id="inputPassword"/>
-            <div id="inputPasswordRepeatError" class="input-error hidden">ERROR</div>
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
                    id="inputPasswordRepeat"/>
             <div class="auth-form-bottom-panel">

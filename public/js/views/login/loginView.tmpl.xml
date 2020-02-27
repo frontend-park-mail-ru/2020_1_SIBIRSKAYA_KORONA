@@ -4,16 +4,9 @@
             <div class="title auth-form-title">
                 Вход
             </div>
-            <div id="inputLoginError" class="input-error hidden">ERROR</div>
+            <div id="inputError" class="input-error hidden">Неверный логин или пароль</div>
             <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Логин"
-                   id="inputLogin">
-                <fest:attributes>
-                    <fest:attribute name="value">
-                        <fest:value>data.login</fest:value>
-                    </fest:attribute>
-                </fest:attributes>
-            </input>
-            <div id="inputPasswordError" class="input-error hidden">ERROR</div>
+                   id="inputLogin"/>
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль"
                    id="inputPassword"/>
             <div class="auth-form-bottom-panel">

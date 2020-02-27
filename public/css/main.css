@@ -79,6 +79,12 @@ textarea {
 
 }
 
+.input-error {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 .title {
     font-weight: 800;
 }
