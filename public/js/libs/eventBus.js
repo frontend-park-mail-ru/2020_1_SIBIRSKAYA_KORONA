@@ -22,7 +22,7 @@ export default class EventBus {
             if (!this.signalHandlers.get(signal)) {
                 this.signalHandlers.set(signal, handler);
             } else {
-                console.log(`Signal ${signal} already bound`);
+                // console.log(`Signal ${signal} already bound`);
             }
         } else {
             console.log(`No such signal '${signal}' in event bus`);

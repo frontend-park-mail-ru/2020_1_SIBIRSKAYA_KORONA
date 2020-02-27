@@ -47,10 +47,19 @@ export default class JoinModel {
         this.eventBus.call('inputSurnameError', error);
     }
 
-    putUser() {
-        console.log(this.in);
-        const data = {};
-        this.api.postUser(data).then((response) => {
+    putUser(data) {
+        console.log(data);
+        const formData = new FormData();
+        // TODO(Alex) Саня помоги
+        formData.append('newName', data.inputName);
+        formData.append('newSurname', data.inputSurname);
+        formData.append('newEmail', data.inputEmail);
+        formData.append('oldPassword', data.inputOldPassword);
+        formData.append('newPassword', data.inputPassword);
+
+//        formData.append('avatar', avatar);
+
+        this.api.putUser(formData).then((response) => {
             console.log(response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
@@ -76,8 +85,8 @@ export default class JoinModel {
                 case 200: // - OK (успешный запрос)
                     console.log('ОГОНЬ');
                     const data = response.body.user;
-                    console.log(data);
                     data.avatar = (data.avatar === "defoultIMG") ? '/img/default_avatar.png' : data.avatar;
+                    console.log(data);
                     this.eventBus.call('gotData', data);
                     break;
                 case 303: // - SeeOther (не авторизован, случай без query string)

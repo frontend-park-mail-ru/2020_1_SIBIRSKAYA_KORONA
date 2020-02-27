@@ -111,7 +111,7 @@ export default class ProfileView {
     handleSubmit(e) {
         console.log(this.inputtedData);
         e.preventDefault();
-        let data = {};
+/*        let data = {};
         switch (e.target.id) {
             case 'submitAbout':
                 console.log('submitAbout');
@@ -130,9 +130,9 @@ export default class ProfileView {
             case 'submitImg':
                 console.log('submitImg');
                 break;
-        }
+        }*/
         const eventBusSubmitSignal = e.target.id;
-        this.eventBus.call(eventBusSubmitSignal, data);
+        this.eventBus.call(eventBusSubmitSignal, this.inputtedData);
     }
 
 
