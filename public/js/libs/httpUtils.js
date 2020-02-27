@@ -7,13 +7,13 @@
  * @param {any} body - request body
  * @param {Object} headersObj
  * @param {Object} queryObj - "GET" parameters for query string
- * @returns {Promise<Response>}
+ * @return {Promise<Response>}
  */
 export const fetchCors = (url, {
     method = 'POST',
     body,
     headersObj = {},
-    queryObj = {}
+    queryObj = {},
 }) => {
     const urlObj = new URL(url);
 
@@ -27,20 +27,20 @@ export const fetchCors = (url, {
         body,
         mode: 'cors',
         credentials: 'include',
-    })
+    });
 };
 
-/*************** SHORTCUTS ****************/
+/** ************* SHORTCUTS ****************/
 
 /**
  * @description Shortcut for parsing json response
  * @param {string|URL} url - fetch url
  * @param {Object} queryObj - "GET" parameters for query string
- * @returns {Promise<any>}
+ * @return {Promise<any>}
  */
 export const fetchGetJson = (url, queryObj) => {
     return fetchCors(url, {method: 'GET', queryObj})
-        .then((res) => res.json())
+        .then((res) => res.json());
 };
 
 
@@ -48,7 +48,7 @@ export const fetchGetJson = (url, queryObj) => {
  * @description Shortcut for sending json request and parsing json response
  * @param {string|URL} url - fetch url
  * @param {Object} body - object
- * @returns {Promise<any>}
+ * @return {Promise<any>}
  */
 export const fetchPostJson = (url, body) => {
     return fetchCors(url, {method: 'POST', body: JSON.stringify(body)})

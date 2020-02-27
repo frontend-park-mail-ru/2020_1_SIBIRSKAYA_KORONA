@@ -9,7 +9,7 @@ export default class ApiService {
      */
     constructor() {
         // this.address = 'http://localhost:8080/';
-        this.address = 'http://89.208.197.150:8080/';  // tachka
+        this.address = 'http://89.208.197.150:8080/';
     }
 
     /**
@@ -34,7 +34,7 @@ export default class ApiService {
 
     /**
      * @description Logout user
-     * @returns {Promise<* | void>}
+     * @return {Promise<* | void>}
      */
     logout() {
         const apiUrl = new URL('logout', this.address);
@@ -60,5 +60,4 @@ export default class ApiService {
         const apiUrl = new URL('profile', this.address);
         return fetchGetJson(apiUrl, userInfo);
     }
-
 }

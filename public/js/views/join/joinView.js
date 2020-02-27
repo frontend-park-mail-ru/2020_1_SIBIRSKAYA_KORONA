@@ -28,12 +28,12 @@ export default class JoinView {
         this.addEventListeners();
     }
 
-    addEventListeners () {
+    addEventListeners() {
         const submitButton = document.getElementById('submit_button');
         submitButton.addEventListener('click', this.handleSubmit);
 
         const formElements = document.getElementById('joinForm').elements;
-        for (let element of formElements) {
+        for (const element of formElements) {
             if (element.nodeName === 'INPUT') {
                 element.addEventListener('input', this.handleUserInput);
                 element.addEventListener('blur', this.handleUserInput);

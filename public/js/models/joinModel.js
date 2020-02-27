@@ -17,27 +17,27 @@ export default class JoinModel {
 
     validatePasswordRepeat(data) {
         console.log(data);
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputPasswordRepeatError', error);
     }
 
     validatePassword(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputPasswordError', error);
     }
 
     validateName(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputNameError', error);
     }
 
     validateNickname(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputNicknameError', error);
     }
 
     validateSurname(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputSurnameError', error);
     }
 
@@ -52,5 +52,4 @@ export default class JoinModel {
             }
         });
     }
-
 }

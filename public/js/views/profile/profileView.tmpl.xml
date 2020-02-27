@@ -27,7 +27,7 @@
                     <div class="input-group profile-input-group">
                         <form id="formAbout">
                             <div class="form-input-label">Имя</div>
-                            <div id="inputNameError" class="input-error hidden">ERROR</div>
+                            <div id="inputNameError" class="input-error hidden">inputNameError</div>
                             <input class="form-input" type="text" id="inputName"
                                    autocomplete="off">
                                 <fest:attributes>
@@ -37,7 +37,7 @@
                                 </fest:attributes>
                             </input>
                             <div class="form-input-label">Фамилия</div>
-                            <div id="inputSurnameError" class="input-error hidden">ERROR</div>
+                            <div id="inputSurnameError" class="input-error hidden">inputSurnameError</div>
                             <input class="form-input" type="text" id="inputSurname"
                                    autocomplete="off">
                                 <fest:attributes>
@@ -68,8 +68,12 @@
                                 </fest:attribute>
                             </fest:attributes>
                         </img>
-                        <input id="avatar-input" type="file" name="name"/>
-                        <button id="submitImg" class="secondary">Изменить</button>
+                        <input id="avatarInput" type="file" name="file"/>
+                        <button disabled="" class="secondary">
+                            <label class="secondary" for="avatarInput">
+                                Изменить
+                            </label>
+                        </button>
                     </div>
                 </div>
                 <div class="group-title">
@@ -79,13 +83,13 @@
                 <div class="input-group profile-input-group">
                     <form id="formPasswords">
                         <div class="form-input-label">Смена пароля</div>
-                        <div id="inputOldPasswordError" class="input-error hidden">ERROR</div>
+                        <div id="inputOldPasswordError" class="input-error hidden">inputOldPasswordError</div>
                         <input class="form-input" type="password" placeholder="Старый пароль" autocomplete="off"
                                id="inputOldPassword"/>
-                        <div id="inputPasswordError" class="input-error hidden">ERROR</div>
+                        <div id="inputPasswordError" class="input-error hidden">inputPasswordError</div>
                         <input class="form-input" autocomplete="off" type="password" placeholder="Пароль"
                                id="inputPassword"/>
-                        <div id="inputPasswordRepeatError" class="input-error hidden">ERROR</div>
+                        <div id="inputPasswordRepeatError" class="input-error hidden">inputPasswordRepeatError</div>
                         <input class="form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
                                id="inputPasswordRepeat"/>
                         <button id="submitPasswords" class="secondary">Изменить</button>
@@ -94,7 +98,7 @@
                 <div class="input-group profile-input-group">
                     <form id="formEmail">
                         <div class="form-input-label">Смена email</div>
-                        <div id="inputEmailError" class="input-error hidden">ERROR</div>
+                        <div id="inputEmailError" class="input-error hidden">inputEmailError</div>
                         <input class="form-input" type="email" id="inputEmail"
                                autocomplete="off">
                             <fest:attributes>

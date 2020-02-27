@@ -12,12 +12,12 @@ export default class LoginModel {
     }
 
     validateLogin(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputLoginError', error);
     }
 
     validatePassword(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputPasswordError', error);
     }
 

@@ -21,8 +21,6 @@ export default class LoginController {
             'inputOldPasswordError',
             'inputPassword',
             'inputPasswordError',
-            'inputPassword',
-            'inputPasswordError',
             'inputPasswordRepeat',
             'inputPasswordRepeatError',
             'inputEmail',

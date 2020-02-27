@@ -13,7 +13,7 @@ export default class Router {
         this.routeMap = new Map();
         this.handleMouseClick = this.handleMouseClick.bind(this);
         this.root.addEventListener('click', this.handleMouseClick);
-        /*window.addEventListener('popstate', () => {
+        /* window.addEventListener('popstate', () => {
             const pathname = window.location.pathname;
             this.go(pathname);
         });*/
@@ -31,7 +31,7 @@ export default class Router {
         } else {
             this.root.innerText = 'PAGE NOT FOUND';
 
-            //this.routeMap.get('/login')();
+            // this.routeMap.get('/login')();
         }
     }
 

@@ -17,4 +17,4 @@ router.setRoute('/login', loginController.view.render);
 router.setRoute('/profile', profileController.view.render);
 router.setRoute('/join', joinController.view.render);
 
-router.go(window.location.pathname,{});
+router.go(window.location.pathname, {});

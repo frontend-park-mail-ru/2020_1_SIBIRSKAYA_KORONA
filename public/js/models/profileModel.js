@@ -22,63 +22,59 @@ export default class JoinModel {
     }
 
     validatePasswordRepeat(data) {
+        console.log(data);
         const error = (data[0] !== data[1]);
         this.eventBus.call('inputPasswordRepeatError', error);
     }
 
     validatePassword(data) {
-        const error = (data === "");
-        this.eventBus.call('inputPasswordError', error);
+        const error = (data === '');
+        this.eventBus.call('inputOldPasswordError', error);
     }
 
     validateName(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputNameError', error);
     }
 
     validateSurname(data) {
-        const error = (data === "");
+        const error = (data === '');
         this.eventBus.call('inputSurnameError', error);
     }
 
     validateEmail(data) {
-        const error = (data === "");
-        this.eventBus.call('inputSurnameError', error);
+        const error = (data === '');
+        this.eventBus.call('inputEmailError', error);
     }
 
     putUser(data) {
-        console.log(data);
         const formData = new FormData();
-
+        formData.append('newNickname', data.inputNickname);
         formData.append('newName', data.inputName || '');
         formData.append('newSurname', data.inputSurname || '');
-        formData.append('newNickname', data.inputNickname);
         formData.append('newEmail', data.inputEmail || '');
         formData.append('oldPassword', data.inputOldPassword || '');
         formData.append('newPassword', data.inputPassword || '');
 
-        // TODO(Roma): i dont know which signal will give me data.avatar,
-        // so now i take it from document every time
-        const avatar = document.getElementById('avatar-input').files[0];
-        if (avatar !== void 0) {
-            formData.append('avatar', avatar);
-            formData.append('avatarExtension', avatar.name.split('.').pop());
+        if (data.avatar !== void 0) {
+            formData.append('avatar', data.avatar);
+            formData.append('avatarExtension', data.avatar.name.split('.').pop());
         }
 
         this.api.putUser(formData).then((response) => {
-            console.log(response.status);
+            // console.log(response.status);
             switch (response.status) {
-                case 200: // - OK (успешный запрос)
-                    this.getUser();
-                    break;
-                case 401: // - Unauthorized (не авторизован)
-                    break;
-                case 403: // - Forbidden (нет прав)
-                    break;
-                case 404: // - NotFound (нет пользвателя с указанным ником)
-                    break;
-                default:
-                    console.log('Пора орать на бекендеров!!!');
+            case 200: // - OK (успешный запрос)
+                this.getUser();
+                break;
+            case 401: // - Unauthorized (не авторизован)
+                break;
+            case 403: // - Forbidden (нет прав)
+                break;
+            case 404: // - NotFound (нет пользвателя с указанным ником)
+                break;
+            default:
+                console.log('Пора орать на бекендеров!!!');
             }
         });
     }
@@ -87,23 +83,21 @@ export default class JoinModel {
         this.api.getUser({}).then((response) => {
             console.log('profile get user' + response.status);
             switch (response.status) {
-                case 200: // - OK (успешный запрос)
-                    console.log(response);
-
-                    const data = response.body.user;
-                    data.avatar = (data.avatar === 'avatars/kek.jpg') ? '/img/default_avatar.png' : data.avatar;
-                    console.log(data);
-                    this.eventBus.call('gotData', data);
-                    break;
-                case 303: // - SeeOther (не авторизован, случай без query string)
-                    this.router.go('/login');
-                    break;
-                case 400: // - BadRequest (неверный запрос)
-                    break;
-                case 404: // - NotFound (нет пользвателя с указанным ником)
-                    break;
-                default:
-                    console.log('Пора идти орать на бекендеров!!');
+            case 200: // - OK (успешный запрос)
+                // console.log(response);
+                const data = response.body.user;
+                data.avatar = (data.avatar === 'avatars/kek.jpg') ? '/img/default_avatar.png' : data.avatar;
+                this.eventBus.call('gotData', data);
+                break;
+            case 303: // - SeeOther (не авторизован, случай без query string)
+                this.router.go('/login');
+                break;
+            case 400: // - BadRequest (неверный запрос)
+                break;
+            case 404: // - NotFound (нет пользвателя с указанным ником)
+                break;
+            default:
+                console.log('Пора идти орать на бекендеров!!');
             }
         });
     }

@@ -12,7 +12,7 @@ a:hover {
     text-decoration: underline;
 }
 
-button {
+button /*input[type=file]*/ {
     display: flex;
     align-items: center;
     height: 35px;
@@ -25,32 +25,41 @@ button {
     transition: 0.3s;
 }
 
-button.primary {
+input[type=file] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/*input[type=file].primary,*/ button.primary {
     background-color: #00c12c;
     box-shadow: 0 0 7px 1px #1c6d09;
 }
 
-button.primary:hover {
+/*input[type=file].primary,*/ button.primary:hover {
     background-color: #10a213;
     box-shadow: 0 0 7px 2px #007c05;
 }
 
-button.secondary {
+/*input[type=file].primary,*/ button.secondary {
     background-color: #03A9F4;
     box-shadow: 0 0 7px 1px #172a53;
 }
 
-button.secondary:hover {
+/*input[type=file].primary,*/ button.secondary:hover {
     background-color: #4040ff;
     box-shadow: 0 0 7px 2px #041a55;
 }
 
-button.danger {
+/*input[type=file].primary,*/ button.danger {
     background-color: #E91E63;
     box-shadow: 0 0 7px 1px #320c19;
 }
 
-button.danger:hover {
+/*input[type=file].primary,*/ button.danger:hover {
     background-color: #ce0000;
     box-shadow: 0 0 7px 2px #4a0214;
 }

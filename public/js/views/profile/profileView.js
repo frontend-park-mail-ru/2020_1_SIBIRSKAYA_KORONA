@@ -16,11 +16,11 @@ export default class ProfileView {
         this.render = this.render.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
+        this.handleAvatarChange = this.handleAvatarChange.bind(this);
         this.handleUserInputPasswordRepeat = this.handleUserInputPasswordRepeat.bind(this);
 
         eventBus.subscribe('gotData', this.renderUserData.bind(this));
     }
-
 
 
     /**
@@ -29,7 +29,7 @@ export default class ProfileView {
      */
     render(data) {
         this.eventBus.call('getData');
-        console.log("render profile");
+        console.log('render profile');
         this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
         this.addEventListeners();
     }
@@ -44,19 +44,21 @@ export default class ProfileView {
             document.getElementById('submitAbout'),
             document.getElementById('submitPasswords'),
             document.getElementById('submitEmail'),
-            document.getElementById('submitImg'),
         ];
-        submitButtons.forEach((button) => {
-            button.addEventListener('click', this.handleSubmit);
-        });
-
         const inputs = [
             document.getElementById('inputName'),
             document.getElementById('inputSurname'),
             document.getElementById('inputEmail'),
             document.getElementById('inputOldPassword'),
-            document.getElementById('inputPassword'),
         ];
+        const newPasswordInputs = [
+            document.getElementById('inputPassword'),
+            document.getElementById('inputPasswordRepeat'),
+        ];
+
+        submitButtons.forEach((button) => {
+            button.addEventListener('click', this.handleSubmit);
+        });
         inputs.forEach((input) => {
             input.addEventListener('input', this.handleUserInput);
             input.addEventListener('blur', this.handleUserInput);
@@ -65,11 +67,14 @@ export default class ProfileView {
             const errorInputHandler = this[errorInputSignal + 'Handler'];
             this.eventBus.subscribe(errorInputSignal, errorInputHandler);
         });
+        newPasswordInputs.forEach((elem) => {
+            elem.addEventListener('input', this.handleUserInputPasswordRepeat);
+            elem.addEventListener('blur', this.handleUserInputPasswordRepeat);
+            this.eventBus.subscribe('inputPasswordRepeatError', this.inputPasswordRepeatErrorHandler);
+        });
 
-        const inputPasswordRepeat = document.getElementById('inputPasswordRepeat');
-        inputPasswordRepeat.addEventListener('input', this.handleUserInputPasswordRepeat);
-        inputPasswordRepeat.addEventListener('blur', this.handleUserInputPasswordRepeat);
-        this.eventBus.subscribe('inputPasswordRepeatError', this.inputPasswordRepeatErrorHandler);
+        const inputImage = document.getElementById('avatarInput');
+        inputImage.addEventListener('change', this.handleAvatarChange);
     }
 
     handleUserInput(e) {
@@ -82,11 +87,10 @@ export default class ProfileView {
     }
 
     handleUserInputPasswordRepeat(e) {
-        const inputPasswordRepeatField = e.target;
-        this.inputtedData[inputPasswordRepeatField.id] = inputPasswordRepeatField.value;
-        console.log(inputPasswordRepeatField.id);
-
-        const data = [this.inputtedData.inputPasswordRepeat, inputPasswordRepeatField.value];
+        const data = [
+            this.inputtedData.inputPassword = document.getElementById('inputPassword').value,
+            this.inputtedData.inputPasswordRepeat = document.getElementById('inputPasswordRepeat').value,
+        ];
         this.eventBus.call('inputPasswordRepeat', data);
     }
 
@@ -105,14 +109,27 @@ export default class ProfileView {
         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
-    inputPasswordErrorHandler(error) {
-        const errorLabel = document.getElementById('inputPasswordError');
+    inputOldPasswordErrorHandler(error) {
+        const errorLabel = document.getElementById('inputOldPasswordError');
         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
+
+    inputEmailErrorHandler(error) {
+        const errorLabel = document.getElementById('inputEmailError');
+        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+    }
+
 
     inputPasswordRepeatErrorHandler(error) {
         const errorLabel = document.getElementById('inputPasswordRepeatError');
         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+    }
+
+    handleAvatarChange(e) {
+        e.preventDefault();
+        this.inputtedData.avatar = e.target.files[0];
+        this.inputtedData.inputNickname = document.getElementById('inputNickname').value;
+        this.eventBus.call('submitImg', this.inputtedData);
     }
 
     handleSubmit(e) {
@@ -123,7 +140,6 @@ export default class ProfileView {
         const eventBusSubmitSignal = e.target.id;
         this.eventBus.call(eventBusSubmitSignal, this.inputtedData);
     }
-
 
     getUserInput() {
         return {

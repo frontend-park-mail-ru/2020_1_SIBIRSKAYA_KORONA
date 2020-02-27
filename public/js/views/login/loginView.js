@@ -33,7 +33,7 @@ export default class LoginView {
         submitButton.addEventListener('click', this.handleSubmit);
 
         const formElements = document.getElementById('loginForm').elements;
-        for (let element of formElements) {
+        for (const element of formElements) {
             if (element.nodeName === 'INPUT') {
                 element.addEventListener('input', this.handleUserInput);
                 element.addEventListener('blur', this.handleUserInput);
