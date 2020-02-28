@@ -74,3 +74,9 @@ typings/
 build/
 dist/
 .awcache/
+
+
+#fest compiled tempates
+*.tmpl.js
+
+public/img/avatar

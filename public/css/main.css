@@ -1,6 +1,6 @@
 /*   COMMON   */
 body {
-    font-family: 'Exo', sans-serif;
+    font-family: 'Fox', sans-serif;
 }
 
 a {
@@ -12,7 +12,9 @@ a:hover {
     text-decoration: underline;
 }
 
-button {
+button /*input[type=file]*/ {
+    display: flex;
+    align-items: center;
     height: 35px;
     border: none;
     border-radius: 15px;
@@ -23,32 +25,41 @@ button {
     transition: 0.3s;
 }
 
-button.primary {
+input[type=file] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/*input[type=file].primary,*/ button.primary {
     background-color: #00c12c;
     box-shadow: 0 0 7px 1px #1c6d09;
 }
 
-button.primary:hover {
+/*input[type=file].primary,*/ button.primary:hover {
     background-color: #10a213;
     box-shadow: 0 0 7px 2px #007c05;
 }
 
-button.secondary {
+/*input[type=file].primary,*/ button.secondary {
     background-color: #03A9F4;
     box-shadow: 0 0 7px 1px #172a53;
 }
 
-button.secondary:hover {
+/*input[type=file].primary,*/ button.secondary:hover {
     background-color: #4040ff;
     box-shadow: 0 0 7px 2px #041a55;
 }
 
-button.danger {
+/*input[type=file].primary,*/ button.danger {
     background-color: #E91E63;
     box-shadow: 0 0 7px 1px #320c19;
 }
 
-button.danger:hover {
+/*input[type=file].primary,*/ button.danger:hover {
     background-color: #ce0000;
     box-shadow: 0 0 7px 2px #4a0214;
 }
@@ -68,9 +79,14 @@ textarea {
 
 }
 
+.input-error {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 .title {
     font-weight: 800;
-    font-family: 'Scada', sans-serif;
 }
 
 .popup {
@@ -81,7 +97,7 @@ textarea {
 }
 
 .avatar-round {
-    border-radius:  50%;
+    border-radius: 50%;
 }
 
 .form {
@@ -90,6 +106,15 @@ textarea {
     padding: 32px;
     margin-bottom: 35px;
     background-color: #f8f8ff;
+}
+
+
+.form-input-label {
+    margin-bottom: 10px;
+    font-size: 11pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+    word-spacing: 5px;
 }
 
 .form-input {
@@ -156,6 +181,10 @@ textarea {
     display: flex;
     flex-flow: wrap-reverse;
 }
+
+.hidden {
+    display: none;
+}
 /*     END COMMON     */
 
 
@@ -191,6 +220,7 @@ textarea {
     font-size: 14pt;
     font-weight: bold;
 }
+
 /*     END DASHBOARDS     */
 
 
@@ -206,7 +236,7 @@ textarea {
 
 .top-pic::after {
     content: "";
-    background: url(pics/work_hard.png) no-repeat top;
+    background: url(../img/work_hard.png) no-repeat top;
     background-size: cover;
     opacity: 0.2;
     top: 0;
@@ -259,6 +289,7 @@ textarea {
 .landing-auth {
     margin: 0 25px;
 }
+
 /*      END LANDING      */
 
 
@@ -285,6 +316,7 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, .3);
 }
+
 /*      END SCROLLBARS     */
 
 
@@ -435,6 +467,7 @@ textarea {
     height: 30px;
     width: 30px;
 }
+
 /*       END BOARD        */
 
 
@@ -465,7 +498,8 @@ textarea {
 }
 
 .profile-input-group {
-    max-width: 450px;
+    max-width: 420px;
+    min-width: 300px;
 }
 
 .profile-mini-group-title {
@@ -480,7 +514,9 @@ textarea {
 }
 
 .profile-avatar {
-    width: 156px;
-    height: 156px;
+    width: 220px;
+    height: 220px;
+    margin-bottom: 10px;
 }
+
 /*      END PROFILE     */

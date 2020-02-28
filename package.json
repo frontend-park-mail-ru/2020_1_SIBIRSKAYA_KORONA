@@ -4,7 +4,9 @@
   "description": "Репозиторий фронтенда",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint --fix . && echo '  LINT OK, NO GOVNOKOD DETECTED'",
     "start": "node server/server.js",
+    "prestart": "./node_modules/.bin/fest-build --dir=public",
     "sync_start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,8 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browser-sync": "^2.26.7",
     "express": "^4.17.1",
+    "fest": "^0.12.1",
+    "husky": "^4.2.3",
     "morgan": "^1.9.1"
   },
   "bugs": {
@@ -24,6 +27,10 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA#readme",
   "devDependencies": {
-    "ip": "^1.1.5"
+    "browser-sync": "^2.26.7",
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "ip": "^1.1.5",
+    "jsdoc": "^3.6.3"
   }
 }
