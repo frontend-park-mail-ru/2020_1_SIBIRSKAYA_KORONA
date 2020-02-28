@@ -1,3 +1,5 @@
+'use strict';
+
 import './profileView.tmpl.js';
 
 /**
@@ -6,7 +8,7 @@ import './profileView.tmpl.js';
 export default class ProfileView {
     /**
      * View constructor
-     * @param eventBus
+     * @param {Object} eventBus
      */
     constructor(eventBus) {
         this.eventBus = eventBus;
@@ -19,7 +21,8 @@ export default class ProfileView {
         this.handleAvatarChange = this.handleAvatarChange.bind(this);
         this.handleUserInputPasswordRepeat = this.handleUserInputPasswordRepeat.bind(this);
 
-        eventBus.subscribe('gotData', this.renderUserData.bind(this));
+        this.eventBus.subscribe('gotData', this.renderUserData.bind(this));
+        this.eventBus.subscribe('userInputError', this.displayError);
     }
 
 
@@ -29,11 +32,12 @@ export default class ProfileView {
      */
     render(data) {
         this.eventBus.call('getData');
-        console.log('render profile');
-        this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
-        this.addEventListeners();
     }
 
+    /**
+     * Real render view method
+     * @param {object} data user data to render
+     */
     renderUserData(data) {
         this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
         this.addEventListeners();
@@ -50,28 +54,31 @@ export default class ProfileView {
             document.getElementById('inputSurname'),
             document.getElementById('inputEmail'),
             document.getElementById('inputOldPassword'),
-        ];
-        const newPasswordInputs = [
             document.getElementById('inputPassword'),
             document.getElementById('inputPasswordRepeat'),
         ];
+        /* const newPasswordInputs = [
+        ];*/
 
         submitButtons.forEach((button) => {
             button.addEventListener('click', this.handleSubmit);
         });
+
         inputs.forEach((input) => {
             input.addEventListener('input', this.handleUserInput);
             input.addEventListener('blur', this.handleUserInput);
 
-            const errorInputSignal = input.id + 'Error';
-            const errorInputHandler = this[errorInputSignal + 'Handler'];
-            this.eventBus.subscribe(errorInputSignal, errorInputHandler);
+            // const errorInputSignal = input.id + 'Error';
+            // const errorInputHandler = this[errorInputSignal + 'Handler'];
+            // this.eventBus.subscribe(errorInputSignal, errorInputHandler);
+            this.eventBus.subscribe('userInputError', this.displayError);
         });
-        newPasswordInputs.forEach((elem) => {
+
+        /* newPasswordInputs.forEach((elem) => {
             elem.addEventListener('input', this.handleUserInputPasswordRepeat);
             elem.addEventListener('blur', this.handleUserInputPasswordRepeat);
             this.eventBus.subscribe('inputPasswordRepeatError', this.inputPasswordRepeatErrorHandler);
-        });
+        });*/
 
         const inputImage = document.getElementById('avatarInput');
         inputImage.addEventListener('change', this.handleAvatarChange);
@@ -81,9 +88,10 @@ export default class ProfileView {
         const inputField = e.target;
         this.inputtedData[inputField.id] = inputField.value;
 
-        const eventBusValidateSignal = inputField.id;
-        const dataToValidate = this.inputtedData[inputField.id];
-        this.eventBus.call(eventBusValidateSignal, dataToValidate);
+        if (inputField.id !== 'inputPasswordRepeat') {
+            const type = inputField.id;
+            this.eventBus.call('userInput', type, inputField.value);
+        }
     }
 
     handleUserInputPasswordRepeat(e) {
@@ -94,36 +102,46 @@ export default class ProfileView {
         this.eventBus.call('inputPasswordRepeat', data);
     }
 
-    inputNameErrorHandler(error) {
-        const errorLabel = document.getElementById('inputNameError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
+    /* inputNameErrorHandler(error) {
+         const errorLabel = document.getElementById('inputNameError');
+         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+     }
 
-    inputSurnameErrorHandler(error) {
-        const errorLabel = document.getElementById('inputSurnameError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
+     inputSurnameErrorHandler(error) {
+         const errorLabel = document.getElementById('inputSurnameError');
+         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+     }
 
-    inputNicknameErrorHandler(error) {
-        const errorLabel = document.getElementById('inputNicknameError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
+     inputNicknameErrorHandler(error) {
+         const errorLabel = document.getElementById('inputNicknameError');
+         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+     }
 
-    inputOldPasswordErrorHandler(error) {
-        const errorLabel = document.getElementById('inputOldPasswordError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
+     inputOldPasswordErrorHandler(error) {
+         const errorLabel = document.getElementById('inputOldPasswordError');
+         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+     }
 
-    inputEmailErrorHandler(error) {
-        const errorLabel = document.getElementById('inputEmailError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
+     inputEmailErrorHandler(error) {
+         const errorLabel = document.getElementById('inputEmailError');
+         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+     }
 
 
-    inputPasswordRepeatErrorHandler(error) {
-        const errorLabel = document.getElementById('inputPasswordRepeatError');
-        error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
+     inputPasswordRepeatErrorHandler(error) {
+         const errorLabel = document.getElementById('inputPasswordRepeatError');
+         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+     }*/
+
+    displayError(display, fieldId, text) {
+/*        console.log(fieldId);
+        console.log(display);*/
+        const errorLabel = document.getElementById(fieldId + 'Error');
+        display ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        if (text) {
+            errorLabel.innerText = text;
+        }
+    };
 
     handleAvatarChange(e) {
         e.preventDefault();
@@ -135,19 +153,29 @@ export default class ProfileView {
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.inputtedData);
-        this.inputtedData.inputNickname = document.getElementById('inputNickname').value;
 
         const eventBusSubmitSignal = e.target.id;
-        this.eventBus.call(eventBusSubmitSignal, this.inputtedData);
-    }
-
-    getUserInput() {
-        return {
-            name: document.getElementById('inputName').value,
-            surname: document.getElementById('inputSurname').value,
-            password: document.getElementById('inputPassword').value,
-            passwordNew: document.getElementById('inputPassword').value,
-            email: document.getElementById('inputPassword').value,
+        const dataToSend = {
+            'inputNickname': document.getElementById('inputNickname').value,
         };
+        switch (e.target.id) {
+            case 'submitAbout':
+                dataToSend.inputName = this.inputtedData.inputName;
+                dataToSend.inputSurname = this.inputtedData.inputSurname;
+                break;
+            case 'submitPasswords':
+                if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
+                    dataToSend.inputOldPassword = this.inputtedData.inputOldPassword;
+                    dataToSend.inputPassword = this.inputtedData.inputPassword;
+                } else {
+                    this.displayError(true, 'inputPasswordRepeat', 'Пароли не совпадают');
+                    return;
+                }
+                break;
+            case 'submitEmail':
+                dataToSend.inputEmail = this.inputtedData.inputEmail;
+                break;
+        }
+        this.eventBus.call(eventBusSubmitSignal, dataToSend);
     }
 }

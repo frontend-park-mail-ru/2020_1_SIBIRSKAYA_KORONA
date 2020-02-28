@@ -1,3 +1,5 @@
+'use strict';
+
 import ApiService from '../libs/apiService.js';
 
 export default class JoinModel {
@@ -7,43 +9,9 @@ export default class JoinModel {
         this.eventBus = eventBus;
         this.router = router;
         this.eventBus.subscribe('submit', this.join.bind(this));
-        /*   this.eventBus.subscribe('inputSurname', this.validateSurname.bind(this));
-           this.eventBus.subscribe('inputNickname', this.validateNickname.bind(this));
-           this.eventBus.subscribe('inputName', this.validateName.bind(this));
-           this.eventBus.subscribe('inputPassword', this.validatePassword.bind(this));
-           this.eventBus.subscribe('inputPasswordRepeat', this.validatePasswordRepeat.bind(this));*/
         this.eventBus.subscribe('userInput', this.validate.bind(this));
-
-        this.fieldsValidated = 0;
     }
 
-    /*
-    validatePasswordRepeat(data) {
-        console.log(data);
-        const valid = (data[0] !== data[1]);
-        this.eventBus.call('inputPasswordRepeatError', valid);
-    }
-
-    validatePassword(data) {
-        const valid = (data === '');
-        this.eventBus.call('inputPasswordError', valid);
-    }
-
-    validateName(data) {
-        const valid = (data === '');
-        this.eventBus.call('inputNameError', valid);
-    }
-
-    validateNickname(data) {
-        const valid = (data === '');
-        this.eventBus.call('inputNicknameError', valid);
-    }
-
-    validateSurname(data) {
-        const valid = (data === '');
-        this.eventBus.call('inputSurnameError', valid);
-    }
-*/
     validate(dataType, data) {
         let valid = true;
         switch (dataType) {

@@ -1,3 +1,5 @@
+'use strict';
+
 import './joinView.tmpl.js';
 
 /**
@@ -37,10 +39,6 @@ export default class JoinView {
                 element.addEventListener('input', this.handleUserInput);
                 element.addEventListener('blur', this.handleUserInput);
 
-                const errorInputSignal = element.id + 'Error';
-                const errorInputHandler = this[errorInputSignal + 'Handler'];
-                // this.eventBus.subscribe(errorInputSignal, errorInputHandler);
-
                 this.eventBus.subscribe('userInputError', this.displayError);
             }
         }
@@ -53,34 +51,6 @@ export default class JoinView {
             errorLabel.innerText = text;
         }
     };
-
-
-    /*
-    inputNameErrorHandler(error) {
-        // const errorLabel = document.getElementById('inputNameError');
-        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
-
-    inputSurnameErrorHandler(error) {
-        // const errorLabel = document.getElementById('inputSurnameError');
-        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
-
-    inputNicknameErrorHandler(error) {
-        // const errorLabel = document.getElementById('inputNicknameError');
-        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
-
-    inputPasswordErrorHandler(error) {
-        // const errorLabel = document.getElementById('inputPasswordError');
-        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
-
-    inputPasswordRepeatErrorHandler(error) {
-        // const errorLabel = document.getElementById('inputPasswordRepeatError');
-        // error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-    }
-*/
 
     handleUserInput(e) {
         const inputField = e.target;
@@ -106,7 +76,6 @@ export default class JoinView {
      * @return {{password: *, surname: *, name: *, nickname: *}}
      */
     getUserData() {
-        // return this.inputtedData;
         return {
             name: document.getElementById('inputName').value,
             surname: document.getElementById('inputSurname').value,

@@ -13,7 +13,7 @@ export default class LoginController {
             'submitImg',
             'getData',
             'gotData',
-            'inputName',
+            /* 'inputName',
             'inputNameError',
             'inputSurname',
             'inputSurnameError',
@@ -24,7 +24,11 @@ export default class LoginController {
             'inputPasswordRepeat',
             'inputPasswordRepeatError',
             'inputEmail',
-            'inputEmailError',
+            'inputEmailError',*/
+
+            'submit',
+            'userInput',
+            'userInputError',
         ]);
         this.model = new ProfileModel(this.eventBus, router);
         this.view = new ProfileView(this.eventBus);

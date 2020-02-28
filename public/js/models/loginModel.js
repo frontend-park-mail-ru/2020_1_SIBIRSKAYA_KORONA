@@ -1,3 +1,5 @@
+'use strict';
+
 import ApiService from '../libs/apiService.js';
 
 /**
