@@ -16,6 +16,11 @@ export default class LoginModel {
         this.eventBus.subscribe('submit', this.login.bind(this));
     }
 
+    /**
+     * Validate user inputted login
+     * @param {string} data - login to validate
+     * @return {boolean} is valid
+     */
     validateLogin(data) {
         const valid = Validator.validateLogin(data);
         if (!valid) {
@@ -24,6 +29,11 @@ export default class LoginModel {
         return valid;
     }
 
+    /**
+     * Validate user inputted password
+     * @param {string} data - password to validate
+     * @return {boolean} is valid
+     */
     validatePassword(data) {
         const valid = Validator.validatePassword(data);
         if (!valid) {
@@ -32,6 +42,10 @@ export default class LoginModel {
         return valid;
     }
 
+    /**
+     * Use api to send data to backend
+     * @param {Object} userInfo - to send
+     */
     login(userInfo) {
         if (!this.validateLogin(userInfo.nickname) || !this.validatePassword(userInfo.password)) {
             return;

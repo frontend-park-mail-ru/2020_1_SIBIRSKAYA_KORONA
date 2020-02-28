@@ -1,12 +1,12 @@
 import './profileView.tmpl.js';
 
 /**
- * View of login page
+ * View of profile page
  */
 export default class ProfileView {
     /**
      * View constructor
-     * @param {Object} eventBus
+     * @param {Object} eventBus for share events with model
      */
     constructor(eventBus) {
         this.eventBus = eventBus;
@@ -24,7 +24,7 @@ export default class ProfileView {
     }
 
     /**
-     * Render view method
+     * Method which triggers getting data from model
      * @param {object} data user data to render
      */
     render(data) {
@@ -32,7 +32,7 @@ export default class ProfileView {
     }
 
     /**
-     * Real render view method
+     * Real render view method with user data from model
      * @param {object} data user data to render
      */
     renderUserData(data) {
@@ -41,6 +41,9 @@ export default class ProfileView {
         this.addEventListeners();
     }
 
+    /**
+     * Set handlers for user input and submit
+     */
     addEventListeners() {
         const submitButtons = [
             document.getElementById('submitAbout'),
@@ -68,6 +71,10 @@ export default class ProfileView {
         inputImage.addEventListener('change', this.handleAvatarChange);
     }
 
+    /**
+     * Handle user input
+     * @param {Event} event - input event
+     */
     handleUserInput(event) {
         const inputField = event.target;
         this.inputtedData[inputField.id] = inputField.value;
@@ -78,8 +85,14 @@ export default class ProfileView {
         }
     }
 
-    showError(show, fieldId, text) {
-        const errorLabel = document.getElementById(fieldId + 'Error');
+    /**
+     * Displays user input error, is triggered when model validation failed
+     * @param {boolean} show - show or hide error string
+     * @param {string} field - input with invalid data
+     * @param {string} text - optional error text
+     */
+    showError(show, field, text) {
+        const errorLabel = document.getElementById(field + 'Error');
         show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
         if (text) {
             errorLabel.innerText = text;
@@ -89,6 +102,9 @@ export default class ProfileView {
         }
     };
 
+    /**
+     * Clear iser inputted data from password fields
+     */
     clearPasswordInputs() {
         document.getElementById('inputOldPassword').value = '';
         document.getElementById('inputPassword').value = '';
@@ -98,6 +114,10 @@ export default class ProfileView {
         delete this.inputtedData.inputPasswordRepeat;
     }
 
+    /**
+     * Handle avatar change
+     * @param {Event} event - change event of avatar input file field
+     */
     handleAvatarChange(event) {
         event.preventDefault();
         this.inputtedData.avatar = event.target.files[0];
@@ -106,6 +126,10 @@ export default class ProfileView {
         this.eventBus.call('submitImg', this.inputtedData);
     }
 
+    /**
+     * Handle user submit
+     * @param {Event} event - button click event
+     */
     handleSubmit(event) {
         event.preventDefault();
         console.log(this.inputtedData);

@@ -24,16 +24,27 @@ export default class LoginView {
         this.addEventListeners();
     };
 
+    /**
+     * Set handlers for user input and submit
+     */
     addEventListeners() {
         const submitButton = document.getElementById('submit_button');
         submitButton.addEventListener('click', this.handleSubmit);
     }
 
+    /**
+     * Displays user input error, is triggered when model validation failed
+     * @param {boolean} display - show or hide error string
+     */
     displayError(display) {
         const errorLabel = document.getElementById('inputError');
         display ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
+    /**
+     * Handle user submit
+     * @param {Event} event - button click event
+     */
     handleSubmit(event) {
         event.preventDefault();
         this.eventBus.call('submit', this.getUserData());

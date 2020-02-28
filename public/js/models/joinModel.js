@@ -1,8 +1,15 @@
 import Validator from '../libs/validator.js';
 import {apiJoin} from '../libs/apiService.js';
 
-
+/**
+ * Join(Registration) model
+ */
 export default class JoinModel {
+    /**
+     * Model constructor
+     * @param {Object} eventBus to share events with join view
+     * @param {Object} router for redirect on success join
+     */
     constructor(eventBus, router) {
         this.eventBus = eventBus;
         this.router = router;
@@ -10,6 +17,12 @@ export default class JoinModel {
         this.eventBus.subscribe('userInput', this.validate.bind(this));
     }
 
+    /**
+     * Validation, triggers on user input
+     * @param {string} dataType - validation type: email, password ...
+     * @param {string} data - data to validate
+     * @return {boolean} is valid
+     */
     validate(dataType, data) {
         let valid = true;
         switch (dataType) {
@@ -32,6 +45,11 @@ export default class JoinModel {
         return valid;
     }
 
+    /**
+     * Validates all user input data on user submit
+     * @param {Object} data - all user inputted data
+     * @return {boolean}
+     */
     validateAll(data) {
         return this.validate('inputName', data.name) &&
             this.validate('inputSurname', data.surname) &&
@@ -39,6 +57,10 @@ export default class JoinModel {
             this.validate('inputPassword', data.password);
     }
 
+    /**
+     * Use api to send data to backend
+     * @param {Object} userInfo - to send
+     */
     join(userInfo) {
         if (!this.validateAll(userInfo)) {
             return;

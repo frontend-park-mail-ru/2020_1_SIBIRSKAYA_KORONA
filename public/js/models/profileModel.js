@@ -1,7 +1,15 @@
 import Validator from '../libs/validator.js';
 import {apiGetUser, apiPutUser} from '../libs/apiService.js';
 
+/**
+ * Profile model
+ */
 export default class JoinModel {
+    /**
+     * Model constructor
+     * @param {Object} eventBus to share events with join view
+     * @param {Object} router for redirect on unauthorized
+     */
     constructor(eventBus, router) {
         this.eventBus = eventBus;
         this.router = router;
@@ -15,6 +23,12 @@ export default class JoinModel {
         this.eventBus.subscribe('getData', this.getUser.bind(this));
     }
 
+    /**
+     * Validation, triggers on user input
+     * @param {string} dataType - validation type: email, password ...
+     * @param {string} data - data to validate
+     * @return {boolean} is valid
+     */
     validate(dataType, data) {
         let valid = true;
         switch (dataType) {
@@ -37,6 +51,11 @@ export default class JoinModel {
         return valid;
     }
 
+    /**
+     * Validates all user input data on user submit
+     * @param {Object} data - all user inputted data
+     * @return {boolean}
+     */
     validateAll(data) {
         for (const [key, value] of Object.entries(data)) {
             if (!this.validate(key + '', value)) {
@@ -46,6 +65,10 @@ export default class JoinModel {
         return true;
     }
 
+    /**
+     * Use api to send data to backend and change user settings
+     * @param {Object} data - user data to update
+     */
     putUser(data) {
         if (!this.validateAll(data)) {
             return;
@@ -81,6 +104,9 @@ export default class JoinModel {
         });
     }
 
+    /**
+     * Use api to get user data and settings from backend
+     */
     getUser() {
         apiGetUser({}).then((response) => {
             // console.log('Profile get user: ' + response.status);

@@ -17,7 +17,7 @@ export default class Router {
     /**
      * Switch current route
      * @param {string} route - route to go
-     * @param params
+     * @param {...any} params - arguments to call with
      */
     go(route, ...params) {
         window.history.replaceState({}, '', route);
