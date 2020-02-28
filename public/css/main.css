@@ -498,7 +498,8 @@ textarea {
 }
 
 .profile-input-group {
-    max-width: 450px;
+    max-width: 420px;
+    min-width: 300px;
 }
 
 .profile-mini-group-title {

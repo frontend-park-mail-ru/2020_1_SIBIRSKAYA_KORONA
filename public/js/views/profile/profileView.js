@@ -19,12 +19,10 @@ export default class ProfileView {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
         this.handleAvatarChange = this.handleAvatarChange.bind(this);
-        this.handleUserInputPasswordRepeat = this.handleUserInputPasswordRepeat.bind(this);
 
         this.eventBus.subscribe('gotData', this.renderUserData.bind(this));
-        this.eventBus.subscribe('userInputError', this.displayError);
+        this.eventBus.subscribe('userInputError', this.showError);
     }
-
 
     /**
      * Render view method
@@ -57,8 +55,6 @@ export default class ProfileView {
             document.getElementById('inputPassword'),
             document.getElementById('inputPasswordRepeat'),
         ];
-        /* const newPasswordInputs = [
-        ];*/
 
         submitButtons.forEach((button) => {
             button.addEventListener('click', this.handleSubmit);
@@ -67,18 +63,8 @@ export default class ProfileView {
         inputs.forEach((input) => {
             input.addEventListener('input', this.handleUserInput);
             input.addEventListener('blur', this.handleUserInput);
-
-            // const errorInputSignal = input.id + 'Error';
-            // const errorInputHandler = this[errorInputSignal + 'Handler'];
-            // this.eventBus.subscribe(errorInputSignal, errorInputHandler);
-            this.eventBus.subscribe('userInputError', this.displayError);
+            this.eventBus.subscribe('userInputError', this.showError);
         });
-
-        /* newPasswordInputs.forEach((elem) => {
-            elem.addEventListener('input', this.handleUserInputPasswordRepeat);
-            elem.addEventListener('blur', this.handleUserInputPasswordRepeat);
-            this.eventBus.subscribe('inputPasswordRepeatError', this.inputPasswordRepeatErrorHandler);
-        });*/
 
         const inputImage = document.getElementById('avatarInput');
         inputImage.addEventListener('change', this.handleAvatarChange);
@@ -94,50 +80,9 @@ export default class ProfileView {
         }
     }
 
-    handleUserInputPasswordRepeat(e) {
-        const data = [
-            this.inputtedData.inputPassword = document.getElementById('inputPassword').value,
-            this.inputtedData.inputPasswordRepeat = document.getElementById('inputPasswordRepeat').value,
-        ];
-        this.eventBus.call('inputPasswordRepeat', data);
-    }
-
-    /* inputNameErrorHandler(error) {
-         const errorLabel = document.getElementById('inputNameError');
-         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-     }
-
-     inputSurnameErrorHandler(error) {
-         const errorLabel = document.getElementById('inputSurnameError');
-         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-     }
-
-     inputNicknameErrorHandler(error) {
-         const errorLabel = document.getElementById('inputNicknameError');
-         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-     }
-
-     inputOldPasswordErrorHandler(error) {
-         const errorLabel = document.getElementById('inputOldPasswordError');
-         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-     }
-
-     inputEmailErrorHandler(error) {
-         const errorLabel = document.getElementById('inputEmailError');
-         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-     }
-
-
-     inputPasswordRepeatErrorHandler(error) {
-         const errorLabel = document.getElementById('inputPasswordRepeatError');
-         error ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-     }*/
-
-    displayError(display, fieldId, text) {
-/*        console.log(fieldId);
-        console.log(display);*/
+    showError(show, fieldId, text) {
         const errorLabel = document.getElementById(fieldId + 'Error');
-        display ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+        show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
         if (text) {
             errorLabel.innerText = text;
         }
@@ -168,7 +113,7 @@ export default class ProfileView {
                     dataToSend.inputOldPassword = this.inputtedData.inputOldPassword;
                     dataToSend.inputPassword = this.inputtedData.inputPassword;
                 } else {
-                    this.displayError(true, 'inputPasswordRepeat', 'Пароли не совпадают');
+                    this.showError(true, 'inputPasswordRepeat', 'Пароли не совпадают');
                     return;
                 }
                 break;

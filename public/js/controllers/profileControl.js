@@ -13,20 +13,6 @@ export default class LoginController {
             'submitImg',
             'getData',
             'gotData',
-            /* 'inputName',
-            'inputNameError',
-            'inputSurname',
-            'inputSurnameError',
-            'inputOldPassword',
-            'inputOldPasswordError',
-            'inputPassword',
-            'inputPasswordError',
-            'inputPasswordRepeat',
-            'inputPasswordRepeatError',
-            'inputEmail',
-            'inputEmailError',*/
-
-            'submit',
             'userInput',
             'userInputError',
         ]);

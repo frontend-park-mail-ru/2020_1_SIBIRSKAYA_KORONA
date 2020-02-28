@@ -1,5 +1,6 @@
 'use strict';
 
+import Validator from '../libs/validator.js';
 import ApiService from '../libs/apiService.js';
 
 export default class JoinModel {
@@ -10,13 +11,6 @@ export default class JoinModel {
 
         this.eventBus.subscribe('getData', this.getUser.bind(this));
 
-        /* this.eventBus.subscribe('inputSurname', this.validateSurname.bind(this));
-         this.eventBus.subscribe('inputName', this.validateName.bind(this));
-         this.eventBus.subscribe('inputOldPassword', this.validatePassword.bind(this));
-         this.eventBus.subscribe('inputPassword', this.validatePassword.bind(this));
-         this.eventBus.subscribe('inputPasswordRepeat', this.validatePasswordRepeat.bind(this));
-         this.eventBus.subscribe('inputEmail', this.validateEmail.bind(this));*/
-
         this.putUser = this.putUser.bind(this);
         this.eventBus.subscribe('submitAbout', this.putUser);
         this.eventBus.subscribe('submitPasswords', this.putUser);
@@ -26,48 +20,20 @@ export default class JoinModel {
         this.eventBus.subscribe('userInput', this.validate.bind(this));
     }
 
-    /*
-        validatePasswordRepeat(data) {
-            console.log(data);
-            const error = (data[0] !== data[1]);
-            this.eventBus.call('inputPasswordRepeatError', error);
-        }
-
-        validatePassword(data) {
-            const error = (data === '');
-            this.eventBus.call('inputOldPasswordError', error);
-        }
-
-        validateName(data) {
-            const error = (data === '');
-            this.eventBus.call('inputNameError', error);
-        }
-
-        validateSurname(data) {
-            const error = (data === '');
-            this.eventBus.call('inputSurnameError', error);
-        }
-
-        validateEmail(data) {
-            const error = (data === '');
-            this.eventBus.call('inputEmailError', error);
-        }*/
-
-
     validate(dataType, data) {
         let valid = true;
         switch (dataType) {
             case 'inputName':
-                valid = (data !== '');
+                valid = Validator.validateName(data);
                 break;
             case 'inputSurname':
-                valid = (data !== '');
+                valid = Validator.validateSurname(data);
                 break;
             case 'inputPassword':
-                valid = (data !== '');
+                valid = Validator.validatePassword(data);
                 break;
             case 'inputEmail':
-                valid = (data !== '1');
+                valid = Validator.validateEmail(data);
                 break;
             default:
                 return true;
@@ -82,6 +48,7 @@ export default class JoinModel {
                 return false;
             }
         }
+        return true;
     }
 
     putUser(data) {
@@ -106,13 +73,15 @@ export default class JoinModel {
             // console.log(response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                    this.getUser();
+                    if (data.avatar !== void 0) {
+                        this.getUser();
+                    }
                     break;
                 case 401: // - Unauthorized (не авторизован)
                     this.router.go('/');
                     break;
                 case 403: // - Forbidden (нет прав)
-                    this.eventBus.call('');
+                    this.eventBus.call('userInputError', true, 'inputOldPassword');
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;
@@ -128,7 +97,6 @@ export default class JoinModel {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
-                    // data.avatar = (data.avatar === 'avatars/kek.jpg') ? '/img/default_avatar.png' : data.avatar;
                     this.eventBus.call('gotData', data);
                     break;
                 case 303: // - SeeOther (не авторизован, случай без query string)

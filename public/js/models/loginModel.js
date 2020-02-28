@@ -1,6 +1,7 @@
 'use strict';
 
 import ApiService from '../libs/apiService.js';
+import Validator from '../libs/validator.js';
 
 /**
  * Login model
@@ -20,7 +21,7 @@ export default class LoginModel {
     }
 
     validateLogin(data) {
-        const valid = (data !== '');
+        const valid = Validator.validateLogin(data);
         if (!valid) {
             this.eventBus.call('inputError', !valid);
         }
@@ -28,7 +29,7 @@ export default class LoginModel {
     }
 
     validatePassword(data) {
-        const valid = (data !== '');
+        const valid = Validator.validatePassword(data);
         if (!valid) {
             this.eventBus.call('inputError', !valid);
         }

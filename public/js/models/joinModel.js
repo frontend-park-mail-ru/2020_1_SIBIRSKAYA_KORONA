@@ -1,5 +1,6 @@
 'use strict';
 
+import Validator from '../libs/validator.js';
 import ApiService from '../libs/apiService.js';
 
 export default class JoinModel {
@@ -15,17 +16,18 @@ export default class JoinModel {
     validate(dataType, data) {
         let valid = true;
         switch (dataType) {
+
             case 'inputName':
-                valid = (data !== '');
+                valid = Validator.validateName(data);
                 break;
             case 'inputSurname':
-                valid = (data !== '');
+                valid = Validator.validateSurname(data);
                 break;
             case 'inputNickname':
-                valid = (data !== '');
+                valid = Validator.validateNickname(data);
                 break;
             case 'inputPassword':
-                valid = (data !== '');
+                valid = Validator.validatePassword(data);
                 break;
             default:
                 return false;
