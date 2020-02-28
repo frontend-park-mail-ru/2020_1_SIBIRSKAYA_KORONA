@@ -7,10 +7,8 @@ export default class LoginController {
         this.eventBus = new EventBus([
             'submit',
             'inputError',
-            'routeToProfile',
         ]);
-        this.eventBus.subscribe('routeToProfile', router.go);
         this.view = new LoginView(this.eventBus);
-        this.model = new LoginModel(this.eventBus);
+        this.model = new LoginModel(this.eventBus, router);
     }
 }

@@ -8,9 +8,11 @@ export default class LoginModel {
     /**
      * @description Constructor
      * @param {Object} eventBus to call and subscribe for signals
+     * @param {Object} router to route on main page after login
      */
-    constructor(eventBus) {
+    constructor(eventBus, router) {
         this.eventBus = eventBus;
+        this.router = router;
         this.eventBus.subscribe('submit', this.login.bind(this));
     }
 
@@ -38,7 +40,7 @@ export default class LoginModel {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
-                    this.eventBus.call('routeToProfile', '/profile');
+                    this.router.go('/profile', {});
                     break;
                 case 400: // - BadRequest (неверный запрос)
                 case 404: // - NotFound (нет пользвателя с указанным ником)

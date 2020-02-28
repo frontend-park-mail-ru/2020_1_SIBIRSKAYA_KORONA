@@ -44,11 +44,10 @@ export default class JoinModel {
             return;
         }
         apiJoin(userInfo).then((response) => {
-            console.log(response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
-                    this.eventBus.call('routeToProfile', {});
+                    this.router.go('/profile', {});
                     break;
                 case 400: // - BadRequest (неверный запрос)
                     console.log('BadRequest');

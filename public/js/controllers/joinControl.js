@@ -8,13 +8,8 @@ export default class JoinController {
             'submit',
             'userInput',
             'userInputError',
-            'routeToProfile',
         ]);
-        this.eventBus.subscribe('routeToProfile', router.go('/profile'));
         this.view = new JoinView(this.eventBus);
-        this.model = new JoinModel(this.eventBus);
-
-
-
+        this.model = new JoinModel(this.eventBus, router);
     }
 }

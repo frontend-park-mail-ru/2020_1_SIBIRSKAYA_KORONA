@@ -6,15 +6,13 @@ export default class JoinModel {
         this.eventBus = eventBus;
         this.router = router;
 
-        this.eventBus.subscribe('getData', this.getUser.bind(this));
-
         this.putUser = this.putUser.bind(this);
         this.eventBus.subscribe('submitAbout', this.putUser);
         this.eventBus.subscribe('submitPasswords', this.putUser);
         this.eventBus.subscribe('submitEmail', this.putUser);
         this.eventBus.subscribe('submitImg', this.putUser);
-
         this.eventBus.subscribe('userInput', this.validate.bind(this));
+        this.eventBus.subscribe('getData', this.getUser.bind(this));
     }
 
     validate(dataType, data) {
@@ -50,10 +48,8 @@ export default class JoinModel {
 
     putUser(data) {
         if (!this.validateAll(data)) {
-            console.log('INVALID');
             return;
         }
-        console.log(data);
         const formData = new FormData();
         formData.append('newNickname', data.inputNickname);
         formData.append('newName', data.inputName || '');
@@ -67,7 +63,6 @@ export default class JoinModel {
             formData.append('avatarExtension', data.avatar.name.split('.').pop());
         }
         apiPutUser(formData).then((res) => res.json()).then((response) => {
-            console.log('Put status    ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     this.getUser();
@@ -76,7 +71,6 @@ export default class JoinModel {
                     this.router.go('/');
                     break;
                 case 403: // - Forbidden (нет прав)
-                    console.log('403');
                     this.eventBus.call('userInputError', true, 'inputOldPassword');
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
@@ -89,7 +83,7 @@ export default class JoinModel {
 
     getUser() {
         apiGetUser({}).then((response) => {
-            console.log('profile get user' + response.status);
+            // console.log('Profile get user: ' + response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
