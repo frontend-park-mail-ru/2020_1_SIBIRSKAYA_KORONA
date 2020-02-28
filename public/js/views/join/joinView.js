@@ -1,5 +1,3 @@
-'use strict';
-
 import './joinView.tmpl.js';
 
 /**
@@ -37,8 +35,6 @@ export default class JoinView {
         for (const element of formElements) {
             if (element.nodeName === 'INPUT') {
                 element.addEventListener('input', this.handleUserInput);
-                element.addEventListener('blur', this.handleUserInput);
-
                 this.eventBus.subscribe('userInputError', this.displayError);
             }
         }
@@ -52,8 +48,8 @@ export default class JoinView {
         }
     };
 
-    handleUserInput(e) {
-        const inputField = e.target;
+    handleUserInput(event) {
+        const inputField = event.target;
         this.inputtedData[inputField.id] = inputField.value;
         if (inputField.id !== 'inputPasswordRepeat') {
             const type = inputField.id;
@@ -61,8 +57,8 @@ export default class JoinView {
         }
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit(event) {
+        event.preventDefault();
         if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
             this.displayError(false, 'inputPasswordRepeat');
             this.eventBus.call('submit', this.getUserData());

@@ -1,5 +1,3 @@
-'use strict';
-
 import './loginView.tmpl.js';
 
 /**
@@ -36,8 +34,8 @@ export default class LoginView {
         display ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit(event) {
+        event.preventDefault();
         this.eventBus.call('submit', this.getUserData());
     }
 

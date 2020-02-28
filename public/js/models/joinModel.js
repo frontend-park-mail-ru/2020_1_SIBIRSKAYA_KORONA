@@ -1,5 +1,3 @@
-'use strict';
-
 import Validator from '../libs/validator.js';
 import {apiJoin} from '../libs/apiService.js';
 
@@ -35,17 +33,14 @@ export default class JoinModel {
     }
 
     validateAll(data) {
-        return (
-            this.validate('inputName', data.name) &&
+        return this.validate('inputName', data.name) &&
             this.validate('inputSurname', data.surname) &&
             this.validate('inputNickname', data.nickname) &&
-            this.validate('inputPassword', data.password)
-        );
+            this.validate('inputPassword', data.password);
     }
 
     join(userInfo) {
         if (!this.validateAll(userInfo)) {
-            console.log('INVALID');
             return;
         }
         apiJoin(userInfo).then((response) => {
@@ -53,8 +48,7 @@ export default class JoinModel {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
-                    console.log('OK');
-                    this.router.go('/profile', {});
+                    this.eventBus.call('routeToProfile', {});
                     break;
                 case 400: // - BadRequest (неверный запрос)
                     console.log('BadRequest');

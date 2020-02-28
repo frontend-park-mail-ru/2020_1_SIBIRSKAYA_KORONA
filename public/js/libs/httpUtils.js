@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @description Fetch used for CORS
  * @param {string|URL} url - fetch url

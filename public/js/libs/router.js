@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Application router
  */
@@ -12,6 +10,8 @@ export default class Router {
         this.root = root;
         this.routeMap = new Map();
         this.handleMouseClick = this.handleMouseClick.bind(this);
+        this.setRoute = this.setRoute.bind(this);
+
         this.root.addEventListener('click', this.handleMouseClick);
     }
 

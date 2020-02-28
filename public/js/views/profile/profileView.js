@@ -1,5 +1,3 @@
-'use strict';
-
 import './profileView.tmpl.js';
 
 /**
@@ -61,10 +59,8 @@ export default class ProfileView {
         submitButtons.forEach((button) => {
             button.addEventListener('click', this.handleSubmit);
         });
-
         inputs.forEach((input) => {
             input.addEventListener('input', this.handleUserInput);
-            input.addEventListener('blur', this.handleUserInput);
             this.eventBus.subscribe('userInputError', this.showError);
         });
 
@@ -72,8 +68,8 @@ export default class ProfileView {
         inputImage.addEventListener('change', this.handleAvatarChange);
     }
 
-    handleUserInput(e) {
-        const inputField = e.target;
+    handleUserInput(event) {
+        const inputField = event.target;
         this.inputtedData[inputField.id] = inputField.value;
 
         if (inputField.id !== 'inputPasswordRepeat') {
@@ -83,7 +79,6 @@ export default class ProfileView {
     }
 
     showError(show, fieldId, text) {
-        console.log(show, fieldId, text);
         const errorLabel = document.getElementById(fieldId + 'Error');
         show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
         if (text) {
@@ -103,23 +98,23 @@ export default class ProfileView {
         delete this.inputtedData.inputPasswordRepeat;
     }
 
-    handleAvatarChange(e) {
-        e.preventDefault();
-        this.inputtedData.avatar = e.target.files[0];
+    handleAvatarChange(event) {
+        event.preventDefault();
+        this.inputtedData.avatar = event.target.files[0];
         this.inputtedData.inputNickname = document.getElementById('inputNickname').value;
         console.log(this.inputtedData);
         this.eventBus.call('submitImg', this.inputtedData);
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit(event) {
+        event.preventDefault();
         console.log(this.inputtedData);
 
-        const eventBusSubmitSignal = e.target.id;
+        const eventBusSubmitSignal = event.target.id;
         const dataToSend = {
             'inputNickname': document.getElementById('inputNickname').value,
         };
-        switch (e.target.id) {
+        switch (event.target.id) {
             case 'submitAbout':
                 dataToSend.inputName = this.inputtedData.inputName;
                 dataToSend.inputSurname = this.inputtedData.inputSurname;
@@ -128,8 +123,9 @@ export default class ProfileView {
                 if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
                     dataToSend.inputOldPassword = this.inputtedData.inputOldPassword;
                     dataToSend.inputPassword = this.inputtedData.inputPassword;
+                    this.showError(false, 'inputPasswordRepeat');
                 } else {
-                    this.showError(true, 'inputPasswordRepeat', 'Пароли не совпадают');
+                    this.showError(true, 'inputPasswordRepeat');
                     return;
                 }
                 break;
