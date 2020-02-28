@@ -16,6 +16,7 @@ export default class ProfileView {
         this.inputtedData = {};
 
         this.render = this.render.bind(this);
+        this.showError = this.showError.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
         this.handleAvatarChange = this.handleAvatarChange.bind(this);
@@ -37,6 +38,7 @@ export default class ProfileView {
      * @param {object} data user data to render
      */
     renderUserData(data) {
+        this.inputtedData = {};
         this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
         this.addEventListeners();
     }
@@ -87,12 +89,25 @@ export default class ProfileView {
         if (text) {
             errorLabel.innerText = text;
         }
+        if (errorLabel.id === 'inputOldPasswordError') {
+            this.clearPasswordInputs();
+        }
     };
+
+    clearPasswordInputs() {
+        document.getElementById('inputOldPassword').value = '';
+        document.getElementById('inputPassword').value = '';
+        document.getElementById('inputPasswordRepeat').value = '';
+        delete this.inputtedData.inputOldPassword;
+        delete this.inputtedData.inputPassword;
+        delete this.inputtedData.inputPasswordRepeat;
+    }
 
     handleAvatarChange(e) {
         e.preventDefault();
         this.inputtedData.avatar = e.target.files[0];
         this.inputtedData.inputNickname = document.getElementById('inputNickname').value;
+        console.log(this.inputtedData);
         this.eventBus.call('submitImg', this.inputtedData);
     }
 

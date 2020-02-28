@@ -2,7 +2,8 @@
 
 import {fetchCors, fetchGetJson, fetchPostJson} from './httpUtils.js';
 
-const BACKEND_ADDRESS = 'http://localhost:8080/';
+// const BACKEND_ADDRESS = 'http://localhost:8080/';
+const BACKEND_ADDRESS = 'http://89.208.197.150:8080/';
 
 /**
  * @description Register user

@@ -1,8 +1,5 @@
-'use strict';
-
 import Validator from '../libs/validator.js';
-import {apiPutUser, apiGetUser} from '../libs/apiService.js';
-
+import {apiGetUser, apiPutUser} from '../libs/apiService.js';
 
 export default class JoinModel {
     constructor(eventBus, router) {
@@ -69,14 +66,11 @@ export default class JoinModel {
             formData.append('avatar', data.avatar);
             formData.append('avatarExtension', data.avatar.name.split('.').pop());
         }
-
-        apiPutUser(formData).then((response) => {
-            // console.log(response.status);
+        apiPutUser(formData).then((res) => res.json()).then((response) => {
+            console.log('Put status    ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                    if (data.avatar !== void 0) {
-                        this.getUser();
-                    }
+                    this.getUser();
                     break;
                 case 401: // - Unauthorized (не авторизован)
                     this.router.go('/');
