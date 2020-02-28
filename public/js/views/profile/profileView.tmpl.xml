@@ -1,0 +1,118 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div>
+        <div class="header profile-header">
+            <div class="title profile-header-title">
+                <fest:value>data.name</fest:value>
+            </div>
+            <div class="profile-header-item">
+                <img class="avatar-round profile-header-avatar">
+                    <fest:attributes>
+                        <fest:attribute name="src">
+                            <fest:value>data.avatar</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </img>
+            </div>
+            <div class="title profile-header-title">
+                <fest:value>'@'+data.nickname</fest:value>
+            </div>
+        </div>
+        <div class="container-width-800">
+            <div class="form profile">
+                <div class="group-title">
+                    <div class="title">О нас</div>
+                    <div class="hr-width-2"/>
+                </div>
+                <div class="container-2cols">
+                    <div class="input-group profile-input-group">
+                        <form id="formAbout">
+                            <div class="form-input-label">Имя</div>
+                            <div id="inputNameError" class="input-error hidden">Недопустимое имя</div>
+                            <input class="form-input" type="text" id="inputName"
+                                   autocomplete="off">
+                                <fest:attributes>
+                                    <fest:attribute name="value">
+                                        <fest:value>data.name</fest:value>
+                                    </fest:attribute>
+                                </fest:attributes>
+                            </input>
+                            <div class="form-input-label">Фамилия</div>
+                            <div id="inputSurnameError" class="input-error hidden">Недопустимая фамилия</div>
+                            <input class="form-input" type="text" id="inputSurname"
+                                   autocomplete="off">
+                                <fest:attributes>
+                                    <fest:attribute name="value">
+                                        <fest:value>data.surname</fest:value>
+                                    </fest:attribute>
+                                </fest:attributes>
+                            </input>
+                            <div class="form-input-label">Никнейм</div>
+                            <div id="inputNicknameError" class="input-error hidden">Недопустимый ник</div>
+                            <div id="nicknameConflictError" class="input-error hidden">Ник уже занят</div>
+                            <input class="form-input" type="text" id="inputNickname">
+                                <fest:attributes>
+                                    <fest:attribute name="readonly"/>
+                                    <fest:attribute name="value">
+                                        <fest:value>data.nickname</fest:value>
+                                    </fest:attribute>
+                                </fest:attributes>
+                            </input>
+                            <button id="submitAbout" class="primary">Сохранить</button>
+                        </form>
+                    </div>
+                    <div class="profile-avatar-column">
+                        <div class="title profile-mini-group-title">Аватар</div>
+                        <img class="avatar-round profile-avatar" alt="MyName"
+                             title="MyName">
+                            <fest:attributes>
+                                <fest:attribute name="src">
+                                    <fest:value>data.avatar</fest:value>
+                                </fest:attribute>
+                            </fest:attributes>
+                        </img>
+                        <input id="avatarInput" type="file" name="file"/>
+                        <button disabled="" class="secondary">
+                            <label class="secondary" for="avatarInput">
+                                Изменить
+                            </label>
+                        </button>
+                    </div>
+                </div>
+                <div class="group-title">
+                    <div class="title">Безопасность</div>
+                    <div class="hr-width-2"/>
+                </div>
+                <div class="input-group profile-input-group">
+                    <form id="formPasswords">
+                        <div class="form-input-label">Смена пароля</div>
+                        <div id="inputOldPasswordError" class="input-error hidden">Неверный пароль</div>
+                        <input class="form-input" type="password" placeholder="Старый пароль" autocomplete="off"
+                               id="inputOldPassword"/>
+                        <div id="inputPasswordError" class="input-error hidden">Недопустимый пароль</div>
+                        <div id="inputPasswordRepeatError" class="input-error hidden">Пароли не совпадают</div>
+                        <input class="form-input" autocomplete="off" type="password" placeholder="Пароль"
+                               id="inputPassword"/>
+                        <input class="form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
+                               id="inputPasswordRepeat"/>
+                        <button id="submitPasswords" class="secondary">Изменить</button>
+                    </form>
+                </div>
+                <div class="input-group profile-input-group">
+                    <form id="formEmail">
+                        <div class="form-input-label">Смена email</div>
+                        <div id="inputEmailError" class="input-error hidden">Недопустимый email</div>
+                        <input class="form-input" type="email" id="inputEmail"
+                               autocomplete="off">
+                            <fest:attributes>
+                                <fest:attribute name="value">
+                                    <fest:value>data.email</fest:value>
+                                </fest:attribute>
+                            </fest:attributes>
+                        </input>
+                        <button id="submitEmail" class="primary">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</fest:template>
