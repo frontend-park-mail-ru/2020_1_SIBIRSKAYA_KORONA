@@ -119,11 +119,11 @@ textarea {
 
 .form-input {
     background-color: transparent;
-    margin: 0px auto 30px;
+    margin: 0px auto 15px;
 }
 
 .form-input:focus {
-    margin: 0px auto 30px;
+    margin: 0px auto 15px;
     padding-left: 5%;
     width: 95%;
     border-color: #1a73a8;
@@ -183,7 +183,7 @@ textarea {
 }
 
 .hidden {
-    display: none;
+    opacity: 0;
 }
 /*     END COMMON     */
 
