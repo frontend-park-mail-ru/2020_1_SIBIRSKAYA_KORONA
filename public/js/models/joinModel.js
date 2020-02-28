@@ -16,7 +16,6 @@ export default class JoinModel {
     validate(dataType, data) {
         let valid = true;
         switch (dataType) {
-
             case 'inputName':
                 valid = Validator.validateName(data);
                 break;

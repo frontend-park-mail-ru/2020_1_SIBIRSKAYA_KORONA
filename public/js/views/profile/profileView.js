@@ -81,6 +81,7 @@ export default class ProfileView {
     }
 
     showError(show, fieldId, text) {
+        console.log(show, fieldId, text);
         const errorLabel = document.getElementById(fieldId + 'Error');
         show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
         if (text) {

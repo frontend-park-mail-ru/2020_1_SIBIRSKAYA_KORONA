@@ -56,6 +56,7 @@ export default class JoinModel {
             console.log('INVALID');
             return;
         }
+        console.log(data);
         const formData = new FormData();
         formData.append('newNickname', data.inputNickname);
         formData.append('newName', data.inputName || '');
@@ -70,7 +71,7 @@ export default class JoinModel {
         }
 
         this.api.putUser(formData).then((response) => {
-            // console.log(response.status);
+            console.log(response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     if (data.avatar !== void 0) {
@@ -81,6 +82,7 @@ export default class JoinModel {
                     this.router.go('/');
                     break;
                 case 403: // - Forbidden (нет прав)
+                    console.log('403');
                     this.eventBus.call('userInputError', true, 'inputOldPassword');
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
