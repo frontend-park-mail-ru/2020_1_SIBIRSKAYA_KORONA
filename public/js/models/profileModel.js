@@ -1,11 +1,11 @@
 'use strict';
 
 import Validator from '../libs/validator.js';
-import ApiService from '../libs/apiService.js';
+import {apiPutUser, apiGetUser} from '../libs/apiService.js';
+
 
 export default class JoinModel {
     constructor(eventBus, router) {
-        this.api = new ApiService();
         this.eventBus = eventBus;
         this.router = router;
 
@@ -70,8 +70,8 @@ export default class JoinModel {
             formData.append('avatarExtension', data.avatar.name.split('.').pop());
         }
 
-        this.api.putUser(formData).then((response) => {
-            console.log(response.status);
+        apiPutUser(formData).then((response) => {
+            // console.log(response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     if (data.avatar !== void 0) {
@@ -94,7 +94,7 @@ export default class JoinModel {
     }
 
     getUser() {
-        this.api.getUser({}).then((response) => {
+        apiGetUser({}).then((response) => {
             console.log('profile get user' + response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)

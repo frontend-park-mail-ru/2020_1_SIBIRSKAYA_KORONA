@@ -1,12 +1,11 @@
 'use strict';
 
 import Validator from '../libs/validator.js';
-import ApiService from '../libs/apiService.js';
+import {apiJoin} from '../libs/apiService.js';
+
 
 export default class JoinModel {
     constructor(eventBus, router) {
-        this.api = new ApiService();
-
         this.eventBus = eventBus;
         this.router = router;
         this.eventBus.subscribe('submit', this.join.bind(this));
@@ -49,7 +48,7 @@ export default class JoinModel {
             console.log('INVALID');
             return;
         }
-        this.api.join(userInfo).then((response) => {
+        apiJoin(userInfo).then((response) => {
             console.log(response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)

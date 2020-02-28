@@ -1,7 +1,10 @@
+
 'use strict';
 
-import ApiService from '../libs/apiService.js';
+
 import Validator from '../libs/validator.js';
+
+import {apiLogin} from '../libs/apiService.js';
 
 /**
  * Login model
@@ -13,7 +16,6 @@ export default class LoginModel {
      * @param {Object} router to route on main page after login
      */
     constructor(eventBus, router) {
-        this.api = new ApiService();
         this.eventBus = eventBus;
         this.router = router;
 
@@ -40,7 +42,7 @@ export default class LoginModel {
         if (!this.validateLogin(userInfo.nickname) || !this.validatePassword(userInfo.password)) {
             return;
         }
-        this.api.login(userInfo).then((response) => {
+        apiLogin(userInfo).then((response) => {
             console.log('login: ' + response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
