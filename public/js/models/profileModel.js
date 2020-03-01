@@ -31,6 +31,7 @@ export default class JoinModel {
      */
     validate(dataType, data) {
         let valid = true;
+        let errorText;
         switch (dataType) {
             case 'inputName':
                 valid = Validator.validateName(data);
@@ -40,6 +41,11 @@ export default class JoinModel {
                 break;
             case 'inputPassword':
                 valid = Validator.validatePassword(data);
+                errorText = (!valid) ? 'Недопустимый пароль' : '';
+                break;
+            case 'inputOldPassword':
+                valid = Validator.validatePassword(data);
+                errorText = (!valid) ? 'Неверный пароль' : '';
                 break;
             case 'inputEmail':
                 valid = Validator.validateEmail(data);
@@ -47,7 +53,7 @@ export default class JoinModel {
             default:
                 return true;
         }
-        this.eventBus.call('userInputError', !valid, dataType);
+        this.eventBus.call('userInputError', !valid, dataType, errorText);
         return valid;
     }
 
@@ -58,6 +64,7 @@ export default class JoinModel {
      */
     validateAll(data) {
         for (const [key, value] of Object.entries(data)) {
+            console.log(key);
             if (!this.validate(key + '', value)) {
                 return false;
             }
@@ -71,6 +78,7 @@ export default class JoinModel {
      */
     putUser(data) {
         if (!this.validateAll(data)) {
+            console.log('ZALUPA');
             return;
         }
         const formData = new FormData();
