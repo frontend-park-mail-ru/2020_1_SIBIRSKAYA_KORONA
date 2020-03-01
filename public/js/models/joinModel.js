@@ -25,6 +25,7 @@ export default class JoinModel {
      */
     validate(dataType, data) {
         let valid = true;
+        let errorText = '';
         switch (dataType) {
             case 'inputName':
                 valid = Validator.validateName(data);
@@ -33,6 +34,7 @@ export default class JoinModel {
                 valid = Validator.validateSurname(data);
                 break;
             case 'inputNickname':
+                errorText = 'Недопустимый ник';
                 valid = Validator.validateNickname(data);
                 break;
             case 'inputPassword':
@@ -41,7 +43,7 @@ export default class JoinModel {
             default:
                 return false;
         }
-        this.eventBus.call('userInputError', !valid, dataType);
+        this.eventBus.call('userInputError', !valid, dataType, errorText);
         return valid;
     }
 
@@ -76,7 +78,8 @@ export default class JoinModel {
                     console.log('BadRequest');
                     break;
                 case 409: // - Conflict (пользователь с таким ником уже существует)
-                    this.eventBus.call('userInputError', true, 'nicknameConflict');
+                    const errorText = 'Пользователь с таким ником уже существует';
+                    this.eventBus.call('userInputError', true, 'inputNickname', errorText);
                     break;
                 default:
                     console.log('Бэкендер молодец!!!');

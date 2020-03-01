@@ -51,9 +51,11 @@ export default class JoinView {
      */
     showError(show, field, text) {
         const errorLabel = document.getElementById(field + 'Error');
-        show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-        if (text) {
-            errorLabel.innerText = text;
+        if (errorLabel) {
+            show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+            if (text) {
+                errorLabel.innerText = text;
+            }
         }
     };
 
@@ -77,10 +79,10 @@ export default class JoinView {
     handleSubmit(event) {
         event.preventDefault();
         if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
-            this.showError(false, 'inputPasswordRepeat');
+            this.showError(false, 'inputPassword', '');
             this.eventBus.call('submit', this.getUserData());
         } else {
-            this.showError(true, 'inputPasswordRepeat', 'Пароли не совпадают');
+            this.showError(true, 'inputPassword', 'Пароли не совпадают');
         }
     }
 

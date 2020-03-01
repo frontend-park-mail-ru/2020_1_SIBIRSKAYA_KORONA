@@ -72,20 +72,6 @@ export default class ProfileView {
     }
 
     /**
-     * Handle user input
-     * @param {Event} event - input event
-     */
-    handleUserInput(event) {
-        const inputField = event.target;
-        this.inputtedData[inputField.id] = inputField.value;
-
-        if (inputField.id !== 'inputPasswordRepeat') {
-            const type = inputField.id;
-            this.eventBus.call('userInput', type, inputField.value);
-        }
-    }
-
-    /**
      * Displays user input error, is triggered when model validation failed
      * @param {boolean} show - show or hide error string
      * @param {string} field - input with invalid data
@@ -93,14 +79,30 @@ export default class ProfileView {
      */
     showError(show, field, text) {
         const errorLabel = document.getElementById(field + 'Error');
-        show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-        if (text) {
-            errorLabel.innerText = text;
-        }
-        if (errorLabel.id === 'inputOldPasswordError') {
-            this.clearPasswordInputs();
+        if (errorLabel) {
+            show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
+            if (text) {
+                errorLabel.innerText = text;
+            }
+            if (errorLabel.id === 'inputOldPasswordError') {
+                this.clearPasswordInputs();
+            }
         }
     };
+
+    /**
+     * Handle user input
+     * @param {Event} event - input event
+     */
+    handleUserInput(event) {
+        const inputField = event.target;
+        this.inputtedData[inputField.id] = inputField.value;
+
+        if (inputField.id !== 'inputPasswordRepeat' && inputField.id !== 'inputOldPassword') {
+            const type = inputField.id;
+            this.eventBus.call('userInput', type, inputField.value);
+        }
+    }
 
     /**
      * Clear iser inputted data from password fields
@@ -147,9 +149,9 @@ export default class ProfileView {
                 if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
                     dataToSend.inputOldPassword = this.inputtedData.inputOldPassword;
                     dataToSend.inputPassword = this.inputtedData.inputPassword;
-                    this.showError(false, 'inputPasswordRepeat');
+                    this.showError(false, 'inputPassword');
                 } else {
-                    this.showError(true, 'inputPasswordRepeat');
+                    this.showError(true, 'inputPassword', 'Пароли не совпадают');
                     return;
                 }
                 break;

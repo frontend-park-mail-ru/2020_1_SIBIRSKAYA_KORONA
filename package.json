@@ -4,11 +4,16 @@
   "description": "Репозиторий фронтенда",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --fix . && echo '  LINT OK, NO GOVNOKOD DETECTED'",
+    "lint": "eslint --fix . && echo '  LINT OK'",
     "start": "node server/server.js",
     "prestart": "./node_modules/.bin/fest-build --dir=public",
     "sync_start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "repository": {
     "type": "git",

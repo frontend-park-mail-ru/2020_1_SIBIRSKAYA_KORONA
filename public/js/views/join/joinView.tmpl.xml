@@ -23,7 +23,7 @@
                 </fest:attributes>
             </input>
             <div id="inputNicknameError" class="input-error hidden">Недопустимый ник</div>
-            <div id="nicknameConflictError" class="input-error hidden">Ник уже занят</div>
+            <!--<div id="nicknameConflictError" class="input-error hidden">Ник уже занят</div>-->
             <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Ник"
                    id="inputNickname">
                 <fest:attributes>
@@ -33,7 +33,7 @@
                 </fest:attributes>
             </input>
             <div id="inputPasswordError" class="input-error hidden">Недопустимый пароль</div>
-            <div id="inputPasswordRepeatError" class="input-error hidden">Пароли не совпадают</div>
+            <!--<div id="inputPasswordRepeatError" class="input-error hidden">Пароли не совпадают</div>-->
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль"
                    id="inputPassword"/>
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
