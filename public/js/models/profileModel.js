@@ -86,6 +86,7 @@ export default class JoinModel {
             formData.append('avatarExtension', data.avatar.name.split('.').pop());
         }
         apiPutUser(formData).then((res) => res.json()).then((response) => {
+            console.log('PUT USER : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     this.getUser();
@@ -109,7 +110,7 @@ export default class JoinModel {
      */
     getUser() {
         apiGetUser({}).then((response) => {
-            // console.log('Profile get user: ' + response.status);
+            console.log('GET USER : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
