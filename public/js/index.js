@@ -17,10 +17,4 @@ document.addEventListener('DOMContentLoaded', () => {
     router.setRoute('/join', joinController.view.render);
 
     router.go(window.location.pathname, {});
-
-    window.onpopstate = (event) => {
-        console.log(event);
-        event.preventDefault();
-        console.log('ZALUPA');
-    };
 });
