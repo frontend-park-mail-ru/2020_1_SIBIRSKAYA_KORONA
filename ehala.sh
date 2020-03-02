@@ -1,11 +1,7 @@
 #!/bin/bash
 
-BACKEND_DIR="/home/gavroman/tp/2sem/tp_back/2020_1_SIBIRSKAYA_KORONA"
-FRONTEND_DIR="/home/gavroman/tp/2sem/tp_front/2020_1_SIBIRSKAYA_KORONA"
-
-# BACKEND_DIR="/home/ubuntu/backend/"
-# FRONTEND_DIR="/home/ubuntu/frontend/"
-
+BACKEND_DIR="/home/ubuntu/backend/"
+FRONTEND_DIR="/home/ubuntu/frontend/"
 
 echo "Run frontend"
 cd $FRONTEND_DIR
@@ -21,5 +17,5 @@ cd $BACKEND_DIR
 git checkout deploy-test && git pull
 kill -9 `pgrep "main"`
 go build main.go
-./main
+./main&
 echo "Backend is running"
