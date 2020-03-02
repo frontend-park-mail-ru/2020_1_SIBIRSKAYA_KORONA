@@ -49,6 +49,7 @@ export default class ProfileView {
             document.getElementById('submitAbout'),
             document.getElementById('submitPasswords'),
             document.getElementById('submitEmail'),
+            document.getElementById('logout'),
         ];
         const inputs = [
             document.getElementById('inputName'),
@@ -163,6 +164,8 @@ export default class ProfileView {
                     return;
                 }
                 dataToSend.inputEmail = this.inputtedData.inputEmail;
+                break;
+            default:
                 break;
         }
         console.log(dataToSend);

@@ -486,6 +486,10 @@ textarea {
     font-size: 20pt;
 }
 
+.profile-header-logout {
+    margin-right: 20px
+}
+
 .profile-header-avatar {
     height: 50px;
     width: 50px;

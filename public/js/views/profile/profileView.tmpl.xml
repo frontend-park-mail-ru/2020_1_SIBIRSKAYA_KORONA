@@ -14,7 +14,12 @@
                 </img>
             </div>
             <div class="title profile-header-title">
-                <fest:value>'@'+data.nickname</fest:value>
+                <div class="board-header-buttons">
+                    <div class="profile-header-logout">
+                        <fest:value>'@'+data.nickname</fest:value>
+                    </div>
+                    <button id="logout" class="danger">Выйти</button>
+                </div>
             </div>
         </div>
         <div class="container-width-800">
