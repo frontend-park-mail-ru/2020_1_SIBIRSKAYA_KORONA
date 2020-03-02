@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {apiGetUser, apiPutUser, apiLogout} from '../libs/apiService.js';
+import {settingsGet, settingsPut, sessionDelete} from '../libs/apiService.js';
 
 /**
  * Profile model
@@ -110,7 +110,7 @@ export default class JoinModel {
         }
         console.log(formData);
 
-        apiPutUser(formData).then((res) => res.json()).then((response) => {
+        settingsPut(formData).then((response) => {
             console.log('PUT USER : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
@@ -134,7 +134,7 @@ export default class JoinModel {
      * Use api to get user data and settings from backend
      */
     getUser() {
-        apiGetUser({}).then((response) => {
+        settingsGet({}).then((response) => {
             console.log('GET USER : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
@@ -158,7 +158,7 @@ export default class JoinModel {
      * Use api to logout user
      */
     logout() {
-        apiLogout().then((res) => res.json()).then((response) => {
+        sessionDelete().then((response) => {
             console.log('LOGOUT : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
