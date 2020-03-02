@@ -64,7 +64,7 @@ export default class JoinModel {
      */
     validateAll(data) {
         for (const [key, value] of Object.entries(data)) {
-            console.log(key);
+            // console.log(key);
             if (!this.validate(key + '', value)) {
                 return false;
             }
@@ -73,26 +73,42 @@ export default class JoinModel {
     }
 
     /**
+     * Appends value to form data if value is not empty
+     * @param {FormData} formData - Form to add fields
+     * @param {string} fieldName - field key
+     * @param {string} fieldValue - field value
+     * @return {boolean} true if value was appended
+     */
+    appendFieldIfNotEmpty(formData, fieldName, fieldValue) {
+        if (fieldValue) {
+            formData.append(fieldName, fieldValue);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Use api to send data to backend and change user settings
      * @param {Object} data - user data to update
      */
     putUser(data) {
         if (!this.validateAll(data)) {
-            console.log('ZALUPA');
             return;
         }
+        console.log(data);
         const formData = new FormData();
-        formData.append('newNickname', data.inputNickname);
-        formData.append('newName', data.inputName || '');
-        formData.append('newSurname', data.inputSurname || '');
-        formData.append('newEmail', data.inputEmail || '');
-        formData.append('oldPassword', data.inputOldPassword || '');
-        formData.append('newPassword', data.inputPassword || '');
-
+        this.appendFieldIfNotEmpty(formData, 'newNickname', data.inputNickname);
+        this.appendFieldIfNotEmpty(formData, 'newName', data.inputName);
+        this.appendFieldIfNotEmpty(formData, 'newSurname', data.inputSurname);
+        this.appendFieldIfNotEmpty(formData, 'newEmail', data.inputEmail);
+        this.appendFieldIfNotEmpty(formData, 'oldPassword', data.inputOldPassword);
+        this.appendFieldIfNotEmpty(formData, 'newPassword', data.inputPassword);
         if (data.avatar !== void 0) {
-            formData.append('avatar', data.avatar);
-            formData.append('avatarExtension', data.avatar.name.split('.').pop());
+            this.appendFieldIfNotEmpty(formData, 'avatar', data.avatar);
+            this.appendFieldIfNotEmpty(formData, 'avatarExtension', data.avatar.name.split('.').pop());
         }
+        console.log(formData);
+
         apiPutUser(formData).then((res) => res.json()).then((response) => {
             console.log('PUT USER : ', response.status);
             switch (response.status) {

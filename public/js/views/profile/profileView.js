@@ -134,18 +134,21 @@ export default class ProfileView {
      */
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.inputtedData);
-
-        const eventBusSubmitSignal = event.target.id;
         const dataToSend = {
             'inputNickname': document.getElementById('inputNickname').value,
         };
         switch (event.target.id) {
             case 'submitAbout':
+                if (!this.inputtedData.inputName || !this.inputtedData.inputName) {
+                    return;
+                }
                 dataToSend.inputName = this.inputtedData.inputName;
                 dataToSend.inputSurname = this.inputtedData.inputSurname;
                 break;
             case 'submitPasswords':
+                if (!this.inputtedData.inputPassword || !this.inputtedData.inputOldPassword) {
+                    return;
+                }
                 if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
                     dataToSend.inputOldPassword = this.inputtedData.inputOldPassword;
                     dataToSend.inputPassword = this.inputtedData.inputPassword;
@@ -156,9 +159,14 @@ export default class ProfileView {
                 }
                 break;
             case 'submitEmail':
+                if (!this.inputtedData.inputEmail) {
+                    return;
+                }
                 dataToSend.inputEmail = this.inputtedData.inputEmail;
                 break;
         }
+        console.log(dataToSend);
+        const eventBusSubmitSignal = event.target.id;
         this.eventBus.call(eventBusSubmitSignal, dataToSend);
     }
 }
