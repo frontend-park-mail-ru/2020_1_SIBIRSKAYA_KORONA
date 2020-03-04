@@ -16,10 +16,12 @@ export default class ProfileController {
             'submitPasswords',
             'submitEmail',
             'submitImg',
+            'logout',
             'getData',
             'gotData',
             'userInput',
             'userInputError',
+            'wrongPassword',
         ]);
         this.model = new ProfileModel(this.eventBus, router);
         this.view = new ProfileView(this.eventBus);

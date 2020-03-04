@@ -1,26 +1,25 @@
 import './profileView.tmpl.js';
+import BaseView from '../baseView.js';
 
 /**
  * View of profile page
  */
-export default class ProfileView {
+export default class ProfileView extends BaseView {
     /**
      * View constructor
      * @param {Object} eventBus for share events with model
      */
     constructor(eventBus) {
-        this.eventBus = eventBus;
-        this.root = document.getElementById('application');
-        this.inputtedData = {};
+        super(eventBus);
 
         this.render = this.render.bind(this);
-        this.showError = this.showError.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
         this.handleAvatarChange = this.handleAvatarChange.bind(this);
 
-        this.eventBus.subscribe('gotData', this.renderUserData.bind(this));
         this.eventBus.subscribe('userInputError', this.showError);
+        this.eventBus.subscribe('gotData', this.renderUserData.bind(this));
+        this.eventBus.subscribe('wrongPassword', this.clearPasswordInputs.bind(this));
     }
 
     /**
@@ -49,6 +48,7 @@ export default class ProfileView {
             document.getElementById('submitAbout'),
             document.getElementById('submitPasswords'),
             document.getElementById('submitEmail'),
+            document.getElementById('logout'),
         ];
         const inputs = [
             document.getElementById('inputName'),
@@ -79,31 +79,14 @@ export default class ProfileView {
         const inputField = event.target;
         this.inputtedData[inputField.id] = inputField.value;
 
-        if (inputField.id !== 'inputPasswordRepeat') {
+        if (inputField.id !== 'inputPasswordRepeat' && inputField.id !== 'inputOldPassword') {
             const type = inputField.id;
             this.eventBus.call('userInput', type, inputField.value);
         }
     }
 
     /**
-     * Displays user input error, is triggered when model validation failed
-     * @param {boolean} show - show or hide error string
-     * @param {string} field - input with invalid data
-     * @param {string} text - optional error text
-     */
-    showError(show, field, text) {
-        const errorLabel = document.getElementById(field + 'Error');
-        show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-        if (text) {
-            errorLabel.innerText = text;
-        }
-        if (errorLabel.id === 'inputOldPasswordError') {
-            this.clearPasswordInputs();
-        }
-    };
-
-    /**
-     * Clear iser inputted data from password fields
+     * Clear user inputted data from password fields
      */
     clearPasswordInputs() {
         document.getElementById('inputOldPassword').value = '';
@@ -122,7 +105,6 @@ export default class ProfileView {
         event.preventDefault();
         this.inputtedData.avatar = event.target.files[0];
         this.inputtedData.inputNickname = document.getElementById('inputNickname').value;
-        console.log(this.inputtedData);
         this.eventBus.call('submitImg', this.inputtedData);
     }
 
@@ -132,31 +114,38 @@ export default class ProfileView {
      */
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.inputtedData);
-
-        const eventBusSubmitSignal = event.target.id;
         const dataToSend = {
             'inputNickname': document.getElementById('inputNickname').value,
         };
         switch (event.target.id) {
             case 'submitAbout':
+                if (!this.inputtedData.inputName || !this.inputtedData.inputName) {
+                    return;
+                }
                 dataToSend.inputName = this.inputtedData.inputName;
                 dataToSend.inputSurname = this.inputtedData.inputSurname;
                 break;
             case 'submitPasswords':
-                if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
+                if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat &&
+                    this.inputtedData.inputPassword !== '') {
                     dataToSend.inputOldPassword = this.inputtedData.inputOldPassword;
                     dataToSend.inputPassword = this.inputtedData.inputPassword;
-                    this.showError(false, 'inputPasswordRepeat');
+                    this.showError({show: false, field: 'inputPassword'});
                 } else {
-                    this.showError(true, 'inputPasswordRepeat');
+                    this.showError({show: true, field: 'inputPassword', text: 'Пароли не совпадают'});
                     return;
                 }
                 break;
             case 'submitEmail':
+                if (!this.inputtedData.inputEmail) {
+                    return;
+                }
                 dataToSend.inputEmail = this.inputtedData.inputEmail;
                 break;
+            default:
+                break;
         }
+        const eventBusSubmitSignal = event.target.id;
         this.eventBus.call(eventBusSubmitSignal, dataToSend);
     }
 }

@@ -34,32 +34,32 @@ input[type=file] {
     z-index: -1;
 }
 
-/*input[type=file].primary,*/ button.primary {
+button.primary {
     background-color: #00c12c;
     box-shadow: 0 0 7px 1px #1c6d09;
 }
 
-/*input[type=file].primary,*/ button.primary:hover {
+button.primary:hover {
     background-color: #10a213;
     box-shadow: 0 0 7px 2px #007c05;
 }
 
-/*input[type=file].primary,*/ button.secondary {
+button.secondary {
     background-color: #03A9F4;
     box-shadow: 0 0 7px 1px #172a53;
 }
 
-/*input[type=file].primary,*/ button.secondary:hover {
+button.secondary:hover {
     background-color: #4040ff;
     box-shadow: 0 0 7px 2px #041a55;
 }
 
-/*input[type=file].primary,*/ button.danger {
+button.danger {
     background-color: #E91E63;
     box-shadow: 0 0 7px 1px #320c19;
 }
 
-/*input[type=file].primary,*/ button.danger:hover {
+button.danger:hover {
     background-color: #ce0000;
     box-shadow: 0 0 7px 2px #4a0214;
 }
@@ -107,7 +107,6 @@ textarea {
     margin-bottom: 35px;
     background-color: #f8f8ff;
 }
-
 
 .form-input-label {
     margin-bottom: 10px;
@@ -183,7 +182,7 @@ textarea {
 }
 
 .hidden {
-    display: none;
+    opacity: 0;
 }
 /*     END COMMON     */
 
@@ -336,7 +335,7 @@ textarea {
 .auth-form-title {
     font-size: 20pt;
     text-align: center;
-    margin: 0 0 32px 0;
+    margin: 0 0 15px 0;
     letter-spacing: 6px;
 }
 
@@ -485,6 +484,10 @@ textarea {
     min-width: 33%;
     color: white;
     font-size: 20pt;
+}
+
+.profile-header-logout {
+    margin-right: 20px
 }
 
 .profile-header-avatar {
