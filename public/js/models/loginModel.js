@@ -51,7 +51,6 @@ export default class LoginModel {
             return;
         }
         sessionPost(userInfo).then((response) => {
-            console.log('LOGIN : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)

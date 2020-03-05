@@ -31,31 +31,34 @@ export default class JoinModel {
      * @return {boolean} is valid
      */
     validate(dataType, data) {
-        let valid = true;
-        let errorText;
+        const eventBusCallParams = {
+            text: '', // error text
+            show: false, // show error or not
+            field: dataType, // field with invalid input data
+        };
         switch (dataType) {
             case 'inputName':
-                valid = Validator.validateName(data);
+                eventBusCallParams.show = !Validator.validateName(data);
                 break;
             case 'inputSurname':
-                valid = Validator.validateSurname(data);
+                eventBusCallParams.show = !Validator.validateSurname(data);
                 break;
             case 'inputPassword':
-                valid = Validator.validatePassword(data);
-                errorText = (!valid) ? 'Недопустимый пароль' : '';
+                eventBusCallParams.show = data === '' || !Validator.validatePassword(data);
+                eventBusCallParams.text = (eventBusCallParams.show) ? 'Недопустимый пароль' : '';
                 break;
             case 'inputOldPassword':
-                valid = Validator.validatePassword(data);
-                errorText = (!valid) ? 'Неверный пароль' : '';
+                eventBusCallParams.show = data === '' || !Validator.validatePassword(data);
+                eventBusCallParams.text = (eventBusCallParams.show) ? 'Неверный пароль' : '';
                 break;
             case 'inputEmail':
-                valid = Validator.validateEmail(data);
+                eventBusCallParams.show = !Validator.validateEmail(data);
                 break;
             default:
                 return true;
         }
-        this.eventBus.call('userInputError', !valid, dataType, errorText);
-        return valid;
+        this.eventBus.call('userInputError', eventBusCallParams);
+        return !eventBusCallParams.show;
     }
 
     /**
@@ -65,8 +68,7 @@ export default class JoinModel {
      */
     validateAll(data) {
         for (const [key, value] of Object.entries(data)) {
-            // console.log(key);
-            if (!this.validate(key + '', value)) {
+            if (!value || !this.validate(key + '', value)) {
                 return false;
             }
         }
@@ -96,7 +98,6 @@ export default class JoinModel {
         if (!this.validateAll(data)) {
             return;
         }
-        console.log(data);
         const formData = new FormData();
         this.appendFieldIfNotEmpty(formData, 'newNickname', data.inputNickname);
         this.appendFieldIfNotEmpty(formData, 'newName', data.inputName);
@@ -108,10 +109,7 @@ export default class JoinModel {
             this.appendFieldIfNotEmpty(formData, 'avatar', data.avatar);
             this.appendFieldIfNotEmpty(formData, 'avatarExtension', data.avatar.name.split('.').pop());
         }
-        console.log(formData);
-
         settingsPut(formData).then((response) => {
-            console.log('PUT USER : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     this.getUser();
@@ -120,7 +118,8 @@ export default class JoinModel {
                     this.router.go('/');
                     break;
                 case 403: // - Forbidden (нет прав)
-                    this.eventBus.call('userInputError', true, 'inputOldPassword');
+                    this.eventBus.call('wrongPassword');
+                    this.eventBus.call('userInputError', {show: true, field: 'inputOldPassword'});
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;
@@ -134,8 +133,7 @@ export default class JoinModel {
      * Use api to get user data and settings from backend
      */
     getUser() {
-        settingsGet({}).then((response) => {
-            console.log('GET USER : ', response.status);
+        settingsGet().then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
@@ -159,10 +157,9 @@ export default class JoinModel {
      */
     logout() {
         sessionDelete().then((response) => {
-            console.log('LOGOUT : ', response.status);
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                case 303: // - SeeOther (смотреть другое, редирект на логин)
+                case 303: // - нет куки (Уже разлогинен)
                     this.router.go('/login');
             }
         });

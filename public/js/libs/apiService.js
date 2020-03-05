@@ -8,7 +8,7 @@ const BACKEND_ADDRESS = 'http://localhost:8080/';
 /**
  * @description Register user; create new user settings
  * @param {Object} userInfo - user info object
- * @return {Promise<any>}
+ * @return {Promise<Response>}
  */
 export const settingsPost = (userInfo) => {
     const apiUrl = new URL('settings', BACKEND_ADDRESS);
@@ -18,7 +18,7 @@ export const settingsPost = (userInfo) => {
 
 /**
  * @description Get current user settings
- * @return {Promise<any>}
+ * @return {Promise<Response>}
  */
 export const settingsGet = () => {
     const apiUrl = new URL('settings', BACKEND_ADDRESS);
@@ -29,7 +29,7 @@ export const settingsGet = () => {
 /**
  * @description Update current user settings
  * @param {FormData} userForm - form with new user data
- * @return {Promise<any>}
+ * @return {Promise<Response>}
  */
 export const settingsPut = (userForm) => {
     const apiUrl = new URL('settings', BACKEND_ADDRESS);
@@ -43,7 +43,7 @@ export const settingsPut = (userForm) => {
 /**
  * @description Login user; create user session
  * @param {Object} userInfo - user info object
- * @return {Promise<any>}
+ * @return {Promise<Response>}
  */
 export const sessionPost = (userInfo) => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
@@ -53,7 +53,7 @@ export const sessionPost = (userInfo) => {
 
 /**
  * @description Check if current user is logged in
- * @return {Promise<any>}
+ * @return {Promise<Response>}
  */
 export const sessionGet = () => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
@@ -63,7 +63,7 @@ export const sessionGet = () => {
 
 /**
  * @description Logout current user
- * @return {Promise<any>}
+ * @return {Promise<Response>}
  */
 export const sessionDelete = () => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
@@ -76,7 +76,7 @@ export const sessionDelete = () => {
 /**
  * @description Get public user info by nickname
  * @param {string} nickname - user nickname
- * @return {Promise<any>}
+ * @return {Promise<Response>}
  */
 export const profileGet = (nickname) => {
     const apiUrl = new URL(`profile/${nickname}`, BACKEND_ADDRESS);

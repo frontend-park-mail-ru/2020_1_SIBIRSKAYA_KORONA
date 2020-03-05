@@ -1,22 +1,19 @@
 import './joinView.tmpl.js';
+import BaseView from '../baseView.js';
 
 /**
  * View of join page
  */
-export default class JoinView {
+export default class JoinView extends BaseView {
     /**
      * View constructor
      * @param {object} eventBus - local event bus
      */
     constructor(eventBus) {
-        this.eventBus = eventBus;
-        this.root = document.getElementById('application');
-        this.inputtedData = {};
-
+        super(eventBus);
         this.render = this.render.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
-        this.showError = this.showError.bind(this);
     }
 
     /**
@@ -49,15 +46,6 @@ export default class JoinView {
      * @param {string} field - input with invalid data
      * @param {string} text - optional error text
      */
-    showError(show, field, text) {
-        const errorLabel = document.getElementById(field + 'Error');
-        if (errorLabel) {
-            show ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
-            if (text) {
-                errorLabel.innerText = text;
-            }
-        }
-    };
 
     /**
      * Handle user input
@@ -79,10 +67,10 @@ export default class JoinView {
     handleSubmit(event) {
         event.preventDefault();
         if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
-            this.showError(false, 'inputPassword', '');
+            this.showError({show: false, field: 'inputPassword'});
             this.eventBus.call('submit', this.getUserData());
         } else {
-            this.showError(true, 'inputPassword', 'Пароли не совпадают');
+            this.showError({show: true, field: 'inputPassword', text: 'Пароли не совпадают'});
         }
     }
 
