@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {apiLogin} from '../libs/apiService.js';
+import {sessionPost} from '../libs/apiService.js';
 
 /**
  * Login model
@@ -50,7 +50,8 @@ export default class LoginModel {
         if (!this.validateLogin(userInfo.nickname) || !this.validatePassword(userInfo.password)) {
             return;
         }
-        apiLogin(userInfo).then((response) => {
+
+        sessionPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)

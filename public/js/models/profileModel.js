@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {apiGetUser, apiLogout, apiPutUser} from '../libs/apiService.js';
+import {settingsGet, settingsPut, sessionDelete} from '../libs/apiService.js';
 
 /**
  * Profile model
@@ -109,7 +109,8 @@ export default class JoinModel {
             this.appendFieldIfNotEmpty(formData, 'avatar', data.avatar);
             this.appendFieldIfNotEmpty(formData, 'avatarExtension', data.avatar.name.split('.').pop());
         }
-        apiPutUser(formData).then((res) => res.json()).then((response) => {
+
+        settingsPut(formData).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     this.getUser();
@@ -117,11 +118,11 @@ export default class JoinModel {
                 case 401: // - Unauthorized (не авторизован)
                     this.router.go('/');
                     break;
-                case 403: // - Forbidden (нет прав)
+                case 404: // - NotFound (нет пользвателя с указанным ником)
+                    break;
+                case 412: // - StatusPreconditionFailed (неверный пароль)
                     this.eventBus.call('wrongPassword');
                     this.eventBus.call('userInputError', {show: true, field: 'inputOldPassword'});
-                    break;
-                case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -133,7 +134,7 @@ export default class JoinModel {
      * Use api to get user data and settings from backend
      */
     getUser() {
-        apiGetUser({}).then((response) => {
+        settingsGet().then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
@@ -156,7 +157,7 @@ export default class JoinModel {
      * Use api to logout user
      */
     logout() {
-        apiLogout().then((res) => res.json()).then((response) => {
+        sessionDelete().then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 303: // - нет куки (Уже разлогинен)

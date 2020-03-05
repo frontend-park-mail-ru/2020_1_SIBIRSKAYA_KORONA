@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {apiJoin} from '../libs/apiService.js';
+import {settingsPost} from '../libs/apiService.js';
 
 /**
  * Join(Registration) model
@@ -70,7 +70,8 @@ export default class JoinModel {
         if (!this.validateAll(userInfo)) {
             return;
         }
-        apiJoin(userInfo).then((response) => {
+
+        settingsPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
