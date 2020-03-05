@@ -109,6 +109,7 @@ export default class JoinModel {
             this.appendFieldIfNotEmpty(formData, 'avatar', data.avatar);
             this.appendFieldIfNotEmpty(formData, 'avatarExtension', data.avatar.name.split('.').pop());
         }
+
         settingsPut(formData).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
@@ -117,11 +118,11 @@ export default class JoinModel {
                 case 401: // - Unauthorized (не авторизован)
                     this.router.go('/');
                     break;
-                case 403: // - Forbidden (нет прав)
+                case 404: // - NotFound (нет пользвателя с указанным ником)
+                    break;
+                case 412: // - StatusPreconditionFailed (неверный пароль)
                     this.eventBus.call('wrongPassword');
                     this.eventBus.call('userInputError', {show: true, field: 'inputOldPassword'});
-                    break;
-                case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;
                 default:
                     console.log('Бекендер молодец!!!');

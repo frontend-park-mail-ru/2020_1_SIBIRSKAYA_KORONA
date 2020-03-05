@@ -70,6 +70,7 @@ export default class JoinModel {
         if (!this.validateAll(userInfo)) {
             return;
         }
+
         settingsPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)

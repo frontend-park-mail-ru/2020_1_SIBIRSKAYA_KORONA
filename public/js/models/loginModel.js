@@ -50,6 +50,7 @@ export default class LoginModel {
         if (!this.validateLogin(userInfo.nickname) || !this.validatePassword(userInfo.password)) {
             return;
         }
+
         sessionPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
