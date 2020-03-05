@@ -47,7 +47,7 @@ export const settingsPut = (userForm) => {
  */
 export const sessionPost = (userInfo) => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
-    return fetchPost(apiUrl.href, userInfo)
+    return fetchPost(apiUrl.href, JSON.stringify(userInfo))
         .then((response) => response.json());
 };
 
