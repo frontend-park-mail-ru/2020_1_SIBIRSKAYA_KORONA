@@ -442,6 +442,12 @@ textarea {
     margin-bottom: 0;
 }
 
+.board-task-label-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .board-task-label-mini {
     background: greenyellow;
     width: fit-content;
@@ -450,6 +456,7 @@ textarea {
     word-wrap: break-word;
     max-width: 100%;
     box-sizing: border-box;
+    margin: 2px;
 }
 
 .board-task-description-mini {
