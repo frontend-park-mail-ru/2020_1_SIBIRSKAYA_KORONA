@@ -1,6 +1,9 @@
 /*   COMMON   */
 body {
     font-family: 'Fox', sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 a {
@@ -357,13 +360,16 @@ textarea {
 
 /*        BOARD        */
 .board {
+    display: flex;
+    flex-direction: column;
     background-color: #bac1c3d1;
-    height: 100vh;
+    flex-grow: 1
 }
 
 .board-header {
     background-color: #4f6dffbd;
     max-height: 6vh;
+    height: 6vh;
 }
 
 .board-header button {
@@ -381,7 +387,7 @@ textarea {
     overflow-x: auto;
     width: 100%;
     padding-top: 10px;
-    max-height: 80vh;
+    flex-grow: 1;
 }
 
 .board-header-buttons {
