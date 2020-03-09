@@ -363,6 +363,7 @@ textarea {
 
 .board-header {
     background-color: #4f6dffbd;
+    max-height: 6vh;
 }
 
 .board-header button {
@@ -378,8 +379,9 @@ textarea {
 .board-card-container {
     display: flex;
     overflow-x: auto;
-    width: fit-content;
+    width: 100%;
     padding-top: 10px;
+    max-height: 80vh;
 }
 
 .board-header-buttons {
@@ -390,10 +392,13 @@ textarea {
 }
 
 .board-card {
+    display: flex;
+    flex-direction: column;
     border-radius: 5px;
     height: fit-content;
     min-width: 272px;
     max-width: 272px;
+    max-height: 75vh;
     padding: 0 4px 8px;
     margin: 0 5px;
     background: #ededed;
@@ -402,10 +407,10 @@ textarea {
 
 .board-card-title {
     font-size: 22px;
-    margin: 5px;
     word-wrap: break-word;
     max-width: 100%;
     margin: 15px 10px 10px 15px;
+    max-height: 20%;
 }
 
 .board-task-list {
@@ -413,7 +418,7 @@ textarea {
     flex-direction: column;
     height: fit-content;
     overflow-y: auto;
-    max-height: 80vh;
+    max-height: 80%;
     padding: 0 4px;
 }
 
