@@ -1,20 +1,699 @@
-import Router from './libs/router.js';
-import JoinController from './controllers/joinControl.js';
-import LoginController from './controllers/loginControl.js';
-import ProfileController from './controllers/profileControl.js';
+import '/js/views/board/board.tmpl.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
-    const application = document.getElementById('application');
-    const router = new Router(application);
+    const f = window.fest['js/views/board/board.tmpl'];
 
-    const joinController = new JoinController(router);
-    const loginController = new LoginController(router);
-    const profileController = new ProfileController(router);
+    const boardData = {
+        title: 'MyBoardName',
+        members: [
+            {
+                url: '/mem1',
+                nickname: 'member 1',
+                avatar: 'img/default_avatar.png',
+            },
+            {
+                url: '/mem2',
+                nickname: 'member 2',
+                avatar: 'img/default_avatar.png',
+            },
+        ],
+        columns: [
+            {
+                title: 'COLUMN 1',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
 
-    router.setRoute('/', profileController.view.render);
-    router.setRoute('/login', loginController.view.render);
-    router.setRoute('/profile', profileController.view.render);
-    router.setRoute('/join', joinController.view.render);
 
-    router.go(window.location.pathname);
+                ],
+            },
+            {
+                title: 'COLUMN 2',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+
+
+                ],
+            },
+            {
+                title: 'COLUMN 1',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+
+
+                ],
+            },
+            {
+                title: 'COLUMN 2',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+
+
+                ],
+            },
+            {
+                title: 'COLUMN 1',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+
+
+                ],
+            },
+            {
+                title: 'COLUMN 2',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+
+
+                ],
+            },
+            {
+                title: 'COLUMN 1',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+
+
+                ],
+            },
+            {
+                title: 'COLUMN 2',
+                tasks: [
+                    {
+                        labels: [
+                            {
+                                title: 'Label 1',
+                            },
+                            {
+                                title: 'Label 2',
+                            },
+                        ],
+                        description: 'My task description 1',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+                    {
+                        labels: [
+                            {
+                                title: 'Label 3',
+                            },
+                            {
+                                title: 'Label 4',
+                            },
+                        ],
+                        description: 'My task description 2',
+                        members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: 'img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: 'img/default_avatar.png',
+                            },
+                        ],
+                    },
+
+
+                ],
+            },
+        ],
+
+    };
+
+    document.body.innerHTML = f(boardData);
 });

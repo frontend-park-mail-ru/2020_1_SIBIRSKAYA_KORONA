@@ -1,67 +1,68 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
+    <div class="board">
 
-    <div class="header board-header">
-        <div class="title board-header-title">
-            <fest:value>board.title</fest:value>
+        <div class="header board-header">
+            <div class="title board-header-title">
+                <fest:value>board.title</fest:value>
+            </div>
+
+            <div class="board-member-container">
+                <fest:for iterate="board.members" index="i" value="member">
+                    <a class="member" href="{member.url}">
+                        <img class="board-member"
+                             src="{member.avatar}"
+                             alt="{member.nickname}"
+                             title="{member.nickname}"/>
+                    </a>
+                </fest:for>
+            </div>
+
+            <div class="board-header-buttons">
+                <button class="secondary">Settings</button>
+                <button class="danger">Delete board</button>
+                <button class="primary">Profile</button>
+            </div>
         </div>
 
-        <div class="board-member-container">
-            <fest:for iterate="board.members" index="i" value="member">
-                <a class="member" href="{member.url}">
-                    <img class="board-member"
-                         src="{member.avatar}"
-                         alt="{member.nickname}"
-                         title="{member.nickname}"/>
-                </a>
+        <div class="board-card-container">
+            <fest:for iterate="board.columns" index="i" value="column">
+                <div class="board-card">
+                    <div class="title board-card-title">
+                        <fest:value>
+                            column.title
+                        </fest:value>
+                    </div>
+                    <div class="board-task-list">
+                        <fest:for iterate="column.tasks" index="j" value="task">
+                            <div class="board-task-mini">
+                                <div class="board-task-label-container">
+                                    <fest:for iterate="task.labels" index="k" value="label">
+                                        <div class="board-task-label-mini">
+                                            <fest:value>
+                                                label.title
+                                            </fest:value>
+                                        </div>
+                                    </fest:for>
+                                </div>
+                                <div class="board-task-description-mini">
+                                    <fest:value>
+                                        task.description
+                                    </fest:value>
+                                </div>
+                                <div class="board-member-container">
+                                    <fest:for iterate="task.members" index="k" value="taskMember">
+                                        <a class="member" href="{taskMember.url}">
+                                            <img class="board-member" src="{taskMember.avatar}"
+                                                 alt="{taskMember.nickname}"
+                                                 title="{taskMember.nickname}"/>
+                                        </a>
+                                    </fest:for>
+                                </div>
+                            </div>
+                        </fest:for>
+                    </div>
+                </div>
             </fest:for>
         </div>
-
-        <div class="board-header-buttons">
-            <button class="secondary">Settings</button>
-            <button class="danger">Delete board</button>
-            <button class="primary">Profile</button>
-        </div>
     </div>
-
-    <div class="board-card-container">
-        <fest:for iterate="board.columns" index="i" value="column">
-            <div class="board-card">
-                <div class="title board-card-title">
-                    <fest:value>
-                        column.title
-                    </fest:value>
-                </div>
-                <div class="board-task-list">
-                    <fest:for iterate="column.tasks" index="j" value="task">
-                        <div class="board-task-mini">
-                            <div class="board-task-label-container">
-                                <fest:for iterate="task.labels" index="k" value="label">
-                                    <div class="board-task-label-mini">
-                                        <fest:value>
-                                            label.title
-                                        </fest:value>
-                                    </div>
-                                </fest:for>
-                            </div>
-                            <div class="board-task-description-mini">
-                                <fest:value>
-                                    task.description
-                                </fest:value>
-                            </div>
-                            <div class="board-member-container">
-                                <fest:for iterate="task.members" index="k" value="taskMember">
-                                    <a class="member" href="{taskMember.url}">
-                                        <img class="board-member" src="{taskMember.avatar}"
-                                             alt="{taskMember.nickname}"
-                                             title="{taskMember.nickname}"/>
-                                    </a>
-                                </fest:for>
-                            </div>
-                        </div>
-                    </fest:for>
-                </div>
-            </div>
-        </fest:for>
-    </div>
-
 </fest:template>
