@@ -1,3 +1,5 @@
+import EventBus from './eventBus.js';
+
 /**
  * Application router
  */
@@ -6,12 +8,19 @@ export default class Router {
      * Router constructor
      * @param {object} root - application's root element
      */
-    constructor(root) {
+    constructor(root, header) {
         this.root = root;
+        this.header = header;
         this.routeMap = new Map();
+
+        this.globalEventBus = new EventBus([
+            'logout',
+            'login',
+        ]);
         this.handleMouseClick = this.handleMouseClick.bind(this);
 
         this.root.addEventListener('click', this.handleMouseClick);
+        this.header.addEventListener('click', this.handleMouseClick);
     }
 
     /**

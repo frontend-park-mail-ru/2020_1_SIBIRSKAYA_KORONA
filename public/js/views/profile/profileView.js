@@ -119,9 +119,10 @@ export default class ProfileView extends BaseView {
         };
         switch (event.target.id) {
             case 'submitAbout':
-                if (!this.inputtedData.inputName || !this.inputtedData.inputName) {
+                if (!this.inputtedData.inputName && !this.inputtedData.inputSurname) {
                     return;
                 }
+
                 dataToSend.inputName = this.inputtedData.inputName;
                 dataToSend.inputSurname = this.inputtedData.inputSurname;
                 break;

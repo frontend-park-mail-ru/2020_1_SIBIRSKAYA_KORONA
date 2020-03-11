@@ -39,7 +39,7 @@
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
                    id="inputPasswordRepeat"/>
             <div class="auth-form-bottom-panel">
-                <button class="primary" id="submit_button">Зарегистрироваться</button>
+                <div class="button primary" id="submit_button">Зарегистрироваться</div>
                 <a class="auth-form-link" href="/login">Уже есть аккаунт?</a>
             </div>
         </form>

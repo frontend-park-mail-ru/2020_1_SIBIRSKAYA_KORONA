@@ -68,7 +68,7 @@ export default class JoinModel {
      */
     validateAll(data) {
         for (const [key, value] of Object.entries(data)) {
-            if (!value || !this.validate(key + '', value)) {
+            if (!this.validate(key + '', value)) { // undefined is valid
                 return false;
             }
         }
@@ -139,9 +139,11 @@ export default class JoinModel {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
                     this.eventBus.call('gotData', data);
+                    this.router.globalEventBus.call('login', data);
                     break;
                 case 303: // - SeeOther (не авторизован, случай без query string)
                     this.router.go('/login');
+                    this.router.globalEventBus.call('logout');
                     break;
                 case 400: // - BadRequest (неверный запрос)
                     break;
@@ -162,6 +164,7 @@ export default class JoinModel {
                 case 200: // - OK (успешный запрос)
                 case 303: // - нет куки (Уже разлогинен)
                     this.router.go('/login');
+                    this.router.globalEventBus.call('logout');
             }
         });
     }

@@ -12,19 +12,6 @@ a:hover {
     text-decoration: underline;
 }
 
-button /*input[type=file]*/ {
-    display: flex;
-    align-items: center;
-    height: 35px;
-    border: none;
-    border-radius: 15px;
-    font-size: 14pt;
-    padding: 0 15px;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
 input[type=file] {
     width: 0.1px;
     height: 0.1px;
@@ -34,32 +21,47 @@ input[type=file] {
     z-index: -1;
 }
 
-button.primary {
+.button /*input[type=file]*/ {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    width: fit-content;
+    border: none;
+    border-radius: 15px;
+    font-size: 14pt;
+    margin: 0px 10px;
+    padding: 0 15px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.button.primary {
     background-color: #00c12c;
     box-shadow: 0 0 7px 1px #1c6d09;
 }
 
-button.primary:hover {
+.button.primary:hover {
     background-color: #10a213;
     box-shadow: 0 0 7px 2px #007c05;
 }
 
-button.secondary {
+.button.secondary {
     background-color: #03A9F4;
     box-shadow: 0 0 7px 1px #172a53;
 }
 
-button.secondary:hover {
+.button.secondary:hover {
     background-color: #4040ff;
     box-shadow: 0 0 7px 2px #041a55;
 }
 
-button.danger {
+.button.danger {
     background-color: #E91E63;
     box-shadow: 0 0 7px 1px #320c19;
 }
 
-button.danger:hover {
+.button.danger:hover {
     background-color: #ce0000;
     box-shadow: 0 0 7px 2px #4a0214;
 }
@@ -77,6 +79,10 @@ input {
 
 textarea {
 
+}
+
+.link-none, .link-none:hover, .link-none:focus {
+    text-decoration: none;
 }
 
 .input-error {
@@ -153,9 +159,20 @@ textarea {
     padding: 8px 10px;
 }
 
-.header div:last-child {
+.header-block-left {
+    min-width: 33%;
+}
+
+.header-block-center {
     display: flex;
-    align-content: flex-end;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-block-right {
+    min-width: 33%;
+    display: flex;
+    place-content: flex-end;
 }
 
 .container-width-1200 {
@@ -187,6 +204,24 @@ textarea {
 /*     END COMMON     */
 
 
+/*     MAIN HEADER     */
+.main-header {
+    background: red;
+}
+
+.main-header-logo {
+    margin-left: 10px;
+    font-family: 'Scada', sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 30pt;
+    letter-spacing: 5px;
+}
+
+/*   END MAIN HEADER   */
+
+
+
 /*     DASHBOARDS     */
 .dashboards-container-title {
     margin-left: 45px;
@@ -205,7 +240,7 @@ textarea {
     margin: 10px;
     border: 2px solid #fbb8b8a1;
     border-radius: 15px;
-    box-shadow: 0 0 15px 0px #c19259;
+    box-shadow: 0 0 15px 0 #c19259;
 }
 
 .dashboard.active {
@@ -321,11 +356,7 @@ textarea {
 
 /*      AUTH / REGISTER    */
 .auth-popup {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    margin-top: 20%;
 }
 
 .auth-form {
@@ -365,7 +396,7 @@ textarea {
     background-color: #4f6dffbd;
 }
 
-.board-header button {
+.board-header .button {
     margin: 0 5px;
 }
 
@@ -481,13 +512,12 @@ textarea {
 }
 
 .profile-header-title {
-    min-width: 33%;
     color: white;
     font-size: 20pt;
 }
 
 .profile-header-logout {
-    margin-right: 20px
+    margin-left: 20px
 }
 
 .profile-header-avatar {

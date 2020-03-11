@@ -1,10 +1,12 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div>
         <div class="header profile-header">
-            <div class="title profile-header-title">
-                <fest:value>data.name</fest:value>
+            <div class="header-block-left">
+                <div class="title profile-header-title">
+                    <fest:value>data.name</fest:value>
+                </div>
             </div>
-            <div class="profile-header-item">
+            <div class="header-block-center">
                 <img class="avatar-round profile-header-avatar">
                     <fest:attributes>
                         <fest:attribute name="src">
@@ -13,12 +15,14 @@
                     </fest:attributes>
                 </img>
             </div>
-            <div class="title profile-header-title">
+            <div class="header-block-right">
                 <div class="board-header-buttons">
-                    <div class="profile-header-logout">
+                    <div class="title profile-header-title">
                         <fest:value>'@'+data.nickname</fest:value>
                     </div>
-                    <button id="logout" class="danger">Выйти</button>
+                    <div class="profile-header-logout">
+                        <div id="logout" class="button danger">Выйти</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,7 +66,7 @@
                                     </fest:attribute>
                                 </fest:attributes>
                             </input>
-                            <button id="submitAbout" class="primary">Сохранить</button>
+                            <div id="submitAbout" class="button primary">Сохранить</div>
                         </form>
                     </div>
                     <div class="profile-avatar-column">
@@ -76,11 +80,11 @@
                             </fest:attributes>
                         </img>
                         <input id="avatarInput" type="file" name="file"/>
-                        <button disabled="" class="secondary">
-                            <label class="secondary" for="avatarInput">
+                        <label for="avatarInput">
+                            <div class="button secondary">
                                 Изменить
-                            </label>
-                        </button>
+                            </div>
+                        </label>
                     </div>
                 </div>
                 <div class="group-title">
@@ -98,7 +102,7 @@
                                id="inputPassword"/>
                         <input class="form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
                                id="inputPasswordRepeat"/>
-                        <button id="submitPasswords" class="secondary">Изменить</button>
+                        <div id="submitPasswords" class="button secondary">Изменить</div>
                     </form>
                 </div>
                 <div class="input-group profile-input-group">
@@ -113,7 +117,7 @@
                                 </fest:attribute>
                             </fest:attributes>
                         </input>
-                        <button id="submitEmail" class="primary">Сохранить</button>
+                        <div id="submitEmail" class="button primary">Сохранить</div>
                     </form>
                 </div>
             </div>

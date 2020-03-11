@@ -1,0 +1,33 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="header main-header">
+        <div class="header-block-left">
+            <div>
+                <fest:choose>
+                    <fest:when test="data.auth===true">
+                        <div id="submitBoards" class="button primary">Доски</div>
+                    </fest:when>
+                    <fest:otherwise>
+
+                    </fest:otherwise>
+                </fest:choose>
+            </div>
+        </div>
+        <div class="header-block-center">
+            <img class="avatar-round profile-header-avatar" src="/img/logo_drello.png"/>
+            <div class="main-header-logo">
+                DRELLO
+            </div>
+        </div>
+        <div class="header-block-right">
+            <fest:choose>
+                <fest:when test="data.auth===true">
+                    <div id="submitSettings" class="button primary">Настройки</div>
+                    <div id="submitLogout" class="button danger">Выйти</div>
+                </fest:when>
+                <fest:otherwise>
+
+                </fest:otherwise>
+            </fest:choose>
+        </div>
+    </div>
+</fest:template>

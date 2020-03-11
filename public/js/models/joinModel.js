@@ -76,6 +76,7 @@ export default class JoinModel {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
                     this.router.go('/profile');
+                    this.router.globalEventBus.call('login', userInfo);
                     break;
                 case 400: // - BadRequest (неверный запрос)
                     console.log('BadRequest');

@@ -10,7 +10,7 @@
             <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль"
                    id="inputPassword"/>
             <div class="auth-form-bottom-panel">
-                <button class="primary" id="submit_button">Войти</button>
+                <div class="button primary" id="submit_button">Войти</div>
                 <a class="auth-form-link" href="join">Регистрация</a>
             </div>
         </form>
