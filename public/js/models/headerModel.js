@@ -46,6 +46,7 @@ export default class HeaderModel {
      */
     logout() {
         sessionDelete().then((response) => {
+            console.log('ZALUPA');
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 303: // - нет куки (Уже разлогинен)

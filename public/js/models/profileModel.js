@@ -8,11 +8,9 @@ export default class JoinModel {
     /**
      * Model constructor
      * @param {Object} eventBus to share events with join view
-     * @param {Object} router for redirect on unauthorized
      */
-    constructor(eventBus, router) {
+    constructor(eventBus) {
         this.eventBus = eventBus;
-        this.router = router;
 
         this.putUser = this.putUser.bind(this);
         this.eventBus.subscribe('submitAbout', this.putUser);
@@ -115,7 +113,7 @@ export default class JoinModel {
                     this.getUser();
                     break;
                 case 401: // - Unauthorized (не авторизован)
-                    this.router.go('/');
+                    this.eventBus.call('unauthorized');
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;
@@ -137,14 +135,14 @@ export default class JoinModel {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
-                    this.eventBus.call('gotData', data);
-                    this.router.globalEventBus.call('login', data);
+                    this.eventBus.call('gotData', data); // for local eventBus (View subscribed)
+                    this.eventBus.call('userDataChanged', data); // for global eventBus (Header subscribed)
                     break;
                 case 303: // - SeeOther (не авторизован, случай без query string)
-                    this.router.go('/login');
-                    this.router.globalEventBus.call('logout');
+                    this.eventBus.call('unauthorized');
                     break;
                 case 400: // - BadRequest (неверный запрос)
+                    console.log('BadRequest');
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;

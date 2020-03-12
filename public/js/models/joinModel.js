@@ -8,11 +8,9 @@ export default class JoinModel {
     /**
      * Model constructor
      * @param {Object} eventBus to share events with join view
-     * @param {Object} router for redirect on success join
      */
-    constructor(eventBus, router) {
+    constructor(eventBus) {
         this.eventBus = eventBus;
-        this.router = router;
         this.eventBus.subscribe('submit', this.join.bind(this));
         this.eventBus.subscribe('userInput', this.validate.bind(this));
     }
@@ -75,8 +73,7 @@ export default class JoinModel {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
-                    this.router.go('/profile');
-                    this.router.globalEventBus.call('login', userInfo);
+                    this.eventBus.call('joinSuccess', userInfo);
                     break;
                 case 400: // - BadRequest (неверный запрос)
                     console.log('BadRequest');

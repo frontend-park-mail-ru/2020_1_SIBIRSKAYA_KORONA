@@ -24,5 +24,6 @@ export default class HeaderController {
 
         router.globalEventBus.subscribe('login', this.model.onLogin);
         router.globalEventBus.subscribe('logout', this.model.onLogout);
+        router.globalEventBus.subscribe('userDataChanged', this.model.onLogin);
     }
 }

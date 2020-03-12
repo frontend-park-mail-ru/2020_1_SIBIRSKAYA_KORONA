@@ -18,6 +18,7 @@ export default class Router {
         this.globalEventBus = new EventBus([
             'logout',
             'login',
+            'userDataChanged',
         ]);
         this.handleMouseClick = this.handleMouseClick.bind(this);
 
@@ -31,7 +32,10 @@ export default class Router {
      * @param {...any} params - arguments to call with
      */
     go(route, ...params) {
-        window.history.replaceState({}, '', route);
+        // window.location.pathname = route;
+        window.history.pushState({}, '', route);
+
+        console.log(route);
         if (this.routeMap.has(route)) {
             this.routeMap.get(route)(...params);
         } else {

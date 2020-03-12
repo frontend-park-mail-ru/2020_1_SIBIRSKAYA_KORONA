@@ -21,8 +21,17 @@ export default class ProfileController {
             'userInput',
             'userInputError',
             'wrongPassword',
+            'unauthorized',
+            'userDataChanged', // for global eventBus
         ]);
-        this.model = new ProfileModel(this.eventBus, router);
+        this.eventBus.subscribe('unauthorized', () => {
+            router.go('/login');
+            router.globalEventBus.call('logout');
+        });
+        this.eventBus.subscribe('userDataChanged', (newUserData) => {
+            router.globalEventBus.call('userDataChanged', newUserData);
+        });
+        this.model = new ProfileModel(this.eventBus);
         this.view = new ProfileView(this.eventBus);
     }
 }

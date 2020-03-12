@@ -14,8 +14,14 @@ export default class LoginController {
         this.eventBus = new EventBus([
             'submit',
             'inputError',
+            'loginSuccess',
         ]);
         this.view = new LoginView(this.eventBus);
-        this.model = new LoginModel(this.eventBus, router);
+        this.model = new LoginModel(this.eventBus);
+
+        this.eventBus.subscribe('loginSuccess', (userData) => {
+            // router.globalEventBus.call('login', userData);
+            router.go('/profile');
+        });
     }
 }
