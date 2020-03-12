@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="popup auth-popup">
+    <div class="auth">
         <form id="loginForm" class="form auth-form">
             <div class="title auth-form-title">
                 Вход

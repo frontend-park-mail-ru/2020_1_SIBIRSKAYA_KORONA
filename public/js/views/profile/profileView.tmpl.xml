@@ -1,6 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div>
-        <div class="header profile-header">
+        <div class="header profile-header" style="display: none">
             <div class="header-block-left">
                 <div class="title profile-header-title">
                     <fest:value>data.name</fest:value>
@@ -81,7 +81,7 @@
                         </img>
                         <input id="avatarInput" type="file" name="file"/>
                         <label for="avatarInput">
-                            <div class="button secondary">
+                            <div class="button profile-change-avatar-button secondary">
                                 Изменить
                             </div>
                         </label>

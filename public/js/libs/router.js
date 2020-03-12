@@ -2,11 +2,13 @@ import EventBus from './eventBus.js';
 
 /**
  * Application router
+ * Contains global event bus
  */
 export default class Router {
     /**
      * Router constructor
      * @param {object} root - application's root element
+     * @param {object} header - application's header element
      */
     constructor(root, header) {
         this.root = root;

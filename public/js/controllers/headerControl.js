@@ -8,7 +8,7 @@ import EventBus from '../libs/eventBus.js';
 export default class HeaderController {
     /**
      * Controller constructor
-     * @param {Object} router - for model to redirect on success registration
+     * @param {Object} router - for model to redirect
      */
     constructor(router) {
         this.eventBus = new EventBus([

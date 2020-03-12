@@ -21,49 +21,54 @@ input[type=file] {
     z-index: -1;
 }
 
-.button /*input[type=file]*/ {
+.button {
     display: flex;
     align-items: center;
     height: 35px;
     width: fit-content;
-    border: none;
-    border-radius: 15px;
-    font-size: 14pt;
-    margin: 0px 10px;
     padding: 0 15px;
-    color: white;
+    border: 1px solid transparent;
+    border-radius: 7px;
     cursor: pointer;
-    transition: 0.3s;
+    color: white;
+    font-size: 14pt;
+    transition: 0.2s;
 }
 
 .button.primary {
-    background-color: #00c12c;
-    box-shadow: 0 0 7px 1px #1c6d09;
+    color: #28a745;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: 0 0 1px 1px #28a745;
 }
 
 .button.primary:hover {
-    background-color: #10a213;
-    box-shadow: 0 0 7px 2px #007c05;
+    background-color: #28a745;
+    color: white;
 }
 
 .button.secondary {
-    background-color: #03A9F4;
-    box-shadow: 0 0 7px 1px #172a53;
+    color: #007bff;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: 0 0 1px 1px #007bff;
 }
 
 .button.secondary:hover {
-    background-color: #4040ff;
-    box-shadow: 0 0 7px 2px #041a55;
+    background-color: #007bff;
+    color: white;
 }
 
 .button.danger {
-    background-color: #E91E63;
-    box-shadow: 0 0 7px 1px #320c19;
+    color: #dc3545;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: 0 0 1px 1px #dc3545;
 }
 
 .button.danger:hover {
-    background-color: #ce0000;
-    box-shadow: 0 0 7px 2px #4a0214;
+    background-color: #dc3545;
+    color: white;
 }
 
 input {
@@ -96,6 +101,11 @@ textarea {
 }
 
 .popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,7 +120,7 @@ textarea {
     border-radius: 10px;
     box-shadow: 0 4px 16px #ccc;
     padding: 32px;
-    margin-bottom: 35px;
+    /*    margin-bottom: 35px;*/
     background-color: #f8f8ff;
 }
 
@@ -172,7 +182,12 @@ textarea {
 .header-block-right {
     min-width: 33%;
     display: flex;
+    align-items: center;
     place-content: flex-end;
+}
+
+.header-button {
+    margin: 0px 10px;
 }
 
 .container-width-1200 {
@@ -201,12 +216,16 @@ textarea {
 .hidden {
     opacity: 0;
 }
+
 /*     END COMMON     */
 
 
 /*     MAIN HEADER     */
 .main-header {
-    background: red;
+    background: #18255f;
+
+    max-height: 10vh;
+    padding: 10px 10px;
 }
 
 .main-header-logo {
@@ -218,8 +237,20 @@ textarea {
     letter-spacing: 5px;
 }
 
-/*   END MAIN HEADER   */
+.main-header-avatar {
+    height: 35px;
+    width: 35px;
+    margin: 0 10px;
+    cursor: pointer;
+}
 
+.main-header-title {
+    color: white;
+    font-size: 14pt;
+    margin: 0 10px;
+}
+
+/*   END MAIN HEADER   */
 
 
 /*     DASHBOARDS     */
@@ -355,8 +386,12 @@ textarea {
 
 
 /*      AUTH / REGISTER    */
-.auth-popup {
-    margin-top: 20%;
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    height: 90vh;
 }
 
 .auth-form {
@@ -527,7 +562,7 @@ textarea {
 
 .profile {
     padding: 32px 32px 5px 32px;
-    margin-bottom: 30px;
+    margin: 30px 0;
 }
 
 .profile-input-group {
@@ -549,7 +584,9 @@ textarea {
 .profile-avatar {
     width: 220px;
     height: 220px;
-    margin-bottom: 10px;
 }
 
+.profile-change-avatar-button {
+    margin-top: 20px;
+}
 /*      END PROFILE     */
