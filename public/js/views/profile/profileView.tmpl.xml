@@ -1,31 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div>
-        <div class="header profile-header" style="display: none">
-            <div class="header-block-left">
-                <div class="title profile-header-title">
-                    <fest:value>data.name</fest:value>
-                </div>
-            </div>
-            <div class="header-block-center">
-                <img class="avatar-round profile-header-avatar">
-                    <fest:attributes>
-                        <fest:attribute name="src">
-                            <fest:value>data.avatar</fest:value>
-                        </fest:attribute>
-                    </fest:attributes>
-                </img>
-            </div>
-            <div class="header-block-right">
-                <div class="board-header-buttons">
-                    <div class="title profile-header-title">
-                        <fest:value>'@'+data.nickname</fest:value>
-                    </div>
-                    <div class="profile-header-logout">
-                        <div id="logout" class="button danger">Выйти</div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="container-width-800">
             <div class="form profile">
                 <div class="group-title">

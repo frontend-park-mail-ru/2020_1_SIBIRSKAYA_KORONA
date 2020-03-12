@@ -48,7 +48,6 @@ export default class ProfileView extends BaseView {
             document.getElementById('submitAbout'),
             document.getElementById('submitPasswords'),
             document.getElementById('submitEmail'),
-            document.getElementById('logout'),
         ];
         const inputs = [
             document.getElementById('inputName'),
@@ -122,7 +121,6 @@ export default class ProfileView extends BaseView {
                 if (!this.inputtedData.inputName && !this.inputtedData.inputSurname) {
                     return;
                 }
-
                 dataToSend.inputName = this.inputtedData.inputName;
                 dataToSend.inputSurname = this.inputtedData.inputSurname;
                 break;

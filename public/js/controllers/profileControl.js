@@ -16,7 +16,6 @@ export default class ProfileController {
             'submitPasswords',
             'submitEmail',
             'submitImg',
-            'logout',
             'getData',
             'gotData',
             'userInput',

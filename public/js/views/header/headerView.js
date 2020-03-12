@@ -25,6 +25,7 @@ export default class HeaderView extends BaseView {
      * @param {Object} data to render
      */
     render(data) {
+        console.log('RENDER');
         data = data || {auth: false};
         this.root.innerHTML = window.fest['js/views/header/headerView.tmpl'](data);
         this.addEventListeners(data.auth);

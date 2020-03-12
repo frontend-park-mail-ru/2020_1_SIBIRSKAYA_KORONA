@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {settingsGet, settingsPut, sessionDelete} from '../libs/apiService.js';
+import {settingsGet, settingsPut} from '../libs/apiService.js';
 
 /**
  * Profile model
@@ -21,7 +21,6 @@ export default class JoinModel {
         this.eventBus.subscribe('submitImg', this.putUser);
         this.eventBus.subscribe('userInput', this.validate.bind(this));
         this.eventBus.subscribe('getData', this.getUser.bind(this));
-        this.eventBus.subscribe('logout', this.logout.bind(this));
     }
 
     /**
@@ -151,20 +150,6 @@ export default class JoinModel {
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
-            }
-        });
-    }
-
-    /**
-     * Use api to logout user
-     */
-    logout() {
-        sessionDelete().then((response) => {
-            switch (response.status) {
-                case 200: // - OK (успешный запрос)
-                case 303: // - нет куки (Уже разлогинен)
-                    this.router.go('/login');
-                    this.router.globalEventBus.call('logout');
             }
         });
     }
