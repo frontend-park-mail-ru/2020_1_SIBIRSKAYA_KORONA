@@ -18,9 +18,7 @@
             </div>
 
             <div class="board-header-buttons">
-                <div class="button secondary">Settings</div>
-                <div class="button danger">Delete board</div>
-                <div class="button primary">Profile</div>
+                <div class="button primary">Board settings</div>
             </div>
         </div>
 
