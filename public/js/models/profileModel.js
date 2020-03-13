@@ -18,7 +18,7 @@ export default class JoinModel {
         this.eventBus.subscribe('submitEmail', this.putUser);
         this.eventBus.subscribe('submitImg', this.putUser);
         this.eventBus.subscribe('userInput', this.validate.bind(this));
-        this.eventBus.subscribe('getData', this.getUser.bind(this));
+        this.eventBus.subscribe('getData', this.getUserData.bind(this));
     }
 
     /**
@@ -110,7 +110,7 @@ export default class JoinModel {
         settingsPut(formData).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                    this.getUser();
+                    this.getUserData();
                     break;
                 case 401: // - Unauthorized (не авторизован)
                     this.eventBus.call('unauthorized');
@@ -130,7 +130,7 @@ export default class JoinModel {
     /**
      * Use api to get user data and settings from backend
      */
-    getUser() {
+    getUserData() {
         settingsGet().then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)

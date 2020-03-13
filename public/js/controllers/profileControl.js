@@ -9,8 +9,9 @@ export default class ProfileController {
     /**
      * Controller constructor
      * @param {Object} router - for model to redirect
+     * @param {Object} globalEventBus - for subscribe on global events
      */
-    constructor(router) {
+    constructor(router, globalEventBus) {
         this.eventBus = new EventBus([
             'submitAbout',
             'submitPasswords',
@@ -21,15 +22,15 @@ export default class ProfileController {
             'userInput',
             'userInputError',
             'wrongPassword',
-            'unauthorized',
+            'unauthorized', // for global eventBus
             'userDataChanged', // for global eventBus
         ]);
         this.eventBus.subscribe('unauthorized', () => {
             router.go('/login');
-            router.globalEventBus.call('logout');
+            globalEventBus.call('logout');
         });
         this.eventBus.subscribe('userDataChanged', (newUserData) => {
-            router.globalEventBus.call('userDataChanged', newUserData);
+            globalEventBus.call('userDataChanged', newUserData);
         });
         this.model = new ProfileModel(this.eventBus);
         this.view = new ProfileView(this.eventBus);

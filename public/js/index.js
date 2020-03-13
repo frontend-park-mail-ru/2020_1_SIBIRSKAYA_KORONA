@@ -1,18 +1,24 @@
 import Router from './libs/router.js';
+import EventBus from './libs/eventBus.js';
 import JoinController from './controllers/joinControl.js';
 import LoginController from './controllers/loginControl.js';
 import ProfileController from './controllers/profileControl.js';
 import HeaderController from './controllers/headerControl.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const application = document.getElementById('application');
-    const header = document.getElementById('header');
-    const router = new Router(application, header);
+    const root = document.getElementById('root');
+    const router = new Router(root);
 
-    const headerController = new HeaderController(router);
+    const globalEventBus = new EventBus([
+        'logout',
+        'login',
+        'userDataChanged',
+    ]);
+
+    const headerController = new HeaderController(router, globalEventBus);
+    const profileController = new ProfileController(router, globalEventBus);
     const joinController = new JoinController(router);
     const loginController = new LoginController(router);
-    const profileController = new ProfileController(router);
 
     router.setRoute('/', profileController.view.render);
     router.setRoute('/login', loginController.view.render);
@@ -20,6 +26,5 @@ document.addEventListener('DOMContentLoaded', () => {
     router.setRoute('/join', joinController.view.render);
 
     headerController.view.render({});
-    console.log('pathname', window.location.pathname);
     router.go(window.location.pathname);
 });

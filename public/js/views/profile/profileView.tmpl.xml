@@ -30,7 +30,6 @@
                                 </fest:attributes>
                             </input>
                             <div id="inputNicknameError" class="input-error hidden">Недопустимый ник</div>
-                            <!--<div id="nicknameConflictError" class="input-error hidden">Ник уже занят</div>-->
                             <div class="form-input-label">Никнейм</div>
                             <input class="form-input" type="text" id="inputNickname">
                                 <fest:attributes>
@@ -83,8 +82,7 @@
                     <form id="formEmail">
                         <div id="inputEmailError" class="input-error hidden">Недопустимый email</div>
                         <div class="form-input-label">Смена email</div>
-                        <input class="form-input" type="email" id="inputEmail"
-                               autocomplete="off">
+                        <input class="form-input" type="email" id="inputEmail" autocomplete="off" placeholder="Email">
                             <fest:attributes>
                                 <fest:attribute name="value">
                                     <fest:value>data.email</fest:value>

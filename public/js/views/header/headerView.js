@@ -15,17 +15,26 @@ export default class HeaderView extends BaseView {
 
         this.render = this.render.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.renderUserData = this.renderUserData.bind(this);
 
         this.eventBus.subscribe('login', this.render);
-        this.eventBus.subscribe('logout', this.render);
+        this.eventBus.subscribe('logout', this.renderUserData);
+        this.eventBus.subscribe('gotData', this.renderUserData);
     }
 
     /**
-     * Render view method
-     * @param {Object} data to render
+     * Triggers getting data from model
+     * @param {object} data user data to render
      */
     render(data) {
-        console.log('RENDER');
+        this.eventBus.call('getData');
+    }
+
+    /**
+     * Real render view method with user data from model
+     * @param {object} data user data to render
+     */
+    renderUserData(data) {
         data = data || {auth: false};
         this.root.innerHTML = window.fest['js/views/header/headerView.tmpl'](data);
         this.addEventListeners(data.auth);
@@ -44,7 +53,10 @@ export default class HeaderView extends BaseView {
                 document.getElementById('submitBoards'),
             ];
         } else {
-
+            buttons = [
+                document.getElementById('submitLogin'),
+                document.getElementById('submitJoin'),
+            ];
         }
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);

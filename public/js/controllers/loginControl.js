@@ -20,7 +20,6 @@ export default class LoginController {
         this.model = new LoginModel(this.eventBus);
 
         this.eventBus.subscribe('loginSuccess', (userData) => {
-            // router.globalEventBus.call('login', userData);
             router.go('/profile');
         });
     }

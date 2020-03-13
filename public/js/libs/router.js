@@ -1,5 +1,3 @@
-import EventBus from './eventBus.js';
-
 /**
  * Application router
  * Contains global event bus
@@ -8,22 +6,10 @@ export default class Router {
     /**
      * Router constructor
      * @param {object} root - application's root element
-     * @param {object} header - application's header element
      */
-    constructor(root, header) {
-        this.root = root;
-        this.header = header;
+    constructor(root) {
         this.routeMap = new Map();
-
-        this.globalEventBus = new EventBus([
-            'logout',
-            'login',
-            'userDataChanged',
-        ]);
-        this.handleMouseClick = this.handleMouseClick.bind(this);
-
-        this.root.addEventListener('click', this.handleMouseClick);
-        this.header.addEventListener('click', this.handleMouseClick);
+        root.addEventListener('click', this.handleMouseClick.bind(this));
     }
 
     /**
@@ -32,14 +18,13 @@ export default class Router {
      * @param {...any} params - arguments to call with
      */
     go(route, ...params) {
-        // window.location.pathname = route;
         window.history.pushState({}, '', route);
 
-        console.log(route);
         if (this.routeMap.has(route)) {
             this.routeMap.get(route)(...params);
         } else {
-            this.root.innerText = 'PAGE NOT FOUND';
+            // TODO 404 page
+            document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
         }
     }
 

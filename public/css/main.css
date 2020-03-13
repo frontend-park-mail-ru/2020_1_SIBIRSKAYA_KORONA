@@ -301,7 +301,7 @@ textarea {
 
 .top-pic::after {
     content: "";
-    background: url(../img/work_hard.png) no-repeat top;
+    /*background: url(../img/work_hard.png) no-repeat top;*/
     background-size: cover;
     opacity: 0.2;
     top: 0;

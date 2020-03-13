@@ -9,21 +9,34 @@ export default class HeaderController {
     /**
      * Controller constructor
      * @param {Object} router - for model to redirect
+     * @param {Object} globalEventBus - for subscribe on global events
      */
-    constructor(router) {
+    constructor(router, globalEventBus) {
         this.eventBus = new EventBus([
-            'login', // model call
-            'logout', // model call
+            // model calls
+            'login',
+            'logout',
+            'gotData',
+            'redirectLogin',
+            // view calls
+            'getData',
             'submitLogin',
+            'submitJoin',
             'submitLogout',
             'submitBoards',
             'submitSettings',
         ]);
         this.view = new HeaderView(this.eventBus);
-        this.model = new HeaderModel(this.eventBus, router);
+        this.model = new HeaderModel(this.eventBus);
 
-        router.globalEventBus.subscribe('login', this.model.onLogin);
-        router.globalEventBus.subscribe('logout', this.model.onLogout);
-        router.globalEventBus.subscribe('userDataChanged', this.model.onLogin);
+        this.eventBus.subscribe('submitSettings', () => router.go('/profile'));
+        this.eventBus.subscribe('redirectLogin', () => router.go('/login'));
+        this.eventBus.subscribe('submitBoards', () => router.go('/boards'));
+        this.eventBus.subscribe('submitLogin', () => router.go('/login'));
+        this.eventBus.subscribe('submitJoin', () => router.go('/join'));
+
+        globalEventBus.subscribe('login', this.model.onLogin);
+        globalEventBus.subscribe('logout', this.model.onLogout);
+        globalEventBus.subscribe('userDataChanged', this.model.onLogin);
     }
 }

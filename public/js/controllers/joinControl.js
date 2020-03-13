@@ -21,7 +21,6 @@ export default class JoinController {
         this.model = new JoinModel(this.eventBus);
 
         this.eventBus.subscribe('joinSuccess', (userData) => {
-            // router.globalEventBus.call('login', userData);
             router.go('/profile');
         });
     }

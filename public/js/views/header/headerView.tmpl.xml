@@ -34,7 +34,8 @@
                     <div id="submitLogout" class="button header-button danger">Выйти</div>
                 </fest:when>
                 <fest:otherwise>
-
+                    <div id="submitLogin" class="button header-button primary">Войти</div>
+                    <div id="submitJoin" class="button header-button secondary">Зарегистрироваться</div>
                 </fest:otherwise>
             </fest:choose>
         </div>
