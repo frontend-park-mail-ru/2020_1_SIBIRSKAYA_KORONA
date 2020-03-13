@@ -1,22 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div>
-        <div class="header profile-header">
-            <div class="title profile-header-title">
-                <fest:value>data.name</fest:value>
-            </div>
-            <div class="profile-header-item">
-                <img class="avatar-round profile-header-avatar">
-                    <fest:attributes>
-                        <fest:attribute name="src">
-                            <fest:value>data.avatar</fest:value>
-                        </fest:attribute>
-                    </fest:attributes>
-                </img>
-            </div>
-            <div class="title profile-header-title">
-                <fest:value>'@'+data.nickname</fest:value>
-            </div>
-        </div>
         <div class="container-width-800">
             <div class="form profile">
                 <div class="group-title">
@@ -47,7 +30,6 @@
                                 </fest:attributes>
                             </input>
                             <div id="inputNicknameError" class="input-error hidden">Недопустимый ник</div>
-                            <!--<div id="nicknameConflictError" class="input-error hidden">Ник уже занят</div>-->
                             <div class="form-input-label">Никнейм</div>
                             <input class="form-input" type="text" id="inputNickname">
                                 <fest:attributes>
@@ -57,7 +39,7 @@
                                     </fest:attribute>
                                 </fest:attributes>
                             </input>
-                            <button id="submitAbout" class="primary">Сохранить</button>
+                            <div id="submitAbout" class="button primary">Сохранить</div>
                         </form>
                     </div>
                     <div class="profile-avatar-column">
@@ -71,11 +53,11 @@
                             </fest:attributes>
                         </img>
                         <input id="avatarInput" type="file" name="file"/>
-                        <button disabled="" class="secondary">
-                            <label class="secondary" for="avatarInput">
+                        <label for="avatarInput">
+                            <div class="button profile-change-avatar-button secondary">
                                 Изменить
-                            </label>
-                        </button>
+                            </div>
+                        </label>
                     </div>
                 </div>
                 <div class="group-title">
@@ -93,22 +75,21 @@
                                id="inputPassword"/>
                         <input class="form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
                                id="inputPasswordRepeat"/>
-                        <button id="submitPasswords" class="secondary">Изменить</button>
+                        <div id="submitPasswords" class="button secondary">Изменить</div>
                     </form>
                 </div>
                 <div class="input-group profile-input-group">
                     <form id="formEmail">
                         <div id="inputEmailError" class="input-error hidden">Недопустимый email</div>
                         <div class="form-input-label">Смена email</div>
-                        <input class="form-input" type="email" id="inputEmail"
-                               autocomplete="off">
+                        <input class="form-input" type="email" id="inputEmail" autocomplete="off" placeholder="Email">
                             <fest:attributes>
                                 <fest:attribute name="value">
                                     <fest:value>data.email</fest:value>
                                 </fest:attribute>
                             </fest:attributes>
                         </input>
-                        <button id="submitEmail" class="primary">Сохранить</button>
+                        <div id="submitEmail" class="button primary">Сохранить</div>
                     </form>
                 </div>
             </div>

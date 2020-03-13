@@ -1,19 +1,20 @@
 import './loginView.tmpl.js';
+import BaseView from '../baseView.js';
 
 /**
  * View of login page
  */
-export default class LoginView {
+export default class LoginView extends BaseView {
     /**
      * View constructor
      * @param {object} eventBus - local event bus
      */
     constructor(eventBus) {
-        this.eventBus = eventBus;
-        this.root = document.getElementById('application');
-        this.eventBus.subscribe('inputError', this.displayError);
+        super(eventBus);
+
         this.render = this.render.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.eventBus.subscribe('inputError', this.displayError);
     }
 
     /**
@@ -52,7 +53,7 @@ export default class LoginView {
 
     /**
      * Get user input data
-     * @return {{password: *, login: *}}
+     * @return {{password: string, login: string}}
      */
     getUserData() {
         return {

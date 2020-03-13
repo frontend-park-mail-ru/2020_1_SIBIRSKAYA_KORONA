@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {apiJoin} from '../libs/apiService.js';
+import {settingsPost} from '../libs/apiService.js';
 
 /**
  * Join(Registration) model
@@ -8,11 +8,9 @@ export default class JoinModel {
     /**
      * Model constructor
      * @param {Object} eventBus to share events with join view
-     * @param {Object} router for redirect on success join
      */
-    constructor(eventBus, router) {
+    constructor(eventBus) {
         this.eventBus = eventBus;
-        this.router = router;
         this.eventBus.subscribe('submit', this.join.bind(this));
         this.eventBus.subscribe('userInput', this.validate.bind(this));
     }
@@ -24,27 +22,30 @@ export default class JoinModel {
      * @return {boolean} is valid
      */
     validate(dataType, data) {
-        let valid = true;
-        let errorText = '';
+        const eventBusCallParams = {
+            text: '', // error text
+            show: false, // show error or not
+            field: dataType, // field with invalid input data
+        };
         switch (dataType) {
             case 'inputName':
-                valid = Validator.validateName(data);
+                eventBusCallParams.show = !Validator.validateName(data);
                 break;
             case 'inputSurname':
-                valid = Validator.validateSurname(data);
+                eventBusCallParams.show = !Validator.validateSurname(data);
                 break;
             case 'inputNickname':
-                errorText = 'Недопустимый ник';
-                valid = Validator.validateNickname(data);
+                eventBusCallParams.text = 'Недопустимый ник';
+                eventBusCallParams.show = !Validator.validateNickname(data);
                 break;
             case 'inputPassword':
-                valid = Validator.validatePassword(data);
+                eventBusCallParams.show = !Validator.validatePassword(data);
                 break;
             default:
                 return false;
         }
-        this.eventBus.call('userInputError', !valid, dataType, errorText);
-        return valid;
+        this.eventBus.call('userInputError', eventBusCallParams);
+        return !eventBusCallParams.show;
     }
 
     /**
@@ -67,19 +68,19 @@ export default class JoinModel {
         if (!this.validateAll(userInfo)) {
             return;
         }
-        apiJoin(userInfo).then((response) => {
-            console.log('JOIN : ', response.status);
+
+        settingsPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                 case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
-                    this.router.go('/profile', {});
+                    this.eventBus.call('joinSuccess', userInfo);
                     break;
                 case 400: // - BadRequest (неверный запрос)
                     console.log('BadRequest');
                     break;
                 case 409: // - Conflict (пользователь с таким ником уже существует)
                     const errorText = 'Пользователь с таким ником уже существует';
-                    this.eventBus.call('userInputError', true, 'inputNickname', errorText);
+                    this.eventBus.call('userInputError', {show: true, field: 'inputNickname', text: errorText});
                     break;
                 default:
                     console.log('Бэкендер молодец!!!');
