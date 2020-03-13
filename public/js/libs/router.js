@@ -1,5 +1,6 @@
 /**
  * Application router
+ * Contains global event bus
  */
 export default class Router {
     /**
@@ -7,11 +8,8 @@ export default class Router {
      * @param {object} root - application's root element
      */
     constructor(root) {
-        this.root = root;
         this.routeMap = new Map();
-        this.handleMouseClick = this.handleMouseClick.bind(this);
-
-        this.root.addEventListener('click', this.handleMouseClick);
+        root.addEventListener('click', this.handleMouseClick.bind(this));
     }
 
     /**
@@ -20,11 +18,13 @@ export default class Router {
      * @param {...any} params - arguments to call with
      */
     go(route, ...params) {
-        window.history.replaceState({}, '', route);
+        window.history.pushState({}, '', route);
+
         if (this.routeMap.has(route)) {
             this.routeMap.get(route)(...params);
         } else {
-            this.root.innerText = 'PAGE NOT FOUND';
+            // TODO 404 page
+            document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
         }
     }
 
