@@ -422,6 +422,11 @@ textarea {
 
 
 /*        BOARD        */
+.board-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .board {
     display: flex;
     flex-direction: column;
