@@ -692,7 +692,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
             },
         ],
-
     };
 
     document.body.innerHTML = f(boardData);

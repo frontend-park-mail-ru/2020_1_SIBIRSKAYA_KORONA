@@ -1,9 +1,6 @@
 /*   COMMON   */
 body {
     font-family: 'Fox', sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
 }
 
 a {
@@ -15,19 +12,6 @@ a:hover {
     text-decoration: underline;
 }
 
-button /*input[type=file]*/ {
-    display: flex;
-    align-items: center;
-    height: 35px;
-    border: none;
-    border-radius: 15px;
-    font-size: 14pt;
-    padding: 0 15px;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
 input[type=file] {
     width: 0.1px;
     height: 0.1px;
@@ -37,34 +21,54 @@ input[type=file] {
     z-index: -1;
 }
 
-button.primary {
-    background-color: #00c12c;
-    box-shadow: 0 0 7px 1px #1c6d09;
+.button {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    width: fit-content;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    cursor: pointer;
+    color: white;
+    font-size: 14pt;
+    transition: 0.2s;
 }
 
-button.primary:hover {
-    background-color: #10a213;
-    box-shadow: 0 0 7px 2px #007c05;
+.button.primary {
+    color: #28a745;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: 0 0 1px 1px #28a745;
 }
 
-button.secondary {
-    background-color: #03A9F4;
-    box-shadow: 0 0 7px 1px #172a53;
+.button.primary:hover {
+    background-color: #28a745;
+    color: white;
 }
 
-button.secondary:hover {
-    background-color: #4040ff;
-    box-shadow: 0 0 7px 2px #041a55;
+.button.secondary {
+    color: #007bff;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: 0 0 1px 1px #007bff;
 }
 
-button.danger {
-    background-color: #E91E63;
-    box-shadow: 0 0 7px 1px #320c19;
+.button.secondary:hover {
+    background-color: #007bff;
+    color: white;
 }
 
-button.danger:hover {
-    background-color: #ce0000;
-    box-shadow: 0 0 7px 2px #4a0214;
+.button.danger {
+    color: #dc3545;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: 0 0 1px 1px #dc3545;
+}
+
+.button.danger:hover {
+    background-color: #dc3545;
+    color: white;
 }
 
 input {
@@ -82,6 +86,10 @@ textarea {
 
 }
 
+.link-none, .link-none:hover, .link-none:focus {
+    text-decoration: none;
+}
+
 .input-error {
     color: red;
     text-align: center;
@@ -93,6 +101,11 @@ textarea {
 }
 
 .popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,7 +120,7 @@ textarea {
     border-radius: 10px;
     box-shadow: 0 4px 16px #ccc;
     padding: 32px;
-    margin-bottom: 35px;
+    /*    margin-bottom: 35px;*/
     background-color: #f8f8ff;
 }
 
@@ -156,9 +169,25 @@ textarea {
     padding: 8px 10px;
 }
 
-.header div:last-child {
+.header-block-left {
+    min-width: 33%;
+}
+
+.header-block-center {
     display: flex;
-    align-content: flex-end;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-block-right {
+    min-width: 33%;
+    display: flex;
+    align-items: center;
+    place-content: flex-end;
+}
+
+.header-button {
+    margin: 0px 10px;
 }
 
 .container-width-1200 {
@@ -187,7 +216,41 @@ textarea {
 .hidden {
     opacity: 0;
 }
+
 /*     END COMMON     */
+
+
+/*     MAIN HEADER     */
+.main-header {
+    background: #18255f;
+
+    max-height: 10vh;
+    padding: 10px 10px;
+}
+
+.main-header-logo {
+    margin-left: 10px;
+    font-family: 'Scada', sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 30pt;
+    letter-spacing: 5px;
+}
+
+.main-header-avatar {
+    height: 35px;
+    width: 35px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.main-header-title {
+    color: white;
+    font-size: 14pt;
+    margin: 0 10px;
+}
+
+/*   END MAIN HEADER   */
 
 
 /*     DASHBOARDS     */
@@ -208,7 +271,7 @@ textarea {
     margin: 10px;
     border: 2px solid #fbb8b8a1;
     border-radius: 15px;
-    box-shadow: 0 0 15px 0px #c19259;
+    box-shadow: 0 0 15px 0 #c19259;
 }
 
 .dashboard.active {
@@ -238,7 +301,7 @@ textarea {
 
 .top-pic::after {
     content: "";
-    background: url(../img/work_hard.png) no-repeat top;
+    /*background: url(../img/work_hard.png) no-repeat top;*/
     background-size: cover;
     opacity: 0.2;
     top: 0;
@@ -323,12 +386,12 @@ textarea {
 
 
 /*      AUTH / REGISTER    */
-.auth-popup {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    height: 90vh;
 }
 
 .auth-form {
@@ -372,7 +435,7 @@ textarea {
     height: 6vh;
 }
 
-.board-header button {
+.board-header .button {
     margin: 0 5px;
 }
 
@@ -499,13 +562,12 @@ textarea {
 }
 
 .profile-header-title {
-    min-width: 33%;
     color: white;
     font-size: 20pt;
 }
 
 .profile-header-logout {
-    margin-right: 20px
+    margin-left: 20px
 }
 
 .profile-header-avatar {
@@ -515,7 +577,7 @@ textarea {
 
 .profile {
     padding: 32px 32px 5px 32px;
-    margin-bottom: 30px;
+    margin: 30px 0;
 }
 
 .profile-input-group {
@@ -537,7 +599,9 @@ textarea {
 .profile-avatar {
     width: 220px;
     height: 220px;
-    margin-bottom: 10px;
 }
 
+.profile-change-avatar-button {
+    margin-top: 20px;
+}
 /*      END PROFILE     */

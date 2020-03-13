@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {settingsGet, settingsPut, sessionDelete} from '../libs/apiService.js';
+import {settingsGet, settingsPut} from '../libs/apiService.js';
 
 /**
  * Profile model
@@ -8,11 +8,9 @@ export default class JoinModel {
     /**
      * Model constructor
      * @param {Object} eventBus to share events with join view
-     * @param {Object} router for redirect on unauthorized
      */
-    constructor(eventBus, router) {
+    constructor(eventBus) {
         this.eventBus = eventBus;
-        this.router = router;
 
         this.putUser = this.putUser.bind(this);
         this.eventBus.subscribe('submitAbout', this.putUser);
@@ -20,8 +18,7 @@ export default class JoinModel {
         this.eventBus.subscribe('submitEmail', this.putUser);
         this.eventBus.subscribe('submitImg', this.putUser);
         this.eventBus.subscribe('userInput', this.validate.bind(this));
-        this.eventBus.subscribe('getData', this.getUser.bind(this));
-        this.eventBus.subscribe('logout', this.logout.bind(this));
+        this.eventBus.subscribe('getData', this.getUserData.bind(this));
     }
 
     /**
@@ -68,7 +65,7 @@ export default class JoinModel {
      */
     validateAll(data) {
         for (const [key, value] of Object.entries(data)) {
-            if (!value || !this.validate(key + '', value)) {
+            if (!this.validate(key + '', value)) { // undefined is valid
                 return false;
             }
         }
@@ -113,10 +110,10 @@ export default class JoinModel {
         settingsPut(formData).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                    this.getUser();
+                    this.getUserData();
                     break;
                 case 401: // - Unauthorized (не авторизован)
-                    this.router.go('/');
+                    this.eventBus.call('unauthorized');
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;
@@ -133,35 +130,24 @@ export default class JoinModel {
     /**
      * Use api to get user data and settings from backend
      */
-    getUser() {
+    getUserData() {
         settingsGet().then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     const data = response.body.user;
-                    this.eventBus.call('gotData', data);
+                    this.eventBus.call('gotData', data); // for local eventBus (View subscribed)
+                    this.eventBus.call('userDataChanged', data); // for global eventBus (Header subscribed)
                     break;
                 case 303: // - SeeOther (не авторизован, случай без query string)
-                    this.router.go('/login');
+                    this.eventBus.call('unauthorized');
                     break;
                 case 400: // - BadRequest (неверный запрос)
+                    console.log('BadRequest');
                     break;
                 case 404: // - NotFound (нет пользвателя с указанным ником)
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
-            }
-        });
-    }
-
-    /**
-     * Use api to logout user
-     */
-    logout() {
-        sessionDelete().then((response) => {
-            switch (response.status) {
-                case 200: // - OK (успешный запрос)
-                case 303: // - нет куки (Уже разлогинен)
-                    this.router.go('/login');
             }
         });
     }
