@@ -3,6 +3,18 @@ body {
     font-family: 'Fox', sans-serif;
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#application {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
 a {
     text-decoration: none;
     transition: 0.2s;
@@ -391,7 +403,7 @@ textarea {
     justify-content: center;
     align-items: center;
     align-self: center;
-    height: 90vh;
+    flex-grow: 1;
 }
 
 .auth-form {
@@ -422,11 +434,6 @@ textarea {
 
 
 /*        BOARD        */
-.board-wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
 .board {
     display: flex;
     flex-direction: column;
