@@ -6,8 +6,7 @@
                 <fest:value>board.title</fest:value>
             </div>
 
-            <div class="board-member-container">
-                <div class="button primary" id="inviteNewMemberButton">Invite</div>
+            <div class="member-container">
                 <fest:for iterate="board.members" index="i" value="member">
                     <a class="member" href="{member.url}">
                         <img class="board-member"
@@ -16,6 +15,7 @@
                              title="{member.nickname}"/>
                     </a>
                 </fest:for>
+                <div class="button primary" id="inviteNewMemberButton">Invite</div>
             </div>
 
             <div class="board-header-buttons">
@@ -32,7 +32,7 @@
                                 column.title
                             </fest:value>
                         </div>
-                        <div class="button board-card-settings" name="cardSettingsButton"/>
+                        <div class="button board-card-settings-button" name="cardSettingsButton"/>
                     </div>
 
 
@@ -53,7 +53,7 @@
                                         task.description
                                     </fest:value>
                                 </div>
-                                <div class="board-member-container">
+                                <div class="member-container">
                                     <fest:for iterate="task.members" index="k" value="taskMember">
                                         <a class="member" href="{taskMember.url}">
                                             <img class="board-member" src="{taskMember.avatar}"

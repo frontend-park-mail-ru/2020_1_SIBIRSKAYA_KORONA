@@ -47,6 +47,16 @@ input[type=file] {
     transition: 0.2s;
 }
 
+.button.default {
+    background: #d4d5fa8a;
+    transition: 0.3s;
+    color: #000000;
+}
+
+.button.default:hover {
+    background: #d4d5fafa;
+}
+
 .button.primary {
     color: #28a745;
     background-color: transparent;
@@ -83,19 +93,19 @@ input[type=file] {
     color: white;
 }
 
-.button.board-card-settings:before {
+.button.board-card-settings-button:before {
     color: #848484;
     font-weight: bold;
     content: "\22EF";
 }
 
-.button.board-card-settings {
+.button.board-card-settings-button {
     padding: 0 5px;
     align-self: start;
     transition: 0.2s;
 }
 
-.button.board-card-settings:hover {
+.button.board-card-settings-button:hover {
     background: #d4d5fabf;
 }
 
@@ -111,7 +121,8 @@ input {
 }
 
 textarea {
-
+    resize: none;
+    width: 100%;
 }
 
 .link-none, .link-none:hover, .link-none:focus {
@@ -138,6 +149,13 @@ textarea {
     justify-content: center;
     align-items: center;
     z-index: 10;
+}
+
+.window-overlay {
+    position: absolute;
+    background: #00000080;
+    width: 100vw;
+    height: 100vh;
 }
 
 .avatar-round {
@@ -510,13 +528,13 @@ textarea {
 .add-board-card {
     box-shadow: #8c8888f5 0px 0px 10px 1px;
     background: #ededed4f;
+    cursor: pointer;
     transition: 0.3s;
 }
 
 .add-board-card:hover {
     box-shadow: #484848f5 0px 0px 10px 1px;
     background: #edededad;
-    cursor: pointer;
 }
 
 .board-card-title {
@@ -568,11 +586,14 @@ textarea {
 
 .board-task-label-container {
     display: flex;
+    align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
 .board-task-label-mini {
+    display: flex;
+    align-items: center;
     background: greenyellow;
     width: fit-content;
     border-radius: 2px;
@@ -594,9 +615,8 @@ textarea {
     box-sizing: border-box;
 }
 
-.board-member-container {
+.member-container {
     display: flex;
-    flex-flow: row-reverse;
     overflow-x: auto;
     max-width: 100%;
     align-items: center;
@@ -612,6 +632,24 @@ textarea {
 
 /*       END BOARD        */
 
+/*       TASK SETTINGS    */
+
+.task-settings-form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    box-shadow: none;
+}
+
+.task-settings-block {
+    margin-bottom: 15px;
+}
+
+.task-settings-title {
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
 /*       PROFILE        */
 .profile-header {
