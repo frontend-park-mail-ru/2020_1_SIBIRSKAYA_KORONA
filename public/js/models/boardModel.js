@@ -10,7 +10,7 @@ export default class BoardModel {
         this.eventBus = eventBus;
         this.getBoardData = this.getBoardData.bind(this);
 
-        eventBus.subscribe('getData', this.getBoardData);
+        eventBus.subscribe('getBoardData', this.getBoardData);
     }
 
     /**
@@ -707,6 +707,6 @@ export default class BoardModel {
             ],
         };
 
-        this.eventBus.call('gotData', boardData);
+        this.eventBus.call('gotBoardData', boardData);
     }
 }

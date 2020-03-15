@@ -12,9 +12,17 @@ export default class BoardController {
      */
     constructor() {
         this.eventBus = new EventBus([
-            'getData',
-            'gotData',
+            'getBoardData',
+            'gotBoardData',
+            // TODO(Alexandr): 'gotBoardDataError',
+            'inviteNewMember',
+            'addNewCard',
+            'addNewTask',
+            'openBoardSettings',
+            'openCardSettings',
+            'openTaskSettings',
         ]);
+
         this.view = new BoardView(this.eventBus);
         this.model = new BoardModel(this.eventBus);
     }

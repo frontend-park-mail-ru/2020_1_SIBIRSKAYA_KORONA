@@ -15,14 +15,14 @@ export default class BoardView extends BaseView {
         this.render = this.render.bind(this);
         this.renderBoard = this.renderBoard.bind(this);
 
-        eventBus.subscribe('gotData', this.renderBoard);
+        eventBus.subscribe('gotBoardData', this.renderBoard);
     }
 
     /**
      * Method which triggers getting data from model
      */
     render() {
-        this.eventBus.call('getData');
+        this.eventBus.call('getBoardData');
     }
 
     /**
@@ -38,6 +38,46 @@ export default class BoardView extends BaseView {
      * Set handlers for task, labels, etc.
      */
     addEventListeners() {
-        console.log('ADD LISTENERS NOT IMPLEMENTED');
+        // ADD NEW MEMBER
+        const addNewMemberButton = document.getElementById('inviteNewMemberButton');
+        addNewMemberButton.addEventListener('click', () => {
+            this.eventBus.call('inviteNewMember');
+        });
+
+        // ADD NEW CARD
+        const addNewCardButton = document.getElementById('addNewCardButton');
+        addNewCardButton.addEventListener('click', () => {
+            this.eventBus.call('addNewCard');
+        });
+
+        // ADD NEW TASK
+        const addNewTaskButtons = Array.from(document.getElementsByName('addNewTaskButton'));
+        addNewTaskButtons.forEach((button, i, arr) => {
+            button.addEventListener('click', () => {
+                this.eventBus.call('addNewTask');
+            });
+        });
+
+        // BOARD SETTINGS
+        const boardSettingsButton = document.getElementById('boardSettingsButton');
+        boardSettingsButton.addEventListener('click', () => {
+            this.eventBus.call('openBoardSettings');
+        });
+
+        // CARD SETTINGS
+        const cardSettingsButtons = Array.from(document.getElementsByName('cardSettingsButton'));
+        cardSettingsButtons.forEach((button, i, arr) => {
+            button.addEventListener('click', () => {
+                this.eventBus.call('openCardSettings');
+            });
+        });
+
+        // TASK SETTINGS
+        const taskSettingsButtons = Array.from(document.getElementsByName('taskSettingsButton'));
+        taskSettingsButtons.forEach((button, i, arr) => {
+            button.addEventListener('click', () => {
+                this.eventBus.call('openTaskSettings');
+            });
+        });
     }
 }

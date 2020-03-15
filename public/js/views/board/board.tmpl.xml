@@ -7,7 +7,7 @@
             </div>
 
             <div class="board-member-container">
-                <div class="button primary">Invite</div>
+                <div class="button primary" id="inviteNewMemberButton">Invite</div>
                 <fest:for iterate="board.members" index="i" value="member">
                     <a class="member" href="{member.url}">
                         <img class="board-member"
@@ -19,7 +19,7 @@
             </div>
 
             <div class="board-header-buttons">
-                <div class="button primary">Board settings</div>
+                <div class="button primary" id="boardSettingsButton">Board settings</div>
             </div>
         </div>
 
@@ -32,13 +32,13 @@
                                 column.title
                             </fest:value>
                         </div>
-                        <div class="button board-card-settings"/>
+                        <div class="button board-card-settings" name="cardSettingsButton"/>
                     </div>
 
 
                     <div class="board-task-list">
                         <fest:for iterate="column.tasks" index="j" value="task">
-                            <div class="board-task-mini">
+                            <div class="board-task-mini" name="taskSettingsButton">
                                 <div class="board-task-label-container">
                                     <fest:for iterate="task.labels" index="k" value="label">
                                         <div class="board-task-label-mini">
@@ -64,15 +64,14 @@
                                 </div>
                             </div>
                         </fest:for>
-                        <div class="board-task-mini board-add-task">
+                        <div class="board-task-mini board-add-task" name="addNewTaskButton">
                             + Add new task
                         </div>
                     </div>
                 </div>
             </fest:for>
 
-            <!--            ADD NEW CARD-->
-            <div class="board-card add-board-card">
+            <div class="board-card add-board-card" id="addNewCardButton">
                 <div class="title board-card-title">
                     + Add new card
                 </div>
