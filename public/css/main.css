@@ -486,6 +486,18 @@ textarea {
     box-shadow: #8c8888f5 0px 0px 10px 1px;
 }
 
+.add-board-card {
+    box-shadow: #8c8888f5 0px 0px 10px 1px;
+    background: #ededed4f;
+    transition: 0.3s;
+}
+
+.add-board-card:hover {
+    box-shadow: #484848f5 0px 0px 10px 1px;
+    background: #edededad;
+    cursor: pointer;
+}
+
 .board-card-title {
     font-size: 22px;
     word-wrap: break-word;
@@ -511,6 +523,22 @@ textarea {
     padding: 9px;
     margin-bottom: 10px;
     background: #d4d5fa8a;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.board-task-mini:hover {
+    cursor: pointer;
+    background: #d4d5fafa;
+}
+
+.board-add-task {
+    background: #d4d5fa8a;
+    font-size: 16pt;
+}
+
+.board-add-task:hover {
+    background: #d4d5fafa;
 }
 
 .board-task-mini:last-child {
@@ -550,6 +578,7 @@ textarea {
     flex-flow: row-reverse;
     overflow-x: auto;
     max-width: 100%;
+    align-items: center;
 }
 
 .board-member-link {
