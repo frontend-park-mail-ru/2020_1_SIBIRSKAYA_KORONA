@@ -467,6 +467,13 @@ textarea {
     margin: 0 5px;
 }
 
+.board-header-buttons {
+    float: right;
+    min-width: 33%;
+    display: flex;
+    place-content: flex-end;
+}
+
 .board-header-title {
     width: 33%;
     font-size: 35px;
@@ -481,11 +488,9 @@ textarea {
     flex-grow: 1;
 }
 
-.board-header-buttons {
-    float: right;
-    min-width: 33%;
-    display: flex;
-    place-content: flex-end;
+.board-card-container:after {
+    content: "";
+    flex: 0 0 5px;
 }
 
 .board-card {
