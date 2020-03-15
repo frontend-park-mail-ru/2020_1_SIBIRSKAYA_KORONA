@@ -139,6 +139,12 @@ textarea {
     font-weight: 800;
 }
 
+.title-big {
+    font-size: 20pt;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
 .popup {
     position: absolute;
     top: 0;
@@ -634,22 +640,23 @@ textarea {
 
 /*       TASK SETTINGS    */
 
-.task-settings-form {
+.settings-form {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 60%;
     box-shadow: none;
 }
 
-.task-settings-block {
+.form-block {
     margin-bottom: 15px;
 }
 
-.task-settings-title {
-    font-size: 20pt;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+/*       END TASK       */
+
+/*       BOARD SETTINGS */
+
+
+/*       END BOARD SETTINGS */
 
 /*       PROFILE        */
 .profile-header {
