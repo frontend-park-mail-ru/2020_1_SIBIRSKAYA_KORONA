@@ -26,11 +26,16 @@
         <div class="board-card-container">
             <fest:for iterate="board.columns" index="i" value="column">
                 <div class="board-card">
-                    <div class="title board-card-title">
-                        <fest:value>
-                            column.title
-                        </fest:value>
+                    <div class="header">
+                        <div class="title board-card-title">
+                            <fest:value>
+                                column.title
+                            </fest:value>
+                        </div>
+                        <div class="button board-card-settings"/>
                     </div>
+
+
                     <div class="board-task-list">
                         <fest:for iterate="column.tasks" index="j" value="task">
                             <div class="board-task-mini">

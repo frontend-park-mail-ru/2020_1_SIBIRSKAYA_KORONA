@@ -83,6 +83,22 @@ input[type=file] {
     color: white;
 }
 
+.button.board-card-settings:before {
+    color: #848484;
+    font-weight: bold;
+    content: "\22EF";
+}
+
+.button.board-card-settings {
+    padding: 0 5px;
+    align-self: start;
+    transition: 0.2s;
+}
+
+.button.board-card-settings:hover {
+    background: #d4d5fabf;
+}
+
 input {
     letter-spacing: 2px;
     font-size: 16px;
@@ -501,7 +517,7 @@ textarea {
 .board-card-title {
     font-size: 22px;
     word-wrap: break-word;
-    max-width: 100%;
+    max-width: 80%;
     margin: 15px 10px 10px 15px;
     max-height: 20%;
 }
