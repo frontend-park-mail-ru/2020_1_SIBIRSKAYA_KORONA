@@ -2,7 +2,7 @@ import './headerView.tmpl.js';
 import BaseView from '../baseView.js';
 
 /**
- * Main header veiw
+ * Main header view
  */
 export default class HeaderView extends BaseView {
     /**
