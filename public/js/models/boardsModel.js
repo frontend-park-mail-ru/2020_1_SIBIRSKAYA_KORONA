@@ -15,6 +15,7 @@ export default class HeaderModel {
         this.eventBus.subscribe('getBoards', this.getBoards);
         this.eventBus.subscribe('addBoard', this.addNewBoard);
 
+        // Заглушка пока бек не умеет в доски
         this.localStorage = {
             myBoards: [
                 {url: 'board1', title: 'Frontend'},
@@ -40,7 +41,6 @@ export default class HeaderModel {
      * @param {Object} boardData - new board data
      */
     addNewBoard(boardData) {
-        // dummy, back has no api for this
         boardData.url = Math.random() + 'url';
         this.localStorage.myBoards.push(boardData);
         this.getBoards();

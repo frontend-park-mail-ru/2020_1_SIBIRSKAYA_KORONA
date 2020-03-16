@@ -53,31 +53,6 @@ export default class BoardsView extends BaseView {
      * Generate new board form
      */
     handleAddBoardButtonClick() {
-        /* const newBoardTitleLabel = document.createElement('div');
-        newBoardTitleLabel.innerText = 'Название доски:';
-        newBoardTitleLabel.className = 'form-input-label';
-
-        const newBoardTitleInput = document.createElement('input');
-        newBoardTitleInput.id = 'inputNewBoardTitle';
-        newBoardTitleInput.type = 'text';
-        newBoardTitleInput.className = 'form-input';
-        newBoardTitleInput.placeholder = 'Новая доска';
-        newBoardTitleInput.autocomplete = 'off';
-
-        const saveNewBoardButton = document.createElement('div');
-        saveNewBoardButton.id = 'submitAddBoard';
-        saveNewBoardButton.className = 'button secondary';
-        saveNewBoardButton.innerText = 'Добавить';
-        saveNewBoardButton.addEventListener('click', () => {
-            if (newBoardTitleInput) {
-                this.eventBus.call('addBoard', {title: newBoardTitleInput.value});
-            }
-        });
-
-        const div = document.createElement('div');
-        div.className = 'dashboard-create';
-        div.append(newBoardTitleLabel, newBoardTitleInput, saveNewBoardButton);
-*/
         const fakeBoard = document.getElementById('addBoard');
         fakeBoard.classList.remove('fake-dashboard');
         fakeBoard.removeEventListener('click', this.handleAddBoardButtonClick);
@@ -89,5 +64,12 @@ export default class BoardsView extends BaseView {
             'placeholder="Новая доска" autocomplete="off">' +
             '<div id="submitAddBoard" class="button secondary">Добавить</div > ' +
             '</div>';
+
+        const newBoardTitleInput = document.getElementById('inputNewBoardTitle');
+        document.getElementById('submitAddBoard').addEventListener('click', () => {
+            if (newBoardTitleInput.value) {
+                this.eventBus.call('addBoard', {title: newBoardTitleInput.value});
+            }
+        });
     }
 }
