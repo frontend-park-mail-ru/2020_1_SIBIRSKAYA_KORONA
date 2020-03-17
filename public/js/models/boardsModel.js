@@ -1,3 +1,5 @@
+import {sessionGet} from '../libs/apiService.js';
+
 /**
  * Main header model
  */
@@ -31,7 +33,18 @@ export default class HeaderModel {
      * TODO: get data from back
      */
     getBoards() {
-        this.eventBus.call('gotBoards', this.localStorage);
+        sessionGet().then((response) => {
+            switch (response.status) {
+                case 200:
+                    this.eventBus.call('gotBoards', this.localStorage);
+                    break;
+                case 401:
+                    this.eventBus.call('unauthorized');
+                    break;
+                default:
+                    console.log('Бекендер молодец!!!');
+            }
+        });
     }
 
 
