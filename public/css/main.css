@@ -604,7 +604,7 @@ textarea {
 .board-task-label-mini {
     display: flex;
     align-items: center;
-    background: greenyellow;
+    background: #cac6c685;
     width: fit-content;
     border-radius: 2px;
     padding: 4px;
@@ -721,63 +721,64 @@ textarea {
 }
 
 
-.task-color-yellow {
+.task-label-color-yellow {
     background: #f2d600;
     transition: 0.2s;
 }
 
-.task-color-yellow.mod-selectable:hover {
+.task-label-color-yellow.mod-selectable:hover {
     background: #ffe837;
 }
 
 
-.task-color-orange {
+.task-label-color-orange {
     background: #ff9f1a;
     transition: 0.2s;
 }
 
-.task-color-orange.mod-selectable:hover {
+.task-label-color-orange.mod-selectable:hover {
     background: #fdaf43;
 }
 
 
-.task-color-red {
+.task-label-color-red {
     background: #eb5a46;
     transition: 0.2s;
 }
 
-.task-color-red.mod-selectable:hover {
+.task-label-color-red.mod-selectable:hover {
     background: #f36d5b;
 }
 
 
-.task-color-purple {
+.task-label-color-purple {
     background: #c377e0;
     transition: 0.2s;
 }
 
-.task-color-purple.mod-selectable:hover {
+.task-label-color-purple.mod-selectable:hover {
     background: #ce88e8;
 }
 
 
-.task-color-darkblue {
+.task-label-color-darkblue {
     background: #0079bf;
+    color: #f8f8ff;
     transition: 0.2s;
 }
 
-.task-color-darkblue.mod-selectable:hover {
+.task-label-color-darkblue.mod-selectable:hover {
     background: #2a97d6;
 }
 
 
-.task-color-black {
+.task-label-color-black {
     background: #344563;
     color: #f8f8ff;
     transition: 0.2s;
 }
 
-.task-color-black.mod-selectable:hover {
+.task-label-color-black.mod-selectable:hover {
     background: #495771;
 }
 

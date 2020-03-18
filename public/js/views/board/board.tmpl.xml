@@ -41,7 +41,7 @@
                             <div class="board-task-mini" name="taskSettingsButton">
                                 <div class="board-task-label-container">
                                     <fest:for iterate="task.labels" index="k" value="label">
-                                        <div class="board-task-label-mini">
+                                        <div class="board-task-label-mini task-label-color-{label.color}">
                                             <fest:value>
                                                 label.title
                                             </fest:value>

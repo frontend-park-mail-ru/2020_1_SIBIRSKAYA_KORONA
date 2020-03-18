@@ -31,6 +31,25 @@ export default class BoardModel {
                     avatar: 'img/default_avatar.png',
                 },
             ],
+            labels: [
+                {
+                    title: 'label 1',
+                    color: 'red',
+                },
+                {
+                    title: 'label 2',
+                    color: 'darkblue',
+                },
+                {
+                    title: 'label 3',
+                    color: 'black',
+                },
+                {
+                    title: 'Label 4',
+                    color: 'orange'
+                },
+            ],
+
             columns: [
                 {
                     title: 'COLUMN 1',
@@ -38,10 +57,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -61,10 +82,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -94,10 +117,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -117,10 +142,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -150,10 +177,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -173,10 +202,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -206,10 +237,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -229,10 +262,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -269,10 +304,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -292,10 +329,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -332,10 +371,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -355,10 +396,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -395,10 +438,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -418,10 +463,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -458,10 +505,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -481,10 +530,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -521,10 +572,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -544,10 +597,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -574,7 +629,6 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
 
                     ],
                 },
@@ -584,10 +638,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -607,10 +663,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
@@ -647,10 +705,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 1',
+                                    title: 'label 1',
+                                    color: 'red',
                                 },
                                 {
-                                    title: 'Label 2',
+                                    title: 'label 2',
+                                    color: 'darkblue',
                                 },
                             ],
                             description: 'My task description 1',
@@ -670,10 +730,12 @@ export default class BoardModel {
                         {
                             labels: [
                                 {
-                                    title: 'Label 3',
+                                    title: 'label 3',
+                                    color: 'black',
                                 },
                                 {
                                     title: 'Label 4',
+                                    color: 'orange'
                                 },
                             ],
                             description: 'My task description 2',
