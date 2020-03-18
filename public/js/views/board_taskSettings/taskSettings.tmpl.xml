@@ -6,7 +6,7 @@
                 <div class="form-block">
                     <div class="title-big">
                         <fest:value>
-                            data.card.title
+                            data.column.title
                         </fest:value>
                     </div>
                 </div>

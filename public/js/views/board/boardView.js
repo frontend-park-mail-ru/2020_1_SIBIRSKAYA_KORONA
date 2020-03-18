@@ -45,9 +45,9 @@ export default class BoardView extends BaseView {
         });
 
         // ADD NEW CARD
-        const addNewCardButton = document.getElementById('addNewCardButton');
-        addNewCardButton.addEventListener('click', () => {
-            this.eventBus.call('addNewCard');
+        const addNewColumnButton = document.getElementById('addNewColumnButton');
+        addNewColumnButton.addEventListener('click', () => {
+            this.eventBus.call('addNewColumn');
         });
 
         // ADD NEW TASK
@@ -65,10 +65,10 @@ export default class BoardView extends BaseView {
         });
 
         // CARD SETTINGS
-        const cardSettingsButtons = Array.from(document.getElementsByName('cardSettingsButton'));
-        cardSettingsButtons.forEach((button, i, arr) => {
+        const columnSettingsButtons = Array.from(document.getElementsByName('columnSettingsButton'));
+        columnSettingsButtons.forEach((button, i, arr) => {
             button.addEventListener('click', () => {
-                this.eventBus.call('openCardSettings');
+                this.eventBus.call('openColumnSettings');
             });
         });
 

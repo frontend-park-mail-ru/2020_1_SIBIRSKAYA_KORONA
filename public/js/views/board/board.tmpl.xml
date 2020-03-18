@@ -23,16 +23,16 @@
             </div>
         </div>
 
-        <div class="board-card-container">
+        <div class="board-column-container">
             <fest:for iterate="board.columns" index="i" value="column">
-                <div class="board-card">
+                <div class="board-column">
                     <div class="header">
-                        <div class="title board-card-title">
+                        <div class="title board-column-title">
                             <fest:value>
                                 column.title
                             </fest:value>
                         </div>
-                        <div class="button board-card-settings-button" name="cardSettingsButton"/>
+                        <div class="button board-column-settings-button" name="columnSettingsButton"/>
                     </div>
 
 
@@ -71,9 +71,9 @@
                 </div>
             </fest:for>
 
-            <div class="board-card add-board-card" id="addNewCardButton">
-                <div class="title board-card-title">
-                    + Add new card
+            <div class="board-column add-board-column" id="addNewColumnButton">
+                <div class="title board-column-title">
+                    + Add new column
                 </div>
             </div>
         </div>

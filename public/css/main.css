@@ -93,19 +93,19 @@ input[type=file] {
     color: white;
 }
 
-.button.board-card-settings-button:before {
+.button.board-column-settings-button:before {
     color: #848484;
     font-weight: bold;
     content: "\22EF";
 }
 
-.button.board-card-settings-button {
+.button.board-column-settings-button {
     padding: 0 5px;
     align-self: start;
     transition: 0.2s;
 }
 
-.button.board-card-settings-button:hover {
+.button.board-column-settings-button:hover {
     background: #d4d5fabf;
 }
 
@@ -508,7 +508,7 @@ textarea {
     color: #ffeaea;
 }
 
-.board-card-container {
+.board-column-container {
     display: flex;
     overflow-x: auto;
     width: 100%;
@@ -516,12 +516,12 @@ textarea {
     flex-grow: 1;
 }
 
-.board-card-container:after {
+.board-column-container:after {
     content: "";
     flex: 0 0 5px;
 }
 
-.board-card {
+.board-column {
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -535,19 +535,19 @@ textarea {
     box-shadow: #8c8888f5 0px 0px 10px 1px;
 }
 
-.add-board-card {
+.add-board-column {
     box-shadow: #8c8888f5 0px 0px 10px 1px;
     background: #ededed4f;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.add-board-card:hover {
+.add-board-column:hover {
     box-shadow: #484848f5 0px 0px 10px 1px;
     background: #edededad;
 }
 
-.board-card-title {
+.board-column-title {
     font-size: 22px;
     word-wrap: break-word;
     max-width: 80%;
