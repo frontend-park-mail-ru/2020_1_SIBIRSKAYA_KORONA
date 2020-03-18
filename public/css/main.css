@@ -671,9 +671,11 @@ textarea {
 
 .task-label {
     display: flex;
+    flex-direction: row;
     border-radius: 5px;
     padding: 10px;
     word-break: break-all;
+    justify-content: space-between;
 }
 
 .task-label.mod-selectable {
@@ -699,8 +701,19 @@ textarea {
     width: 100%;
 }
 
+.task-label-status {
+    align-content: center;
+    margin-left: 5px;
+    width: 10px;
+    align-self: center;
+}
+
+.task-label-status.active:before {
+    content: "\2713";
+}
+
 .task-label-item .task-label {
-    width: 70%;
+    width: 68%;
 }
 
 .task-label-item .button {
