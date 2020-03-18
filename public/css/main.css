@@ -93,22 +93,6 @@ input[type=file] {
     color: white;
 }
 
-.button.board-column-settings-button:before {
-    color: #848484;
-    font-weight: bold;
-    content: "\22EF";
-}
-
-.button.board-column-settings-button {
-    padding: 0 5px;
-    align-self: start;
-    transition: 0.2s;
-}
-
-.button.board-column-settings-button:hover {
-    background: #d4d5fabf;
-}
-
 input {
     letter-spacing: 2px;
     font-size: 16px;
@@ -198,6 +182,10 @@ textarea {
     padding-left: 5%;
     width: 95%;
     border-color: #1a73a8;
+}
+
+.form-block {
+    margin-bottom: 15px;
 }
 
 .group-title {
@@ -656,8 +644,20 @@ textarea {
     box-shadow: none;
 }
 
-.form-block {
-    margin-bottom: 15px;
+.button.board-column-settings-button:before {
+    color: #848484;
+    font-weight: bold;
+    content: "\22EF";
+}
+
+.button.board-column-settings-button {
+    padding: 0 5px;
+    align-self: start;
+    transition: 0.2s;
+}
+
+.button.board-column-settings-button:hover {
+    background: #d4d5fabf;
 }
 
 /*       END TASK       */
