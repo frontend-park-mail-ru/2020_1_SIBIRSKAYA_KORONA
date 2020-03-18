@@ -46,7 +46,7 @@ export default class BoardModel {
                 },
                 {
                     title: 'Label 4',
-                    color: 'orange'
+                    color: 'orange',
                 },
             ],
 
@@ -87,7 +87,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -147,7 +147,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -207,7 +207,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -267,7 +267,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -334,7 +334,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -401,7 +401,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -468,7 +468,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -535,7 +535,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -602,7 +602,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -668,7 +668,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',
@@ -735,7 +735,7 @@ export default class BoardModel {
                                 },
                                 {
                                     title: 'Label 4',
-                                    color: 'orange'
+                                    color: 'orange',
                                 },
                             ],
                             description: 'My task description 2',

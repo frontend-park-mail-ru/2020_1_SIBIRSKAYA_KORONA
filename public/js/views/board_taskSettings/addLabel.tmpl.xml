@@ -1,0 +1,40 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="labels" xmlns:fesr="http://fest.mail.ru">
+    <div class="form pop-over">
+        <div class="form-block">
+            <div class="title-big">
+                Labels
+            </div>
+        </div>
+
+        <div class="form-block">
+            <div class="task-label-container">
+                <fest:for iterate="labels" index="i" value="label">
+                    <div class="task-label-item">
+                        <div class="task-label task-label-color-{label.color} mod-selectable">
+                            <fesr:value>
+                                label.title
+                            </fesr:value>
+                            <fest:if test="label.isActive">
+                                <div class="task-label-status active"></div>
+                            </fest:if>
+                            <fest:if test="!label.isActive">
+                                <div class="task-label-status"></div>
+                            </fest:if>
+                        </div>
+
+                        <div class="button default">
+                            &#x270E;
+                        </div>
+                    </div>
+                </fest:for>
+            </div>
+        </div>
+
+        <div class="form-block">
+            <div class="task-label task-add-label mod-selectable">
+                + Create new label
+            </div>
+        </div>
+
+    </div>
+</fest:template>
