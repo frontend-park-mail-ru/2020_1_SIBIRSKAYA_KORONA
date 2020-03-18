@@ -157,6 +157,10 @@ textarea {
     z-index: 10;
 }
 
+.pop-over {
+    width: 250px;
+}
+
 .window-overlay {
     position: absolute;
     background: #00000080;
@@ -628,12 +632,17 @@ textarea {
     align-items: center;
 }
 
+.member-container .board-member {
+    margin-right: 5px;
+}
+
 .board-member-link {
 }
 
 .board-member {
     height: 30px;
     width: 30px;
+    border-radius: 5px;
 }
 
 /*       END BOARD        */
@@ -657,6 +666,142 @@ textarea {
 
 
 /*       END BOARD SETTINGS */
+
+/*       LABEL          */
+
+.task-label {
+    display: flex;
+    border-radius: 5px;
+    padding: 10px;
+    word-break: break-all;
+}
+
+.task-label.mod-selectable {
+    cursor: pointer;
+}
+
+.task-label-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.task-label-container .task-label {
+    margin-bottom: 5px;
+}
+
+.task-label-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.task-label-item .task-label {
+    width: 70%;
+}
+
+.task-label-item .button {
+
+}
+
+
+.task-color-yellow {
+    background: #f2d600;
+    transition: 0.2s;
+}
+
+.task-color-yellow.mod-selectable:hover {
+    background: #ffe837;
+}
+
+
+.task-color-orange {
+    background: #ff9f1a;
+    transition: 0.2s;
+}
+
+.task-color-orange.mod-selectable:hover {
+    background: #fdaf43;
+}
+
+
+.task-color-red {
+    background: #eb5a46;
+    transition: 0.2s;
+}
+
+.task-color-red.mod-selectable:hover {
+    background: #f36d5b;
+}
+
+
+.task-color-purple {
+    background: #c377e0;
+    transition: 0.2s;
+}
+
+.task-color-purple.mod-selectable:hover {
+    background: #ce88e8;
+}
+
+
+.task-color-darkblue {
+    background: #0079bf;
+    transition: 0.2s;
+}
+
+.task-color-darkblue.mod-selectable:hover {
+    background: #2a97d6;
+}
+
+
+.task-color-black {
+    background: #344563;
+    color: #f8f8ff;
+    transition: 0.2s;
+}
+
+.task-color-black.mod-selectable:hover {
+    background: #495771;
+}
+
+
+.task-add-label {
+    margin-top: 10px;
+    background: #d4d5fa8a;
+    font-size: 16pt;
+}
+
+.task-add-label:hover {
+    background: #d4d5fafa;
+}
+
+/*       END LABEL          */
+
+/*       CREATE LABEL       */
+
+.task-color-palette {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.task-palette-color {
+    height: 15px;
+    width: 30px;
+    margin: 5px;
+    justify-content: center;
+}
+
+.task-palette-color.active:before {
+    content: "\2713";
+}
+
+/*       END CREATE LABEL       */
+
 
 /*       PROFILE        */
 .profile-header {
