@@ -139,7 +139,7 @@ export default class JoinModel {
                         });
                     break;
                 case 403: // - Forbidden (В запросе на данные отсутствует кука)
-                    this.eventBus.call('unauthorized');
+                    this.eventBus.call('invalidCookie');
                     break;
                 case 404: // - NotFound (Пользователя по куке не нашли)
                     console.log('BadRequest');
