@@ -12,7 +12,7 @@ const BACKEND_ADDRESS = 'http://localhost:8080/';
  */
 export const settingsPost = (userInfo) => {
     const apiUrl = new URL('settings', BACKEND_ADDRESS);
-    return fetchPost(apiUrl.href, JSON.stringify(userInfo));
+    return fetchPost(apiUrl.href, JSON.stringify(userInfo), {'Content-Type': 'application/json'});
 };
 
 /**
@@ -44,7 +44,7 @@ export const settingsPut = (userForm) => {
  */
 export const sessionPost = (userInfo) => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
-    return fetchPost(apiUrl.href, JSON.stringify(userInfo));
+    return fetchPost(apiUrl.href, JSON.stringify(userInfo), {'Content-Type': 'application/json'});
 };
 
 /**
