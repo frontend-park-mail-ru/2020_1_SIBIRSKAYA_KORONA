@@ -139,10 +139,8 @@ export default class JoinModel {
                         });
                     break;
                 case 403: // - Forbidden (В запросе на данные отсутствует кука)
-                    this.eventBus.call('invalidCookie');
-                    break;
                 case 404: // - NotFound (Пользователя по куке не нашли)
-                    console.log('BadRequest');
+                    this.eventBus.call('invalidCookie');
                     break;
                 case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)
                     break;
