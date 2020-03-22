@@ -77,3 +77,26 @@ export const profileGet = (nickname) => {
     return fetchGet(apiUrl.href);
 };
 
+/** ******************* BOARDS ************************/
+
+/**
+ * @description Create new board
+ * @param {string} boardName - board name
+ * @return {Promise<Response>}
+ */
+export const boardsPost = (boardName) => {
+    const apiUrl = new URL('boards', BACKEND_ADDRESS);
+    const body = {
+        name: boardName,
+    };
+    return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
+};
+
+/**
+ * @description Get available boards for current user
+ * @return {Promise<Response>}
+ */
+export const boardsGet = () => {
+    const apiUrl = new URL('boards', BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
