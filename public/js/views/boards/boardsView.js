@@ -68,7 +68,7 @@ export default class BoardsView extends BaseView {
         const newBoardTitleInput = document.getElementById('inputNewBoardTitle');
         document.getElementById('submitAddBoard').addEventListener('click', () => {
             if (newBoardTitleInput.value) {
-                this.eventBus.call('addBoard', {title: newBoardTitleInput.value});
+                this.eventBus.call('addBoard', newBoardTitleInput.value);
             }
         });
     }

@@ -9,9 +9,9 @@
             </div>
             <div class="dashboards-container">
                 <fest:for iterate="data.myBoards" index="i" value="board">
-                    <a class="link-none dashboard" href="{board.url}">
+                    <a class="link-none dashboard" href="{board.id}">
                         <div class="dashboard-title">
-                            <fest:value>board.title</fest:value>
+                            <fest:value>board.name</fest:value>
                         </div>
                     </a>
                 </fest:for>
@@ -28,9 +28,9 @@
             </div>
             <div class="dashboards-container">
                 <fest:for iterate="data.sharedBoards" index="i" value="board">
-                    <a class="link-none dashboard" href="{board.url}">
+                    <a class="link-none dashboard" href="{board.id}">
                         <div class="dashboard-title">
-                            <fest:value>board.title</fest:value>
+                            <fest:value>board.name</fest:value>
                         </div>
                     </a>
                 </fest:for>

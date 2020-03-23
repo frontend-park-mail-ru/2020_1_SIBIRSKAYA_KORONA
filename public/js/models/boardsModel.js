@@ -1,4 +1,4 @@
-import {sessionGet} from '../libs/apiService.js';
+import {boardsGet, boardsPost} from '../libs/apiService.js';
 
 /**
  * Main header model
@@ -20,26 +20,44 @@ export default class HeaderModel {
         // Заглушка пока бек не умеет в доски
         this.localStorage = {
             myBoards: [
-                {url: 'board1', title: 'Frontend'},
+                {
+                    url: 'board1',
+                    title: 'Frontend',
+                    members: []
+                },
             ],
             sharedBoards: [
-                {url: 'board2', title: 'Backend'},
+                {
+                    url: 'board2',
+                    title: 'Backend',
+                    admin: {},
+                    members: []
+                },
             ],
         };
     }
 
     /**
-     * Dummy for get data
-     * TODO: get data from back
+     * Call api to get all boards
      */
     getBoards() {
-        sessionGet().then((response) => {
+        boardsGet().then((response) => {
+            console.log(response);
             switch (response.status) {
                 case 200:
-                    this.eventBus.call('gotBoards', this.localStorage);
+                    response.json().then((responseJson) => {
+                            this.eventBus.call('gotBoards', {
+                                myBoards: responseJson.admin,
+                                sharedBoards: responseJson.member
+                            });
+                            console.log(responseJson);
+                        }
+                    );
                     break;
-                case 401:
+                case 403:
                     this.eventBus.call('unauthorized');
+                    break;
+                case 404:
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -49,13 +67,28 @@ export default class HeaderModel {
 
 
     /**
-     * Dummy for add new board
-     * TODO: put data to back
-     * @param {Object} boardData - new board data
+     * Call api to add new board
+     * @param {String} boardTitle - new board title
      */
-    addNewBoard(boardData) {
-        boardData.url = Math.random() + 'url';
-        this.localStorage.myBoards.push(boardData);
-        this.getBoards();
+    addNewBoard(boardTitle) {
+        boardsPost(boardTitle).then((response) => {
+            switch (response.status) {
+                case 200:
+                    response.json().then(this.getBoards);
+                    break;
+                case 403:
+                    this.eventBus.call('unauthorized');
+                    break;
+                case 404:
+                    break;
+                default:
+                    console.log('Бекендер молодец!!!');
+            }
+
+
+        });
+        // boardTitle.url = Math.random() + 'url';
+        // this.localStorage.myBoards.push(boardTitle);
+
     }
 }

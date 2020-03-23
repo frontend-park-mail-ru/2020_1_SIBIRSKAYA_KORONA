@@ -72,13 +72,13 @@ export default class JoinModel {
         settingsPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
+                case 303: // - See Other (Постучались на данный endpoint с выставленной кукой)
                     this.eventBus.call('joinSuccess', userInfo);
                     break;
-                case 400: // - BadRequest (неверный запрос)
+                case 400: // - BadRequest (Тело запроса не соответствует модели пользователя)
                     console.log('BadRequest');
                     break;
-                case 409: // - Conflict (пользователь с таким ником уже существует)
+                case 409: // - Conflict (Пользователь с такими регистрационными данными уже существует)
                     const errorText = 'Пользователь с таким ником уже существует';
                     this.eventBus.call('userInputError', {show: true, field: 'inputNickname', text: errorText});
                     break;
