@@ -1,3 +1,5 @@
+import {} from '../libs/apiService.js';
+
 /**
  * Board model
  */
@@ -55,6 +57,7 @@ export default class BoardModel {
                     title: 'COLUMN 1',
                     tasks: [
                         {
+                            id: 1,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -80,6 +83,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 2,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -115,6 +119,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 3,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -140,6 +145,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 4,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -175,6 +181,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 5,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -200,6 +207,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 6,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -235,6 +243,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 7,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -260,6 +269,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 8,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -302,6 +312,7 @@ export default class BoardModel {
                     title: 'COLUMN 2',
                     tasks: [
                         {
+                            id: 9,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -327,6 +338,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 10,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -361,14 +373,13 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
-
                     ],
                 },
                 {
                     title: 'COLUMN 1',
                     tasks: [
                         {
+                            id: 11,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -394,6 +405,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 12,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -428,14 +440,13 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
-
                     ],
                 },
                 {
                     title: 'COLUMN 2',
                     tasks: [
                         {
+                            id: 13,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -461,6 +472,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 14,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -495,14 +507,13 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
-
                     ],
                 },
                 {
                     title: 'COLUMN 1',
                     tasks: [
                         {
+                            id: 15,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -528,6 +539,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 16,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -562,14 +574,13 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
-
                     ],
                 },
                 {
                     title: 'COLUMN 2',
                     tasks: [
                         {
+                            id: 17,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -595,6 +606,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 18,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -629,13 +641,13 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
                     ],
                 },
                 {
                     title: 'COLUMN 1',
                     tasks: [
                         {
+                            id: 19,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -661,6 +673,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 20,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -695,14 +708,13 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
-
                     ],
                 },
                 {
                     title: 'COLUMN 2',
                     tasks: [
                         {
+                            id: 21,
                             labels: [
                                 {
                                     title: 'label 1',
@@ -728,6 +740,7 @@ export default class BoardModel {
                             ],
                         },
                         {
+                            id: 22,
                             labels: [
                                 {
                                     title: 'label 3',
@@ -762,8 +775,6 @@ export default class BoardModel {
                                 },
                             ],
                         },
-
-
                     ],
                 },
             ],

@@ -145,6 +145,16 @@ textarea {
     width: 250px;
 }
 
+#popup-block {
+    position: absolute;
+    z-index:100;
+}
+
+#popover-block {
+    position: absolute;
+    z-index: 10;
+}
+
 .window-overlay {
     position: absolute;
     background: #00000080;

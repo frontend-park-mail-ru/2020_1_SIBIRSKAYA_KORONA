@@ -38,7 +38,7 @@
 
                     <div class="board-task-list">
                         <fest:for iterate="column.tasks" index="j" value="task">
-                            <div class="board-task-mini" name="taskSettingsButton">
+                            <div class="board-task-mini" name="taskSettingsButton" data-task-id="{task.id}">
                                 <div class="board-task-label-container">
                                     <fest:for iterate="task.labels" index="k" value="label">
                                         <div class="board-task-label-mini task-label-color-{label.color}">
@@ -78,4 +78,6 @@
             </div>
         </div>
     </div>
+    <div id="popup-block"></div>
+    <div id="popover-block"></div>
 </fest:template>

@@ -1,4 +1,5 @@
 import './board.tmpl.js';
+import '../board_taskSettings/taskSettings.tmpl.js';
 import BaseView from '../baseView.js';
 
 /**
@@ -30,6 +31,7 @@ export default class BoardView extends BaseView {
      * @param {Object} boardData - board data to render
      */
     renderBoard(boardData) {
+        this.boardData = boardData;
         this.root.innerHTML = window.fest['js/views/board/board.tmpl'](boardData);
         this.addEventListeners();
     }
@@ -75,8 +77,9 @@ export default class BoardView extends BaseView {
         // TASK SETTINGS
         const taskSettingsButtons = Array.from(document.getElementsByName('taskSettingsButton'));
         taskSettingsButtons.forEach((button, i, arr) => {
-            button.addEventListener('click', () => {
-                this.eventBus.call('openTaskSettings');
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                this.eventBus.call('openTaskSettings', event.currentTarget);
             });
         });
     }
