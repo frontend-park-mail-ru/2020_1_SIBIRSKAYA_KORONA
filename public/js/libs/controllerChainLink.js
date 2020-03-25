@@ -1,30 +1,35 @@
 /**
- * Map of chain link signals. IMPORTANT: only 'closeCurrentLink' may be used outside library!!!
- * IMPORTANT: all signals from this library must be inside chain link event bus
+ * Map of chain link signals.
+ * IMPORTANT: all signals from this library must be present in chain link event bus
  *
+ * Signals for MULTIPLE chain links:
  * @property {string} closeLastChainLink - close only last link in chain excluding current link
  * @property {string} closeLastChainLinkOrSelf - close last link or current link if it doesn't have child link
  *
  * @property {string} closeAllChildChainLinks - close all link in chain excluding current link
  * @property {string} closeAllChildChainLinksAndSelf - close all link in chain including current link
  *
- * @property {string} childLinkWasClosed - means that child link was closed and reference to child must be cleared
- * @property {string} preCloseCurrentLink - used to pass 'childLinkWasClosed' signal to parent
- * right before closing current link
+ * Signal for PARENT link
+ * @property {string} childLinkWasClosed - (signal for parent link)
+ * It means that child link was closed and reference to child must be cleared.
+ * Usually you don't need to call this signal explicitly!
  *
- * @property {string} closeCurrentLink - means that current link must be closed
+ * Signal for CURRENT link
+ * @property {string} closeCurrentLink - (signal for current link)
+ * It means that current link must be closed.
+ * Custom close function will be executed if it was set
  */
 export const ChainLinkSignals = {
+    // signals for chain manipulating
     closeLastChainLink: 'closeLastChild',
     closeLastChainLinkOrSelf: 'closeLastChildOrSelf',
-
     closeAllChildChainLinks: 'closeAllChildren',
     closeAllChildChainLinksAndSelf: 'closeAllChildrenAndSelf',
 
+    // signal for parent chain link
     childLinkWasClosed: 'closedChild',
-    preCloseCurrentLink: 'preCloseSelf',
 
-    // IMPORTANT: this is the only signal from this library that may be used by developer in his link event bus
+    // signal for current chain link
     closeCurrentLink: 'closeSelf',
 };
 
@@ -47,6 +52,7 @@ const checkEventBusValidity = (eventBus) => {
 /**
  * This class is made to build chain of controllers.
  * It has signals for communication between chain links.
+ * IMPORTANT: You can set custom close function which will be executed on close signal
  */
 export default class ControllerChainLink {
     /**
@@ -55,26 +61,30 @@ export default class ControllerChainLink {
      * @param {EventBus} parentEventBus - event bus of parent chain link
      */
     constructor(eventBus, parentEventBus = null) {
+        checkEventBusValidity(eventBus);
+
         this.eventBus = eventBus;
         this.parentEventBus = parentEventBus;
         this.childEventBus = null;
+        this.customCloseFunction = null;
 
+        // CLOSE LAST CHAIN LINK
         this.eventBus.subscribe(ChainLinkSignals.closeLastChainLink, () => {
             if (this.childEventBus !== null) {
                 this.childEventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
             }
         });
 
-
+        // CLOSE LAST CHAIN LINK OR SELF
         this.eventBus.subscribe(ChainLinkSignals.closeLastChainLinkOrSelf, () => {
             if (this.childEventBus !== null) {
                 this.childEventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
             } else {
-                this.eventBus.call(ChainLinkSignals.preCloseCurrentLink);
+                this.eventBus.call(ChainLinkSignals.closeCurrentLink);
             }
         });
 
-
+        // CLOSE ALL CHAIN LINK EXCEPT SELF
         this.eventBus.subscribe(ChainLinkSignals.closeAllChildChainLinks, () => {
             if (this.childEventBus !== null) {
                 this.childEventBus.call(ChainLinkSignals.closeAllChildChainLinksAndSelf);
@@ -82,29 +92,34 @@ export default class ControllerChainLink {
             }
         });
 
-
+        // CLOSE ALL CHAIN LINK EXCEPT SELF
         this.eventBus.subscribe(ChainLinkSignals.closeAllChildChainLinksAndSelf, () => {
             if (this.childEventBus !== null) {
                 this.childEventBus.call(ChainLinkSignals.closeAllChildChainLinksAndSelf);
             }
 
-            this.eventBus.call(ChainLinkSignals.preCloseCurrentLink);
+            this.eventBus.call(ChainLinkSignals.closeCurrentLink);
         });
 
 
+        // SIGNAL FOR PARENT
         this.eventBus.subscribe(ChainLinkSignals.childLinkWasClosed, () => {
             this.childEventBus = null;
         });
 
 
-        this.eventBus.subscribe(ChainLinkSignals.preCloseCurrentLink, () => {
+        // SIGNAL FOR CURRENT LINK
+        this.eventBus.subscribe(ChainLinkSignals.closeCurrentLink, (...args) => {
+            if (this.customCloseFunction !== null) {
+                this.customCloseFunction(...args);
+            }
+
             if (this.parentEventBus !== null) {
                 this.parentEventBus.call(ChainLinkSignals.childLinkWasClosed);
             }
-
-            this.eventBus.call(ChainLinkSignals.closeCurrentLink);
         });
     }
+
 
     /**
      * Set child link of current link
@@ -113,6 +128,16 @@ export default class ControllerChainLink {
     setChildEventBus(childEventBus) {
         checkEventBusValidity(childEventBus);
         this.childEventBus = childEventBus;
+    }
+
+
+    /**
+     * Sets custom close function.
+     * This function will be executed on 'ChainLinkSignals.closeCurrentLink' signal if set
+     * @param {function} customCloseFunction - custom close function
+     */
+    setCustomCloseFunction(customCloseFunction) {
+        this.customCloseFunction = customCloseFunction;
     }
 }
 

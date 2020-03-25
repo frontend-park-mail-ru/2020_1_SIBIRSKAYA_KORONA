@@ -31,10 +31,11 @@ export default class AddLabelPopupController extends ControllerChainLink {
         const eventBus = new EventBus(actualSignals.concat(chainLinkSignalsArray));
         super(eventBus, parentEventBus);
 
-        this.eventBus.subscribe(ChainLinkSignals.closeCurrentLink, () => {
+        this.setCustomCloseFunction(() => {
             this.view.closeSelf();
             parentEventBus.call('closedAddLabelPopup');
         });
+
 
         this.view = new AddLabelPopupView(this.eventBus);
         this.model = new AddLabelPopupModel(this.eventBus);

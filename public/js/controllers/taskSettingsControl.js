@@ -33,6 +33,12 @@ export default class TaskSettingsController extends ControllerChainLink {
         const eventBus = new EventBus(actualSignals.concat(chainLinkSignalsArray));
         super(eventBus, null);
 
+        this.setCustomCloseFunction(() => {
+            this.view.closeSelf();
+            boardEventBus.call('closedTaskSettings');
+        });
+
+
         this.view = new TaskSettingsView(this.eventBus);
         this.model = new TaskSettingsModel(this.eventBus, taskId);
 
@@ -40,11 +46,6 @@ export default class TaskSettingsController extends ControllerChainLink {
             const childController = new AddLabelPopupController(this.eventBus);
             this.setChildEventBus(childController.eventBus);
             childController.view.render(position);
-        });
-
-        this.eventBus.subscribe('closeSelf', () => {
-            this.view.closeSelf();
-            boardEventBus.call('closedTaskSettings');
         });
     }
 }

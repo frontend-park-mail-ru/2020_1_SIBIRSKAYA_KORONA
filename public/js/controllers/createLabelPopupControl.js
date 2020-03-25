@@ -26,18 +26,12 @@ export default class CreateLabelPopupController extends ControllerChainLink {
         const eventBus = new EventBus(actualSignals.concat(chainLinkSignalsArray));
         super(eventBus, parentEventBus);
 
+        this.setCustomCloseFunction(() => {
+            this.view.closeSelf();
+            parentEventBus.call('closedCreateLabelPopup');
+        });
 
         this.view = new CreateLabelPopupView(this.eventBus);
         this.model = new CreateLabelPopupModel(this.eventBus);
-
-
-        this.eventBus.subscribe('closeSelf', () => {
-            this.view.closeSelf();
-            if (this.parentEventBus !== null) {
-                this.parentEventBus.call('closedChild');
-            }
-
-            parentEventBus.call('closedCreateLabelPopup');
-        });
     }
 }
