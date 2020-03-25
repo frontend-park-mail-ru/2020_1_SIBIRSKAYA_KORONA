@@ -12,8 +12,7 @@ const BACKEND_ADDRESS = 'http://localhost:8080/';
  */
 export const settingsPost = (userInfo) => {
     const apiUrl = new URL('settings', BACKEND_ADDRESS);
-    return fetchPost(apiUrl.href, JSON.stringify(userInfo))
-        .then((response) => response.json());
+    return fetchPost(apiUrl.href, JSON.stringify(userInfo), {'Content-Type': 'application/json'});
 };
 
 /**
@@ -22,8 +21,7 @@ export const settingsPost = (userInfo) => {
  */
 export const settingsGet = () => {
     const apiUrl = new URL('settings', BACKEND_ADDRESS);
-    return fetchGet(apiUrl.href)
-        .then((response) => response.json());
+    return fetchGet(apiUrl.href);
 };
 
 /**
@@ -33,8 +31,7 @@ export const settingsGet = () => {
  */
 export const settingsPut = (userForm) => {
     const apiUrl = new URL('settings', BACKEND_ADDRESS);
-    return fetchPut(apiUrl.href, userForm)
-        .then((response) => response.json());
+    return fetchPut(apiUrl.href, userForm);
 };
 
 /** ******************* SESSION ************************/
@@ -47,8 +44,7 @@ export const settingsPut = (userForm) => {
  */
 export const sessionPost = (userInfo) => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
-    return fetchPost(apiUrl.href, JSON.stringify(userInfo))
-        .then((response) => response.json());
+    return fetchPost(apiUrl.href, JSON.stringify(userInfo), {'Content-Type': 'application/json'});
 };
 
 /**
@@ -57,8 +53,7 @@ export const sessionPost = (userInfo) => {
  */
 export const sessionGet = () => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
-    return fetchGet(apiUrl.href)
-        .then((response) => response.json());
+    return fetchGet(apiUrl.href);
 };
 
 /**
@@ -67,8 +62,7 @@ export const sessionGet = () => {
  */
 export const sessionDelete = () => {
     const apiUrl = new URL('session', BACKEND_ADDRESS);
-    return fetchDelete(apiUrl.href)
-        .then((response) => response.json());
+    return fetchDelete(apiUrl.href);
 };
 
 /** ******************* PROFILE ************************/
@@ -80,7 +74,29 @@ export const sessionDelete = () => {
  */
 export const profileGet = (nickname) => {
     const apiUrl = new URL(`profile/${nickname}`, BACKEND_ADDRESS);
-    return fetchGet(apiUrl.href)
-        .then((response) => response.json());
+    return fetchGet(apiUrl.href);
 };
 
+/** ******************* BOARDS ************************/
+
+/**
+ * @description Create new board
+ * @param {string} boardName - board name
+ * @return {Promise<Response>}
+ */
+export const boardsPost = (boardName) => {
+    const apiUrl = new URL('boards', BACKEND_ADDRESS);
+    const body = {
+        name: boardName,
+    };
+    return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
+};
+
+/**
+ * @description Get available boards for current user
+ * @return {Promise<Response>}
+ */
+export const boardsGet = () => {
+    const apiUrl = new URL('boards', BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};

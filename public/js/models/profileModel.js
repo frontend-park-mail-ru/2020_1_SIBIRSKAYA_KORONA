@@ -112,14 +112,12 @@ export default class JoinModel {
                 case 200: // - OK (успешный запрос)
                     this.getUserData();
                     break;
-                case 401: // - Unauthorized (не авторизован)
-                    this.eventBus.call('unauthorized');
-                    break;
-                case 404: // - NotFound (нет пользвателя с указанным ником)
-                    break;
-                case 412: // - StatusPreconditionFailed (неверный пароль)
+                case 400: // - Unauthorized (Невалидное тело запроса с информацией для обновления)
                     this.eventBus.call('wrongPassword');
                     this.eventBus.call('userInputError', {show: true, field: 'inputOldPassword'});
+                    break;
+                case 403: // - NotFound (В запросе отсутствует кука)
+                    this.eventBus.call('invalidCookie');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -133,18 +131,18 @@ export default class JoinModel {
     getUserData() {
         settingsGet().then((response) => {
             switch (response.status) {
-                case 200: // - OK (успешный запрос)
-                    const data = response.body.user;
-                    this.eventBus.call('gotData', data); // for local eventBus (View subscribed)
-                    this.eventBus.call('userDataChanged', data); // for global eventBus (Header subscribed)
+                case 200: // - OK (Валидный запрос данных пользователя)
+                    response.json()
+                        .then((responseJson) => {
+                            this.eventBus.call('gotData', responseJson.user); // for local eventBus (View subscribed)
+                            this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
+                        });
                     break;
-                case 303: // - SeeOther (не авторизован, случай без query string)
-                    this.eventBus.call('unauthorized');
+                case 403: // - Forbidden (В запросе на данные отсутствует кука)
+                case 404: // - NotFound (Пользователя по куке не нашли)
+                    this.eventBus.call('invalidCookie');
                     break;
-                case 400: // - BadRequest (неверный запрос)
-                    console.log('BadRequest');
-                    break;
-                case 404: // - NotFound (нет пользвателя с указанным ником)
+                case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)
                     break;
                 default:
                     console.log('Бекендер молодец!!!');

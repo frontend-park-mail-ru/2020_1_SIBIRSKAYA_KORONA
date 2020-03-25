@@ -52,12 +52,11 @@ export default class LoginModel {
         sessionPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
+                case 303: // - See Other (Постучались на данный endpoint с выставленной кукой)
                     this.eventBus.call('loginSuccess', userInfo);
                     break;
-                case 400: // - BadRequest (неверный запрос)
-                case 404: // - NotFound (нет пользвателя с указанным ником)
-                case 412: // - PreconditionFailed (неверный пароль)
+                case 400: // - Bad Request (Невалидное тело запроса)
+                case 409: // - Conflict (Пароль неверный)
                     this.eventBus.call('inputError', true);
                     break;
                 default:
