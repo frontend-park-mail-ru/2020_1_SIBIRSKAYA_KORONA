@@ -1,5 +1,7 @@
 import './taskSettings.tmpl.js';
 import BaseView from '../baseView.js';
+import {ChainLinkSignals} from '../../libs/controllerChainLink.js';
+
 
 /**
  * Task settings view
@@ -46,7 +48,7 @@ export default class TaskSettingsView extends BaseView {
         const popoverWindow = taskSettings.getElementsByClassName('settings-form')[0];
         popoverWindow.addEventListener('click', (event) => {
             event.stopPropagation();
-            this.eventBus.call('closeLastChild');
+            this.eventBus.call(ChainLinkSignals.closeLastChainLink);
         });
 
         // TODO(Alexandr): add more event listeners
@@ -61,7 +63,7 @@ export default class TaskSettingsView extends BaseView {
         windowOverlay.addEventListener('click', (event) => {
             if (event.target === event.currentTarget) {
                 event.stopPropagation();
-                this.eventBus.call('closeLastChildOrSelf');
+                this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
             }
         });
     }
