@@ -1,10 +1,10 @@
-import '../addLabelPopup/addLabelPopup.tmpl.js';
+import './createLabelPopup.tmpl.js';
 import BaseView from '../baseView.js';
 
 /**
- * View of 'Add label' popup
+ * View of 'Create label' popup
  */
-export default class AddLabelPopupView extends BaseView {
+export default class CreateLabelPopupView extends BaseView {
     /**
      * Constructor of view of 'Add label' popup
      * @param {Object} eventBus  - eventBus to share events with model
@@ -18,31 +18,28 @@ export default class AddLabelPopupView extends BaseView {
         this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
 
-        this.eventBus.subscribe('gotLabels', this.renderAddLabelPopup);
+        this.eventBus.subscribe('gotLabelColors', this.renderAddLabelPopup);
     }
 
     /**
      * Method which triggers getting data from model and sets render position
-     * @param {Object} [position] - object which contains left and top offset in px
-     * TODO(Alexandr): use button targer instead of position object. This way its easycto resize
+     * @param {Object} position - object which contains left and top offset in px
+     * TODO(Alexandr): use button target instead of position object. This way its easy to resize
      */
-    render(position) {
-        if (position !== void 0) {
-            this.position = position;
-        }
-
-        this.eventBus.call('getLabels');
+    render(position = {left: 0, top: 0}) {
+        this.position = position;
+        this.eventBus.call('getLabelColors');
     }
 
     /**
      * Real render view method with label data from model
-     * @param {Object} labelsInfo - information about task and board labels
+     * @param {Object} boardLabelColors - information about board label colors
      */
-    renderAddLabelPopup(labelsInfo) {
+    renderAddLabelPopup(boardLabelColors) {
         const popupDiv = document.getElementById('popup-block');
         popupDiv.style.left = `${this.position.left}px`;
         popupDiv.style.top = `${this.position.top}px`;
-        popupDiv.innerHTML = window.fest['js/views/addLabelPopup/addLabelPopup.tmpl'](labelsInfo);
+        popupDiv.innerHTML = window.fest['js/views/createLabelPopup/createLabelPopup.tmpl'](boardLabelColors);
         this.addEventListeners();
     }
 
@@ -50,10 +47,7 @@ export default class AddLabelPopupView extends BaseView {
      * Add event listeners for interactive elements
      */
     addEventListeners() {
-        const openCreateLabelPopupButton = document.getElementById('openCreateLabelPopupButton');
-        openCreateLabelPopupButton.addEventListener('click', (event) => {
-            this.eventBus.call('openCreateLabelPopup', event.target);
-        });
+        // const popupDiv = document.getElementById('popup-block');
     }
 
 

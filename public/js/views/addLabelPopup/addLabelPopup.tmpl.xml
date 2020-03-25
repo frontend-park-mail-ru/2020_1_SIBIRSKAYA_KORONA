@@ -31,7 +31,8 @@
         </div>
 
         <div class="form-block">
-            <div class="task-label task-add-label mod-selectable">
+            <div class="task-label task-add-label mod-selectable"
+                 id="openCreateLabelPopupButton">
                 + Create new label
             </div>
         </div>

@@ -43,8 +43,13 @@ export default class TaskSettingsController {
             this.childEventBus = childController.eventBus;
             childController.view.render(position);
         });
+
         this.eventBus.subscribe('closeSelf', () => {
             this.view.closeSelf();
+            if (this.parentEventBus !== null) {
+                this.parentEventBus.call('closedChild');
+            }
+
             boardEventBus.call('closedTaskSettings');
         });
 
@@ -67,10 +72,6 @@ export default class TaskSettingsController {
                 this.childEventBus.call('closeLastChildOrSelf');
             } else {
                 this.eventBus.call('closeSelf');
-
-                if (this.parentEventBus !== null) {
-                    this.parentEventBus.call('closedChild');
-                }
             }
         });
 
@@ -87,9 +88,6 @@ export default class TaskSettingsController {
             }
 
             this.eventBus.call('closeSelf');
-            if (this.parentEventBus !== null) {
-                this.parentEventBus.call('closedChild');
-            }
         });
     }
 }

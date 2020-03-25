@@ -1,12 +1,12 @@
-import AddLabelPopupModel from '../models/addLabelPopupModel.js';
-import AddLabelPopupView from '../views/addLabelPopup/addLabelPopupView.js';
+import CreateLabelPopupModel from '../models/createLabelPopupModel.js';
+import CreateLabelPopupView from '../views/createLabelPopup/createLabelPopupView.js';
 import EventBus from '../libs/eventBus.js';
-import CreateLabelPopupController from './createLabelPopupControl.js';
+
 
 /**
- * Add label popup controller
+ * Create label popup controller
  */
-export default class AddLabelPopupController {
+export default class CreateLabelPopupController {
     /**
      * Controller constructor
      * @param {EventBus} parentEventBus - for communication with parent mvc
@@ -18,32 +18,16 @@ export default class AddLabelPopupController {
             'closeLastChildOrSelf', // outside signal
             'closeAllChildren', // outside signal
             'closeAllChildrenAndSelf', // outside signal
+            'closeSelf', // must be set
 
-            'closeSelf',
+            'getLabelColors',
+            'gotLabelColors',
 
-            'getLabels',
-            'gotLabels',
-
-            'openCreateLabelPopup',
-            'closedCreateLabelPopup',
-
-            'openChangeLabelPopup',
-            'closedChangeLabelPopup',
+            'createLabel',
         ]);
 
-        this.view = new AddLabelPopupView(this.eventBus);
-        this.model = new AddLabelPopupModel(this.eventBus);
-
-
-        this.eventBus.subscribe('openCreateLabelPopup', (button)=>{
-            const childController = new CreateLabelPopupController(this.eventBus);
-            this.childEventBus = childController.eventBus;
-            childController.view.render(button.getBoundingClientRect());
-        });
-
-        this.eventBus.subscribe('closedCreateLabelPopup', ()=>{
-            this.view.render();
-        });
+        this.view = new CreateLabelPopupView(this.eventBus);
+        this.model = new CreateLabelPopupModel(this.eventBus);
 
 
         this.eventBus.subscribe('closeSelf', () => {
@@ -52,7 +36,7 @@ export default class AddLabelPopupController {
                 this.parentEventBus.call('closedChild');
             }
 
-            parentEventBus.call('closedAddLabelPopup');
+            parentEventBus.call('closedCreateLabelPopup');
         });
 
 
