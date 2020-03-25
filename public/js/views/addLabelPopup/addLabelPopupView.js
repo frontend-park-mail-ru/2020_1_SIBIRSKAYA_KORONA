@@ -12,7 +12,7 @@ export default class AddLabelPopupView extends BaseView {
     constructor(eventBus) {
         super(eventBus);
 
-        this.position = {left: 0, top: 0};
+        this.relativeTarget = null;
 
         this.render = this.render.bind(this);
         this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
@@ -23,12 +23,11 @@ export default class AddLabelPopupView extends BaseView {
 
     /**
      * Method which triggers getting data from model and sets render position
-     * @param {Object} [position] - object which contains left and top offset in px
-     * TODO(Alexandr): use button targer instead of position object. This way its easycto resize
+     * @param {HTMLElement} [relativeTarget] - html element which will be used as base for further render
      */
-    render(position) {
-        if (position !== void 0) {
-            this.position = position;
+    render(relativeTarget) {
+        if (relativeTarget !== void 0) {
+            this.relativeTarget = relativeTarget;
         }
 
         this.eventBus.call('getLabels');
@@ -40,9 +39,12 @@ export default class AddLabelPopupView extends BaseView {
      */
     renderAddLabelPopup(labelsInfo) {
         const popupDiv = document.getElementById('popup-block');
-        popupDiv.style.left = `${this.position.left}px`;
-        popupDiv.style.top = `${this.position.top}px`;
+
+        const {left, top} = this.relativeTarget.getBoundingClientRect();
+        popupDiv.style.left = `${left}px`;
+        popupDiv.style.top = `${top}px`;
         popupDiv.innerHTML = window.fest['js/views/addLabelPopup/addLabelPopup.tmpl'](labelsInfo);
+
         this.addEventListeners();
     }
 
@@ -52,7 +54,7 @@ export default class AddLabelPopupView extends BaseView {
     addEventListeners() {
         const openCreateLabelPopupButton = document.getElementById('openCreateLabelPopupButton');
         openCreateLabelPopupButton.addEventListener('click', (event) => {
-            this.eventBus.call('openCreateLabelPopup', event.target);
+            this.eventBus.call('openCreateLabelPopup', this.relativeTarget);
         });
     }
 

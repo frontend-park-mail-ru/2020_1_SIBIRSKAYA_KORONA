@@ -43,7 +43,7 @@ export default class AddLabelPopupController extends ControllerChainLink {
         this.eventBus.subscribe('openCreateLabelPopup', (button) => {
             const childController = new CreateLabelPopupController(this.eventBus);
             this.setChildEventBus(childController.eventBus);
-            childController.view.render(button.getBoundingClientRect());
+            childController.view.render(button);
         });
 
         this.eventBus.subscribe('closedCreateLabelPopup', () => {

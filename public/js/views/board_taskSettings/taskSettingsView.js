@@ -55,8 +55,7 @@ export default class TaskSettingsView extends BaseView {
         const addNewLabelButton = taskSettings.querySelector('[name="addNewLabelButton"]');
         addNewLabelButton.addEventListener('click', (event) => {
             event.stopPropagation();
-            const position = addNewLabelButton.getBoundingClientRect();
-            this.eventBus.call('openAddLabelPopup', position);
+            this.eventBus.call('openAddLabelPopup', event.target);
         });
 
         const windowOverlay = taskSettings.getElementsByClassName('window-overlay')[0];

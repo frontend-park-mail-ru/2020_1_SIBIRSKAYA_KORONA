@@ -12,7 +12,7 @@ export default class CreateLabelPopupView extends BaseView {
     constructor(eventBus) {
         super(eventBus);
 
-        this.position = {left: 0, top: 0};
+        this.relativeTarget = null;
 
         this.render = this.render.bind(this);
         this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
@@ -23,11 +23,10 @@ export default class CreateLabelPopupView extends BaseView {
 
     /**
      * Method which triggers getting data from model and sets render position
-     * @param {Object} position - object which contains left and top offset in px
-     * TODO(Alexandr): use button target instead of position object. This way its easy to resize
+     * @param {HTMLElement} [relativeTarget] - html element which will be used as base for further render
      */
-    render(position = {left: 0, top: 0}) {
-        this.position = position;
+    render(relativeTarget) {
+        this.relativeTarget = relativeTarget;
         this.eventBus.call('getLabelColors');
     }
 
@@ -37,9 +36,12 @@ export default class CreateLabelPopupView extends BaseView {
      */
     renderAddLabelPopup(boardLabelColors) {
         const popupDiv = document.getElementById('popup-block');
-        popupDiv.style.left = `${this.position.left}px`;
-        popupDiv.style.top = `${this.position.top}px`;
+
+        const {left, top} = this.relativeTarget.getBoundingClientRect();
+        popupDiv.style.left = `${left}px`;
+        popupDiv.style.top = `${top}px`;
         popupDiv.innerHTML = window.fest['js/views/createLabelPopup/createLabelPopup.tmpl'](boardLabelColors);
+
         this.addEventListeners();
     }
 

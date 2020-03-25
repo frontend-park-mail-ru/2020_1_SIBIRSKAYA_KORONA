@@ -42,10 +42,10 @@ export default class TaskSettingsController extends ControllerChainLink {
         this.view = new TaskSettingsView(this.eventBus);
         this.model = new TaskSettingsModel(this.eventBus, taskId);
 
-        this.eventBus.subscribe('openAddLabelPopup', (position) => {
+        this.eventBus.subscribe('openAddLabelPopup', (button) => {
             const childController = new AddLabelPopupController(this.eventBus);
             this.setChildEventBus(childController.eventBus);
-            childController.view.render(position);
+            childController.view.render(button);
         });
     }
 }
