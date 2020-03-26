@@ -20,7 +20,8 @@ export default class JoinController {
         this.view = new JoinView(this.eventBus);
         this.model = new JoinModel(this.eventBus);
 
-        this.eventBus.subscribe('joinSuccess', (userData) => {
+        this.eventBus.subscribe('joinSuccess', () => {
+            this.view.clearInputtedData();
             router.go('/profile');
         });
     }

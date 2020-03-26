@@ -272,6 +272,7 @@ textarea {
     height: 190px;
     margin: 10px;
     border-radius: 15px;
+    border: 2px solid transparent;
     box-shadow: 0 0 17px 2px #8f8a8a82;
 }
 

@@ -14,6 +14,7 @@ export default class JoinView extends BaseView {
         this.render = this.render.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
+        this.clearInputtedData = this.clearInputtedData.bind(this);
     }
 
     /**
@@ -60,6 +61,12 @@ export default class JoinView extends BaseView {
         }
     }
 
+    /**
+     * Clears inputted data from local storage
+     */
+    clearInputtedData() {
+        this.inputtedData = {};
+    }
     /**
      * Handle user submit
      * @param {Event} event - button click event

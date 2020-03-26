@@ -16,25 +16,6 @@ export default class HeaderModel {
 
         this.eventBus.subscribe('getBoards', this.getBoards);
         this.eventBus.subscribe('addBoard', this.addNewBoard);
-
-        // Заглушка пока бек не умеет в доски
-        this.localStorage = {
-            myBoards: [
-                {
-                    url: 'board1',
-                    title: 'Frontend',
-                    members: []
-                },
-            ],
-            sharedBoards: [
-                {
-                    url: 'board2',
-                    title: 'Backend',
-                    admin: {},
-                    members: []
-                },
-            ],
-        };
     }
 
     /**
@@ -42,29 +23,24 @@ export default class HeaderModel {
      */
     getBoards() {
         boardsGet().then((response) => {
-            console.log(response);
             switch (response.status) {
                 case 200:
                     response.json().then((responseJson) => {
-                            this.eventBus.call('gotBoards', {
-                                myBoards: responseJson.admin,
-                                sharedBoards: responseJson.member
-                            });
-                            console.log(responseJson);
-                        }
-                    );
+                        this.eventBus.call('gotBoards', {
+                            myBoards: responseJson.admin,
+                            sharedBoards: responseJson.member,
+                        });
+                    });
                     break;
                 case 403:
-                    this.eventBus.call('unauthorized');
-                    break;
                 case 404:
+                    this.eventBus.call('unauthorized');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
             }
         });
     }
-
 
     /**
      * Call api to add new board
@@ -77,18 +53,12 @@ export default class HeaderModel {
                     response.json().then(this.getBoards);
                     break;
                 case 403:
-                    this.eventBus.call('unauthorized');
-                    break;
                 case 404:
+                    this.eventBus.call('unauthorized');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
             }
-
-
         });
-        // boardTitle.url = Math.random() + 'url';
-        // this.localStorage.myBoards.push(boardTitle);
-
     }
 }

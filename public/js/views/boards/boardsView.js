@@ -1,3 +1,4 @@
+import './addBoardForm.tmpl.js';
 import './boardsView.tmpl.js';
 import BaseView from '../baseView.js';
 
@@ -56,14 +57,7 @@ export default class BoardsView extends BaseView {
         const fakeBoard = document.getElementById('addBoard');
         fakeBoard.classList.remove('fake-dashboard');
         fakeBoard.removeEventListener('click', this.handleAddBoardButtonClick);
-        fakeBoard.innerHTML = '<div class="dashboard-create">' +
-            '<div class="form-input-label"> ' +
-            'Название доски:' +
-            '</div>' +
-            '<input id="inputNewBoardTitle" type="text" class="form-input" ' +
-            'placeholder="Новая доска" autocomplete="off">' +
-            '<div id="submitAddBoard" class="button secondary">Добавить</div > ' +
-            '</div>';
+        fakeBoard.innerHTML = window.fest['js/views/boards/addBoardForm.tmpl']();
 
         const newBoardTitleInput = document.getElementById('inputNewBoardTitle');
         document.getElementById('submitAddBoard').addEventListener('click', () => {
