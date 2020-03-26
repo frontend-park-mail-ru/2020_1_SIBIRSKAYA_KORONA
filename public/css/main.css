@@ -255,36 +255,70 @@ textarea {
 
 /*     DASHBOARDS     */
 .dashboards-container-title {
-    margin-left: 45px;
-    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 45px 0;
 }
 
 .dashboards-container {
     display: flex;
-    flex-flow: wrap;
-    justify-content: center;
+    flex-flow: row wrap;
+    margin-left: 35px;
 }
 
 .dashboard {
     width: 260px;
     height: 190px;
     margin: 10px;
-    border: 2px solid #fbb8b8a1;
     border-radius: 15px;
-    box-shadow: 0 0 15px 0 #c19259;
+    border: 2px solid transparent;
+    box-shadow: 0 0 17px 2px #8f8a8a82;
 }
 
-.dashboard.active {
-    border: 2px solid #c7f5c638;
-    box-shadow: 0 0 20px 0px #5af35e;
+.dashboard:hover {
+    box-shadow: 0 0 20px 0 #5b5656;
+    cursor: pointer;
 }
 
 .dashboard-title {
-    margin-top: 10px;
-    margin-left: 20px;
-    font-size: 14pt;
+    margin-top: 20px;
+    margin-left: 26px;
+    font-size: 16pt;
     font-weight: bold;
+    color: black;
 }
+
+.fake-dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #afaeae;
+    box-shadow: none;
+}
+
+.fake-dashboard-text {
+    text-align: center;
+    width: 200px;
+    font-size: 16pt;
+    font-weight: bold;
+    color: #afaeae;
+}
+
+.fake-dashboard-plus-icon {
+    width: 50%;
+    height: 50%;
+}
+
+.dashboard-create {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 20px;
+}
+
 
 /*     END DASHBOARDS     */
 
@@ -589,4 +623,5 @@ textarea {
 .profile-change-avatar-button {
     margin-top: 20px;
 }
+
 /*      END PROFILE     */

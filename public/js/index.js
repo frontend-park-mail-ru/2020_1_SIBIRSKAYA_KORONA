@@ -1,9 +1,10 @@
-import Router from './libs/router.js';
 import EventBus from './libs/eventBus.js';
+import Router from './libs/router.js';
+import BoardsController from './controllers/boardsControl.js';
+import HeaderController from './controllers/headerControl.js';
 import JoinController from './controllers/joinControl.js';
 import LoginController from './controllers/loginControl.js';
 import ProfileController from './controllers/profileControl.js';
-import HeaderController from './controllers/headerControl.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root');
@@ -19,11 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileController = new ProfileController(router, globalEventBus);
     const joinController = new JoinController(router);
     const loginController = new LoginController(router);
+    const boardsController = new BoardsController(router);
 
     router.setRoute('/', profileController.view.render);
     router.setRoute('/login', loginController.view.render);
     router.setRoute('/profile', profileController.view.render);
     router.setRoute('/join', joinController.view.render);
+    router.setRoute('/boards', boardsController.view.render);
 
     headerController.view.render({});
     router.go(window.location.pathname);
