@@ -14,7 +14,7 @@ export default class LoginView extends BaseView {
 
         this.render = this.render.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.eventBus.subscribe('inputError', this.displayError);
+        this.eventBus.subscribe('inputError', this.displayError.bind(this));
     }
 
     /**
@@ -38,6 +38,7 @@ export default class LoginView extends BaseView {
      * @param {boolean} display - show or hide error string
      */
     displayError(display) {
+        this.render();
         const errorLabel = document.getElementById('inputError');
         display ? errorLabel.classList.remove('hidden') : errorLabel.classList.add('hidden');
     }

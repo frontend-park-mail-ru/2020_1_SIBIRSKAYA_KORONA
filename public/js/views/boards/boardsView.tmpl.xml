@@ -1,0 +1,40 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="boards">
+        <div class="container-width-1200">
+            <div class="group-title">
+                <div class="dashboards-container-title">
+                    Персональные доски
+                </div>
+                <div class="hr-width-2"/>
+            </div>
+            <div class="dashboards-container">
+                <fest:for iterate="data.myBoards" index="i" value="board">
+                    <a class="link-none dashboard" href="{board.id}">
+                        <div class="dashboard-title">
+                            <fest:value>board.name</fest:value>
+                        </div>
+                    </a>
+                </fest:for>
+                <div id="addBoard" class="dashboard fake-dashboard">
+                    <div class="fake-dashboard-text">
+                        Добавить новую доску
+                    </div>
+                    <img class="fake-dashboard-plus-icon" src="/img/plus_icon.svg"/>
+                </div>
+            </div>
+            <div class="group-title">
+                <div class="dashboards-container-title">Доступные доски</div>
+                <div class="hr-width-2"/>
+            </div>
+            <div class="dashboards-container">
+                <fest:for iterate="data.sharedBoards" index="i" value="board">
+                    <a class="link-none dashboard" href="{board.id}">
+                        <div class="dashboard-title">
+                            <fest:value>board.name</fest:value>
+                        </div>
+                    </a>
+                </fest:for>
+            </div>
+        </div>
+    </div>
+</fest:template>
