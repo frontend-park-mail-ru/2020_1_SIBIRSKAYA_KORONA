@@ -8,7 +8,7 @@
     "start": "node server/server.js",
     "prestart": "npm run fest && npm run sass",
     "fest": "./node_modules/.bin/fest-build --dir=public",
-    "sass": "./node_modules/.bin/sass --update --no-source-map public/css/sass/main.sass public/css/main.css",
+    "sass": "./node_modules/.bin/sass --update --no-source-map public/css/sass/base.sass public/css/main.css",
     "sync_start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -4,6 +4,6 @@
             Название доски:
         </div>
         <input id="inputNewBoardTitle" type="text" class="form-input" placeholder="Новая доска" autocomplete="off"/>
-        <div id="submitAddBoard" class="button secondary">Добавить</div>
+        <div id="submitAddBoard" class="button--secondary">Добавить</div>
     </div>
 </fest:template>

@@ -1,0 +1,92 @@
+.board
+    background-color: #bac1c3d1
+    height: 100vh
+
+.board-header
+    background-color: #4f6dffbd
+
+.board-header .button
+    margin: 0 5px
+
+.board-header-title
+    width: 33%
+    font-size: 35px
+    color: #ffeaea
+
+.board-card-container
+    display: flex
+    overflow-x: auto
+    width: fit-content
+    padding-top: 10px
+
+.board-header-buttons
+    float: right
+    min-width: 33%
+    display: flex
+    place-content: flex-end
+
+.board-card
+    border-radius: 5px
+    height: fit-content
+    min-width: 272px
+    max-width: 272px
+    padding: 0 4px 8px
+    margin: 0 5px
+    background: #ededed
+    box-shadow: #8c8888f5 0 0 10px 1px
+
+.board-card-title
+    font-size: 22px
+    word-wrap: break-word
+    max-width: 100%
+    margin: 15px 10px 10px 15px
+
+.board-task-list
+    display: flex
+    flex-direction: column
+    height: fit-content
+    overflow-y: auto
+    max-height: 80vh
+    padding: 0 4px
+
+.board-task-mini
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    border-radius: 5px
+    padding: 9px
+    margin-bottom: 10px
+    background: #d4d5fa8a
+
+.board-task-mini:last-child
+    margin-bottom: 0
+
+.board-task-label-mini
+    background: greenyellow
+    width: fit-content
+    border-radius: 2px
+    padding: 4px
+    word-wrap: break-word
+    max-width: 100%
+    box-sizing: border-box
+
+
+.board-task-description-mini
+    background: white
+    border-radius: 2px
+    padding: 4px
+    margin-top: 5px
+    margin-bottom: 5px
+    word-wrap: break-word
+    max-width: 100%
+    box-sizing: border-box
+
+.board-member-container
+    display: flex
+    flex-flow: row-reverse
+    overflow-x: auto
+    max-width: 100%
+
+.board-member
+    height: 30px
+    width: 30px
