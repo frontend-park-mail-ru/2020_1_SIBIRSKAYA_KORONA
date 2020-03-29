@@ -22,7 +22,8 @@ export default class BoardsController {
         this.model = new BoardsModel(this.eventBus);
         this.eventBus.subscribe('unauthorized', () => router.go('/login'));
         this.eventBus.subscribe('submitBoard', (id) => {
-            const params = {id: id};
+            const params = {id: Number(id)};
+            console.log(params);
             router.go('/board', params);
         });
     }

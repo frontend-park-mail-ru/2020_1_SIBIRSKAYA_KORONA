@@ -40,7 +40,6 @@ export default class Router {
             this.routeMap.get(route)(dataToCallWith);
         } else {
             console.log('ZALUPA');
-
             // TODO 404 page
             document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
         }

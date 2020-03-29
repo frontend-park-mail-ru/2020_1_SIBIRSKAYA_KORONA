@@ -61,8 +61,6 @@ export default class BoardsView extends BaseView {
      * @param {object} event - click event
      */
     handleBoardClick(event) {
-        console.log(event.target);
-        console.log(event.target.dataset.boardId);
         this.eventBus.call('submitBoard', event.target.dataset.boardId);
     }
 
