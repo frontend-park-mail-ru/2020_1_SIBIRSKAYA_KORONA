@@ -1,5 +1,5 @@
-import '../addLabelPopup/addLabelPopup.tmpl.js';
-import BaseView from '../baseView.js';
+import './addLabelPopup.tmpl.js';
+import BaseView from '../../baseView.js';
 
 /**
  * View of 'Add label' popup
@@ -43,7 +43,7 @@ export default class AddLabelPopupView extends BaseView {
         const {left, top} = this.relativeTarget.getBoundingClientRect();
         popupDiv.style.left = `${left}px`;
         popupDiv.style.top = `${top}px`;
-        popupDiv.innerHTML = window.fest['js/views/addLabelPopup/addLabelPopup.tmpl'](labelsInfo);
+        popupDiv.innerHTML = window.fest['js/views/board/addLabelPopup/addLabelPopup.tmpl'](labelsInfo);
 
         this.addEventListeners();
     }

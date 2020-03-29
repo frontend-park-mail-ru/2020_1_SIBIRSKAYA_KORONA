@@ -1,6 +1,6 @@
 import './taskSettings.tmpl.js';
-import BaseView from '../baseView.js';
-import {ChainLinkSignals} from '../../libs/controllerChainLink.js';
+import BaseView from '../../baseView.js';
+import {ChainLinkSignals} from '../../../libs/controllerChainLink.js';
 
 
 /**
@@ -34,7 +34,7 @@ export default class TaskSettingsView extends BaseView {
      */
     renderTaskSettings(taskData) {
         const popoverDiv = document.getElementById('popover-block');
-        popoverDiv.innerHTML = window.fest['js/views/board_taskSettings/taskSettings.tmpl'](taskData);
+        popoverDiv.innerHTML = window.fest['js/views/board/taskSettings/taskSettings.tmpl'](taskData);
         this.addEventListeners();
     }
 

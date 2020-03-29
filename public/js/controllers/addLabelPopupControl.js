@@ -1,5 +1,5 @@
 import AddLabelPopupModel from '../models/addLabelPopupModel.js';
-import AddLabelPopupView from '../views/addLabelPopup/addLabelPopupView.js';
+import AddLabelPopupView from '../views/board/addLabelPopup/addLabelPopupView.js';
 import CreateLabelPopupController from './createLabelPopupControl.js';
 import EventBus from '../libs/eventBus.js';
 

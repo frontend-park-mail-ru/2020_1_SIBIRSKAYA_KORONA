@@ -1,5 +1,5 @@
 import TaskSettingsModel from '../models/taskSettingsModel.js';
-import TaskSettingsView from '../views/board_taskSettings/taskSettingsView.js';
+import TaskSettingsView from '../views/board/taskSettings/taskSettingsView.js';
 import EventBus from '../libs/eventBus.js';
 import AddLabelPopupController from './addLabelPopupControl.js';
 

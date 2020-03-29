@@ -1,5 +1,5 @@
 import './board.tmpl.js';
-import '../board_taskSettings/taskSettings.tmpl.js';
+import './taskSettings/taskSettings.tmpl.js';
 import BaseView from '../baseView.js';
 
 /**
@@ -31,7 +31,6 @@ export default class BoardView extends BaseView {
      * @param {Object} boardData - board data to render
      */
     renderBoard(boardData) {
-        this.boardData = boardData;
         this.root.innerHTML = window.fest['js/views/board/board.tmpl'](boardData);
         this.addEventListeners();
     }
@@ -54,7 +53,7 @@ export default class BoardView extends BaseView {
 
         // ADD NEW TASK
         const addNewTaskButtons = Array.from(document.getElementsByName('addNewTaskButton'));
-        addNewTaskButtons.forEach((button, i, arr) => {
+        addNewTaskButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 this.eventBus.call('addNewTask');
             });
@@ -68,7 +67,7 @@ export default class BoardView extends BaseView {
 
         // CARD SETTINGS
         const columnSettingsButtons = Array.from(document.getElementsByName('columnSettingsButton'));
-        columnSettingsButtons.forEach((button, i, arr) => {
+        columnSettingsButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 this.eventBus.call('openColumnSettings');
             });
@@ -76,7 +75,7 @@ export default class BoardView extends BaseView {
 
         // TASK SETTINGS
         const taskSettingsButtons = Array.from(document.getElementsByName('taskSettingsButton'));
-        taskSettingsButtons.forEach((button, i, arr) => {
+        taskSettingsButtons.forEach((button) => {
             button.addEventListener('click', (event) => {
                 event.stopPropagation();
                 this.eventBus.call('openTaskSettings', event.currentTarget);
