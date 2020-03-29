@@ -18,6 +18,7 @@ export default class BoardsView extends BaseView {
         this.renderData = this.renderData.bind(this);
         this.addEventListeners = this.addEventListeners.bind(this);
         this.handleAddBoardButtonClick = this.handleAddBoardButtonClick.bind(this);
+        this.handleBoardClick = this.handleBoardClick.bind(this);
 
         this.eventBus.subscribe('gotBoards', this.renderData);
     }
@@ -48,7 +49,23 @@ export default class BoardsView extends BaseView {
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleAddBoardButtonClick);
         });
+
+        const boards = [...document.getElementsByClassName('js-dashboard')];
+        boards.forEach((board) => {
+            board.addEventListener('click', this.handleBoardClick);
+        });
     }
+
+    /**
+     * Handle board click and go to board
+     * @param {object} event - click event
+     */
+    handleBoardClick(event) {
+        console.log(event.target);
+        console.log(event.target.dataset.boardId);
+        this.eventBus.call('submitBoard', event.target.dataset.boardId);
+    }
+
 
     /**
      * Generate new board form

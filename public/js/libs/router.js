@@ -15,14 +15,32 @@ export default class Router {
     /**
      * Switch current route
      * @param {string} route - route to go
-     * @param {...any} params - arguments to call with
+     * @param {object?} params - arguments to call with
      */
-    go(route, ...params) {
-        window.history.pushState({}, '', route);
-
+    go(route, params) {
         if (this.routeMap.has(route)) {
-            this.routeMap.get(route)(...params);
+            let dataToCallWith;
+            let url = route;
+            if (params) {
+                switch (route) {
+                    case '/board':
+                        if (params.id && Number.isInteger(params.id)) {
+                            dataToCallWith = params.id;
+                            url = '/board/' + params.id;
+                        }
+                        break;
+                    case '/task':
+                        break;
+                    default:
+                        document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
+                        return;
+                }
+            }
+            window.history.pushState({}, '', url);
+            this.routeMap.get(route)(dataToCallWith);
         } else {
+            console.log('ZALUPA');
+
             // TODO 404 page
             document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
         }
