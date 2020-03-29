@@ -9,11 +9,11 @@
             </div>
             <div class="dashboards-container">
                 <fest:for iterate="data.myBoards" index="i" value="board">
-                    <div class="dashboard js-dashboard" data-board-id="{board.id}">
+                    <a class="link-none dashboard" href="{board.url}">
                         <div class="dashboard-title">
                             <fest:value>board.name</fest:value>
                         </div>
-                    </div>
+                    </a>
                 </fest:for>
                 <div id="addBoard" class="dashboard fake-dashboard">
                     <div class="fake-dashboard-text">
@@ -28,11 +28,11 @@
             </div>
             <div class="dashboards-container">
                 <fest:for iterate="data.sharedBoards" index="i" value="board">
-                    <div class="dashboard js-dashboard" data-board-id="{board.id}">
+                    <a class="link-none dashboard" href="{board.url}">
                         <div class="dashboard-title">
                             <fest:value>board.name</fest:value>
                         </div>
-                    </div>
+                    </a>
                 </fest:for>
             </div>
         </div>
