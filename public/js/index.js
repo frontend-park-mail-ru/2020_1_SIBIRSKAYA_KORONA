@@ -24,14 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const boardsController = new BoardsController(router);
     const boardController = new BoardController(router);
 
-    // router.setRoute('/', profileController.view.render);
-    // router.setRoute('/login', loginController.view.render);
-    // router.setRoute('/profile', profileController.view.render);
-    // router.setRoute('/join', joinController.view.render);
-    // router.setRoute('/boards', boardsController.view.render);
-    // router.setRoute('/board', boardController.view.render);
-
-
     router.setRoute('^/$', profileController.view.render);
     router.setRoute('^/login$', loginController.view.render);
     router.setRoute('^/profile$', profileController.view.render);

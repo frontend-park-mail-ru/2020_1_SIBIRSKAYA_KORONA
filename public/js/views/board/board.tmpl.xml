@@ -78,6 +78,6 @@
             </div>
         </div>
     </div>
-    <div id="popup-block"></div>
-    <div id="popover-block"></div>
+    <div id="popup-block"/>
+    <div id="popover-block"/>
 </fest:template>

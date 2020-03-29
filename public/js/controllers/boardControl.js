@@ -22,7 +22,6 @@ export default class BoardController {
             'openCardSettings',
             'openTaskSettings',
             'boardDataChanged',
-
         ]);
 
         this.childController = null;
@@ -30,7 +29,7 @@ export default class BoardController {
         this.model = new BoardModel(this.eventBus);
 
         this.eventBus.subscribe('openTaskSettings', (target)=> {
-            const taskId = target.dataset['taskId'];
+            const taskId = Number(target.dataset.taskId);
             this.childController = new TaskSettingsController(this.eventBus, taskId);
             this.childController.view.render();
         });

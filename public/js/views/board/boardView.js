@@ -39,6 +39,19 @@ export default class BoardView extends BaseView {
      * Set handlers for task, labels, etc.
      */
     addEventListeners() {
+/*        const buttons = [
+            document.getElementById('openBoardSettings'),
+            document.getElementById('openColumnSettings'),
+            document.getElementById('openTaskSettings'),
+            document.getElementById('addNewMember'),
+            document.getElementById('addNewColumn'),
+            document.getElementById('addNewTask'),
+        ];
+
+        buttons.forEach((button) => {
+            button.addEventListener('click', this.handleButtonClick.bind(this));
+        });*/
+
         // ADD NEW MEMBER
         const addNewMemberButton = document.getElementById('inviteNewMemberButton');
         addNewMemberButton.addEventListener('click', () => {

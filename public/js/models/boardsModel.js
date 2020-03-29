@@ -27,7 +27,7 @@ export default class HeaderModel {
                 case 200:
                     response.json().then((responseJson) => {
                         responseJson.admin.concat(responseJson.member).forEach((board) => {
-                            board.url = '/boards/' + board.id
+                            board.url = '/boards/' + board.id;
                         });
                         this.eventBus.call('gotBoards', {
                             myBoards: responseJson.admin,
