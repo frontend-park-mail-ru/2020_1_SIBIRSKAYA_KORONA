@@ -9,8 +9,9 @@ import TaskSettingsController from './taskSettingsControl.js';
 export default class BoardController {
     /**
      * Controller constructor
+     * @param {Object} router for redirect
      */
-    constructor() {
+    constructor(router) {
         this.eventBus = new EventBus([
             'getBoardData',
             'gotBoardData',
@@ -24,13 +25,27 @@ export default class BoardController {
             'boardDataChanged',
         ]);
 
+        this.router = router;
+
         this.childController = null;
         this.view = new BoardView(this.eventBus);
         this.model = new BoardModel(this.eventBus);
-
-        this.eventBus.subscribe('openTaskSettings', (taskId)=> {
+        this.triggerTaskAndBoard = this.triggerTaskAndBoard.bind(this);
+        this.eventBus.subscribe('openTaskSettings', (boardId, taskId)=> {
+            this.router.go('/boards/' + boardId + '/tasks/' + taskId);
             this.childController = new TaskSettingsController(this.eventBus, taskId);
             this.childController.view.render();
         });
+    }
+
+    /**
+     * Triggers board and task render
+     * @param {Number} boardId
+     * @param {Number} taskId
+     */
+    triggerTaskAndBoard(boardId, taskId) {
+        this.view.render(boardId);
+        this.childController = new TaskSettingsController(this.eventBus, taskId);
+        this.childController.view.render();
     }
 }

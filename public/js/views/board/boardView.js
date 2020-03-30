@@ -23,9 +23,12 @@ export default class BoardView extends BaseView {
 
     /**
      * Method which triggers getting data from model
+     * It can triggers task render if there is 'taskId' in dataFromURL
+     * @param {Object} dataFromURL - fields: boardId, taskId(optional)
      */
-    render() {
-        this.eventBus.call('getBoardData');
+    render(dataFromURL) {
+        this.boardId = dataFromURL.boardId;
+        this.eventBus.call('getBoardData', dataFromURL.boardId);
     }
 
     /**
@@ -63,7 +66,7 @@ export default class BoardView extends BaseView {
         const target = event.currentTarget;
         switch (true) {
             case target.classList.contains('js-openTaskSettings'):
-                this.eventBus.call('openTaskSettings', target.dataset.taskId);
+                this.eventBus.call('openTaskSettings', this.boardId, target.dataset.taskId);
                 break;
 
             case target.classList.contains('js-addNewTask'):
@@ -106,6 +109,7 @@ export default class BoardView extends BaseView {
             const newTaskInput = document.getElementById('inputNewTaskTitle');
             if (newTaskInput.value) {
                 this.eventBus.call('addNewTask', {
+                    boardId: this.boardId,
                     columnID: columnID,
                     taskTitle: newTaskInput.value,
                 });
@@ -133,7 +137,10 @@ export default class BoardView extends BaseView {
         document.getElementById('addColumnButton').addEventListener('click', () => {
             const newColumnTitleInput = document.getElementById('inputNewColumnTitle');
             if (newColumnTitleInput.value) {
-                this.eventBus.call('addNewColumn', newColumnTitleInput.value);
+                this.eventBus.call('addNewColumn', {
+                    boardId: this.boardId,
+                    columnTitle: newColumnTitleInput.value,
+                });
             }
         });
 

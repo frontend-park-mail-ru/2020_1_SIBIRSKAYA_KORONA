@@ -788,15 +788,23 @@ export default class BoardModel {
     /**
      * Returns board data
      * TODO call API
+     * @param {Number} boardId
      */
-    getBoardData() {
-        this.eventBus.call('gotBoardData', this.boardData);
+    getBoardData(boardId) {
+        const gotDataFromBackend = this.boardData;
+        gotDataFromBackend.columns.forEach((column)=> {
+            column.tasks.forEach((task) => {
+                task.url = '/boards/' + boardId + '/tasks/' + task.id + '/';
+            });
+        });
+        gotDataFromBackend.id = boardId;
+        this.eventBus.call('gotBoardData', gotDataFromBackend);
     }
 
     /**
      * Add task in fake local storage
      * TODO call API
-     * @param {object} data - fields: columnID, taskTitle
+     * @param {object} data - fields: boardId, columnID, taskTitle
      */
     addTask(data) {
         let columnToAddTask;
@@ -810,21 +818,21 @@ export default class BoardModel {
             id: Math.random(),
             description: data.taskTitle,
         });
-        this.getBoardData();
+        this.getBoardData(data.boardId);
     }
 
     /**
      * Add task in fake local storage
      * TODO call API
-     * @param {String} columnTitle - title of new column
+     * @param {object} data - fields: boardId, columnTitle
      */
-    addColumn(columnTitle) {
+    addColumn(data) {
         const lastColumnID = this.boardData.columns[this.boardData.columns.length - 1].id;
         this.boardData.columns.push({
             id: lastColumnID + 1,
-            title: columnTitle,
+            title: data.columnTitle,
             tasks: [],
         });
-        this.getBoardData();
+        this.getBoardData(data.boardId);
     }
 }

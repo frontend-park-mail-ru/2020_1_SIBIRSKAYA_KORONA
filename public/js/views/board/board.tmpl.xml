@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
-    <div class="board">
+    <div class="board" data-board-id="board.id">
         <div class="header board-header">
             <div class="title board-header-title">
                 <fest:value>board.title</fest:value>
@@ -38,7 +38,7 @@
                     <div class="board-task-list">
                         <fest:for iterate="column.tasks" index="j" value="task">
                             <div class="board-task-mini js-openTaskSettings" name="taskSettingsButton"
-                                 data-task-id="{task.id}">
+                                 data-task-id="{task.id}" data-task-url="{task.url}">
                                 <div class="board-task-label-container">
                                     <fest:for iterate="task.labels" index="k" value="label">
                                         <div class="board-task-label-mini task-label-color-{label.color}">
