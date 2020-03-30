@@ -15,8 +15,8 @@ export default class BoardController {
             'getBoardData',
             'gotBoardData',
             // TODO(Alexandr): 'gotBoardDataError',
-            'inviteNewMember',
-            'addNewCard',
+            'addNewMember',
+            'addNewColumn',
             'addNewTask',
             'openBoardSettings',
             'openCardSettings',
@@ -28,8 +28,7 @@ export default class BoardController {
         this.view = new BoardView(this.eventBus);
         this.model = new BoardModel(this.eventBus);
 
-        this.eventBus.subscribe('openTaskSettings', (target)=> {
-            const taskId = Number(target.dataset.taskId);
+        this.eventBus.subscribe('openTaskSettings', (taskId)=> {
             this.childController = new TaskSettingsController(this.eventBus, taskId);
             this.childController.view.render();
         });

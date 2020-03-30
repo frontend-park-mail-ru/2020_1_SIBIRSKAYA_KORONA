@@ -46,12 +46,12 @@ export default class TaskSettingsModel {
                     {
                         url: '/mem1',
                         nickname: 'member 1',
-                        avatar: 'img/default_avatar.png',
+                        avatar: '/img/default_avatar.png',
                     },
                     {
                         url: '/mem2',
                         nickname: 'member 2',
-                        avatar: 'img/default_avatar.png',
+                        avatar: '/img/default_avatar.png',
                     },
                 ],
             },

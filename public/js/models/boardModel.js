@@ -1,5 +1,3 @@
-import {} from '../libs/apiService.js';
-
 /**
  * Board model
  */
@@ -10,16 +8,14 @@ export default class BoardModel {
      */
     constructor(eventBus) {
         this.eventBus = eventBus;
-        this.getBoardData = this.getBoardData.bind(this);
 
-        eventBus.subscribe('getBoardData', this.getBoardData);
-    }
+        eventBus.subscribe('getBoardData', this.getBoardData.bind(this));
+        eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
+        eventBus.subscribe('addNewTask', this.addTask.bind(this));
 
-    /**
-     * Returns board data
-     */
-    getBoardData() {
-        const boardData = {
+
+        // заглушка пока бек не умеет в доску
+        this.boardData = {
             title: 'MyBoardName',
             members: [
                 {
@@ -54,6 +50,7 @@ export default class BoardModel {
 
             columns: [
                 {
+                    id: 1,
                     title: 'COLUMN 1',
                     tasks: [
                         {
@@ -309,6 +306,7 @@ export default class BoardModel {
                     ],
                 },
                 {
+                    id: 2,
                     title: 'COLUMN 2',
                     tasks: [
                         {
@@ -376,7 +374,8 @@ export default class BoardModel {
                     ],
                 },
                 {
-                    title: 'COLUMN 1',
+                    id: 3,
+                    title: 'COLUMN 3',
                     tasks: [
                         {
                             id: 11,
@@ -443,7 +442,8 @@ export default class BoardModel {
                     ],
                 },
                 {
-                    title: 'COLUMN 2',
+                    id: 4,
+                    title: 'COLUMN 4',
                     tasks: [
                         {
                             id: 13,
@@ -510,7 +510,8 @@ export default class BoardModel {
                     ],
                 },
                 {
-                    title: 'COLUMN 1',
+                    id: 5,
+                    title: 'COLUMN 5',
                     tasks: [
                         {
                             id: 15,
@@ -577,7 +578,8 @@ export default class BoardModel {
                     ],
                 },
                 {
-                    title: 'COLUMN 2',
+                    id: 6,
+                    title: 'COLUMN 6',
                     tasks: [
                         {
                             id: 17,
@@ -644,7 +646,8 @@ export default class BoardModel {
                     ],
                 },
                 {
-                    title: 'COLUMN 1',
+                    id: 7,
+                    title: 'COLUMN 7',
                     tasks: [
                         {
                             id: 19,
@@ -711,7 +714,8 @@ export default class BoardModel {
                     ],
                 },
                 {
-                    title: 'COLUMN 2',
+                    id: 8,
+                    title: 'COLUMN 8',
                     tasks: [
                         {
                             id: 21,
@@ -779,7 +783,48 @@ export default class BoardModel {
                 },
             ],
         };
+    }
 
-        this.eventBus.call('gotBoardData', boardData);
+    /**
+     * Returns board data
+     * TODO call API
+     */
+    getBoardData() {
+        this.eventBus.call('gotBoardData', this.boardData);
+    }
+
+    /**
+     * Add task in fake local storage
+     * TODO call API
+     * @param {object} data - fields: columnID, taskTitle
+     */
+    addTask(data) {
+        let columnToAddTask;
+        for (const column of this.boardData.columns) {
+            if (column.id == data.columnID) {
+                columnToAddTask = column;
+                break;
+            }
+        }
+        columnToAddTask.tasks.push({
+            id: Math.random(),
+            description: data.taskTitle,
+        });
+        this.getBoardData();
+    }
+
+    /**
+     * Add task in fake local storage
+     * TODO call API
+     * @param {String} columnTitle - title of new column
+     */
+    addColumn(columnTitle) {
+        const lastColumnID = this.boardData.columns[this.boardData.columns.length - 1].id;
+        this.boardData.columns.push({
+            id: lastColumnID + 1,
+            title: columnTitle,
+            tasks: [],
+        });
+        this.getBoardData();
     }
 }

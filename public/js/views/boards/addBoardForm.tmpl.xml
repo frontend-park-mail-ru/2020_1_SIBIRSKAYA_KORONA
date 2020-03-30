@@ -1,9 +1,24 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="dashboard-create">
-        <div class="form-input-label">
-            Название доски:
-        </div>
-        <input id="inputNewBoardTitle" type="text" class="form-input" placeholder="Новая доска" autocomplete="off"/>
-        <div id="submitAddBoard" class="button secondary">Добавить</div>
-    </div>
+    <fest:choose>
+        <fest:when test="data.form===true">
+            <div class="dashboard-create">
+                <div class="form-input-label">
+                    Название доски:
+                </div>
+                <input id="inputNewBoardTitle" type="text" class="form-input" placeholder="Новая доска"
+                       autocomplete="off"/>
+                <div class="bottom-buttons-panel">
+                    <div id="submitAddBoard" class="button secondary">Добавить</div>
+                    <div id="closeForm" class="button danger">Закрыть</div>
+                </div>
+            </div>
+        </fest:when>
+
+        <fest:otherwise>
+            <div class="fake-dashboard-text">
+                Добавить новую доску
+            </div>
+            <img class="fake-dashboard-plus-icon" src="/img/plus_icon.svg"/>
+        </fest:otherwise>
+    </fest:choose>
 </fest:template>

@@ -1,6 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
     <div class="board">
-
         <div class="header board-header">
             <div class="title board-header-title">
                 <fest:value>board.title</fest:value>
@@ -15,30 +14,31 @@
                              title="{member.nickname}"/>
                     </a>
                 </fest:for>
-                <div class="button primary" id="inviteNewMemberButton">Invite</div>
+                <div class="button primary js-addNewMember" id="inviteNewMemberButton">Invite</div>
             </div>
 
             <div class="board-header-buttons">
-                <div class="button primary" id="boardSettingsButton">Board settings</div>
+                <div class="button primary js-openBoardSettings" id="boardSettingsButton">Board settings</div>
             </div>
         </div>
 
         <div class="board-column-container">
             <fest:for iterate="board.columns" index="i" value="column">
-                <div class="board-column">
+                <div class="board-column" data-column-id="{column.id}">
                     <div class="header">
                         <div class="title board-column-title">
                             <fest:value>
                                 column.title
                             </fest:value>
                         </div>
-                        <div class="button board-column-settings-button" name="columnSettingsButton"/>
+                        <div class="button board-column-settings-button js-openColumnSettings"
+                             data-column-id="{column.id}"/>
                     </div>
-
 
                     <div class="board-task-list">
                         <fest:for iterate="column.tasks" index="j" value="task">
-                            <div class="board-task-mini" name="taskSettingsButton" data-task-id="{task.id}">
+                            <div class="board-task-mini js-openTaskSettings" name="taskSettingsButton"
+                                 data-task-id="{task.id}">
                                 <div class="board-task-label-container">
                                     <fest:for iterate="task.labels" index="k" value="label">
                                         <div class="board-task-label-mini task-label-color-{label.color}">
@@ -64,14 +64,14 @@
                                 </div>
                             </div>
                         </fest:for>
-                        <div class="board-task-mini board-add-task" name="addNewTaskButton">
+                        <div class="board-task-mini board-add-task js-addNewTask" data-column-id="{column.id}">
                             + Add new task
                         </div>
                     </div>
                 </div>
             </fest:for>
 
-            <div class="board-column add-board-column" id="addNewColumnButton">
+            <div class="board-column add-board-column js-addNewColumn" id="addNewColumnButton">
                 <div class="title board-column-title">
                     + Add new column
                 </div>

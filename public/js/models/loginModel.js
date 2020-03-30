@@ -48,7 +48,6 @@ export default class LoginModel {
         if (!this.validateLogin(userInfo.nickname) || !this.validatePassword(userInfo.password)) {
             return;
         }
-
         sessionPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
@@ -56,7 +55,7 @@ export default class LoginModel {
                     this.eventBus.call('loginSuccess', userInfo);
                     break;
                 case 400: // - Bad Request (Невалидное тело запроса)
-                case 409: // - Conflict (Пароль неверный)
+                case 401: // - Conflict (Пароль неверный)
                     this.eventBus.call('inputError', true);
                     break;
                 default:
