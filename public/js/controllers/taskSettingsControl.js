@@ -35,7 +35,7 @@ export default class TaskSettingsController extends ControllerChainLink {
 
         this.setCustomCloseFunction(() => {
             this.view.closeSelf();
-            boardEventBus.call('closedTaskSettings');
+            boardEventBus.call('closeTaskSettings');
         });
 
 

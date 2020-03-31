@@ -1,6 +1,6 @@
+import EventBus from '../libs/eventBus.js';
 import BoardModel from '../models/boardModel.js';
 import BoardView from '../views/board/boardView.js';
-import EventBus from '../libs/eventBus.js';
 import TaskSettingsController from './taskSettingsControl.js';
 
 /**
@@ -22,6 +22,7 @@ export default class BoardController {
             'openBoardSettings',
             'openCardSettings',
             'openTaskSettings',
+            'closeTaskSettings',
             'boardDataChanged',
         ]);
 
@@ -30,12 +31,16 @@ export default class BoardController {
         this.childController = null;
         this.view = new BoardView(this.eventBus);
         this.model = new BoardModel(this.eventBus);
+
         this.triggerTaskAndBoard = this.triggerTaskAndBoard.bind(this);
-        this.eventBus.subscribe('openTaskSettings', (boardId, taskId)=> {
+
+        this.eventBus.subscribe('openTaskSettings', (boardId, taskId) => {
             this.router.go('/boards/' + boardId + '/tasks/' + taskId);
             this.childController = new TaskSettingsController(this.eventBus, taskId);
             this.childController.view.render();
         });
+
+        this.eventBus.subscribe('closeTaskSettings', () => router.go('/boards/' + this.view.boardId));
     }
 
     /**

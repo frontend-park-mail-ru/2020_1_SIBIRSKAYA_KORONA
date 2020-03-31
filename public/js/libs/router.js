@@ -34,12 +34,16 @@ export default class Router {
 
     /**
      * Click handler
-     * @param {object} e - mouse event
+     * @param {Object} event - mouse event
      */
-    handleMouseClick(e) {
-        if (e.target.tagName === 'A') {
-            e.preventDefault();
-            this.go(e.target.pathname);
+    handleMouseClick(event) {
+        console.log('event', event);
+        if (event.target.tagName === 'A') {
+            event.preventDefault();
+            this.go(event.target.pathname);
+        } else if (event.target.parentElement.tagName === 'A') {
+            event.preventDefault();
+            this.go(event.target.parentElement.pathname);
         }
     }
 

@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const boardController = new BoardController(router);
 
     router.setRoute('^/$', profileController.view.render);
-    router.setRoute('^/login$', loginController.view.render);
-    router.setRoute('^/profile$', profileController.view.render);
-    router.setRoute('^/join$', joinController.view.render);
-    router.setRoute('^/boards$', boardsController.view.render);
+    router.setRoute('^/login/?$', loginController.view.render);
+    router.setRoute('^/profile/?$', profileController.view.render);
+    router.setRoute('^/join/?$', joinController.view.render);
+    router.setRoute('^/boards/?$', boardsController.view.render);
     router.setRoute('^/boards/(?<boardId>\\d+)/?$', boardController.view.render);
     router.setRoute('^/boards/(?<boardId>\\d+)/tasks/(?<taskId>\\d+)/?$', boardController.triggerTaskAndBoard);
 
