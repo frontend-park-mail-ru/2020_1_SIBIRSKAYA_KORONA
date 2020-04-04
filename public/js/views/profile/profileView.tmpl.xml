@@ -1,97 +1,98 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="container-width-800">
         <div class="profile">
-            <div class="profile-settings">
-                <div class="profile-settings-group-title">
-                    <div class="profile-settings-group-title__text">О нас</div>
-                    <div class="profile-settings-group-title__hr--width-2"/>
-                </div>
-                <div class="container-2cols">
-                    <div class="profile-input-group">
-                        <div class="profile-input-group__error hidden" id="inputNameError">Недопустимое имя</div>
-                        <div class="profile-input-group__label">Имя</div>
-                        <input class="profile-input-group__input" type="text" id="inputName"
-                               autocomplete="off">
-                            <fest:attributes>
-                                <fest:attribute name="value">
-                                    <fest:value>data.name</fest:value>
-                                </fest:attribute>
-                            </fest:attributes>
-                        </input>
-                        <div class="profile-input-group__error hidden" id="inputSurnameError">Недопустимая фамилия</div>
-                        <div class="profile-input-group__label">Фамилия</div>
-                        <input class="profile-input-group__input" type="text" id="inputSurname"
-                               autocomplete="off">
-                            <fest:attributes>
-                                <fest:attribute name="value">
-                                    <fest:value>data.surname</fest:value>
-                                </fest:attribute>
-                            </fest:attributes>
-                        </input>
-                        <div class="profile-input-group__error hidden" id="inputNicknameError">Недопустимый ник</div>
-                        <div class="profile-input-group__label">Никнейм</div>
-                        <input class="profile-input-group__input" type="text" id="inputNickname">
-                            <fest:attributes>
-                                <fest:attribute name="readonly"/>
-                                <fest:attribute name="value">
-                                    <fest:value>data.nickname</fest:value>
-                                </fest:attribute>
-                            </fest:attributes>
-                        </input>
-                        <div class="profile-input-group__button--primary" id="submitAbout">Сохранить</div>
-                    </div>
-                    <div class="profile-input-group container-centered-col">
-                        <div class="profile-input-group__error hidden" id="inputNameError">
-                            Файл должен быть
-                            картинкой
-                        </div>
-                        <div class="profile-input-group__label">Аватар</div>
-                        <img class="profile-input-group__avatar--round" alt="MyName"
-                             title="MyName">
-                            <fest:attributes>
-                                <fest:attribute name="src">
-                                    <fest:value>data.avatar</fest:value>
-                                </fest:attribute>
-                            </fest:attributes>
-                        </img>
-                        <input id="avatarInput" type="file" name="file"/>
-                        <label for="avatarInput">
-                            <div class="profile-input-group__button--secondary">
-                                Изменить
-                            </div>
-                        </label>
-                    </div>
-                </div>
+            <div class="profile-settings-title">
+                <div class="profile-settings-title__text">О нас</div>
+                <div class="profile-settings-title__hr--width-2"/>
             </div>
-            <div class="profile-settings">
-                <div class="profile-settings-group-title">
-                    <div class="profile-settings-group-title__text">Безопасность</div>
-                    <div class="profile-settings-group-title__hr--width-2"/>
-                </div>
-                <div class="profile-input-group">
-                    <div class="profile-input-group__error hidden" id="inputOldPasswordError">Неверный пароль</div>
-                    <div class="profile-input-group__label">Смена пароля</div>
-                    <input class="profile-input-group__input" type="password" placeholder="Старый пароль" autocomplete="off"
-                           id="inputOldPassword"/>
-                    <div class="profile-input-group__error hidden" id="inputPasswordError">Недопустимый пароль</div>
-                    <input class="profile-input-group__input" autocomplete="off" type="password" placeholder="Пароль"
-                           id="inputPassword"/>
-                    <input class="profile-input-group__input" autocomplete="off" type="password" placeholder="Повторите пароль"
-                           id="inputPasswordRepeat"/>
-                    <div id="submitPasswords" class="profile-input-group__button--secondary">Изменить</div>
-                </div>
-                <div class="profile-input-group">
-                    <div class="profile-input-group__error hidden" id="inputEmailError">Недопустимый email</div>
-                    <div class="profile-input-group__label">Смена email</div>
-                    <input class="profile-input-group__input" type="email" id="inputEmail" autocomplete="off" placeholder="Email">
+            <div class="container-2cols">
+                <div class="profile-settings">
+                    <div class="profile-settings__error hidden" id="inputNameError">Недопустимое имя</div>
+                    <div class="profile-settings__label">Имя</div>
+                    <input class="profile-settings__input" type="text" id="inputName"
+                           autocomplete="off">
                         <fest:attributes>
                             <fest:attribute name="value">
-                                <fest:value>data.email</fest:value>
+                                <fest:value>data.name</fest:value>
                             </fest:attribute>
                         </fest:attributes>
                     </input>
-                    <div id="submitEmail" class="profile-input-group__button--primary">Сохранить</div>
+                    <div class="profile-settings__error hidden" id="inputSurnameError">Недопустимая
+                        фамилия
+                    </div>
+                    <div class="profile-settings__label">Фамилия</div>
+                    <input class="profile-settings__input" type="text" id="inputSurname"
+                           autocomplete="off">
+                        <fest:attributes>
+                            <fest:attribute name="value">
+                                <fest:value>data.surname</fest:value>
+                            </fest:attribute>
+                        </fest:attributes>
+                    </input>
+                    <div class="profile-settings__error hidden" id="inputNicknameError">Недопустимый ник</div>
+                    <div class="profile-settings__label">Никнейм</div>
+                    <input class="profile-settings__input" type="text" id="inputNickname">
+                        <fest:attributes>
+                            <fest:attribute name="readonly"/>
+                            <fest:attribute name="value">
+                                <fest:value>data.nickname</fest:value>
+                            </fest:attribute>
+                        </fest:attributes>
+                    </input>
+                    <div class="profile-settings__button--primary" id="submitAbout">Сохранить</div>
                 </div>
+                <div class="profile-settings container-centered-col">
+                    <div class="profile-settings__error hidden" id="inputNameError">
+                        Файл должен быть
+                        картинкой
+                    </div>
+                    <div class="profile-settings__label">Аватар</div>
+                    <img class="profile-settings__avatar--round" alt="MyName"
+                         title="MyName">
+                        <fest:attributes>
+                            <fest:attribute name="src">
+                                <fest:value>data.avatar</fest:value>
+                            </fest:attribute>
+                        </fest:attributes>
+                    </img>
+                    <input id="avatarInput" type="file" name="file"/>
+                    <label for="avatarInput">
+                        <div class="profile-settings__button--secondary">
+                            Изменить
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="profile-settings-title">
+                <div class="profile-settings-title__text">Безопасность</div>
+                <div class="profile-settings-title__hr--width-2"/>
+            </div>
+            <div class="profile-settings">
+                <div class="profile-settings__error hidden" id="inputOldPasswordError">Неверный пароль</div>
+                <div class="profile-settings__label">Смена пароля</div>
+                <input class="profile-settings__input" type="password" placeholder="Старый пароль"
+                       autocomplete="off"
+                       id="inputOldPassword"/>
+                <div class="profile-settings__error hidden" id="inputPasswordError">Недопустимый пароль</div>
+                <input class="profile-settings__input" autocomplete="off" type="password" placeholder="Пароль"
+                       id="inputPassword"/>
+                <input class="profile-settings__input" autocomplete="off" type="password"
+                       placeholder="Повторите пароль"
+                       id="inputPasswordRepeat"/>
+                <div id="submitPasswords" class="profile-settings__button--secondary">Изменить</div>
+            </div>
+            <div class="profile-settings">
+                <div class="profile-settings__error hidden" id="inputEmailError">Недопустимый email</div>
+                <div class="profile-settings__label">Смена email</div>
+                <input class="profile-settings__input" type="email" id="inputEmail" autocomplete="off"
+                       placeholder="Email">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>data.email</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
+                <div id="submitEmail" class="profile-settings__button--primary">Сохранить</div>
             </div>
         </div>
     </div>

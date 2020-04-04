@@ -49,7 +49,8 @@ export default class BoardsView extends BaseView {
      */
     handleAddBoardButtonClick() {
         const fakeBoard = document.getElementById('addBoard');
-        fakeBoard.classList.remove('fake-dashboard');
+        fakeBoard.classList.remove('group-fake-board');
+        fakeBoard.classList.add('group-mini-board');
         fakeBoard.removeEventListener('click', this.handleAddBoardButtonClick);
         fakeBoard.innerHTML = window.fest['js/views/boards/addBoardForm.tmpl']({form: true});
 
@@ -61,7 +62,8 @@ export default class BoardsView extends BaseView {
         });
         document.getElementById('closeForm').addEventListener('click', (event) => {
             event.stopPropagation();
-            fakeBoard.classList.add('fake-dashboard');
+            fakeBoard.classList.add('group-fake-board');
+            fakeBoard.classList.remove('group-mini-board');
             fakeBoard.addEventListener('click', this.handleAddBoardButtonClick);
             fakeBoard.innerHTML = window.fest['js/views/boards/addBoardForm.tmpl']({form: false});
         });

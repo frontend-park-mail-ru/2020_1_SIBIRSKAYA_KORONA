@@ -1,64 +1,82 @@
-.dashboards-container-title
-    display: flex
-    align-items: center
-    justify-content: space-between
-    margin: 20px 45px 0
+.boards
+    margin: 20px
 
+    &-title
+        margin-bottom: 25px
 
-.dashboards-container
+        &__text
+            margin: 20px 45px 0
+            font-size: 20pt
+            font-weight: 700
+
+        &__hr--width-2
+            @extend .hr-width-2
+
+.group
     display: flex
     flex-flow: row wrap
     margin-left: 35px
 
+    &-mini-board
+        @extend .link-none
+        width: 260px
+        height: 190px
+        margin: 10px
+        border-radius: 15px
+        border: 2px solid transparent
+        box-shadow: 0 0 17px 2px #8f8a8a82
 
-.dashboard
-    width: 260px
-    height: 190px
-    margin: 10px
-    border-radius: 15px
-    border: 2px solid transparent
-    box-shadow: 0 0 17px 2px #8f8a8a82
+        &:hover
+            @extend .link-none
+            box-shadow: 0 0 20px 0 #5b5656
+            cursor: pointer
 
+        &__title
+            margin-top: 20px
+            margin-left: 26px
+            font-size: 16pt
+            color: black
+            @extend .title
 
-.dashboard:hover
-    box-shadow: 0 0 20px 0 #5b5656
-    cursor: pointer
+    &-fake-board
+        @extend .group-mini-board
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        border: 2px dashed #afaeae
+        box-shadow: none
 
+        &__text
+            text-align: center
+            width: 200px
+            font-size: 16pt
+            font-weight: bold
+            color: #afaeae
 
-.dashboard-title
-    margin-top: 20px
-    margin-left: 26px
-    font-size: 16pt
-    font-weight: bold
-    color: black
+        &__icon
+            width: 50%
+            height: 50%
 
+    &-board-create
+        height: 80%
+        display: flex
+        flex-direction: column
+        justify-content: space-around
+        margin: 20px
 
-.fake-dashboard
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: center
-    border: 2px dashed #afaeae
-    box-shadow: none
+        &__label
+            @extend .form-input-label
 
+        &__input
+            @extend .form-input
 
-.fake-dashboard-text
-    text-align: center
-    width: 200px
-    font-size: 16pt
-    font-weight: bold
-    color: #afaeae
+        &-controls
+            @extend .controls-panel
 
+            &__button
+                &--secondary
+                    @extend .button--secondary
 
-.fake-dashboard-plus-icon
-    width: 50%
-    height: 50%
-
-
-.dashboard-create
-    height: 80%
-    display: flex
-    flex-direction: column
-    justify-content: space-around
-    margin: 20px
-
+                &--danger
+                    @extend .button--danger
