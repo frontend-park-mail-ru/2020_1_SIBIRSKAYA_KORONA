@@ -1,5 +1,5 @@
-import Validator from '../libs/validator.js';
 import {settingsGet, settingsPut} from '../libs/apiService.js';
+import Validator from '../libs/validator.js';
 
 /**
  * Profile model
@@ -138,6 +138,7 @@ export default class JoinModel {
                             this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
                         });
                     break;
+                case 401:
                 case 403: // - Forbidden (В запросе на данные отсутствует кука)
                 case 404: // - NotFound (Пользователя по куке не нашли)
                     this.eventBus.call('invalidCookie');

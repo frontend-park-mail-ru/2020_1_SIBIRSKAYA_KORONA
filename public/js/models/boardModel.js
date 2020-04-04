@@ -1,3 +1,5 @@
+import {columnsGet, columnsPost} from '../libs/apiService.js';
+
 /**
  * Board model
  */
@@ -12,7 +14,6 @@ export default class BoardModel {
         eventBus.subscribe('getBoardData', this.getBoardData.bind(this));
         eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
         eventBus.subscribe('addNewTask', this.addTask.bind(this));
-
 
         // заглушка пока бек не умеет в доску
         this.boardData = {
@@ -791,8 +792,23 @@ export default class BoardModel {
      * @param {Number} boardId
      */
     getBoardData(boardId) {
+        columnsGet(boardId).then((response) => {
+            switch (response.status) {
+                case 200: // - OK (Валидный запрос данных пользователя)
+                    response.json().then((responseJson) => {
+                        console.log(responseJson);
+                    });
+                    break;
+                case 500:
+                    console.log('500');
+                    break;
+                default:
+                    console.log('Бекендер молодец!!!');
+            }
+        });
+
         const gotDataFromBackend = this.boardData;
-        gotDataFromBackend.columns.forEach((column)=> {
+        gotDataFromBackend.columns.forEach((column) => {
             column.tasks.forEach((task) => {
                 task.url = '/boards/' + boardId + '/tasks/' + task.id + '/';
             });
@@ -827,12 +843,28 @@ export default class BoardModel {
      * @param {object} data - fields: boardId, columnTitle
      */
     addColumn(data) {
-        const lastColumnID = this.boardData.columns[this.boardData.columns.length - 1].id;
-        this.boardData.columns.push({
-            id: lastColumnID + 1,
-            title: data.columnTitle,
-            tasks: [],
+        console.log(data);
+        columnsPost(data.boardId, data.columnTitle, Math.random()).then((response) => {
+            switch (response.status) {
+                case 200: // - OK (Валидный запрос данных пользователя)
+                    this.getBoardData(data.boardId);
+                    response.json().then((responseJson) => {
+                        console.log(responseJson);
+                    });
+                    break;
+                case 500:
+                    console.log('500');
+                    break;
+                default:
+                    console.log('Бекендер молодец!!!');
+            }
         });
-        this.getBoardData(data.boardId);
+        // const lastColumnID = this.boardData.columns[this.boardData.columns.length - 1].id;
+        // this.boardData.columns.push({
+        //     id: lastColumnID + 1,
+        //     title: data.columnTitle,
+        //     tasks: [],
+        // });
+        // this.getBoardData(data.boardId);
     }
 }

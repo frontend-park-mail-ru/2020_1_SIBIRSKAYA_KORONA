@@ -37,7 +37,6 @@ export default class Router {
      * @param {Object} event - mouse event
      */
     handleMouseClick(event) {
-        console.log('event', event);
         if (event.target.tagName === 'A') {
             event.preventDefault();
             this.go(event.target.pathname);

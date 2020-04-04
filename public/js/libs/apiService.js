@@ -1,4 +1,4 @@
-import {fetchPost, fetchGet, fetchPut, fetchDelete} from './httpUtils.js';
+import {fetchDelete, fetchGet, fetchPost, fetchPut} from './httpUtils.js';
 
 const BACKEND_ADDRESS = 'http://localhost:8080/';
 // const BACKEND_ADDRESS = 'http://89.208.197.150:8080/';
@@ -100,3 +100,29 @@ export const boardsGet = () => {
     const apiUrl = new URL('boards', BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
+
+/**
+ * @description Create new column
+ * @param {Number} boardID
+ * @param {String} columnName
+ * @param {Number} columnPosition
+ * @return {Promise<Response>}
+ */
+export const columnsPost = (boardID, columnName, columnPosition) => {
+    const apiUrl = new URL(`boards/${boardID}/columns`, BACKEND_ADDRESS);
+    const body = {
+        name: columnName,
+        position: columnPosition,
+    };
+    return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
+};
+
+/**
+ * @param {Number} boardID
+ * @description Get all board columns column
+ * @return {Promise<Response>}
+ */
+export const columnsGet = (boardID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+}
