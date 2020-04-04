@@ -1,11 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="auth">
-        <form action="" class="form auth-form" id="joinForm">
-            <div class="title auth-form-title">
+        <div class="auth-form" >
+            <div class="auth-form__title">
                 Регистрация
             </div>
-            <div id="inputNameError" class="input-error hidden">Недопустимое имя</div>
-            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Имя"
+            <div id="inputNameError" class="auth-form__input-error hidden">Недопустимое имя</div>
+            <input class="auth-form__input" autocomplete="off" type="text" placeholder="Имя"
                    id="inputName">
                 <fest:attributes>
                     <fest:attribute name="value">
@@ -13,8 +13,8 @@
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div id="inputSurnameError" class="input-error hidden">Недопустимая фамилия</div>
-            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Фамилия"
+            <div id="inputSurnameError" class="auth-form__input-error hidden">Недопустимая фамилия</div>
+            <input class="auth-form__input" autocomplete="off" type="text" placeholder="Фамилия"
                    id="inputSurname">
                 <fest:attributes>
                     <fest:attribute name="value">
@@ -22,8 +22,8 @@
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div id="inputNicknameError" class="input-error hidden">Недопустимый ник</div>
-            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Ник"
+            <div id="inputNicknameError" class="auth-form__input-error hidden">Недопустимый ник</div>
+            <input class="auth-form__input" autocomplete="off" type="text" placeholder="Ник"
                    id="inputNickname">
                 <fest:attributes>
                     <fest:attribute name="value">
@@ -31,15 +31,15 @@
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div id="inputPasswordError" class="input-error hidden">Недопустимый пароль</div>
-            <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль"
+            <div id="inputPasswordError" class="auth-form__input-error hidden">Недопустимый пароль</div>
+            <input class="auth-form__input" autocomplete="off" type="password" placeholder="Пароль"
                    id="inputPassword"/>
-            <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
+            <input class="auth-form__input" autocomplete="off" type="password" placeholder="Повторите пароль"
                    id="inputPasswordRepeat"/>
             <div class="auth-form__bottom-panel">
-                <div class="button--primary" id="submit_button">Зарегистрироваться</div>
-                <a class="auth-form-link" href="/login">Уже есть аккаунт?</a>
+                <div class="auth-form__button--primary" id="submit_button">Зарегистрироваться</div>
+                <a class="auth-form__link" href="/login">Уже есть аккаунт?</a>
             </div>
-        </form>
+        </div>
     </div>
 </fest:template>

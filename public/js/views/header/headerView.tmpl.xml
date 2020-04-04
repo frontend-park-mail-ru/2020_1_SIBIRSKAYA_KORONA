@@ -1,10 +1,10 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="main-header">
-        <div class="header-block-left">
+        <div class="main-header-left">
             <div>
                 <fest:choose>
                     <fest:when test="data.auth===true">
-                        <div id="submitBoards" class="header__button--primary">Доски</div>
+                        <div id="submitBoards" class="main-header-left__button--primary">Доски</div>
                     </fest:when>
                     <fest:otherwise>
 
@@ -12,30 +12,30 @@
                 </fest:choose>
             </div>
         </div>
-        <div class="header-block-center">
-            <img class="avatar-round profile-header-avatar" src="/img/logo_drello.png"/>
-            <div class="main-header-logo">
+        <div class="main-header-center">
+            <img class="main-header-center__logo" src="/img/logo_drello.png"/>
+            <div class="main-header-center__title">
                 DRELLO
             </div>
         </div>
-        <div class="header-block-right">
+        <div class="main-header-right">
             <fest:choose>
                 <fest:when test="data.auth===true">
-                    <div class="title main-header-title">
+                    <div class="main-header-right__nickname">
                         <fest:value>'@'+data.nickname</fest:value>
                     </div>
-                    <img id="submitSettings" class="avatar-round main-header-avatar">
+                    <img id="submitSettings" class="main-header-right__avatar--round">
                         <fest:attributes>
                             <fest:attribute name="src">
                                 <fest:value>data.avatar</fest:value>
                             </fest:attribute>
                         </fest:attributes>
                     </img>
-                    <div id="submitLogout" class="header__button--danger">Выйти</div>
+                    <div id="submitLogout" class="main-header-right__button--danger">Выйти</div>
                 </fest:when>
                 <fest:otherwise>
-                    <div id="submitLogin" class="header__button--primary">Войти</div>
-                    <div id="submitJoin" class="header__button--secondary">Зарегистрироваться</div>
+                    <div id="submitLogin" class="main-header-right__button--primary">Войти</div>
+                    <div id="submitJoin" class="main-header-right__button--secondary">Зарегистрироваться</div>
                 </fest:otherwise>
             </fest:choose>
         </div>

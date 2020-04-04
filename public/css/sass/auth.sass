@@ -6,12 +6,17 @@
     height: 90vh
 
 .auth-form
+    @extend .form
     width: 400px
 
+.auth-form__input
+    @extend .form-input
+
 .auth-form__title
+    @extend .title
     font-size: 20pt
     text-align: center
-    margin: 0 0px 15px 0
+    margin: 0 0 15px 0
     letter-spacing: 6px
 
 .auth-form__bottom-panel
@@ -21,3 +26,9 @@
 
 .auth-form__link
     color: #2b5df3
+
+.auth-form__button--primary
+    @extend .button--primary
+
+.auth-form__input-error
+    @extend .input-error

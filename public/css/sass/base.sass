@@ -65,7 +65,7 @@ input[type=file]
         box-shadow: 0 0 1px 1px #007bff
 
         &:hover
-            background-color: #28a745
+            background-color: #007bff
             color: white
 
     &--danger
@@ -157,7 +157,7 @@ input
     align-items: center
     justify-content: space-between
     height: fit-content
-    padding: 8px 10px
+    max-height: 10vh
 
 .header-block-left
     min-width: 33%
@@ -207,6 +207,11 @@ input
 .container-2cols
     display: flex
     flex-flow: wrap-reverse
+
+.container-centered-col
+    display: flex
+    flex-direction: column
+    align-items: center
 
 .hidden
     opacity: 0

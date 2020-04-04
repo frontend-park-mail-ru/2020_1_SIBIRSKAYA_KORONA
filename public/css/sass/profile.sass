@@ -1,41 +1,47 @@
-.profile-header
-    background-color: #4f6dffbd
-    margin-bottom: 10px
-
-.profile-header div:last-child
-    place-content: flex-end
-
-.profile-header-title
-    color: white
-    font-size: 20pt
-
-.profile-header-logout
-    margin-left: 20px
-
-.profile-header-avatar
-    height: 50px
-    width: 50px
-
 .profile
+    @extend .form
     padding: 32px 32px 5px 32px
     margin: 30px 0
 
-.profile-input-group
-    max-width: 420px
-    min-width: 300px
+    &-settings
+        margin-bottom: 15px
 
-.profile-mini-group-title
-    margin: 20px 0
+        &-group-title
+            @extend .group-title
 
-.profile-avatar-column
-    margin: 0 auto 0
-    display: flex
-    flex-direction: column
-    align-items: center
+            &__text
+                @extend .title
 
-.profile-avatar
-    width: 220px
-    height: 220px
+            &__hr--width-2
+                @extend .hr-width-2
 
-.profile-change-avatar-button
-    margin-top: 20px
+
+    &-input-group
+        margin: 15px
+        width: 330px
+
+        &__error
+            @extend .input-error
+
+        &__label
+            @extend .form-input-label
+
+        &__input
+            @extend .form-input
+
+        &__button
+            &--primary
+                @extend .button--primary
+
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
+
+        &__avatar--round
+            @extend .avatar-round
+            width: 260px
+            height: 260px
+            margin: 10px 0
+
