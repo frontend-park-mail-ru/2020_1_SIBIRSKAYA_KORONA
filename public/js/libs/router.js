@@ -50,7 +50,7 @@ export default class Router {
         if (event.target.tagName === 'A') {
             event.preventDefault();
             this.go(event.target.pathname);
-        } else if (event.target.parentElement.tagName === 'A') {
+        } else if (event.target.parentElement && event.target.parentElement.tagName === 'A') {
             event.preventDefault();
             this.go(event.target.parentElement.pathname);
         }
