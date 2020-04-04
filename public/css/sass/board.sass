@@ -1,0 +1,295 @@
+/*        BOARD        */
+.board
+    display: flex
+    flex-direction: column
+    background-color: #bac1c3d1
+    flex-grow: 1
+
+.board-header
+    background-color: #4f6dffbd
+    max-height: 6vh
+    height: 6vh
+
+.board-header .button
+    margin: 0 5px
+
+.board-header-buttons
+    float: right
+    min-width: 33%
+    display: flex
+    place-content: flex-end
+
+.board-header-title
+    width: 33%
+    font-size: 35px
+    color: #ffeaea
+
+.board-column-container
+    display: flex
+    overflow-x: auto
+    width: 100%
+    padding-top: 10px
+    flex-grow: 1
+
+.board-column-container:after
+    content: ""
+    flex: 0 0 5px
+
+.board-column
+    display: flex
+    flex-direction: column
+    border-radius: 5px
+    height: fit-content
+    min-width: 272px
+    max-width: 272px
+    max-height: 75vh
+    padding: 0 4px 8px
+    margin: 0 5px
+    background: #ededed
+    box-shadow: #8c8888f5 0 0 10px 1px
+
+.add-board-column
+    box-shadow: #8c8888f5 0 0 10px 1px
+    background: #ededed4f
+    cursor: pointer
+    transition: 0.3s
+
+.add-board-column:hover
+    box-shadow: #484848f5 0 0 10px 1px
+    background: #edededad
+
+.board-column-title
+    font-size: 22px
+    word-wrap: break-word
+    max-width: 80%
+    margin: 15px 10px 10px 15px
+    max-height: 20%
+
+.board-task-list
+    display: flex
+    flex-direction: column
+    height: fit-content
+    overflow-y: auto
+    max-height: 80%
+    padding: 0 4px
+
+.board-task-mini
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    border-radius: 5px
+    padding: 9px
+    margin-bottom: 10px
+    background: #d4d5fa8a
+    cursor: pointer
+    transition: 0.1s
+
+.board-task-mini:hover
+    cursor: pointer
+    background: #d4d5fafa
+
+.board-add-task
+    background: #d4d5fa8a
+    font-size: 16pt
+
+.board-add-task:hover
+    background: #d4d5fafa
+
+.board-task-mini:last-child
+    margin-bottom: 0
+
+.board-task-label-container
+    display: flex
+    align-items: center
+    flex-direction: row
+    flex-wrap: wrap
+
+.board-task-label-mini
+    display: flex
+    align-items: center
+    background: #cac6c685
+    width: fit-content
+    border-radius: 2px
+    padding: 4px
+    word-wrap: break-word
+    max-width: 100%
+    box-sizing: border-box
+    margin: 2px
+
+.board-task-description-mini
+    background: white
+    border-radius: 2px
+    padding: 4px
+    margin-top: 5px
+    margin-bottom: 5px
+    word-wrap: break-word
+    max-width: 100%
+    box-sizing: border-box
+
+.member-container
+    display: flex
+    overflow-x: auto
+    max-width: 100%
+    align-items: center
+
+.member-container .board-member
+    margin-right: 5px
+
+// .board-member-link
+
+.board-member
+    height: 30px
+    width: 30px
+    border-radius: 5px
+
+/*       END BOARD        */
+
+/*       TASK SETTINGS    */
+
+.settings-form
+    display: flex
+    flex-direction: column
+    width: 60%
+    box-shadow: none
+
+.button.board-column-settings-button:before
+    color: #848484
+    font-weight: bold
+    content: "\22EF"
+
+.button.board-column-settings-button
+    padding: 0 5px
+    align-self: start
+    transition: 0.2s
+
+.button.board-column-settings-button:hover
+    background: #d4d5fabf
+
+/*       END TASK       */
+
+/*       BOARD SETTINGS */
+
+
+/*       END BOARD SETTINGS */
+
+/*       LABEL          */
+
+.task-label
+    display: flex
+    flex-direction: row
+    border-radius: 5px
+    padding: 10px
+    word-break: break-all
+    justify-content: space-between
+
+.task-label.mod-selectable
+    cursor: pointer
+
+.task-label-container
+    display: flex
+    flex-direction: column
+    max-height: 50vh
+    overflow-y: auto
+    padding-right: 10px
+
+.task-label-container .task-label
+    margin-bottom: 5px
+
+.task-label-item
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    width: 100%
+
+.task-label-status
+    align-content: center
+    margin-left: 5px
+    width: 10px
+    align-self: center
+
+.task-label-status.active:before
+    content: "\2713"
+
+.task-label-item .task-label
+    width: 68%
+
+// .task-label-item .button
+
+
+
+.task-label-color-yellow
+    background: #f2d600
+    transition: 0.2s
+
+.task-label-color-yellow.mod-selectable:hover
+    background: #ffe837
+
+
+.task-label-color-orange
+    background: #ff9f1a
+    transition: 0.2s
+
+.task-label-color-orange.mod-selectable:hover
+    background: #fdaf43
+
+
+.task-label-color-red
+    background: #eb5a46
+    transition: 0.2s
+
+.task-label-color-red.mod-selectable:hover
+    background: #f36d5b
+
+
+.task-label-color-purple
+    background: #c377e0
+    transition: 0.2s
+
+.task-label-color-purple.mod-selectable:hover
+    background: #ce88e8
+
+
+.task-label-color-darkblue
+    background: #0079bf
+    color: #f8f8ff
+    transition: 0.2s
+
+.task-label-color-darkblue.mod-selectable:hover
+    background: #2a97d6
+
+
+.task-label-color-black
+    background: #344563
+    color: #f8f8ff
+    transition: 0.2s
+
+.task-label-color-black.mod-selectable:hover
+    background: #495771
+
+
+.task-add-label
+    background: #d4d5fa8a
+    font-size: 16pt
+
+.task-add-label:hover
+    background: #d4d5fafa
+
+/*       END LABEL          */
+
+/*       CREATE LABEL       */
+
+.task-color-palette
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+.task-palette-color
+    height: 15px
+    width: 30px
+    margin: 5px
+    justify-content: center
+
+.task-palette-color.active:before
+    content: "\2713"
+
+/*       END CREATE LABEL       */

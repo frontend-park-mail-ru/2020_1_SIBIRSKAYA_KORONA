@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "eslint --fix . && echo '  LINT OK'",
     "start": "node server/server.js",
-    "prestart": "./node_modules/.bin/fest-build --dir=public",
+    "prestart": "npm run fest && npm run sass",
+    "fest": "./node_modules/.bin/fest-build --dir=public",
+    "sass": "./node_modules/.bin/sass --no-source-map public/css/sass/base.sass public/css/main.css",
     "sync_start": "browser-sync start --server --files 'public/*.css, public/*.html, static/*'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,7 +28,8 @@
     "fest": "^0.12.1",
     "forever": "^2.0.0",
     "husky": "^4.2.3",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "sass": "^1.26.3"
   },
   "bugs": {
     "url": "https://github.com/frontend-park-mail-ru/2020_1_SIBIRSKAYA_KORONA/issues"

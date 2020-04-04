@@ -39,7 +39,7 @@
                                     </fest:attribute>
                                 </fest:attributes>
                             </input>
-                            <div id="submitAbout" class="button primary">Сохранить</div>
+                            <div id="submitAbout" class="button--primary">Сохранить</div>
                         </form>
                     </div>
                     <div class="profile-avatar-column">
@@ -54,7 +54,7 @@
                         </img>
                         <input id="avatarInput" type="file" name="file"/>
                         <label for="avatarInput">
-                            <div class="button profile-change-avatar-button secondary">
+                            <div class="profile-change-avatar-button button--secondary">
                                 Изменить
                             </div>
                         </label>
@@ -75,7 +75,7 @@
                                id="inputPassword"/>
                         <input class="form-input" autocomplete="off" type="password" placeholder="Повторите пароль"
                                id="inputPasswordRepeat"/>
-                        <div id="submitPasswords" class="button secondary">Изменить</div>
+                        <div id="submitPasswords" class="button--secondary">Изменить</div>
                     </form>
                 </div>
                 <div class="input-group profile-input-group">
@@ -89,7 +89,7 @@
                                 </fest:attribute>
                             </fest:attributes>
                         </input>
-                        <div id="submitEmail" class="button primary">Сохранить</div>
+                        <div id="submitEmail" class="button--primary">Сохранить</div>
                     </form>
                 </div>
             </div>
