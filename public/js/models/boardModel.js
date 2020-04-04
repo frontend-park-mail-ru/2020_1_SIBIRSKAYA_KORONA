@@ -799,6 +799,10 @@ export default class BoardModel {
                         console.log(responseJson);
                     });
                     break;
+                case 403:
+                case 401:
+                    this.eventBus.call('unauthorized');
+                    break;
                 case 500:
                     console.log('500');
                     break;
@@ -851,6 +855,10 @@ export default class BoardModel {
                     response.json().then((responseJson) => {
                         console.log(responseJson);
                     });
+                    break;
+                case 403:
+                case 401:
+                    this.eventBus.call('unauthorized');
                     break;
                 case 500:
                     console.log('500');

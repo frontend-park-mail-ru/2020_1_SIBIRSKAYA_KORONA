@@ -69,7 +69,7 @@ export default class HeaderModel {
                         .then((responseJson) => {
                             const data = responseJson.user;
                             this.onLogin(data);
-                        }
+                        },
                         );
                     break;
                 case 401:

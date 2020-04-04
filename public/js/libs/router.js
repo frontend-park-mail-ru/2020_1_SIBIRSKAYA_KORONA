@@ -8,28 +8,38 @@ export default class Router {
      * @param {object} root - application's root element
      */
     constructor(root) {
-        this.routeMap = new Map();
         this.routes = [];
         root.addEventListener('click', this.handleMouseClick.bind(this));
+        window.addEventListener('popstate', (event) => {
+            const currentPath = window.location.pathname;
+            this.go(currentPath, false);
+        });
     }
 
     /**
      * Switch current route
      * @param {string} URL - URL to go
+     * @param {boolean?} pushState - Need to push state or not.
+     * No pushState is necessary when user go back in history. Default set to true.
      */
-    go(URL) {
+    go(URL, pushState = true) {
+        const oldURL = window.history.state && window.history.state.url;
+
         let routeNotFound = true;
-        this.routes.forEach((route) => {
+        for (const route of this.routes) {
             if (route.regExp.test(URL)) {
                 const parsedURL = route.regExp.exec(URL);
                 route.handler(parsedURL.groups);
                 routeNotFound = false;
+                break;
             }
-        });
+        }
         if (routeNotFound) {
             document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
         }
-        window.history.pushState({}, '', URL);
+        if (pushState && URL !== oldURL) {
+            window.history.pushState({url: URL}, '', URL);
+        }
     }
 
     /**

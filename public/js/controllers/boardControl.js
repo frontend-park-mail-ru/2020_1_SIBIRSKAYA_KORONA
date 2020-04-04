@@ -24,22 +24,23 @@ export default class BoardController {
             'openTaskSettings',
             'closeTaskSettings',
             'boardDataChanged',
-        ]);
 
-        this.router = router;
+            'unauthorized',
+        ]);
 
         this.childController = null;
         this.view = new BoardView(this.eventBus);
         this.model = new BoardModel(this.eventBus);
 
+        this.router = router;
         this.triggerTaskAndBoard = this.triggerTaskAndBoard.bind(this);
 
+        this.eventBus.subscribe('unauthorized', () => router.go('/login'));
         this.eventBus.subscribe('openTaskSettings', (boardId, taskId) => {
             this.router.go('/boards/' + boardId + '/tasks/' + taskId);
             this.childController = new TaskSettingsController(this.eventBus, taskId);
             this.childController.view.render();
         });
-
         this.eventBus.subscribe('closeTaskSettings', () => router.go('/boards/' + this.view.boardId));
     }
 

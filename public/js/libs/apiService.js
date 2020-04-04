@@ -125,4 +125,4 @@ export const columnsPost = (boardID, columnName, columnPosition) => {
 export const columnsGet = (boardID) => {
     const apiUrl = new URL(`boards/${boardID}/columns`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
-}
+};
