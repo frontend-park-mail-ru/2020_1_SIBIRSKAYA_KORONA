@@ -24,6 +24,7 @@ export default class BoardController {
             'openTaskSettings',
             'closeTaskSettings',
             'boardDataChanged',
+            'taskMoved',
 
             'unauthorized',
         ]);

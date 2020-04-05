@@ -1,4 +1,4 @@
-import {boardGet, columnsGet, columnsPost, tasksGet, tasksPost} from '../libs/apiService.js';
+import {boardGet, columnsGet, columnsPost, tasksGet, tasksPost, taskPut} from '../libs/apiService.js';
 
 /**
  * Board model
@@ -14,6 +14,7 @@ export default class BoardModel {
         eventBus.subscribe('getBoardData', this.getBoardData.bind(this));
         eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
         eventBus.subscribe('addNewTask', this.addTask.bind(this));
+        eventBus.subscribe('taskMoved', this.saveTask.bind(this));
 
         this.boardData = {
             title: 'BOARD NOT FOUND',
@@ -29,6 +30,11 @@ export default class BoardModel {
      * @return {Promise}
      */
     async getBoardData(boardId) {
+        if (boardId === void 0) {
+            boardId = this.boardData.id;
+        }
+
+
         // GET BOARD INFO
         const boardResponse = await boardGet(boardId);
         const newBoardData = (await boardResponse.json())['board'];
@@ -168,5 +174,16 @@ export default class BoardModel {
         //     tasks: [],
         // });
         // this.getBoardData(data.boardId);
+    }
+
+    /**
+     * Save task position
+     * @param {Object} data
+     * @return {Promise<void>}
+     */
+    async saveTask(data) {
+        await taskPut(data.boardId, data.oldColumnId, data.taskId, {cid: data.newColumnId, position: data.newTaskPos});
+        // TODO: check status
+        this.eventBus.call('getBoardData');
     }
 }
