@@ -15,8 +15,11 @@ export default class BoardModel {
         eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
         eventBus.subscribe('addNewTask', this.addTask.bind(this));
 
-        // заглушка пока бек не умеет в доску
-        this.boardData = {};
+        this.boardData = {
+            title: 'BOARD NOT FOUND',
+            members: [],
+            columns: [],
+        };
     }
 
     /**
@@ -26,23 +29,17 @@ export default class BoardModel {
      * @return {Promise}
      */
     async getBoardData(boardId) {
-        let boardData = {
-            title: 'BOARD NOT FOUND',
-            members: [],
-            columns: [],
-        };
-
         // GET BOARD INFO
         const boardResponse = await boardGet(boardId);
-        boardData = (await boardResponse.json())['board'];
+        const newBoardData = (await boardResponse.json())['board'];
 
         // GET COLUMNS INFO
         const columnsResponse = await columnsGet(boardId);
-        boardData.columns = (await columnsResponse.json()).columns;
+        newBoardData.columns = (await columnsResponse.json()).columns;
 
         // GET TASKS FROM EACH COLUMN
         const columnsTasksPromises = [];
-        for (const column of boardData.columns) {
+        for (const column of newBoardData.columns) {
             columnsTasksPromises.push(tasksGet(boardId, column.id));
         }
 
@@ -74,12 +71,40 @@ export default class BoardModel {
                         avatar: '/img/default_avatar.png',
                     },
                 ];
-                task.url = `/boards/${boardId}/tasks/${task.id}`;
+                task.url = `/boards/${boardId}/columns/${task.cid}/tasks/${task.id}`;
             }
 
-            boardData['columns'][i]['tasks'] = columnTasks;
+            newBoardData['columns'][i]['tasks'] = columnTasks;
         }
-        this.eventBus.call('gotBoardData', boardData);
+
+        // SORT COLUMNS
+        for (const column of newBoardData.columns) {
+            column.tasks.sort((a, b) => {
+                if (a.position < b.position) {
+                    return -1;
+                }
+                if (a.position === b.position) {
+                    return 0;
+                }
+                return 1;
+            });
+        }
+
+        // SORT TASK IN COLUMNS
+        newBoardData.columns.sort((a, b) => {
+            if (a.position < b.position) {
+                return -1;
+            }
+            if (a.position === b.position) {
+                return 0;
+            }
+            return 1;
+        });
+
+        console.log(newBoardData);
+
+        this.boardData = newBoardData;
+        this.eventBus.call('gotBoardData', newBoardData);
     }
 
     /**

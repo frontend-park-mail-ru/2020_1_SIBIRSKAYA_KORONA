@@ -36,8 +36,8 @@ export default class BoardController {
         this.triggerTaskAndBoard = this.triggerTaskAndBoard.bind(this);
 
         this.eventBus.subscribe('unauthorized', () => router.go('/login'));
-        this.eventBus.subscribe('openTaskSettings', (boardId, taskId) => {
-            this.router.go('/boards/' + boardId + '/tasks/' + taskId);
+        this.eventBus.subscribe('openTaskSettings', (boardId, columnId, taskId) => {
+            this.router.go(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
         });
         this.eventBus.subscribe('closeTaskSettings', () => {
             router.go('/boards/' + this.view.boardId);
@@ -50,14 +50,12 @@ export default class BoardController {
      */
     triggerTaskAndBoard(dataFromUrl) {
         const boardId = Number(dataFromUrl.boardId);
+        const columnId = Number(dataFromUrl.columnId);
         const taskId = Number(dataFromUrl.taskId);
 
-        if (isNaN(boardId) || isNaN(taskId)) {
-            this.router.go('/boards');
-        }
 
         this.view.render(dataFromUrl).then(() => {
-            this.childController = new TaskSettingsController(this.eventBus, taskId);
+            this.childController = new TaskSettingsController(this.eventBus, boardId, columnId, taskId);
             this.childController.view.render();
         },
         );

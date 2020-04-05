@@ -34,7 +34,7 @@ export default class BoardView extends BaseView {
      * @return {Promise}
      */
     render(dataFromURL) {
-        this.boardId = dataFromURL.boardId;
+        this.boardId = Number(dataFromURL.boardId);
         return this.eventBus.call('getBoardData', dataFromURL.boardId);
     }
 
@@ -82,8 +82,11 @@ export default class BoardView extends BaseView {
     handleButtonClick(event) {
         const target = event.currentTarget;
         switch (true) {
-            case target.classList.contains('js-taskSettings'):
-                this.eventBus.call('openTaskSettings', this.boardId, target.dataset.taskId);
+            case target.classList.contains('js-openTaskSettings'):
+                this.eventBus.call('openTaskSettings',
+                    this.boardId,
+                    Number(target.dataset.columnId),
+                    Number(target.dataset.taskId));
                 break;
 
             case target.classList.contains('js-addNewTask'):
@@ -113,8 +116,8 @@ export default class BoardView extends BaseView {
      * @param {HTMLDivElement} node where to render form
      */
     showNewTaskForm(node) {
-        const columnID = node.dataset.columnId;
-        const columnPosition = node.dataset.position;
+        const columnID = Number(node.dataset.columnId);
+        const columnPosition = Number(node.dataset.position);
         node.classList.remove('task-list-add-task-button');
         node.removeEventListener('click', this.handleButtonClick);
         node.innerHTML = window.fest['js/views/board/addTaskForm.tmpl']({
@@ -225,7 +228,10 @@ export default class BoardView extends BaseView {
         document.removeEventListener('mouseup', this.handleTaskDragEnd);
         document.removeEventListener('selectstart', this.preventDefault);
         if (event.pageX === this.dragTask.mouseDown.x && event.pageY === this.dragTask.mouseDown.y) {
-            this.eventBus.call('openTaskSettings', this.boardId, this.dragTask.element.dataset.taskId);
+            this.eventBus.call('openTaskSettings',
+                this.boardId,
+                Number(target.dataset.columnId),
+                Number(target.dataset.taskId));
         } else {
             this.dragTask.element.style.display = 'none';
             const elem = document.elementFromPoint(event.clientX, event.clientY);
@@ -235,9 +241,9 @@ export default class BoardView extends BaseView {
                 const newColumnId = newColumn.dataset.columnId;
                 const oldColumnId = this.dragTask.element.closest('.board-column').dataset.columnId;
                 const taskList = newColumn.lastChild;
-                console.log(taskList);
+                // console.log(taskList);
                 const tasks = [];
-                console.log(taskList.childNodes);
+                // console.log(taskList.childNodes);
                 [...taskList.childNodes].forEach((node) => {
                     if (node.classList.contains('task-mini')) {
                         const boundingRect = node.getBoundingClientRect();
@@ -248,7 +254,7 @@ export default class BoardView extends BaseView {
                         });
                     }
                 });
-                console.log(tasks);
+                // console.log(tasks);
                 const newTaskRealPos = event.pageY;
                 let newTaskPos = 1;
                 for (let i = 0; i !== tasks.length; i++) {
