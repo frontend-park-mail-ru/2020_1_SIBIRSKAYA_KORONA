@@ -158,7 +158,7 @@ export const tasksGet = (boardID, columnID) => {
 export const tasksPost = (boardID, columnID, task = {position: 1, description: '', title: ''}) => {
     const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks`, BACKEND_ADDRESS);
     const body = {
-        name: task.title,
+        title: task.title,
         about: task.description,
         position: task.position,
     };

@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="board-task-description-mini">
                                     <fest:value>
-                                        task.description
+                                        task.title
                                     </fest:value>
                                 </div>
                                 <div class="member-container">
