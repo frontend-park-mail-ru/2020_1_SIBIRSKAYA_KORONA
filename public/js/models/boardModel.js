@@ -25,7 +25,6 @@ export default class BoardModel {
 
     /**
      * Returns board data
-     * TODO call API
      * @param {Number} boardId
      * @return {Promise}
      */
@@ -165,7 +164,6 @@ export default class BoardModel {
 
     /**
      * Add task in fake local storage
-     * TODO call API
      * @param {object} data - fields: boardId, columnTitle
      */
     addColumn(data) {
