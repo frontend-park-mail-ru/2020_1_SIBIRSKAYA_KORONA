@@ -25,10 +25,11 @@ export default class BoardView extends BaseView {
      * Method which triggers getting data from model
      * It can triggers task render if there is 'taskId' in dataFromURL
      * @param {Object} dataFromURL - fields: boardId, taskId(optional)
+     * @return {Promise}
      */
     render(dataFromURL) {
         this.boardId = dataFromURL.boardId;
-        this.eventBus.call('getBoardData', dataFromURL.boardId);
+        return this.eventBus.call('getBoardData', dataFromURL.boardId);
     }
 
     /**
