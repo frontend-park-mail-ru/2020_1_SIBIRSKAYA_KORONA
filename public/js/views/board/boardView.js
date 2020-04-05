@@ -44,10 +44,12 @@ export default class BoardView extends BaseView {
      */
     renderBoard(boardData) {
         this.lastColumnIndex = boardData.columns.length - 1;
-        this.lastTaskInColumnIndex = new Array(boardData.columns.length);
+        this.lastTaskInColumnPosition = new Array(boardData.columns.length);
         boardData.columns.forEach((column, index) => {
-            this.lastTaskInColumnIndex[index] = column.tasks.length;
+            const lastTask = column.tasks[column.tasks.length - 1];
+            this.lastTaskInColumnPosition[index] = (lastTask)? lastTask.position : 1;
         });
+        console.log(this.lastTaskInColumnPosition);
 
         this.root.innerHTML = window.fest['js/views/board/board.tmpl'](boardData);
         this.addEventListeners();
@@ -82,13 +84,6 @@ export default class BoardView extends BaseView {
     handleButtonClick(event) {
         const target = event.currentTarget;
         switch (true) {
-            case target.classList.contains('js-openTaskSettings'):
-                this.eventBus.call('openTaskSettings',
-                    this.boardId,
-                    Number(target.dataset.columnId),
-                    Number(target.dataset.taskId));
-                break;
-
             case target.classList.contains('js-addNewTask'):
                 this.showNewTaskForm(target);
                 break;
@@ -133,7 +128,7 @@ export default class BoardView extends BaseView {
                     boardId: this.boardId,
                     columnID: columnID,
                     taskTitle: newTaskInput.value,
-                    taskPosition: this.lastTaskInColumnIndex[columnPosition] + 1,
+                    taskPosition: this.lastTaskInColumnPosition[columnPosition] + 1,
                 });
             }
         });
@@ -235,15 +230,10 @@ export default class BoardView extends BaseView {
         } else {
             this.dragTask.element.style.display = 'none';
             const elem = document.elementFromPoint(event.clientX, event.clientY);
-            this.dragTask.element.style.display = '';
             if (elem && elem.closest('.board-column')) {
                 const newColumn = elem.closest('.board-column');
-                const newColumnId = Number(newColumn.dataset.columnId);
-                const oldColumnId = Number(this.dragTask.element.closest('.board-column').dataset.columnId);
                 const taskList = newColumn.lastChild;
-                // console.log(taskList);
                 const tasks = [];
-                // console.log(taskList.childNodes);
                 [...taskList.childNodes].forEach((node) => {
                     if (node.classList.contains('task-mini')) {
                         const boundingRect = node.getBoundingClientRect();
@@ -254,7 +244,6 @@ export default class BoardView extends BaseView {
                         });
                     }
                 });
-                // console.log(tasks);
                 const newTaskRealPos = event.pageY;
                 let newTaskPos = 1;
                 for (let i = 0; i !== tasks.length; i++) {
@@ -266,12 +255,15 @@ export default class BoardView extends BaseView {
                         newTaskPos = tasks[i].pos + 1;
                     }
                 }
-                console.log('newTaskPos', newTaskPos);
-                console.log('newColumnId', newColumnId);
-                console.log('oldColumnId', oldColumnId);
-
-                const taskId = Number(this.dragTask.element.dataset.taskId);
-                this.eventBus.call('taskMoved', {boardId: this.boardId, oldColumnId, newColumnId, newTaskPos, taskId});
+                const eventBusCallParams= {
+                    boardId: this.boardId,
+                    newColumnId: Number(newColumn.dataset.columnId),
+                    oldColumnId: Number(this.dragTask.element.closest('.board-column').dataset.columnId),
+                    taskId: Number(this.dragTask.element.dataset.taskId),
+                    newTaskPos: newTaskPos,
+                };
+                this.eventBus.call('taskMoved', eventBusCallParams);
+                return;
             }
         }
         this.dragTask.element.style = null;
