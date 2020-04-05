@@ -16,13 +16,8 @@ a
 a:hover
     text-decoration: underline
 
-input[type=file]
-    width: 0.1px
-    height: 0.1px
-    opacity: 0
-    overflow: hidden
-    position: absolute
-    z-index: -1
+.link-none, .link-none:hover, .link-none:focus
+    text-decoration: none
 
 #root
     display: flex
@@ -94,8 +89,18 @@ input
     outline: none
     transition: 0.3s
 
-.link-none, .link-none:hover, .link-none:focus
-    text-decoration: none
+textarea
+    resize: none
+    width: 100%
+
+input[type=file]
+    width: 0.1px
+    height: 0.1px
+    opacity: 0
+    overflow: hidden
+    position: absolute
+    z-index: -1
+
 
 .input-error
     color: red
@@ -104,6 +109,11 @@ input
 
 .title
     font-weight: 800
+
+.title-big
+    font-size: 20pt
+    font-weight: bold
+    margin-bottom: 5px
 
 .popup
     position: absolute
@@ -115,6 +125,26 @@ input
     justify-content: center
     align-items: center
     z-index: 10
+
+.popover
+    width: 250px
+
+
+#popup-block
+    position: absolute
+    z-index: 100
+
+
+#popover-block
+    position: absolute
+    z-index: 10
+
+.window-overlay
+    position: absolute
+    background: #00000080
+    width: 100vw
+    height: 100vh
+
 
 .avatar-round
     border-radius: 50%
@@ -142,10 +172,12 @@ input
     width: 95%
     border-color: #1a73a8
 
+.form-block
+    margin-bottom: 15px
+
 .group-title
     font-size: 20pt
     font-weight: 700
-
 
 .input-group
     margin: 30px 15px

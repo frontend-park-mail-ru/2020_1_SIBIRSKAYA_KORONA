@@ -17,13 +17,13 @@ export default class BoardView extends BaseView {
 
         this.render = this.render.bind(this);
         this.renderBoard = this.renderBoard.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
 
         eventBus.subscribe('gotBoardData', this.renderBoard);
     }
 
     /**
-     * Method which triggers getting data from model
-     * It can triggers task render if there is 'taskId' in dataFromURL
+     * Triggers getting data from model
      * @param {Object} dataFromURL - fields: boardId, taskId(optional)
      */
     render(dataFromURL) {
@@ -54,7 +54,7 @@ export default class BoardView extends BaseView {
         ];
 
         buttons.forEach((button) => {
-            button.addEventListener('click', this.handleButtonClick.bind(this));
+            button.addEventListener('click', this.handleButtonClick);
         });
     }
 
@@ -97,7 +97,7 @@ export default class BoardView extends BaseView {
      */
     showNewTaskForm(node) {
         const columnID = node.dataset.columnId;
-        node.classList.remove('js-addNewTask');
+        node.classList.remove('task-list-add-task-button');
         node.removeEventListener('click', this.handleButtonClick);
         node.innerHTML = window.fest['js/views/board/addTaskForm.tmpl']({
             form: true,
@@ -119,7 +119,7 @@ export default class BoardView extends BaseView {
         const closeButtonID = 'closeNewTaskFormButton' + columnID;
         document.getElementById(closeButtonID).addEventListener('click', (event) => {
             event.stopPropagation();
-            node.classList.add('js-addNewTask');
+            node.classList.add('task-list-add-task-button');
             node.addEventListener('click', this.handleButtonClick);
             node.innerHTML = window.fest['js/views/board/addTaskForm.tmpl']({form: false});
         });
@@ -130,7 +130,7 @@ export default class BoardView extends BaseView {
      * @param {HTMLDivElement} node where to render form
      */
     showNewColumnForm(node) {
-        node.classList.remove('js-addNewColumn');
+        node.classList.remove('column-list-add-column-button');
         node.removeEventListener('click', this.handleButtonClick);
         node.innerHTML = window.fest['js/views/board/addColumnForm.tmpl']({form: true});
 
@@ -146,7 +146,7 @@ export default class BoardView extends BaseView {
 
         document.getElementById('closeNewColumnFormButton').addEventListener('click', (event) => {
             event.stopPropagation();
-            node.classList.add('js-addNewColumn');
+            node.classList.add('column-list-add-column-button');
             node.addEventListener('click', this.handleButtonClick);
             node.innerHTML = window.fest['js/views/board/addColumnForm.tmpl']({form: false});
         });

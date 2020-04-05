@@ -6,19 +6,15 @@
 
     <fest:choose>
         <fest:when test="data.form===true">
-            <div class="task-create">
-                <div class="form-input-label">
+            <div class="task-create-form">
+                <div class="task-create-form__label">
                     Название задачи:
                 </div>
-                <input id="inputNewTaskTitle" type="text" class="form-input" placeholder="Новая задача"
+                <input class="task-create-form__input" id="inputNewTaskTitle" type="text" placeholder="Новая задача"
                        autocomplete="off"/>
-                <div class="bottom-buttons-panel">
-                    <div id="{addButtonID}" class="button secondary">
-                        Добавить
-                    </div>
-                    <div id="{closeButtonID}" class="button danger">
-                        Закрыть
-                    </div>
+                <div class="task-create-form-controls">
+                    <div class="task-create-form-controls__button--secondary" id="{addButtonID}">Добавить</div>
+                    <div class="task-create-form-controls__button--danger" id="{closeButtonID}">Закрыть</div>
                 </div>
             </div>
         </fest:when>

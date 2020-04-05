@@ -6,34 +6,100 @@
     flex-grow: 1
 
 .board-header
-    background-color: #4f6dffbd
-    max-height: 6vh
-    height: 6vh
+    background-color: #18255f
+    padding: 10px 10px
+    @extend .header
 
-.board-header .button
-    margin: 0 5px
+    &-left
+        @extend .header-block-left
 
-.board-header-buttons
-    float: right
-    min-width: 33%
+        &__title
+            width: 33%
+            font-size: 35px
+            color: #ffeaea
+
+    &-center
+        @extend .header-block-center
+
+        &-members
+            @extend .member-container
+
+            &__member
+                @extend .board-member
+
+        &__button--primary
+            @extend .button--primary
+            margin-left: 15px
+
+    &-right
+        @extend .header-block-right
+
+        &__button--primary
+            @extend .button--primary
+
+.member-container
     display: flex
-    place-content: flex-end
+    overflow-x: auto
+    max-width: 100%
+    align-items: center
 
-.board-header-title
-    width: 33%
-    font-size: 35px
-    color: #ffeaea
+.board-member
+    height: 30px
+    width: 30px
+    border-radius: 50%
 
-.board-column-container
+
+.column-list
     display: flex
     overflow-x: auto
     width: 100%
     padding-top: 10px
     flex-grow: 1
 
-.board-column-container:after
-    content: ""
-    flex: 0 0 5px
+    &:after
+        content: ""
+        flex: 0 0 5px
+
+    &-add-column-button
+        @extend .board-column
+        box-shadow: #8c8888f5 0 0 10px 1px
+        background: #ededed4f
+        cursor: pointer
+        transition: 0.3s
+
+        &:hover
+            box-shadow: #484848f5 0 0 10px 1px
+            background: #edededad
+
+        &-header
+            @extend .board-column-header
+
+            &__title
+                @extend .board-column-header__title
+
+.column-create-form
+    padding: 20px
+    margin: 0 5px
+    border-radius: 5px
+    height: fit-content
+    width: 272px
+    background: #ededed
+
+    &__label
+        @extend .form-input-label
+
+    &__input
+        @extend .form-input
+
+    &-controls
+        @extend .controls-panel
+
+        &__button
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
 
 .board-column
     display: flex
@@ -48,24 +114,37 @@
     background: #ededed
     box-shadow: #8c8888f5 0 0 10px 1px
 
-.add-board-column
-    box-shadow: #8c8888f5 0 0 10px 1px
-    background: #ededed4f
-    cursor: pointer
-    transition: 0.3s
+    &-header
+        display: flex
+        flex-direction: row
+        align-items: center
+        justify-content: space-between
+        height: fit-content
 
-.add-board-column:hover
-    box-shadow: #484848f5 0 0 10px 1px
-    background: #edededad
+        &__title
+            @extend .title
+            font-size: 22px
+            word-wrap: break-word
+            max-width: 80%
+            margin: 15px 10px 10px 15px
+            max-height: 20%
 
-.board-column-title
-    font-size: 22px
-    word-wrap: break-word
-    max-width: 80%
-    margin: 15px 10px 10px 15px
-    max-height: 20%
+        &__settings-button
+            margin: 10px
+            padding-top: 7px
+            align-self: start
+            transition: 0.2s
 
-.board-task-list
+            &:before
+                color: #848484
+                font-weight: bold
+                content: "\22EF"
+
+            &:hover
+                background: #d4d5fabf
+
+
+.task-list
     display: flex
     flex-direction: column
     height: fit-content
@@ -73,7 +152,38 @@
     max-height: 80%
     padding: 0 4px
 
-.board-task-mini
+    &-add-task-button
+        @extend .task-mini
+        background: #d4d5fa8a
+        font-size: 16pt
+
+        &:hover
+            background: #d4d5fafa
+
+.task-create-form
+    height: 80%
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    padding: 10px
+
+    &__label
+        @extend .form-input-label
+
+    &__input
+        @extend .form-input
+
+    &-controls
+        @extend .controls-panel
+
+        &__button
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
+
+.task-mini
     display: flex
     flex-direction: column
     flex-wrap: wrap
@@ -82,65 +192,74 @@
     margin-bottom: 10px
     background: #d4d5fa8a
     cursor: pointer
-    transition: 0.1s
 
-.board-task-mini:hover
-    cursor: pointer
-    background: #d4d5fafa
+    &:hover
+        transition: 0.2s
+        cursor: pointer
+        background: #d4d5fafa
 
-.board-add-task
-    background: #d4d5fa8a
-    font-size: 16pt
+    &:last-child
+        margin-bottom: 0
 
-.board-add-task:hover
-    background: #d4d5fafa
+    &__description
+        background: white
+        border-radius: 2px
+        padding: 4px
+        margin-top: 5px
+        margin-bottom: 5px
+        word-wrap: break-word
+        max-width: 100%
+        box-sizing: border-box
 
-.board-task-mini:last-child
-    margin-bottom: 0
+    &-members
+        @extend .member-container
 
-.board-task-label-container
+        &__member
+            @extend .board-member
+
+
+//.board-task-label-container
+.task-label-list
     display: flex
     align-items: center
     flex-direction: row
     flex-wrap: wrap
+    // .board-task-label-mini
+    &__label-mini
+        display: flex
+        align-items: center
+        background: #cac6c685
+        width: fit-content
+        border-radius: 2px
+        padding: 4px
+        word-wrap: break-word
+        max-width: 100%
+        box-sizing: border-box
+        margin: 2px
 
-.board-task-label-mini
-    display: flex
-    align-items: center
-    background: #cac6c685
-    width: fit-content
-    border-radius: 2px
-    padding: 4px
-    word-wrap: break-word
-    max-width: 100%
-    box-sizing: border-box
-    margin: 2px
+        &--color-yellow
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-yellow
 
-.board-task-description-mini
-    background: white
-    border-radius: 2px
-    padding: 4px
-    margin-top: 5px
-    margin-bottom: 5px
-    word-wrap: break-word
-    max-width: 100%
-    box-sizing: border-box
+        &--color-orange
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-orange
 
-.member-container
-    display: flex
-    overflow-x: auto
-    max-width: 100%
-    align-items: center
+        &--color-red
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-red
 
-.member-container .board-member
-    margin-right: 5px
+        &--color-purple
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-purple
 
-// .board-member-link
+        &--color-darkblue
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-darkblue
 
-.board-member
-    height: 30px
-    width: 30px
-    border-radius: 5px
+        &--color-black
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-black
 
 /*       END BOARD        */
 
@@ -151,19 +270,6 @@
     flex-direction: column
     width: 60%
     box-shadow: none
-
-.button.board-column-settings-button:before
-    color: #848484
-    font-weight: bold
-    content: "\22EF"
-
-.button.board-column-settings-button
-    padding: 0 5px
-    align-self: start
-    transition: 0.2s
-
-.button.board-column-settings-button:hover
-    background: #d4d5fabf
 
 /*       END TASK       */
 
@@ -217,54 +323,50 @@
 
 
 
-.task-label-color-yellow
-    background: #f2d600
-    transition: 0.2s
+.task-label-color
+    &-yellow
+        background: #f2d600
+        transition: 0.2s
 
-.task-label-color-yellow.mod-selectable:hover
-    background: #ffe837
+        &.selectable:hover
+            background: #ffe837
 
+    &-orange
+        background: #ff9f1a
+        transition: 0.2s
 
-.task-label-color-orange
-    background: #ff9f1a
-    transition: 0.2s
+        &.selectable:hover
+            background: #fdaf43
 
-.task-label-color-orange.mod-selectable:hover
-    background: #fdaf43
+    &-red
+        background: #eb5a46
+        transition: 0.2s
 
+        &.selectable:hover
+            background: #f36d5b
 
-.task-label-color-red
-    background: #eb5a46
-    transition: 0.2s
+    &-purple
+        background: #c377e0
+        transition: 0.2s
 
-.task-label-color-red.mod-selectable:hover
-    background: #f36d5b
+        &.selectable:hover
+            background: #ce88e8
 
+    &-darkblue
+        background: #0079bf
+        color: #f8f8ff
+        transition: 0.2s
 
-.task-label-color-purple
-    background: #c377e0
-    transition: 0.2s
+        &.selectable:hover
+            background: #2a97d6
 
-.task-label-color-purple.mod-selectable:hover
-    background: #ce88e8
+    &-black
+        background: #344563
+        color: #f8f8ff
+        transition: 0.2s
 
-
-.task-label-color-darkblue
-    background: #0079bf
-    color: #f8f8ff
-    transition: 0.2s
-
-.task-label-color-darkblue.mod-selectable:hover
-    background: #2a97d6
-
-
-.task-label-color-black
-    background: #344563
-    color: #f8f8ff
-    transition: 0.2s
-
-.task-label-color-black.mod-selectable:hover
-    background: #495771
+        &.selectable:hover
+            background: #495771
 
 
 .task-add-label

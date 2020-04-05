@@ -1,21 +1,24 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <fest:choose>
         <fest:when test="data.form===true">
-            <div class="column-create">
-                <div class="form-input-label">
+            <div class="column-create-form">
+                <div class="column-create-form__label">
                     Название колонки:
                 </div>
-                <input id="inputNewColumnTitle" type="text" class="form-input" placeholder="Новая колонка"
+                <input class="column-create-form__input" id="inputNewColumnTitle" type="text"
+                       placeholder="Новая колонка"
                        autocomplete="off"/>
-                <div class="bottom-buttons-panel">
-                    <div id="addColumnButton" class="button secondary">Добавить</div>
-                    <div id="closeNewColumnFormButton" class="button danger">Закрыть</div>
+                <div class="column-create-form-controls">
+                    <div class="column-create-form-controls__button--secondary" id="addColumnButton">Добавить</div>
+                    <div class="column-create-form-controls__button--danger" id="closeNewColumnFormButton">Закрыть</div>
                 </div>
             </div>
         </fest:when>
         <fest:otherwise>
-            <div class="title board-column-title">
-                + Add new column
+            <div class="column-list-add-column-button-header">
+                <div class="column-list-add-column-button-header__title">
+                    + Add new column
+                </div>
             </div>
         </fest:otherwise>
     </fest:choose>
