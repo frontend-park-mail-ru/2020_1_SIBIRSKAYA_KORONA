@@ -1,4 +1,4 @@
-import {taskPut, taskGet} from '../libs/apiService.js';
+import {taskPut, taskGet, taskDelete} from '../libs/apiService.js';
 
 /**
  * Task settings model
@@ -19,9 +19,11 @@ export default class TaskSettingsModel {
 
         this.getTaskSettings = this.getTaskSettings.bind(this);
         this.saveTaskSettings = this.saveTaskSettings.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
 
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings);
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings);
+        this.eventBus.subscribe('deleteTask', this.deleteTask);
     }
 
     /**
@@ -70,6 +72,17 @@ export default class TaskSettingsModel {
      */
     async saveTaskSettings(taskData) {
         await taskPut(this.boardId, this.columnId, this.taskId, taskData);
+        // TODO(Alexandr): check response status\
+        this.eventBus.call('closeSelf');
+    }
+
+    /**
+     * Deletes task
+     * @return {Promise<void>}
+     */
+    async deleteTask() {
+        await taskDelete(this.boardId, this.columnId, this.taskId);
         // TODO(Alexandr): check response status
+        this.eventBus.call('closeSelf');
     }
 }

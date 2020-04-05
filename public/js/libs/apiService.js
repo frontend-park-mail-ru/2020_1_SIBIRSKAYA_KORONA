@@ -185,7 +185,20 @@ export const taskGet = (boardID, columnID, taskID) => {
  * @param {Object} task
  * @return {Promise<Response>}
  */
-export const taskPut = (boardID, columnID, taskID, task) => {
+export const taskPut = (boardID, columnID, taskID, task={}) => {
     const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}`, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify(task));
+};
+
+
+/**
+ * Delete task
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @return {Promise<Response>}
+ */
+export const taskDelete = (boardID, columnID, taskID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}`, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
 };

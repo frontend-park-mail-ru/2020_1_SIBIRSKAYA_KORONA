@@ -30,6 +30,7 @@ export default class TaskSettingsController extends ControllerChainLink {
             'closedAddMemberPopup',
 
             'saveTaskSettings',
+            'deleteTask',
         ];
 
         const eventBus = new EventBus(actualSignals.concat(chainLinkSignalsArray));
