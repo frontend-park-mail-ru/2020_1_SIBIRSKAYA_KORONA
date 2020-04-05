@@ -28,7 +28,7 @@ export default class BoardView extends BaseView {
      * @return {Promise}
      */
     render(dataFromURL) {
-        this.boardId = dataFromURL.boardId;
+        this.boardId = Number(dataFromURL.boardId);
         return this.eventBus.call('getBoardData', dataFromURL.boardId);
     }
 
@@ -67,7 +67,10 @@ export default class BoardView extends BaseView {
         const target = event.currentTarget;
         switch (true) {
             case target.classList.contains('js-openTaskSettings'):
-                this.eventBus.call('openTaskSettings', this.boardId, target.dataset.columnId, target.dataset.taskId);
+                this.eventBus.call('openTaskSettings',
+                    this.boardId,
+                    Number(target.dataset.columnId),
+                    Number(target.dataset.taskId));
                 break;
 
             case target.classList.contains('js-addNewTask'):
@@ -97,7 +100,7 @@ export default class BoardView extends BaseView {
      * @param {HTMLDivElement} node where to render form
      */
     showNewTaskForm(node) {
-        const columnID = node.dataset.columnId;
+        const columnID = Number(node.dataset.columnId);
         node.classList.remove('task-list-add-task-button');
         node.removeEventListener('click', this.handleButtonClick);
         node.innerHTML = window.fest['js/views/board/addTaskForm.tmpl']({
