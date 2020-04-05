@@ -87,7 +87,7 @@ export const profileGet = (nickname) => {
 export const boardsPost = (boardName) => {
     const apiUrl = new URL('boards', BACKEND_ADDRESS);
     const body = {
-        name: boardName,
+        title: boardName,
     };
     return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
 };
@@ -102,6 +102,16 @@ export const boardsGet = () => {
 };
 
 /**
+ * @description Get board info
+ * @param {Number} boardID
+ * @return {Promise<Response>}
+ */
+export const boardGet = (boardID) => {
+    const apiUrl = new URL(`boards/${boardID}`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
  * @description Create new column
  * @param {Number} boardID
  * @param {String} columnName
@@ -111,7 +121,7 @@ export const boardsGet = () => {
 export const columnsPost = (boardID, columnName, columnPosition) => {
     const apiUrl = new URL(`boards/${boardID}/columns`, BACKEND_ADDRESS);
     const body = {
-        name: columnName,
+        title: columnName,
         position: columnPosition,
     };
     return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
@@ -125,4 +135,32 @@ export const columnsPost = (boardID, columnName, columnPosition) => {
 export const columnsGet = (boardID) => {
     const apiUrl = new URL(`boards/${boardID}/columns`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
+};
+
+/**
+ * @description Get all tasks
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @return {Promise<Response>}
+ */
+export const tasksGet = (boardID, columnID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Create new task in column
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Object} task
+ * @return {Promise<Response>}
+ */
+export const tasksPost = (boardID, columnID, task = {position: 1, description: '', title: ''}) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks`, BACKEND_ADDRESS);
+    const body = {
+        name: task.title,
+        about: task.description,
+        position: task.position,
+    };
+    return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
 };

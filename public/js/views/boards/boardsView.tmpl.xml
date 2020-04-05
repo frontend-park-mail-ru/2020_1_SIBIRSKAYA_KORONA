@@ -11,7 +11,7 @@
                 <fest:for iterate="data.myBoards" index="i" value="board">
                     <a class="group-mini-board" href="{board.url}">
                         <div class="group-mini-board__title">
-                            <fest:value>board.name</fest:value>
+                            <fest:value>board.title</fest:value>
                         </div>
                     </a>
                 </fest:for>
@@ -32,7 +32,7 @@
                 <fest:for iterate="data.sharedBoards" index="i" value="board">
                     <a class="group-mini-board" href="{board.url}">
                         <div class="group-mini-board__title">
-                            <fest:value>board.name</fest:value>
+                            <fest:value>board.title</fest:value>
                         </div>
                     </a>
                 </fest:for>
