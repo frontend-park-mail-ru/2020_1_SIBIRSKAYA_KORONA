@@ -25,10 +25,11 @@ export default class BoardView extends BaseView {
     /**
      * Triggers getting data from model
      * @param {Object} dataFromURL - fields: boardId, taskId(optional)
+     * @return {Promise}
      */
     render(dataFromURL) {
         this.boardId = dataFromURL.boardId;
-        this.eventBus.call('getBoardData', dataFromURL.boardId);
+        return this.eventBus.call('getBoardData', dataFromURL.boardId);
     }
 
     /**

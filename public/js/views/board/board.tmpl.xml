@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="task-mini__description">
                                     <fest:value>
-                                        task.description
+                                        task.title
                                     </fest:value>
                                 </div>
                                 <div class="task-mini-members">
