@@ -37,6 +37,25 @@ export default class BoardModel {
 
         // GET BOARD INFO
         const boardResponse = await boardGet(boardId);
+
+        switch (boardResponse.status) {
+            case 200:
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                return;
+            case 400:
+            case 403:
+            case 500:
+                this.eventBus.call('goToBoards');
+                return;
+            default:
+                console.log('Бекендер молодец!!!');
+                this.eventBus.call('goToBoards');
+                return;
+        }
+
+
         const newBoardData = (await boardResponse.json())['board'];
 
         // GET COLUMNS INFO
@@ -128,9 +147,12 @@ export default class BoardModel {
                         //     console.log(responseJson);
                         // });
                         break;
-                    case 403:
                     case 401:
                         this.eventBus.call('unauthorized');
+                        break;
+                    case 400:
+                    case 403:
+                        this.eventBus.call('goToBoards');
                         break;
                     case 500:
                         console.log('500');
@@ -156,9 +178,12 @@ export default class BoardModel {
                         console.log(responseJson);
                     });
                     break;
-                case 403:
                 case 401:
                     this.eventBus.call('unauthorized');
+                    break;
+                case 400:
+                case 403:
+                    this.eventBus.call('goToBoards');
                     break;
                 case 500:
                     console.log('500');
@@ -182,8 +207,25 @@ export default class BoardModel {
      * @return {Promise<void>}
      */
     async saveTask(data) {
-        await taskPut(data.boardId, data.oldColumnId, data.taskId, {cid: data.newColumnId, position: data.newTaskPos});
-        // TODO: check status
-        this.eventBus.call('getBoardData');
+        const response = await taskPut(data.boardId, data.oldColumnId, data.taskId,
+            {cid: data.newColumnId, position: data.newTaskPos});
+
+        switch (response.status) {
+            case 200:
+                this.eventBus.call('getBoardData');
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 403:
+                this.eventBus.call('goToBoards');
+                break;
+            case 400:
+            case 500:
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                break;
+        }
     }
 }
