@@ -27,6 +27,7 @@ export default class BoardController {
             'taskMoved',
 
             'unauthorized',
+            'goToBoards',
         ]);
 
         this.childController = null;
@@ -37,6 +38,7 @@ export default class BoardController {
         this.triggerTaskAndBoard = this.triggerTaskAndBoard.bind(this);
 
         this.eventBus.subscribe('unauthorized', () => router.go('/login'));
+        this.eventBus.subscribe('goToBoards', () => router.go('/boards'));
         this.eventBus.subscribe('openTaskSettings', (boardId, columnId, taskId) => {
             this.router.go(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
         });
@@ -56,9 +58,8 @@ export default class BoardController {
 
 
         this.view.render(dataFromUrl).then(() => {
-            this.childController = new TaskSettingsController(this.eventBus, boardId, columnId, taskId);
+            this.childController = new TaskSettingsController(this.eventBus, this.router, boardId, columnId, taskId);
             this.childController.view.render();
-        },
-        );
+        });
     }
 }

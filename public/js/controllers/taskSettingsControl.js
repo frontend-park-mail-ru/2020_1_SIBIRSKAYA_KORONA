@@ -13,11 +13,12 @@ export default class TaskSettingsController extends ControllerChainLink {
     /**
      * Task settings controller constructor
      * @param {EventBus} boardEventBus - event bus to communicate with board
+     * @param {Object} router - main router
      * @param {number} boardID - board id
      * @param {number} columnID - column id
      * @param {number} taskID - task id
      */
-    constructor(boardEventBus, boardID, columnID, taskID) {
+    constructor(boardEventBus, router, boardID, columnID, taskID) {
         const chainLinkSignalsArray = Object.values(ChainLinkSignals);
         const actualSignals = [
             'getTaskSettings',
@@ -31,6 +32,9 @@ export default class TaskSettingsController extends ControllerChainLink {
 
             'saveTaskSettings',
             'deleteTask',
+
+            'unauthorized',
+            'goToBoards',
         ];
 
         const eventBus = new EventBus(actualSignals.concat(chainLinkSignalsArray));
@@ -41,7 +45,7 @@ export default class TaskSettingsController extends ControllerChainLink {
             boardEventBus.call('closeTaskSettings');
         });
 
-
+        this.router =router;
         this.view = new TaskSettingsView(this.eventBus);
         this.model = new TaskSettingsModel(this.eventBus, boardID, columnID, taskID);
 
@@ -50,5 +54,8 @@ export default class TaskSettingsController extends ControllerChainLink {
             this.setChildEventBus(childController.eventBus);
             childController.view.render(button);
         });
+
+        this.eventBus.subscribe('unauthorized', () => router.go('/login'));
+        this.eventBus.subscribe('goToBoards', () => router.go('/boards'));
     }
 }
