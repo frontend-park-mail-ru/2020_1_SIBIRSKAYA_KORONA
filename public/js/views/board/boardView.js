@@ -250,7 +250,7 @@ export default class BoardView extends BaseView {
                 });
                 console.log(tasks);
                 const newTaskRealPos = event.pageY;
-                let newTaskPos;
+                let newTaskPos = 1;
                 for (let i = 0; i !== tasks.length; i++) {
                     if (tasks[i].realPos > newTaskRealPos) {
                         newTaskPos = (i === 0) ? tasks[i].pos / 2 : (tasks[i].pos + tasks[i - 1].pos) / 2;
