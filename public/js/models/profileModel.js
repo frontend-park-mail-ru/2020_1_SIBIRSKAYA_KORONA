@@ -112,15 +112,15 @@ export default class JoinModel {
                 case 200: // - OK (успешный запрос)
                     this.getUserData();
                     break;
-                case 403: // - Unauthorized (В запросе отсутствует кука)
-                    this.eventBus.call('invalidCookie');
-                    break;
-                case 401: // - (Неверный пароль)
-                    this.eventBus.call('wrongPassword');
-                    this.eventBus.call('userInputError', {show: true, field: 'inputOldPassword'});
-                    break;
                 case 400: // - (Невалидное тело запроса с информацией для обновления)
                     console.log('Bad request');
+                    break;
+                case 401: // (В запросе отсутствует кука)
+                    this.eventBus.call('invalidCookie');
+                    break;
+                case 412: // - (Неверный пароль)
+                    this.eventBus.call('wrongPassword');
+                    this.eventBus.call('userInputError', {show: true, field: 'inputOldPassword'});
                     break;
                 default:
                     console.log('Бекендер молодец!!!');

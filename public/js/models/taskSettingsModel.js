@@ -30,9 +30,31 @@ export default class TaskSettingsModel {
      * Returns task information
      */
     async getTaskSettings() {
-        // TODO(Alexandr): add response status checks
         // TODO(Alexandr): убрать заглушки на лейюлы и участников
-        const taskData = {
+
+        const getTaskDataResponse = await taskGet(this.boardId, this.columnId, this.taskId);
+        switch (getTaskDataResponse.status) {
+            case 200:
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                return;
+            case 403:
+                this.eventBus.call('goToBoards');
+                return;
+            case 400:
+            case 500:
+                this.eventBus.call('closeSelf');
+                return;
+            default:
+                console.log('Бекендер молодец!!!');
+                this.eventBus.call('goToBoards');
+                return;
+        }
+
+        const actualTaskData = (await getTaskDataResponse.json())['task'];
+
+        const defaultTaskData = {
             title: 'UNKNOWN',
             description: 'UNKNOWN',
             members: [
@@ -58,11 +80,7 @@ export default class TaskSettingsModel {
                 },
             ],
         };
-
-        const getTaskDataResponse = await taskGet(this.boardId, this.columnId, this.taskId);
-        const actualTaskData = (await getTaskDataResponse.json())['task'];
-
-        this.eventBus.call('gotTaskSettings', {...taskData, ...actualTaskData});
+        this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...actualTaskData});
     }
 
     /**
@@ -71,9 +89,24 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async saveTaskSettings(taskData) {
-        await taskPut(this.boardId, this.columnId, this.taskId, taskData);
-        // TODO(Alexandr): check response status\
-        this.eventBus.call('closeSelf');
+        const response = await taskPut(this.boardId, this.columnId, this.taskId, taskData);
+        switch (response.status) {
+            case 200:
+                this.eventBus.call('closeSelf');
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 403:
+                this.eventBus.call('goToBoards');
+                break;
+            case 400:
+            case 500:
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                break;
+        }
     }
 
     /**
@@ -81,8 +114,23 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async deleteTask() {
-        await taskDelete(this.boardId, this.columnId, this.taskId);
-        // TODO(Alexandr): check response status
-        this.eventBus.call('closeSelf');
+        const response = await taskDelete(this.boardId, this.columnId, this.taskId);
+        switch (response.status) {
+            case 200:
+                this.eventBus.call('closeSelf');
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 403:
+                this.eventBus.call('goToBoards');
+                break;
+            case 400:
+            case 500:
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                break;
+        }
     }
 }
