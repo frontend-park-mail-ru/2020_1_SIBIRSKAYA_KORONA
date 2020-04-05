@@ -19,6 +19,12 @@ export default class BoardView extends BaseView {
         this.renderBoard = this.renderBoard.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
 
+        this.handleTaskDragStart = this.handleTaskDragStart.bind(this);
+        this.handleTaskDrag = this.handleTaskDrag.bind(this);
+        this.handleTaskDragEnd = this.handleTaskDragEnd.bind(this);
+        this.preventDefault = this.preventDefault.bind(this);
+
+
         eventBus.subscribe('gotBoardData', this.renderBoard);
     }
 
@@ -37,6 +43,12 @@ export default class BoardView extends BaseView {
      * @param {Object} boardData - board data to render
      */
     renderBoard(boardData) {
+        this.lastColumnIndex = boardData.columns.length - 1;
+        this.lastTaskInColumnIndex = new Array(boardData.columns.length);
+        boardData.columns.forEach((column, index) => {
+            this.lastTaskInColumnIndex[index] = column.tasks.length;
+        });
+
         this.root.innerHTML = window.fest['js/views/board/board.tmpl'](boardData);
         this.addEventListeners();
     }
@@ -45,17 +57,21 @@ export default class BoardView extends BaseView {
      * Set handlers for task, labels, etc.
      */
     addEventListeners() {
+        const tasks = [...document.getElementsByClassName('js-taskSettings')];
         const buttons = [
             ...document.getElementsByClassName('js-openBoardSettings'),
             ...document.getElementsByClassName('js-addNewMember'),
             ...document.getElementsByClassName('js-addNewColumn'),
             ...document.getElementsByClassName('js-openColumnSettings'),
-            ...document.getElementsByClassName('js-openTaskSettings'),
             ...document.getElementsByClassName('js-addNewTask'),
         ];
 
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
+        });
+
+        tasks.forEach((task) => {
+            task.addEventListener('mousedown', this.handleTaskDragStart);
         });
     }
 
@@ -66,7 +82,7 @@ export default class BoardView extends BaseView {
     handleButtonClick(event) {
         const target = event.currentTarget;
         switch (true) {
-            case target.classList.contains('js-openTaskSettings'):
+            case target.classList.contains('js-taskSettings'):
                 this.eventBus.call('openTaskSettings', this.boardId, target.dataset.taskId);
                 break;
 
@@ -98,6 +114,7 @@ export default class BoardView extends BaseView {
      */
     showNewTaskForm(node) {
         const columnID = node.dataset.columnId;
+        const columnPosition = node.dataset.position;
         node.classList.remove('task-list-add-task-button');
         node.removeEventListener('click', this.handleButtonClick);
         node.innerHTML = window.fest['js/views/board/addTaskForm.tmpl']({
@@ -113,6 +130,7 @@ export default class BoardView extends BaseView {
                     boardId: this.boardId,
                     columnID: columnID,
                     taskTitle: newTaskInput.value,
+                    taskPosition: this.lastTaskInColumnIndex[columnPosition] + 1,
                 });
             }
         });
@@ -141,6 +159,7 @@ export default class BoardView extends BaseView {
                 this.eventBus.call('addNewColumn', {
                     boardId: this.boardId,
                     columnTitle: newColumnTitleInput.value,
+                    columnPosition: this.lastColumnIndex + 1,
                 });
             }
         });
@@ -151,5 +170,102 @@ export default class BoardView extends BaseView {
             node.addEventListener('click', this.handleButtonClick);
             node.innerHTML = window.fest['js/views/board/addColumnForm.tmpl']({form: false});
         });
+    }
+
+    /**
+     * Is used to cancel text selection
+     * @param {MouseEvent} event
+     */
+    preventDefault(event) {
+        event.preventDefault();
+    }
+
+    /**
+     * Handle mouse down on task
+     * @param {MouseEvent} event
+     */
+    handleTaskDragStart(event) {
+        const box = event.currentTarget.getBoundingClientRect();
+        this.dragTask = {
+            element: event.currentTarget,
+            shift: {
+                x: event.pageX - box.left + pageXOffset,
+                y: event.pageY - box.top + pageYOffset,
+            },
+            mouseDown: {
+                x: event.pageX,
+                y: event.pageY,
+            },
+        };
+        document.addEventListener('mousemove', this.handleTaskDrag);
+        document.addEventListener('mouseup', this.handleTaskDragEnd);
+        document.addEventListener('selectstart', this.preventDefault);
+    }
+
+    /**
+     * Handle task move
+     * @param {MouseEvent} event
+     */
+    handleTaskDrag(event) {
+        this.dragTask.element.removeEventListener('click', this.handleButtonClick);
+        this.dragTask.element.style.background = '#d4d5fa';
+        this.dragTask.element.style.position = 'absolute';
+        this.dragTask.element.style.zIndex = '10';
+        this.dragTask.element.style.top = Math.round(event.pageY - this.dragTask.shift.y) + 'px';
+        this.dragTask.element.style.left = Math.round(event.pageX - this.dragTask.shift.x) + 'px';
+    }
+
+    /**
+     * Handle task move end.
+     * Opens triggers eventBus to open task settings or to change task position/column
+     * @param {MouseEvent} event
+     */
+    handleTaskDragEnd(event) {
+        document.removeEventListener('mousemove', this.handleTaskDrag);
+        document.removeEventListener('mouseup', this.handleTaskDragEnd);
+        document.removeEventListener('selectstart', this.preventDefault);
+        if (event.pageX === this.dragTask.mouseDown.x && event.pageY === this.dragTask.mouseDown.y) {
+            this.eventBus.call('openTaskSettings', this.boardId, this.dragTask.element.dataset.taskId);
+        } else {
+            this.dragTask.element.style.display = 'none';
+            const elem = document.elementFromPoint(event.clientX, event.clientY);
+            this.dragTask.element.style.display = '';
+            if (elem && elem.closest('.board-column')) {
+                const newColumn = elem.closest('.board-column');
+                const newColumnId = newColumn.dataset.columnId;
+                const oldColumnId = this.dragTask.element.closest('.board-column').dataset.columnId;
+                const taskList = newColumn.lastChild;
+                console.log(taskList);
+                const tasks = [];
+                console.log(taskList.childNodes);
+                [...taskList.childNodes].forEach((node) => {
+                    if (node.classList.contains('task-mini')) {
+                        const boundingRect = node.getBoundingClientRect();
+                        const verticalPosCenter = boundingRect.y + (boundingRect.height / 2);
+                        tasks.push({
+                            realPos: verticalPosCenter,
+                            pos: Number(node.dataset.taskPosition),
+                        });
+                    }
+                });
+                console.log(tasks);
+                const newTaskRealPos = event.pageY;
+                let newTaskPos;
+                for (let i = 0; i !== tasks.length; i++) {
+                    if (tasks[i].realPos > newTaskRealPos) {
+                        newTaskPos = (i === 0) ? tasks[i].pos / 2 : (tasks[i].pos + tasks[i - 1].pos) / 2;
+                        break;
+                    }
+                    if (i === tasks.length - 1) {
+                        newTaskPos = tasks[i].pos + 1;
+                    }
+                }
+                console.log('newTaskPos', newTaskPos);
+                console.log('newColumnId', newColumnId);
+                console.log('oldColumnId', oldColumnId);
+            }
+        }
+        this.dragTask.element.style = null;
+        this.dragTask = {};
     }
 }

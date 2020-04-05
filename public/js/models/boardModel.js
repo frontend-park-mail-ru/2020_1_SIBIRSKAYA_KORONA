@@ -79,39 +79,35 @@ export default class BoardModel {
 
             boardData['columns'][i]['tasks'] = columnTasks;
         }
-
-
-        console.log(boardData);
-
         this.eventBus.call('gotBoardData', boardData);
     }
 
     /**
-     * Add task in fake local storage
-     * TODO call API
+     * Call api to add task
      * @param {object} data - fields: boardId, columnID, taskTitle
      */
     addTask(data) {
         console.log(data);
-        tasksPost(data.boardId, data.columnID, {title: data.taskTitle}).then((response) => {
-            switch (response.status) {
-                case 200: // - OK (Валидный запрос данных пользователя)
-                    this.eventBus.call('getBoardData', data.boardId);
-                    response.json().then((responseJson) => {
-                        console.log(responseJson);
-                    });
-                    break;
-                case 403:
-                case 401:
-                    this.eventBus.call('unauthorized');
-                    break;
-                case 500:
-                    console.log('500');
-                    break;
-                default:
-                    console.log('Бекендер молодец!!!');
-            }
-        });
+        tasksPost(data.boardId, data.columnID, {title: data.taskTitle, position: data.taskPosition})
+            .then((response) => {
+                switch (response.status) {
+                    case 200: // - OK (Валидный запрос данных пользователя)
+                        this.eventBus.call('getBoardData', data.boardId);
+                        // response.json().then((responseJson) => {
+                        //     console.log(responseJson);
+                        // });
+                        break;
+                    case 403:
+                    case 401:
+                        this.eventBus.call('unauthorized');
+                        break;
+                    case 500:
+                        console.log('500');
+                        break;
+                    default:
+                        console.log('Бекендер молодец!!!');
+                }
+            });
     }
 
     /**
@@ -121,7 +117,7 @@ export default class BoardModel {
      */
     addColumn(data) {
         console.log(data);
-        columnsPost(data.boardId, data.columnTitle, Math.random()).then((response) => {
+        columnsPost(data.boardId, data.columnTitle, data.columnPosition).then((response) => {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
                     this.eventBus.call('getBoardData', data.boardId);

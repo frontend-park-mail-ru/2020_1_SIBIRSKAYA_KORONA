@@ -22,8 +22,9 @@
                 </div>
             </div>
             <div class="board-header-right">
-                    <div class="board-header-right__button--primary js-openBoardSettings"
-                         id="boardSettingsButton">Board settings</div>
+                <div class="board-header-right__button--primary js-openBoardSettings"
+                     id="boardSettingsButton">Board settings
+                </div>
             </div>
         </div>
 
@@ -40,9 +41,12 @@
                              data-column-id="{column.id}"/>
                     </div>
 
-                    <div class="task-list">
+                    <div class="task-list" data-column-id="{column.id}">
                         <fest:for iterate="column.tasks" index="j" value="task">
-                            <div class="task-mini js-openTaskSettings" data-task-id="{task.id}" data-task-url="{task.url}">
+                            <div class="task-mini js-taskSettings"
+                                 data-task-id="{task.id}"
+                                 data-task-url="{task.url}"
+                                 data-task-position="{task.position}">
                                 <div class="task-label-list">
                                     <fest:for iterate="task.labels" index="k" value="label">
                                         <div class="task-label-list__label-mini--color-{label.color}">
@@ -68,7 +72,9 @@
                                 </div>
                             </div>
                         </fest:for>
-                        <div class="task-list-add-task-button js-addNewTask" data-column-id="{column.id}">
+                        <div class="task-list-add-task-button js-addNewTask"
+                             data-column-id="{column.id}"
+                             data-position="{column.position}">
                             + Add new task
                         </div>
                     </div>
