@@ -73,8 +73,6 @@ export default class HeaderModel {
                         );
                     break;
                 case 401:
-                case 403: // - Forbidden (В запросе на данные отсутствует кука)
-                case 404: // - Not Found (Пользователя по куке не нашли)
                 case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)
                     this.eventBus.call('logout');
                     break;
