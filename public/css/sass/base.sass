@@ -79,19 +79,9 @@ a:hover
     justify-content: space-between
     align-items: center
 
-input
-    letter-spacing: 2px
-    font-size: 16px
-    width: 100%
-    padding: 0 0 10px 0
-    border: none
-    border-bottom: 2px solid #cac6c6
-    outline: none
-    transition: 0.3s
 
 textarea
     resize: none
-    width: 100%
 
 input[type=file]
     width: 0.1px
@@ -163,17 +153,34 @@ input[type=file]
     word-spacing: 5px
 
 .form-input
+    letter-spacing: 2px
+    font-size: 16px
+    width: 100%
+    padding: 0 0 10px 0
+    border: none
+    border-bottom: 2px solid #cac6c6
+    outline: none
+    transition: 0.3s
     background-color: transparent
-    margin: 0 auto 30px
+    &:focus
+        padding-left: 5%
+        width: 95%
+        border-color: #1a73a8
 
-.form-input:focus
-    margin: 0 auto 30px
-    padding-left: 5%
-    width: 95%
-    border-color: #1a73a8
+.form-textarea
+    letter-spacing: 2px
+    font-size: 16px
+    outline: none
+    transition: 0.3s
+    padding-top: 10px
+    background-color: transparent
+    border: 2px solid #cac6c6
+    width: 99%
+    &:focus
+        padding-left: 5%
+        width: 94%
+        border-color: #1a73a8
 
-.form-block
-    margin-bottom: 15px
 
 .group-title
     font-size: 20pt
@@ -243,6 +250,7 @@ input[type=file]
 
 .container-2cols
     display: flex
+    justify-content: space-between
     flex-flow: wrap-reverse
 
 .container-centered-col

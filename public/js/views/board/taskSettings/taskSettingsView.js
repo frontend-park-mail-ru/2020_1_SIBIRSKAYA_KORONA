@@ -45,7 +45,7 @@ export default class TaskSettingsView extends BaseView {
     addEventListeners() {
         const taskSettings = document.getElementById('popover-block');
 
-        const popoverWindow = taskSettings.getElementsByClassName('settings-form')[0];
+        const popoverWindow = taskSettings.getElementsByClassName('task')[0];
         popoverWindow.addEventListener('click', (event) => {
             event.stopPropagation();
             this.eventBus.call(ChainLinkSignals.closeLastChainLink);

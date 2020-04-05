@@ -89,6 +89,7 @@
         @extend .form-input-label
 
     &__input
+        margin: 0 auto 30px
         @extend .form-input
 
     &-controls
@@ -171,6 +172,7 @@
         @extend .form-input-label
 
     &__input
+        margin: 0 auto 30px
         @extend .form-input
 
     &-controls
@@ -192,6 +194,7 @@
     margin-bottom: 10px
     background: #d4d5fa8a
     cursor: pointer
+    box-shadow:  0 3px 5px -5px black
 
     &:hover
         transition: 0.2s
@@ -265,11 +268,55 @@
 
 /*       TASK SETTINGS    */
 
-.settings-form
+// .settings-form
+.task
+    @extend .form
     display: flex
     flex-direction: column
-    width: 60%
+    width: 700px
     box-shadow: none
+    &-title
+        &__text
+            @extend .title
+            margin-left: 20px
+            font-size: 20pt
+
+        &__hr--width-2
+            @extend .hr-width-2
+
+    &-settings
+        margin: 0 auto 10px
+        width: 660px
+        &-members
+            @extend .member-container
+            padding-top: 4px
+            &__member
+                @extend .board-member
+            &__add-button
+                background: #d4d5fa8a
+                transition: 0.3s
+                color: #000000
+                &:hover
+                    background: #d4d5fafa
+        &-controls
+            margin-top: 20px
+            @extend .controls-panel
+            &__button
+                &--primary
+                    @extend .button--primary
+
+                &--danger
+                    @extend .button--danger
+
+        &__error
+            @extend .input-error
+        &__label
+            margin-top: 30px
+            @extend .form-input-label
+        &__input
+            @extend .form-input
+        &__textarea
+             @extend .form-textarea
 
 /*       END TASK       */
 
@@ -372,9 +419,8 @@
 .task-add-label
     background: #d4d5fa8a
     font-size: 16pt
-
-.task-add-label:hover
-    background: #d4d5fafa
+    &:hover
+        background: #d4d5fafa
 
 /*       END LABEL          */
 
