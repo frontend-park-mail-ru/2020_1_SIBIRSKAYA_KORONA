@@ -1,0 +1,45 @@
+.profile
+    @extend .form
+    padding: 32px 32px 5px 32px
+    margin: 30px 0
+
+    &-settings
+        margin: 15px
+        width: 330px
+
+        &-title
+            margin-top: 20px
+            @extend .group-title
+
+            &__text
+                @extend .title
+
+            &__hr--width-2
+                @extend .hr-width-2
+
+        &__error
+            @extend .input-error
+
+        &__label
+            @extend .form-input-label
+
+        &__input
+            margin: 0 auto 30px
+            @extend .form-input
+
+        &__button
+            &--primary
+                @extend .button--primary
+
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
+
+        &__avatar--round
+            @extend .avatar-round
+            width: 260px
+            height: 260px
+            margin: 10px 0
+

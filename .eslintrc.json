@@ -1,8 +1,7 @@
 {
   "env": {
     "browser": true,
-    "node": true,
-    "es6": true
+    "node": true
   },
   "extends": [
     "google"
@@ -12,7 +11,7 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "rules": {

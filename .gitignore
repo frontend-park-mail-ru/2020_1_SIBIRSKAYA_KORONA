@@ -80,3 +80,7 @@ dist/
 *.tmpl.js
 
 public/img/avatar
+
+# We use sass
+*.css
+*.css.map
