@@ -1,0 +1,60 @@
+.main-header
+    background: #18255f
+    padding: 10px 0
+    @extend .header
+
+    &-left
+        @extend .header-block-left
+
+        &__button--primary
+            @extend .header__button--primary
+
+        &__button--secondary
+            @extend .header__button--secondary
+
+        &__button--danger
+            @extend .header__button--danger
+
+    &-center
+        @extend .header-block-center
+
+        &__title
+            @extend .title
+            margin-left: 10px
+            font-family: 'Scada', sans-serif
+            font-weight: bold
+            color: white
+            font-size: 30pt
+            letter-spacing: 5px
+
+        &__logo
+            height: 35px
+            width: 35px
+
+    &-right
+        @extend .header-block-right
+
+        &__button--primary
+            @extend .header__button--primary
+
+        &__button--secondary
+            @extend .header__button--secondary
+
+        &__button--danger
+            @extend .header__button--danger
+
+        &__nickname
+            @extend .title
+            color: white
+            font-size: 14pt
+            margin: 0 10px
+
+        &__avatar
+            height: 35px
+            width: 35px
+            margin: 0 10px
+            cursor: pointer
+
+            &--round
+                @extend .main-header-right__avatar
+                @extend .avatar-round

@@ -1,0 +1,355 @@
+@import 'reset'
+@import 'header'
+@import 'auth'
+@import 'board'
+@import 'boards'
+@import 'profile'
+
+/*   COMMON   */
+body
+    font-family: 'Fox', sans-serif
+
+a
+    text-decoration: none
+    transition: 0.2s
+
+a:hover
+    text-decoration: underline
+
+.link-none, .link-none:hover, .link-none:focus
+    text-decoration: none
+
+#root
+    display: flex
+    flex-direction: column
+    height: 100vh
+
+#application
+    display: flex
+    flex-direction: column
+    flex-grow: 1
+
+.button
+    display: flex
+    align-items: center
+    height: 35px
+    width: fit-content
+    padding: 0 10px
+    border: 1px solid transparent
+    border-radius: 7px
+    cursor: pointer
+    font-size: 14pt
+    transition: 0.2s
+
+    &--primary
+        @extend .button
+        color: #28a745
+        background-color: transparent
+        background-image: none
+        box-shadow: 0 0 1px 1px #28a745
+
+        &:hover
+            background-color: #28a745
+            color: white
+
+    &--secondary
+        @extend .button
+        color: #007bff
+        background-color: transparent
+        background-image: none
+        box-shadow: 0 0 1px 1px #007bff
+
+        &:hover
+            background-color: #007bff
+            color: white
+
+    &--danger
+        @extend .button
+        color: #dc3545
+        background-color: transparent
+        background-image: none
+        box-shadow: 0 0 1px 1px #dc3545
+
+        &:hover
+            background-color: #dc3545
+            color: white
+
+.controls-panel
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+
+textarea
+    resize: none
+
+input[type=file]
+    width: 0.1px
+    height: 0.1px
+    opacity: 0
+    overflow: hidden
+    position: absolute
+    z-index: -1
+
+
+.input-error
+    color: red
+    text-align: center
+    margin-bottom: 10px
+
+.title
+    font-weight: 800
+
+.title-big
+    font-size: 20pt
+    font-weight: bold
+    margin-bottom: 5px
+
+.popup
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    display: flex
+    justify-content: center
+    align-items: center
+    z-index: 10
+
+.popover
+    width: 250px
+
+
+#popup-block
+    position: absolute
+    z-index: 100
+
+
+#popover-block
+    position: absolute
+    z-index: 10
+
+.window-overlay
+    position: absolute
+    background: #00000080
+    width: 100vw
+    height: 100vh
+
+
+.avatar-round
+    border-radius: 50%
+
+.form
+    border-radius: 10px
+    box-shadow: 0 4px 16px #ccc
+    padding: 32px
+    background-color: #f8f8ff
+
+.form-input-label
+    margin-bottom: 10px
+    font-size: 11pt
+    font-weight: bold
+    letter-spacing: 1px
+    word-spacing: 5px
+
+.form-input
+    letter-spacing: 2px
+    font-size: 16px
+    width: 100%
+    padding: 0 0 10px 0
+    border: none
+    border-bottom: 2px solid #cac6c6
+    outline: none
+    transition: 0.3s
+    background-color: transparent
+    &:focus
+        padding-left: 5%
+        width: 95%
+        border-color: #1a73a8
+
+.form-textarea
+    letter-spacing: 2px
+    font-size: 16px
+    outline: none
+    transition: 0.3s
+    padding-top: 10px
+    background-color: transparent
+    border: 2px solid #cac6c6
+    width: 99%
+    &:focus
+        padding-left: 5%
+        width: 94%
+        border-color: #1a73a8
+
+
+.group-title
+    font-size: 20pt
+    font-weight: 700
+
+.input-group
+    margin: 30px 15px
+
+.hr-width-2
+    height: 2px
+    width: 100%
+    background-color: #4d4d4d
+    margin: 10px 0
+
+.header
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: space-between
+    height: fit-content
+    max-height: 10vh
+
+.header-block-left
+    min-width: 33%
+
+.header-block-center
+    display: flex
+    justify-content: center
+    align-items: center
+
+.header-block-right
+    min-width: 33%
+    display: flex
+    align-items: center
+    place-content: flex-end
+
+.header__button
+    margin: 0 10px
+
+    &--primary
+        @extend .header__button
+        @extend .button--primary
+
+    &--secondary
+        @extend .header__button
+        @extend .button--secondary
+
+    &--danger
+        @extend .header__button
+        @extend .button--danger
+
+
+.container-width-1200
+    width: 100%
+    max-width: 1200px
+    margin: 0 auto
+
+.container-width-1000
+    width: 100%
+    max-width: 1000px
+    margin: 0 auto
+
+.container-width-800
+    width: 100%
+    max-width: 800px
+    margin: 0 auto
+
+.container-2cols
+    display: flex
+    justify-content: space-between
+    flex-flow: wrap-reverse
+
+.container-centered-col
+    display: flex
+    flex-direction: column
+    align-items: center
+
+.hidden
+    opacity: 0
+/*     END COMMON     */
+
+
+
+/*       LANDING       */
+.top-pic
+    display: flex
+    flex-direction: column
+    flex-flow: wrap
+    justify-content: center
+    position: relative
+    height: 100vh
+
+
+.top-pic::after
+    content: ""
+    /*background: url(../img/work_hard.png) no-repeat top*/
+    background-size: cover
+    opacity: 0.2
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    position: absolute
+    z-index: -1
+
+
+.landing-title
+    font-size: 72px
+    word-spacing: 30px
+    line-height: 90px
+    text-transform: uppercase
+    letter-spacing: 10px
+    color: #000000
+    text-align: center
+    text-shadow: 0 0 3px palevioletred
+
+
+.landing-description
+    width: 50%
+    border-radius: 17px
+    background-color: #790affa6
+    box-shadow: 0 7px 15px #f9cbad8f
+    padding: 10px
+    margin: 35px auto 0 auto
+
+
+.promo
+    font-size: 20pt
+    color: white
+    margin: 10px
+
+
+.start-title
+    font-size: 25pt
+    text-align: center
+    color: white
+
+
+.link-group
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    margin: 15px 20%
+
+
+.landing-auth
+    margin: 0 25px
+/*      END LANDING      */
+
+/*       SCROLLBARS      */
+::-webkit-scrollbar
+    width: 6px
+    height: 6px
+
+
+::-webkit-scrollbar-track
+    background-color: rgba(0, 0, 0, .1)
+    border-radius: 5px
+
+
+::-webkit-scrollbar-track:hover
+    background-color: rgba(0, 0, 0, .15)
+
+
+::-webkit-scrollbar-thumb
+    background-color: rgba(0, 0, 0, .2)
+    border-radius: 5px
+
+
+::-webkit-scrollbar-thumb:hover
+    background-color: rgba(0, 0, 0, .3)
+/*      END SCROLLBARS     */

@@ -1,0 +1,24 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <fest:choose>
+        <fest:when test="data.form===true">
+            <div class="group-board-create">
+                <div class="group-board-create__label">
+                    Название доски:
+                </div>
+                <input id="inputNewBoardTitle" type="text" class="group-board-create__input" placeholder="Новая доска"
+                       autocomplete="off"/>
+                <div class="group-board-create-controls">
+                    <div id="submitAddBoard" class="group-board-create-controls__button--secondary">Добавить</div>
+                    <div id="closeForm" class="group-board-create-controls__button--danger">Закрыть</div>
+                </div>
+            </div>
+        </fest:when>
+
+        <fest:otherwise>
+            <div class="group-fake-board__text">
+                Добавить новую доску
+            </div>
+            <img class="group-fake-board__icon" src="/img/plus_icon.svg"/>
+        </fest:otherwise>
+    </fest:choose>
+</fest:template>

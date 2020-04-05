@@ -46,9 +46,11 @@ export default class HeaderModel {
         sessionDelete().then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                case 303: // - нет куки (Уже разлогинен)
+                case 403: // - Forbidden (В запросе куки нет)
                     this.onLogout();
                     this.eventBus.call('redirectLogin');
+                    break;
+                case 500: // - Internal Server Error (На сервере ошибка удаления куки из хранилища)
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -63,17 +65,20 @@ export default class HeaderModel {
         settingsGet().then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                    const data = response.body.user;
-                    this.onLogin(data);
+                    response.json()
+                        .then((responseJson) => {
+                            const data = responseJson.user;
+                            this.onLogin(data);
+                        },
+                        );
                     break;
-                case 303: // - SeeOther (не авторизован, случай без query string)
+                case 401:
+                case 403: // - Forbidden (В запросе на данные отсутствует кука)
+                case 404: // - Not Found (Пользователя по куке не нашли)
+                case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)
                     this.eventBus.call('logout');
                     break;
-                case 400: // - BadRequest (неверный запрос)
-                    console.log('BadRequest');
-                    break;
-                case 404: // - NotFound (нет пользвателя с указанным ником)
-                    break;
+
                 default:
                     console.log('Бекендер молодец!!!');
             }

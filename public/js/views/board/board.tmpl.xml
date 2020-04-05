@@ -1,0 +1,96 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
+    <div class="board" data-board-id="board.id">
+        <div class="board-header">
+            <div class="board-header-left">
+                <div class="board-header-left__title">
+                    <fest:value>board.title</fest:value>
+                </div>
+            </div>
+            <div class="board-header-center">
+                <div class="board-header-center-members">
+                    <fest:for iterate="board.members" index="i" value="member">
+                        <a href="{member.url}">
+                            <img class="board-header-center-members__member"
+                                 src="{member.avatar}"
+                                 alt="{member.nickname}"
+                                 title="{member.nickname}"/>
+                        </a>
+                    </fest:for>
+                </div>
+                <div class="board-header-center__button--primary js-addNewMember"
+                     id="inviteNewMemberButton">Invite
+                </div>
+            </div>
+            <div class="board-header-right">
+                <div class="board-header-right__button--primary js-openBoardSettings"
+                     id="boardSettingsButton">Board settings
+                </div>
+            </div>
+        </div>
+
+        <div class="column-list">
+            <fest:for iterate="board.columns" index="i" value="column">
+                <div class="board-column" data-column-id="{column.id}">
+                    <div class="board-column-header">
+                        <div class="board-column-header__title">
+                            <fest:value>
+                                column.title
+                            </fest:value>
+                        </div>
+                        <div class="board-column-header__settings-button js-openColumnSettings"
+                             data-column-id="{column.id}"/>
+                    </div>
+
+                    <div class="task-list" data-column-id="{column.id}">
+                        <fest:for iterate="column.tasks" index="j" value="task">
+                            <div class="task-mini js-taskSettings"
+                            	 data-column-id="{column.id}"
+                                 data-task-id="{task.id}"
+                                 data-task-url="{task.url}"
+                                 data-task-position="{task.position}">
+                                <div class="task-label-list">
+                                    <fest:for iterate="task.labels" index="k" value="label">
+                                        <div class="task-label-list__label-mini--color-{label.color}">
+                                            <fest:value>
+                                                label.title
+                                            </fest:value>
+                                        </div>
+                                    </fest:for>
+                                </div>
+                                <div class="task-mini__description">
+                                    <fest:value>
+                                        task.title
+                                    </fest:value>
+                                </div>
+                                <div class="task-mini-members">
+                                    <fest:for iterate="task.members" index="k" value="taskMember">
+                                        <a href="{taskMember.url}">
+                                            <img class="task-mini-members__member" src="{taskMember.avatar}"
+                                                 alt="{taskMember.nickname}"
+                                                 title="{taskMember.nickname}"/>
+                                        </a>
+                                    </fest:for>
+                                </div>
+                            </div>
+                        </fest:for>
+                        <div class="task-list-add-task-button js-addNewTask"
+                             data-column-id="{column.id}"
+                             data-position="{column.position}">
+                            + Add new task
+                        </div>
+                    </div>
+                </div>
+            </fest:for>
+
+            <div class="column-list-add-column-button js-addNewColumn" id="addNewColumnButton">
+                <div class="column-list-add-column-button-header">
+                    <div class="column-list-add-column-button-header__title">
+                        + Add new column
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popup-block"/>
+    <div id="popover-block"/>
+</fest:template>

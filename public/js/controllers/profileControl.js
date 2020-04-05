@@ -22,10 +22,10 @@ export default class ProfileController {
             'userInput',
             'userInputError',
             'wrongPassword',
-            'unauthorized', // for global eventBus
+            'invalidCookie', // for global eventBus
             'userDataChanged', // for global eventBus
         ]);
-        this.eventBus.subscribe('unauthorized', () => {
+        this.eventBus.subscribe('invalidCookie', () => {
             router.go('/login');
             globalEventBus.call('logout');
         });
