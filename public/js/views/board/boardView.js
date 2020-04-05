@@ -67,7 +67,7 @@ export default class BoardView extends BaseView {
         const target = event.currentTarget;
         switch (true) {
             case target.classList.contains('js-openTaskSettings'):
-                this.eventBus.call('openTaskSettings', this.boardId, target.dataset.taskId);
+                this.eventBus.call('openTaskSettings', this.boardId, target.dataset.columnId, target.dataset.taskId);
                 break;
 
             case target.classList.contains('js-addNewTask'):

@@ -1,4 +1,4 @@
-import {} from '../libs/apiService.js';
+import {taskPut, taskGet} from '../libs/apiService.js';
 
 /**
  * Task settings model
@@ -7,11 +7,15 @@ export default class TaskSettingsModel {
     /**
      * Task settings model constructor
      * @param {Object} eventBus to share events with task settings view
-     * @param {number} taskId - task id
+     * @param {number} boardID - board id
+     * @param {number} columnID - column id
+     * @param {number} taskID - task id
      */
-    constructor(eventBus, taskId) {
+    constructor(eventBus, boardID, columnID, taskID) {
         this.eventBus = eventBus;
-        this.taskId = taskId;
+        this.boardId = boardID;
+        this.columnId = columnID;
+        this.taskId = taskID;
 
         this.getTaskSettings = this.getTaskSettings.bind(this);
         this.saveTaskSettings = this.saveTaskSettings.bind(this);
@@ -23,47 +27,49 @@ export default class TaskSettingsModel {
     /**
      * Returns task information
      */
-    getTaskSettings() {
-        // TODO(Alexandr): get task info with API
+    async getTaskSettings() {
         // TODO(Alexandr): add response status checks
+        // TODO(Alexandr): убрать заглушки на лейюлы и участников
         const taskData = {
-            column: {
-                title: 'COLUMN',
-            },
-            task: {
-                labels: [
-                    {
-                        title: 'label 1',
-                        color: 'red',
-                    },
-                    {
-                        title: 'label 2',
-                        color: 'darkblue',
-                    },
-                ],
-                description: 'My task description 1',
-                members: [
-                    {
-                        url: '/mem1',
-                        nickname: 'member 1',
-                        avatar: '/img/default_avatar.png',
-                    },
-                    {
-                        url: '/mem2',
-                        nickname: 'member 2',
-                        avatar: '/img/default_avatar.png',
-                    },
-                ],
-            },
+            title: 'UNKNOWN',
+            description: 'UNKNOWN',
+            members: [
+                {
+                    url: '/mem1',
+                    nickname: 'member 1',
+                    avatar: '/img/default_avatar.png',
+                },
+                {
+                    url: '/mem2',
+                    nickname: 'member 2',
+                    avatar: '/img/default_avatar.png',
+                },
+            ],
+            labels: [
+                {
+                    title: 'label 1',
+                    color: 'red',
+                },
+                {
+                    title: 'label 2',
+                    color: 'darkblue',
+                },
+            ],
         };
-        this.eventBus.call('gotTaskSettings', taskData);
+
+        const getTaskDataResponse = await taskGet(this.boardId, this.columnId, this.taskId);
+        const actualTaskData = (await getTaskDataResponse.json())['task'];
+
+        this.eventBus.call('gotTaskSettings', {...taskData, ...actualTaskData});
     }
 
     /**
      * Saves task information
+     * @param {Object} taskData
+     * @return {Promise<void>}
      */
-    saveTaskSettings() {
-        // TODO(Alexandr): save task info with API
-        // TODO(Alexandr): add response status checks
+    async saveTaskSettings(taskData) {
+        await taskPut(this.boardId, this.columnId, this.taskId, taskData);
+        // TODO(Alexandr): check response status
     }
 }

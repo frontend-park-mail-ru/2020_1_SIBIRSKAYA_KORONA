@@ -58,6 +58,16 @@ export default class TaskSettingsView extends BaseView {
             this.eventBus.call('openAddLabelPopup', event.target);
         });
 
+        const saveTaskButton = taskSettings.querySelector('.js-saveTask');
+        saveTaskButton.addEventListener('click', (event)=>{
+            event.stopPropagation();
+
+            const description = taskSettings.querySelector('#inputDescription').value;
+            const title = taskSettings.querySelector('#inputTitle').value;
+
+            this.eventBus.call('saveTaskSettings', {title, description});
+        });
+
         const windowOverlay = taskSettings.getElementsByClassName('window-overlay')[0];
         windowOverlay.addEventListener('click', (event) => {
             if (event.target === event.currentTarget) {

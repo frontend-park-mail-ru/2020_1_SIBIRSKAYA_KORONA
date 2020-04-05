@@ -74,7 +74,7 @@ export default class BoardModel {
                         avatar: '/img/default_avatar.png',
                     },
                 ];
-                task.url = `/boards/${boardId}/tasks/${task.id}`;
+                task.url = `/boards/${boardId}/columns/${task.cid}/tasks/${task.id}`;
             }
 
             boardData['columns'][i]['tasks'] = columnTasks;

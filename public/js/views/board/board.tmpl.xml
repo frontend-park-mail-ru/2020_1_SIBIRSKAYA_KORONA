@@ -42,7 +42,7 @@
 
                     <div class="task-list">
                         <fest:for iterate="column.tasks" index="j" value="task">
-                            <div class="task-mini js-openTaskSettings" data-task-id="{task.id}" data-task-url="{task.url}">
+                            <div class="task-mini js-openTaskSettings" data-column-id="{column.id}" data-task-id="{task.id}" data-task-url="{task.url}">
                                 <div class="task-label-list">
                                     <fest:for iterate="task.labels" index="k" value="label">
                                         <div class="task-label-list__label-mini--color-{label.color}">

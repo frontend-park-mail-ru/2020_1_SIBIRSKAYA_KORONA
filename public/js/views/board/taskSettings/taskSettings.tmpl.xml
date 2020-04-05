@@ -1,10 +1,10 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="task">
     <div class="window-overlay popup">
         <div class="task">
             <div class="task-title">
                 <div class="task-title__text">
                     <fest:value>
-                        data.title
+                        task.title
                     </fest:value>
                 </div>
                 <div class="task-title__hr--width-2"/>
@@ -15,7 +15,7 @@
                     <div>
                         <div class="task-settings__label">Участники</div>
                         <div class="task-settings-members">
-                            <fest:for iterate="data.task.members" index="i" value="member">
+                            <fest:for iterate="task.members" index="i" value="member">
                                 <a href="{member.url}">
                                     <img class="task-settings-members__member" src="{member.avatar}"
                                          alt="{member.nickname}"
@@ -28,7 +28,7 @@
                     <div>
                         <div class="task-settings__label">Метки</div>
                         <div class="task-label-list">
-                            <fest:for iterate="data.task.labels" index="i" value="label">
+                            <fest:for iterate="task.labels" index="i" value="label">
                                 <div class="task-label-list__label-mini--color-{label.color}">
                                     <fest:value>
                                         label.title
@@ -41,11 +41,11 @@
                 </div>
 
                 <div class="task-settings__label">Название</div>
-                    <input class="task-settings__input" type="text" id="inputName"
+                    <input class="task-settings__input" type="text" id="inputTitle"
                            autocomplete="off">
                         <fest:attributes>
                             <fest:attribute name="value">
-                                <fest:value>data.title</fest:value>
+                                <fest:value>task.title</fest:value>
                             </fest:attribute>
                         </fest:attributes>
                     </input>
@@ -53,15 +53,15 @@
                 <div class="task-settings__label">
                     Description
                 </div>
-                <textarea class="task-settings__textarea">
+                <textarea class="task-settings__textarea" id="inputDescription">
                     <fest:value>
-                        data.task.description
+                        task.description
                     </fest:value>
                 </textarea>
 
                 <div class="task-settings-controls">
-                    <div class="task-settings-controls__button--primary">Сохранить</div>
-                    <div class="task-settings-controls__button--danger">Удалить</div>
+                    <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
+                    <div class="task-settings-controls__button--danger js-deleteTask">Удалить</div>
                 </div>
             </div>
         </div>

@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     router.setRoute('^/join/?$', joinController.view.render);
     router.setRoute('^/boards/?$', boardsController.view.render);
     router.setRoute('^/boards/(?<boardId>\\d+)/?$', boardController.view.render);
-    router.setRoute('^/boards/(?<boardId>\\d+)/tasks/(?<taskId>\\d+)/?$', boardController.triggerTaskAndBoard);
+    router.setRoute('^/boards/(?<boardId>\\d+)/columns/(?<columnId>\\d+)/tasks/(?<taskId>\\d+)/?$',
+        boardController.triggerTaskAndBoard);
 
     headerController.view.render({});
     router.go(window.location.pathname);

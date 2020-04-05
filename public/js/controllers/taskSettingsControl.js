@@ -13,9 +13,11 @@ export default class TaskSettingsController extends ControllerChainLink {
     /**
      * Task settings controller constructor
      * @param {EventBus} boardEventBus - event bus to communicate with board
-     * @param {number} taskId - task id
+     * @param {number} boardID - board id
+     * @param {number} columnID - column id
+     * @param {number} taskID - task id
      */
-    constructor(boardEventBus, taskId) {
+    constructor(boardEventBus, boardID, columnID, taskID) {
         const chainLinkSignalsArray = Object.values(ChainLinkSignals);
         const actualSignals = [
             'getTaskSettings',
@@ -40,7 +42,7 @@ export default class TaskSettingsController extends ControllerChainLink {
 
 
         this.view = new TaskSettingsView(this.eventBus);
-        this.model = new TaskSettingsModel(this.eventBus, taskId);
+        this.model = new TaskSettingsModel(this.eventBus, boardID, columnID, taskID);
 
         this.eventBus.subscribe('openAddLabelPopup', (button) => {
             const childController = new AddLabelPopupController(this.eventBus);
