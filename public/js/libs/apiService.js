@@ -187,5 +187,5 @@ export const taskGet = (boardID, columnID, taskID) => {
  */
 export const taskPut = (boardID, columnID, taskID, task) => {
     const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}`, BACKEND_ADDRESS);
-    return fetchPut(apiUrl.href, task);
+    return fetchPut(apiUrl.href, JSON.stringify(task));
 };
