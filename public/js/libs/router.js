@@ -1,5 +1,6 @@
 /**
  * Application router
+ * Contains global event bus
  */
 export default class Router {
     /**
@@ -7,35 +8,51 @@ export default class Router {
      * @param {object} root - application's root element
      */
     constructor(root) {
-        this.root = root;
-        this.routeMap = new Map();
-        this.handleMouseClick = this.handleMouseClick.bind(this);
-
-        this.root.addEventListener('click', this.handleMouseClick);
+        this.routes = [];
+        root.addEventListener('click', this.handleMouseClick.bind(this));
+        window.addEventListener('popstate', (event) => {
+            const currentPath = window.location.pathname;
+            this.go(currentPath, false);
+        });
     }
 
     /**
      * Switch current route
-     * @param {string} route - route to go
-     * @param {...any} params - arguments to call with
+     * @param {string} URL - URL to go
+     * @param {boolean?} pushState - Need to push state or not.
+     * No pushState is necessary when user go back in history. Default set to true.
      */
-    go(route, ...params) {
-        window.history.replaceState({}, '', route);
-        if (this.routeMap.has(route)) {
-            this.routeMap.get(route)(...params);
-        } else {
-            this.root.innerText = 'PAGE NOT FOUND';
+    go(URL, pushState = true) {
+        const oldURL = window.history.state && window.history.state.url;
+
+        let routeNotFound = true;
+        for (const route of this.routes) {
+            if (route.regExp.test(URL)) {
+                const parsedURL = route.regExp.exec(URL);
+                route.handler(parsedURL.groups);
+                routeNotFound = false;
+                break;
+            }
+        }
+        if (routeNotFound) {
+            document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
+        }
+        if (pushState && URL !== oldURL) {
+            window.history.pushState({url: URL}, '', URL);
         }
     }
 
     /**
      * Click handler
-     * @param {object} e - mouse event
+     * @param {Object} event - mouse event
      */
-    handleMouseClick(e) {
-        if (e.target.tagName === 'A') {
-            e.preventDefault();
-            this.go(e.target.pathname);
+    handleMouseClick(event) {
+        if (event.target.tagName === 'A') {
+            event.preventDefault();
+            this.go(event.target.pathname);
+        } else if (event.target.parentElement && event.target.parentElement.tagName === 'A') {
+            event.preventDefault();
+            this.go(event.target.parentElement.pathname);
         }
     }
 
@@ -45,6 +62,9 @@ export default class Router {
      * @param {function} handler - route handler
      */
     setRoute(route, handler) {
-        this.routeMap.set(route, handler);
+        this.routes.push({
+            regExp: new RegExp(route),
+            handler: handler,
+        });
     }
 }

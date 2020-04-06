@@ -13,6 +13,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(publicFolder, 'index.html'));
 });
 
+// app.get('*', (req, res) => {
+//     res.redirect('/');
+// });
+
 const PORT = process.env.PORT || 5757;
 app.listen(PORT, () => {
     console.log(`Server working at:

@@ -1,5 +1,5 @@
 import Validator from '../libs/validator.js';
-import {apiLogin} from '../libs/apiService.js';
+import {sessionPost} from '../libs/apiService.js';
 
 /**
  * Login model
@@ -8,11 +8,9 @@ export default class LoginModel {
     /**
      * @description Constructor
      * @param {Object} eventBus to call and subscribe for signals
-     * @param {Object} router to route on main page after login
      */
-    constructor(eventBus, router) {
+    constructor(eventBus) {
         this.eventBus = eventBus;
-        this.router = router;
         this.eventBus.subscribe('submit', this.login.bind(this));
     }
 
@@ -50,15 +48,15 @@ export default class LoginModel {
         if (!this.validateLogin(userInfo.nickname) || !this.validatePassword(userInfo.password)) {
             return;
         }
-        apiLogin(userInfo).then((response) => {
+        sessionPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
-                case 308: // - PermanentRedirect (уже залогинен, редирект на главную)
-                    this.router.go('/profile', {});
+                case 303: // - See Other (Постучались на данный endpoint с выставленной кукой)
+                    this.eventBus.call('loginSuccess', userInfo);
                     break;
-                case 400: // - BadRequest (неверный запрос)
-                case 404: // - NotFound (нет пользвателя с указанным ником)
-                case 412: // - PreconditionFailed (неверный пароль)
+                case 400: // - (Невалидное тело запроса)
+                case 412: // - (Пароль неверный)
+                case 404: // - (Пользователь не найден)
                     this.eventBus.call('inputError', true);
                     break;
                 default:

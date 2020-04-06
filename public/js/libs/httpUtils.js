@@ -1,54 +1,71 @@
 /**
- * @description Fetch used for CORS
- * @param {string|URL} url - fetch url
- * @param {string} method - POST, GET, etc.
- * @param {any} body - request body
- * @param {Object} headersObj
- * @param {Object} queryObj - 'GET' parameters for query string
+ * @description Shortcut for creating data
+ * @param {string} url - request address
+ * @param {Object} body - request body
+ * @param {Object} headers - additional headers
  * @return {Promise<Response>}
  */
-export const fetchCors = (url, {
-    method = 'POST',
-    body,
-    headersObj = {},
-    queryObj = {},
-}) => {
-    const urlObj = new URL(url);
+export const fetchPost = (url, body, headers = {}) => {
+    return fetch(url, {
+        mode: 'cors',
+        credentials: 'include',
+        method: 'POST',
+        headers,
+        body,
+    });
+};
 
+/**
+ * @description Shortcut for getting data
+ * @param {string} url - request address
+ * @param {Object.<string, string>} queryObj - 'GET' parameters for query string
+ * @param {Object} headers - additional headers
+ * @return {Promise<Response>}
+ */
+export const fetchGet = (url, queryObj = {}, headers = {}) => {
+    const urlObj = new URL(url);
     for (const [key, value] of Object.entries(queryObj)) {
         urlObj.searchParams.append(key, value);
     }
 
     return fetch(urlObj.href, {
-        method,
-        headers: headersObj,
-        body,
         mode: 'cors',
         credentials: 'include',
+        method: 'GET',
+        headers,
     });
 };
 
-/** ************* SHORTCUTS ****************/
+/**
+ * @description Shortcut for updating data
+ * @param {string} url - request address
+ * @param {*} body - request body
+ * @param {Object} headers - additional headers
+ * @return {Promise<Response>}
+ */
+export const fetchPut = (url, body, headers = {}) => {
+    return fetch(url, {
+        mode: 'cors',
+        credentials: 'include',
+        method: 'PUT',
+        headers,
+        body,
+    });
+};
 
 /**
- * @description Shortcut for parsing json response
- * @param {string|URL} url - fetch url
- * @param {Object} queryObj - 'GET' parameters for query string
- * @return {Promise<any>}
+ * @description Shortcut for deleting data
+ * @param {string} url - request address
+ * @param {Object} headers - additional headers
+ * @return {Promise<Response>}
  */
-export const fetchGetJson = (url, queryObj) => {
-    return fetchCors(url, {method: 'GET', queryObj})
-        .then((res) => res.json());
+export const fetchDelete = (url, headers = {}) => {
+    return fetch(url, {
+        mode: 'cors',
+        credentials: 'include',
+        method: 'DELETE',
+        headers,
+    });
 };
 
 
-/**
- * @description Shortcut for sending json request and parsing json response
- * @param {string|URL} url - fetch url
- * @param {Object} body - object
- * @return {Promise<any>}
- */
-export const fetchPostJson = (url, body) => {
-    return fetchCors(url, {method: 'POST', body: JSON.stringify(body)})
-        .then((res) => res.json());
-};

@@ -1,0 +1,25 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <fest:script>
+        var addButtonID = 'addTaskButton' + data.id;
+        var closeButtonID = 'closeNewTaskFormButton' + data.id;
+    </fest:script>
+
+    <fest:choose>
+        <fest:when test="data.form===true">
+            <div class="task-create-form">
+                <div class="task-create-form__label">
+                    Название задачи:
+                </div>
+                <input class="task-create-form__input" id="inputNewTaskTitle" type="text" placeholder="Новая задача"
+                       autocomplete="off"/>
+                <div class="task-create-form-controls">
+                    <div class="task-create-form-controls__button--secondary" id="{addButtonID}">Добавить</div>
+                    <div class="task-create-form-controls__button--danger" id="{closeButtonID}">Закрыть</div>
+                </div>
+            </div>
+        </fest:when>
+        <fest:otherwise>
+            + Добавить задачу
+        </fest:otherwise>
+    </fest:choose>
+</fest:template>
