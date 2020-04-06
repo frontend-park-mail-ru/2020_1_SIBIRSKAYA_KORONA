@@ -1,0 +1,442 @@
+/*        BOARD        */
+.board
+    display: flex
+    flex-direction: column
+    background-color: #bac1c3d1
+    flex-grow: 1
+
+.board-header
+    background-color: #18255f
+    padding: 10px 10px
+    @extend .header
+
+    &-left
+        @extend .header-block-left
+
+        &__title
+            width: 33%
+            font-size: 35px
+            color: #ffeaea
+
+    &-center
+        @extend .header-block-center
+
+        &-members
+            @extend .member-container
+
+            &__member
+                @extend .board-member
+
+        &__button--primary
+            @extend .button--primary
+            margin-left: 15px
+
+    &-right
+        @extend .header-block-right
+
+        &__button--primary
+            @extend .button--primary
+
+.member-container
+    display: flex
+    overflow-x: auto
+    max-width: 100%
+    align-items: center
+
+.board-member
+    height: 30px
+    width: 30px
+    border-radius: 50%
+
+
+.column-list
+    display: flex
+    overflow-x: auto
+    width: 100%
+    padding-top: 10px
+    flex-grow: 1
+
+    &:after
+        content: ""
+        flex: 0 0 5px
+
+    &-add-column-button
+        @extend .board-column
+        box-shadow: #8c8888f5 0 0 10px 1px
+        background: #ededed4f
+        cursor: pointer
+        transition: 0.3s
+
+        &:hover
+            box-shadow: #484848f5 0 0 10px 1px
+            background: #edededad
+
+        &-header
+            @extend .board-column-header
+
+            &__title
+                @extend .board-column-header__title
+
+.column-create-form
+    padding: 20px
+    margin: 0 5px
+    border-radius: 5px
+    height: fit-content
+    width: 272px
+    background: #ededed
+
+    &__label
+        @extend .form-input-label
+
+    &__input
+        margin: 0 auto 30px
+        @extend .form-input
+
+    &-controls
+        @extend .controls-panel
+
+        &__button
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
+
+.board-column
+    display: flex
+    flex-direction: column
+    border-radius: 5px
+    height: fit-content
+    min-width: 272px
+    max-width: 272px
+    max-height: 75vh
+    padding: 0 4px 8px
+    margin: 0 5px
+    background: #ededed
+    box-shadow: #8c8888f5 0 0 10px 1px
+
+    &-header
+        display: flex
+        flex-direction: row
+        align-items: center
+        justify-content: space-between
+        height: fit-content
+
+        &__title
+            @extend .title
+            font-size: 22px
+            word-wrap: break-word
+            max-width: 90%
+            margin: 15px 10px 10px 15px
+            max-height: 20%
+
+        &__settings-button
+            margin: 10px
+            padding-top: 7px
+            align-self: start
+            transition: 0.2s
+
+            &:before
+                color: #848484
+                font-weight: bold
+                content: "\22EF"
+
+            &:hover
+                background: #d4d5fabf
+
+
+.task-list
+    display: flex
+    flex-direction: column
+    height: fit-content
+    overflow-y: auto
+    max-height: 80%
+    padding: 0 4px
+
+    &-add-task-button
+        @extend .task-mini
+        background: #d4d5fa8a
+        font-size: 16pt
+
+        &:hover
+            background: #d4d5fafa
+
+.task-create-form
+    height: 80%
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    padding: 10px
+
+    &__label
+        @extend .form-input-label
+
+    &__input
+        margin: 0 auto 30px
+        @extend .form-input
+
+    &-controls
+        @extend .controls-panel
+
+        &__button
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
+
+.task-mini
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    border-radius: 5px
+    padding: 9px
+    margin-bottom: 10px
+    background: #d4d5fa8a
+    cursor: pointer
+    box-shadow:  0 3px 5px -5px black
+
+    &:hover
+        cursor: pointer
+        background: #d4d5fafa
+
+    &:last-child
+        margin-bottom: 0
+
+    &__description
+        background: white
+        border-radius: 2px
+        padding: 4px
+        margin-top: 5px
+        margin-bottom: 5px
+        word-wrap: break-word
+        max-width: 100%
+        box-sizing: border-box
+
+    &-members
+        @extend .member-container
+
+        &__member
+            @extend .board-member
+
+
+//.board-task-label-container
+.task-label-list
+    display: flex
+    align-items: center
+    flex-direction: row
+    flex-wrap: wrap
+    // .board-task-label-mini
+    &__label-mini
+        display: flex
+        align-items: center
+        background: #cac6c685
+        width: fit-content
+        border-radius: 2px
+        padding: 4px
+        word-wrap: break-word
+        max-width: 100%
+        box-sizing: border-box
+        margin: 2px
+
+        &--color-yellow
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-yellow
+
+        &--color-orange
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-orange
+
+        &--color-red
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-red
+
+        &--color-purple
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-purple
+
+        &--color-darkblue
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-darkblue
+
+        &--color-black
+            @extend .task-label-list__label-mini
+            @extend .task-label-color-black
+
+/*       END BOARD        */
+
+/*       TASK SETTINGS    */
+
+// .settings-form
+.task
+    @extend .form
+    display: flex
+    flex-direction: column
+    width: 700px
+    box-shadow: none
+    &-title
+        &__text
+            @extend .title
+            margin-left: 20px
+            font-size: 20pt
+
+        &__hr--width-2
+            @extend .hr-width-2
+
+    &-settings
+        margin: 0 auto 10px
+        width: 660px
+        &-members
+            @extend .member-container
+            padding-top: 4px
+            &__member
+                @extend .board-member
+            &__add-button
+                background: #d4d5fa8a
+                transition: 0.3s
+                color: #000000
+                &:hover
+                    background: #d4d5fafa
+        &-controls
+            margin-top: 20px
+            @extend .controls-panel
+            &__button
+                &--primary
+                    @extend .button--primary
+
+                &--danger
+                    @extend .button--danger
+
+        &__error
+            @extend .input-error
+        &__label
+            margin-top: 30px
+            @extend .form-input-label
+        &__input
+            @extend .form-input
+        &__textarea
+             @extend .form-textarea
+
+/*       END TASK       */
+
+/*       BOARD SETTINGS */
+
+
+/*       END BOARD SETTINGS */
+
+/*       LABEL          */
+
+.task-label
+    display: flex
+    flex-direction: row
+    border-radius: 5px
+    padding: 10px
+    word-break: break-all
+    justify-content: space-between
+
+.task-label.mod-selectable
+    cursor: pointer
+
+.task-label-container
+    display: flex
+    flex-direction: column
+    max-height: 50vh
+    overflow-y: auto
+    padding-right: 10px
+
+.task-label-container .task-label
+    margin-bottom: 5px
+
+.task-label-item
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    width: 100%
+
+.task-label-status
+    align-content: center
+    margin-left: 5px
+    width: 10px
+    align-self: center
+
+.task-label-status.active:before
+    content: "\2713"
+
+.task-label-item .task-label
+    width: 68%
+
+// .task-label-item .button
+
+
+
+.task-label-color
+    &-yellow
+        background: #f2d600
+        transition: 0.2s
+
+        &.selectable:hover
+            background: #ffe837
+
+    &-orange
+        background: #ff9f1a
+        transition: 0.2s
+
+        &.selectable:hover
+            background: #fdaf43
+
+    &-red
+        background: #eb5a46
+        transition: 0.2s
+
+        &.selectable:hover
+            background: #f36d5b
+
+    &-purple
+        background: #c377e0
+        transition: 0.2s
+
+        &.selectable:hover
+            background: #ce88e8
+
+    &-darkblue
+        background: #0079bf
+        color: #f8f8ff
+        transition: 0.2s
+
+        &.selectable:hover
+            background: #2a97d6
+
+    &-black
+        background: #344563
+        color: #f8f8ff
+        transition: 0.2s
+
+        &.selectable:hover
+            background: #495771
+
+
+.task-add-label
+    background: #d4d5fa8a
+    font-size: 16pt
+    &:hover
+        background: #d4d5fafa
+
+/*       END LABEL          */
+
+/*       CREATE LABEL       */
+
+.task-color-palette
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+.task-palette-color
+    height: 15px
+    width: 30px
+    margin: 5px
+    justify-content: center
+
+.task-palette-color.active:before
+    content: "\2713"
+
+/*       END CREATE LABEL       */

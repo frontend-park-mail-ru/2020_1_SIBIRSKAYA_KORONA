@@ -1,6 +1,6 @@
+import EventBus from '../libs/eventBus.js';
 import BoardsModel from '../models/boardsModel.js';
 import BoardsView from '../views/boards/boardsView.js';
-import EventBus from '../libs/eventBus.js';
 
 /**
  * Boards controller
@@ -19,8 +19,6 @@ export default class BoardsController {
         ]);
         this.view = new BoardsView(this.eventBus);
         this.model = new BoardsModel(this.eventBus);
-        this.eventBus.subscribe('unauthorized', () => {
-            router.go('/login');
-        });
+        this.eventBus.subscribe('unauthorized', () => router.go('/login'));
     }
 }

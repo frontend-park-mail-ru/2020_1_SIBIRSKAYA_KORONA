@@ -1,0 +1,83 @@
+.boards
+    margin: 20px
+
+    &-title
+        margin-bottom: 25px
+
+        &__text
+            margin: 20px 45px 0
+            font-size: 20pt
+            @extend .title
+
+        &__hr--width-2
+            @extend .hr-width-2
+
+.group
+    display: flex
+    flex-flow: row wrap
+    margin-left: 35px
+
+    &-mini-board
+        @extend .link-none
+        width: 260px
+        height: 190px
+        margin: 10px
+        border-radius: 15px
+        border: 2px solid transparent
+        box-shadow: 0 0 17px 2px #8f8a8a82
+
+        &:hover
+            @extend .link-none
+            box-shadow: 0 0 20px 0 #5b5656
+            cursor: pointer
+
+        &__title
+            margin-top: 20px
+            margin-left: 26px
+            font-size: 16pt
+            color: black
+            @extend .title
+
+    &-fake-board
+        @extend .group-mini-board
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        border: 2px dashed #afaeae
+        box-shadow: none
+
+        &__text
+            text-align: center
+            width: 200px
+            font-size: 16pt
+            font-weight: bold
+            color: #afaeae
+
+        &__icon
+            width: 50%
+            height: 50%
+
+    &-board-create
+        height: 80%
+        display: flex
+        flex-direction: column
+        justify-content: space-around
+        margin: 20px
+
+        &__label
+            @extend .form-input-label
+
+        &__input
+            margin: 0 auto 30px
+            @extend .form-input
+
+        &-controls
+            @extend .controls-panel
+
+            &__button
+                &--secondary
+                    @extend .button--secondary
+
+                &--danger
+                    @extend .button--danger

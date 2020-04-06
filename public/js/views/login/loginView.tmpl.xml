@@ -1,18 +1,20 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="auth">
-        <form id="loginForm" class="form auth-form">
-            <div class="title auth-form-title">
-                Вход
+    <div class="auth-login__logo">
+        <div class="auth">
+            <div class="auth-form-login">
+                <div class="title auth-form__title">
+                    Вход
+                </div>
+                <div id="inputError" class="auth-form__input-error hidden">Неверный логин или пароль</div>
+                <input class="auth-form__input" autocomplete="off" type="text" placeholder="Логин"
+                       id="inputLogin"/>
+                <input class="auth-form__input" autocomplete="off" type="password" placeholder="Пароль"
+                       id="inputPassword"/>
+                <div class="auth-form__bottom-panel">
+                    <div class="auth-form__button--primary" id="submit_button">Войти</div>
+                    <a class="auth-form__link" href="join">Регистрация</a>
+                </div>
             </div>
-            <div id="inputError" class="input-error hidden">Неверный логин или пароль</div>
-            <input class="form-input auth-form-input" autocomplete="off" type="text" placeholder="Логин"
-                   id="inputLogin"/>
-            <input class="form-input auth-form-input" autocomplete="off" type="password" placeholder="Пароль"
-                   id="inputPassword"/>
-            <div class="auth-form-bottom-panel">
-                <div class="button primary" id="submit_button">Войти</div>
-                <a class="auth-form-link" href="join">Регистрация</a>
-            </div>
-        </form>
+        </div>
     </div>
 </fest:template>

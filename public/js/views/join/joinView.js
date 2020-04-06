@@ -1,5 +1,5 @@
-import './joinView.tmpl.js';
 import BaseView from '../baseView.js';
+import './joinView.tmpl.js';
 
 /**
  * View of join page
@@ -15,6 +15,8 @@ export default class JoinView extends BaseView {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
         this.clearInputtedData = this.clearInputtedData.bind(this);
+
+        this.eventBus.subscribe('userInputError', this.showError);
     }
 
     /**
@@ -29,24 +31,20 @@ export default class JoinView extends BaseView {
      * Set handlers for user input and submit
      */
     addEventListeners() {
-        const submitButton = document.getElementById('submit_button');
-        submitButton.addEventListener('click', this.handleSubmit);
+        document.getElementById('submit_button').addEventListener('click', this.handleSubmit);
 
-        const formElements = document.getElementById('joinForm').elements;
-        for (const element of formElements) {
-            if (element.nodeName === 'INPUT') {
-                element.addEventListener('input', this.handleUserInput);
-                this.eventBus.subscribe('userInputError', this.showError);
-            }
-        }
+        const inputs = [
+            document.getElementById('inputName'),
+            document.getElementById('inputSurname'),
+            document.getElementById('inputNickname'),
+            document.getElementById('inputPassword'),
+            document.getElementById('inputPasswordRepeat'),
+        ];
+
+        inputs.forEach((input) => {
+            input.addEventListener('input', this.handleUserInput);
+        });
     }
-
-    /**
-     * Displays user input error, is triggered when model validation failed
-     * @param {boolean} show - show or hide error string
-     * @param {string} field - input with invalid data
-     * @param {string} text - optional error text
-     */
 
     /**
      * Handle user input
@@ -67,6 +65,7 @@ export default class JoinView extends BaseView {
     clearInputtedData() {
         this.inputtedData = {};
     }
+
     /**
      * Handle user submit
      * @param {Event} event - button click event

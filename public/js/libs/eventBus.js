@@ -33,11 +33,12 @@ export default class EventBus {
      * @description Executes signal handler with passed arguments
      * @param {string} signal - signal at which handler will be executed
      * @param {...*} args - arguments which will be passed to handler
+     * @return {*}
      */
     call(signal, ...args) {
         if (this.signalHandlers.has(signal)) {
             if (this.signalHandlers.get(signal)) {
-                this.signalHandlers.get(signal)(...args);
+                return this.signalHandlers.get(signal)(...args);
             } else {
                 console.log('No handler for signal '+ signal);
             }

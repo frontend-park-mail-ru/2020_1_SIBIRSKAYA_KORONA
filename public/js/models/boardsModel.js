@@ -26,15 +26,20 @@ export default class HeaderModel {
             switch (response.status) {
                 case 200:
                     response.json().then((responseJson) => {
+                        responseJson.admin.concat(responseJson.member).forEach((board) => {
+                            board.url = '/boards/' + board.id;
+                        });
                         this.eventBus.call('gotBoards', {
                             myBoards: responseJson.admin,
                             sharedBoards: responseJson.member,
                         });
                     });
                     break;
-                case 403:
-                case 404:
+                case 401:
                     this.eventBus.call('unauthorized');
+                    break;
+                case 500:
+                    console.log('Server error');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -49,12 +54,18 @@ export default class HeaderModel {
     addNewBoard(boardTitle) {
         boardsPost(boardTitle).then((response) => {
             switch (response.status) {
-                case 200:
+                case 200: // Успешно создали доску
                     response.json().then(this.getBoards);
                     break;
-                case 403:
-                case 404:
+                case 400: // Невалидное тело
+                    console.log('Bad request');
+                    break;
+                case 401:
+                case 403: // В запросе отсутствует кука
                     this.eventBus.call('unauthorized');
+                    break;
+                case 500:
+                    console.log('Server error');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');

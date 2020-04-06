@@ -1,5 +1,5 @@
-import Validator from '../libs/validator.js';
 import {settingsGet, settingsPut} from '../libs/apiService.js';
+import Validator from '../libs/validator.js';
 
 /**
  * Profile model
@@ -112,12 +112,15 @@ export default class JoinModel {
                 case 200: // - OK (успешный запрос)
                     this.getUserData();
                     break;
-                case 400: // - Unauthorized (Невалидное тело запроса с информацией для обновления)
+                case 400: // - (Невалидное тело запроса с информацией для обновления)
+                    console.log('Bad request');
+                    break;
+                case 401: // (В запросе отсутствует кука)
+                    this.eventBus.call('unauthorized');
+                    break;
+                case 412: // - (Неверный пароль)
                     this.eventBus.call('wrongPassword');
                     this.eventBus.call('userInputError', {show: true, field: 'inputOldPassword'});
-                    break;
-                case 403: // - NotFound (В запросе отсутствует кука)
-                    this.eventBus.call('invalidCookie');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -132,15 +135,15 @@ export default class JoinModel {
         settingsGet().then((response) => {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
-                    response.json()
-                        .then((responseJson) => {
-                            this.eventBus.call('gotData', responseJson.user); // for local eventBus (View subscribed)
-                            this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
-                        });
+                    response.json().then((responseJson) => {
+                        this.eventBus.call('gotData', responseJson.user); // for local eventBus (View subscribed)
+                        this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
+                    });
                     break;
-                case 403: // - Forbidden (В запросе на данные отсутствует кука)
-                case 404: // - NotFound (Пользователя по куке не нашли)
-                    this.eventBus.call('invalidCookie');
+                case 401: // - В запросе отсутствует кука
+                    // case 403: // - Forbidden (В запросе на данные отсутствует кука)
+                    // case 404: // - NotFound (Пользователя по куке не нашли)
+                    this.eventBus.call('unauthorized');
                     break;
                 case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)
                     break;
