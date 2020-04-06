@@ -19,7 +19,7 @@
             </div>
         </fest:when>
         <fest:otherwise>
-            + Add new task
+            + Добавить задачу
         </fest:otherwise>
     </fest:choose>
 </fest:template>

@@ -51,7 +51,7 @@
                     </input>
 
                 <div class="task-settings__label">
-                    Description
+                    Описание
                 </div>
                 <textarea class="task-settings__textarea" id="inputDescription">
                     <fest:value>
