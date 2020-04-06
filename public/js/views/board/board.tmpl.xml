@@ -18,12 +18,12 @@
                     </fest:for>
                 </div>
                 <div class="board-header-center__button--primary js-addNewMember"
-                     id="inviteNewMemberButton">Invite
+                     id="inviteNewMemberButton">Пригласить
                 </div>
             </div>
             <div class="board-header-right">
                 <div class="board-header-right__button--primary js-openBoardSettings"
-                     id="boardSettingsButton">Board settings
+                     id="boardSettingsButton">Настройки доски
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                         <div class="task-list-add-task-button js-addNewTask"
                              data-column-id="{column.id}"
                              data-position="{column.position}">
-                            + Add new task
+                            + Добавить задачу
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
             <div class="column-list-add-column-button js-addNewColumn" id="addNewColumnButton">
                 <div class="column-list-add-column-button-header">
                     <div class="column-list-add-column-button-header__title">
-                        + Add new column
+                        + Добавить колонку
                     </div>
                 </div>
             </div>

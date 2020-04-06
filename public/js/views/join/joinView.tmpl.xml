@@ -1,44 +1,46 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="auth">
-        <div class="auth-form" >
-            <div class="auth-form__title">
-                Регистрация
-            </div>
-            <div id="inputNameError" class="auth-form__input-error hidden">Недопустимое имя</div>
-            <input class="auth-form__input" autocomplete="off" type="text" placeholder="Имя"
-                   id="inputName">
-                <fest:attributes>
-                    <fest:attribute name="value">
-                        <fest:value>data.inputName</fest:value>
-                    </fest:attribute>
-                </fest:attributes>
-            </input>
-            <div id="inputSurnameError" class="auth-form__input-error hidden">Недопустимая фамилия</div>
-            <input class="auth-form__input" autocomplete="off" type="text" placeholder="Фамилия"
-                   id="inputSurname">
-                <fest:attributes>
-                    <fest:attribute name="value">
-                        <fest:value>data.inputSurname</fest:value>
-                    </fest:attribute>
-                </fest:attributes>
-            </input>
-            <div id="inputNicknameError" class="auth-form__input-error hidden">Недопустимый ник</div>
-            <input class="auth-form__input" autocomplete="off" type="text" placeholder="Ник"
-                   id="inputNickname">
-                <fest:attributes>
-                    <fest:attribute name="value">
-                        <fest:value>data.inputNickname</fest:value>
-                    </fest:attribute>
-                </fest:attributes>
-            </input>
-            <div id="inputPasswordError" class="auth-form__input-error hidden">Недопустимый пароль</div>
-            <input class="auth-form__input" autocomplete="off" type="password" placeholder="Пароль"
-                   id="inputPassword"/>
-            <input class="auth-form__input" autocomplete="off" type="password" placeholder="Повторите пароль"
-                   id="inputPasswordRepeat"/>
-            <div class="auth-form__bottom-panel">
-                <div class="auth-form__button--primary" id="submit_button">Зарегистрироваться</div>
-                <a class="auth-form__link" href="/login">Уже есть аккаунт?</a>
+    <div class="auth-join__logo">
+        <div class="auth">
+            <div class="auth-form-join">
+                <div class="auth-form__title">
+                    Регистрация
+                </div>
+                <div id="inputNameError" class="auth-form__input-error hidden">Недопустимое имя</div>
+                <input class="auth-form__input" autocomplete="off" type="text" placeholder="Имя"
+                       id="inputName">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>data.inputName</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
+                <div id="inputSurnameError" class="auth-form__input-error hidden">Недопустимая фамилия</div>
+                <input class="auth-form__input" autocomplete="off" type="text" placeholder="Фамилия"
+                       id="inputSurname">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>data.inputSurname</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
+                <div id="inputNicknameError" class="auth-form__input-error hidden">Недопустимый ник</div>
+                <input class="auth-form__input" autocomplete="off" type="text" placeholder="Ник"
+                       id="inputNickname">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>data.inputNickname</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
+                <div id="inputPasswordError" class="auth-form__input-error hidden">Недопустимый пароль</div>
+                <input class="auth-form__input" autocomplete="off" type="password" placeholder="Пароль"
+                       id="inputPassword"/>
+                <input class="auth-form__input" autocomplete="off" type="password" placeholder="Повторите пароль"
+                       id="inputPasswordRepeat"/>
+                <div class="auth-form__bottom-panel">
+                    <div class="auth-form__button--primary" id="submit_button">Зарегистрироваться</div>
+                    <a class="auth-form__link" href="/login">Уже есть аккаунт?</a>
+                </div>
             </div>
         </div>
     </div>

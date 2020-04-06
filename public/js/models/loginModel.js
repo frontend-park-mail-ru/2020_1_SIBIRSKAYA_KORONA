@@ -54,8 +54,9 @@ export default class LoginModel {
                 case 303: // - See Other (Постучались на данный endpoint с выставленной кукой)
                     this.eventBus.call('loginSuccess', userInfo);
                     break;
-                case 400: // - Bad Request (Невалидное тело запроса)
-                case 412: // - Conflict (Пароль неверный)
+                case 400: // - (Невалидное тело запроса)
+                case 412: // - (Пароль неверный)
+                case 404: // - (Пользователь не найден)
                     this.eventBus.call('inputError', true);
                     break;
                 default:

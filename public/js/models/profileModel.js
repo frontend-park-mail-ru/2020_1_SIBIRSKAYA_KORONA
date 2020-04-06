@@ -116,7 +116,7 @@ export default class JoinModel {
                     console.log('Bad request');
                     break;
                 case 401: // (В запросе отсутствует кука)
-                    this.eventBus.call('invalidCookie');
+                    this.eventBus.call('unauthorized');
                     break;
                 case 412: // - (Неверный пароль)
                     this.eventBus.call('wrongPassword');
@@ -135,16 +135,15 @@ export default class JoinModel {
         settingsGet().then((response) => {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
-                    response.json()
-                        .then((responseJson) => {
-                            this.eventBus.call('gotData', responseJson.user); // for local eventBus (View subscribed)
-                            this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
-                        });
+                    response.json().then((responseJson) => {
+                        this.eventBus.call('gotData', responseJson.user); // for local eventBus (View subscribed)
+                        this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
+                    });
                     break;
-                case 401:
-                case 403: // - Forbidden (В запросе на данные отсутствует кука)
-                case 404: // - NotFound (Пользователя по куке не нашли)
-                    this.eventBus.call('invalidCookie');
+                case 401: // - В запросе отсутствует кука
+                    // case 403: // - Forbidden (В запросе на данные отсутствует кука)
+                    // case 404: // - NotFound (Пользователя по куке не нашли)
+                    this.eventBus.call('unauthorized');
                     break;
                 case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)
                     break;

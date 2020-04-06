@@ -9,13 +9,13 @@ const publicFolder = path.resolve(__dirname, '..', 'public');
 app.use(morgan('dev'));
 app.use(express.static(publicFolder));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.resolve(publicFolder, 'index.html'));
 });
 
-app.get('*', (req, res) => {
-    res.redirect('/');
-});
+// app.get('*', (req, res) => {
+//     res.redirect('/');
+// });
 
 const PORT = process.env.PORT || 5757;
 app.listen(PORT, () => {

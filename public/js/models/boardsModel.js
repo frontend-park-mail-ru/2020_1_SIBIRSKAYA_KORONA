@@ -36,7 +36,6 @@ export default class HeaderModel {
                     });
                     break;
                 case 401:
-                case 403:
                     this.eventBus.call('unauthorized');
                     break;
                 case 500:

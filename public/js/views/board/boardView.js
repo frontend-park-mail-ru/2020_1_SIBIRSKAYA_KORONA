@@ -24,7 +24,6 @@ export default class BoardView extends BaseView {
         this.handleTaskDragEnd = this.handleTaskDragEnd.bind(this);
         this.preventDefault = this.preventDefault.bind(this);
 
-
         eventBus.subscribe('gotBoardData', this.renderBoard);
     }
 
@@ -49,7 +48,7 @@ export default class BoardView extends BaseView {
             const lastTask = column.tasks[column.tasks.length - 1];
             this.lastTaskInColumnPosition[index] = (lastTask)? lastTask.position : 1;
         });
-        console.log(this.lastTaskInColumnPosition);
+        // console.log(this.lastTaskInColumnPosition);
 
         this.root.innerHTML = window.fest['js/views/board/board.tmpl'](boardData);
         this.addEventListeners();

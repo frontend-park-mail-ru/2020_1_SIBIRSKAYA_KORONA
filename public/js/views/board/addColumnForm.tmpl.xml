@@ -17,7 +17,7 @@
         <fest:otherwise>
             <div class="column-list-add-column-button-header">
                 <div class="column-list-add-column-button-header__title">
-                    + Add new column
+                    + Добавить колонку
                 </div>
             </div>
         </fest:otherwise>
