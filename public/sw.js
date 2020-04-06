@@ -8,7 +8,7 @@ self.addEventListener('install', (event) => {
                     '/js/index.js',
                     '/',
                 ]);
-            })
+            }),
     );
 });
 
@@ -37,6 +37,5 @@ self.addEventListener('fetch', (event) => {
             .then((response) => {
                 return response || fetch(event.request);
             });
-    })()
-    );
+    })());
 });

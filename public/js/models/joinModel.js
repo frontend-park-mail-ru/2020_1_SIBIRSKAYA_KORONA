@@ -71,7 +71,7 @@ export default class JoinModel {
 
         settingsPost(userInfo).then((response) => {
             switch (response.status) {
-                case 200: // - OK (успешный запрос)
+                case 200: // - OK (Успешная регистрация)
                 case 303: // - See Other (Постучались на данный endpoint с выставленной кукой)
                     this.eventBus.call('joinSuccess', userInfo);
                     break;

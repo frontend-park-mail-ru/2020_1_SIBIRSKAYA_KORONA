@@ -1,4 +1,4 @@
-import {boardGet, columnsGet, columnsPost, tasksGet, tasksPost, taskPut} from '../libs/apiService.js';
+import {boardGet, columnsGet, columnsPost, taskPut, tasksGet, tasksPost} from '../libs/apiService.js';
 
 /**
  * Board model
@@ -33,72 +33,73 @@ export default class BoardModel {
             boardId = this.boardData.id;
         }
 
+        const handleResponseStatus = async (response, onSuccess) => {
+            switch (response.status) {
+                case 200:
+                    const body = await response.json();
+                    onSuccess(body);
+                    return true;
+                case 401:
+                    this.eventBus.call('unauthorized');
+                    return false;
+                case 400:
+                case 403:
+                case 500:
+                    this.eventBus.call('goToBoards');
+                    return false;
+                default:
+                    console.log('Бекендер молодец!!!');
+                    this.eventBus.call('goToBoards');
+                    return false;
+            }
+        };
 
         // GET BOARD INFO
+        let newBoardData;
         const boardResponse = await boardGet(boardId);
-
-        switch (boardResponse.status) {
-            case 200:
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                return;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                return;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                return;
+        if (!(await handleResponseStatus(boardResponse, (body) => newBoardData = body.board))) {
+            return;
         }
-
-
-        const newBoardData = (await boardResponse.json())['board'];
 
         // GET COLUMNS INFO
         const columnsResponse = await columnsGet(boardId);
-        newBoardData.columns = (await columnsResponse.json()).columns;
+        if (!(await handleResponseStatus(columnsResponse, (body) => newBoardData.columns = body.columns))) {
+            return;
+        }
 
         // GET TASKS FROM EACH COLUMN
         const columnsTasksPromises = [];
         for (const column of newBoardData.columns) {
             columnsTasksPromises.push(tasksGet(boardId, column.id));
         }
-
         const columnsTasksResponses = await Promise.all(columnsTasksPromises);
-        for (const [i, columnsTasksResponse] of columnsTasksResponses.entries()) {
-            const columnTasks = (await columnsTasksResponse.json()).tasks;
 
-            // TODO(Anyone): убрать заглушку на labels и members
-            for (const task of columnTasks) {
-                task.labels = [
-                    {
+        for (const [i, columnsTasksResponse] of columnsTasksResponses.entries()) {
+            if (!(await handleResponseStatus(columnsTasksResponse, (body) => {
+                const columnTasks = body.tasks;
+                for (const task of columnTasks) {
+                    task.labels = [{
                         title: 'Example label',
                         color: 'black',
-                    },
-                    {
+                    }, {
                         title: 'Example label',
                         color: 'orange',
-                    },
-                ];
-                task.members = [
-                    {
+                    }];
+                    task.members = [{
                         url: '/mem1',
                         nickname: 'member 1',
                         avatar: '/img/default_avatar.png',
-                    },
-                    {
+                    }, {
                         url: '/mem2',
                         nickname: 'member 2',
                         avatar: '/img/default_avatar.png',
-                    },
-                ];
-                task.url = `/boards/${boardId}/columns/${task.cid}/tasks/${task.id}`;
+                    }];
+                    task.url = `/boards/${boardId}/columns/${task.cid}/tasks/${task.id}`;
+                }
+                newBoardData['columns'][i]['tasks'] = columnTasks;
+            }))) {
+                return;
             }
-
-            newBoardData['columns'][i]['tasks'] = columnTasks;
         }
 
         // SORT COLUMNS
@@ -125,8 +126,7 @@ export default class BoardModel {
             return 1;
         });
 
-        console.log(newBoardData);
-
+        // console.log(newBoardData);
         this.boardData = newBoardData;
         this.eventBus.call('gotBoardData', newBoardData);
     }
@@ -190,13 +190,6 @@ export default class BoardModel {
                     console.log('Бекендер молодец!!!');
             }
         });
-        // const lastColumnID = this.boardData.columns[this.boardData.columns.length - 1].id;
-        // this.boardData.columns.push({
-        //     id: lastColumnID + 1,
-        //     title: data.columnTitle,
-        //     tasks: [],
-        // });
-        // this.getBoardData(data.boardId);
     }
 
     /**
@@ -205,8 +198,10 @@ export default class BoardModel {
      * @return {Promise<void>}
      */
     async saveTask(data) {
-        const response = await taskPut(data.boardId, data.oldColumnId, data.taskId,
-            {cid: data.newColumnId, position: data.newTaskPos});
+        const response = await taskPut(data.boardId, data.oldColumnId, data.taskId, {
+            cid: data.newColumnId,
+            position: data.newTaskPos,
+        });
 
         switch (response.status) {
             case 200:
