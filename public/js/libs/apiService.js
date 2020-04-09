@@ -68,6 +68,7 @@ export const settingsPut = async (userForm) => {
  * @return {Promise<Response>}
  */
 export const sessionPost = (userInfo) => {
+    CSRFToken = null;
     const apiUrl = new URL('session', BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify(userInfo), {'Content-Type': 'application/json'});
 };
@@ -86,6 +87,7 @@ export const sessionGet = () => {
  * @return {Promise<Response>}
  */
 export const sessionDelete = () => {
+    CSRFToken = null;
     const apiUrl = new URL('session', BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
