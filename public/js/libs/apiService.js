@@ -3,6 +3,27 @@ import {fetchDelete, fetchGet, fetchPost, fetchPut} from './httpUtils.js';
 // const BACKEND_ADDRESS = 'http://localhost:8080/';
 const BACKEND_ADDRESS = 'http://89.208.197.150:8080/';
 
+let CSRFToken;
+
+/**
+ * Gets CSRF token from backend
+ * @return {Promise<Response>}
+ */
+const getCSRFToken = async () => {
+    let response;
+    if (CSRFToken) {
+        response = new Response();
+        response.headers.set('X-Csrf-Token', CSRFToken);
+        return response;
+    }
+    const apiUrl = new URL('token', BACKEND_ADDRESS);
+    response = await fetchGet(apiUrl.href);
+    if (response.status === 200) {
+        CSRFToken = response.headers.get('X-Csrf-Token');
+    }
+    return response;
+};
+
 /** ******************* SETTINGS ************************/
 
 /**
@@ -29,9 +50,13 @@ export const settingsGet = () => {
  * @param {FormData} userForm - form with new user data
  * @return {Promise<Response>}
  */
-export const settingsPut = (userForm) => {
-    const apiUrl = new URL('settings', BACKEND_ADDRESS);
-    return fetchPut(apiUrl.href, userForm);
+export const settingsPut = async (userForm) => {
+    const tokenResponse = await getCSRFToken();
+    if (tokenResponse.status === 200) {
+        const apiUrl = new URL('settings', BACKEND_ADDRESS);
+        return fetchPut(apiUrl.href, userForm, {'X-Csrf-Token': CSRFToken});
+    }
+    return tokenResponse;
 };
 
 /** ******************* SESSION ************************/
@@ -43,6 +68,7 @@ export const settingsPut = (userForm) => {
  * @return {Promise<Response>}
  */
 export const sessionPost = (userInfo) => {
+    CSRFToken = null;
     const apiUrl = new URL('session', BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify(userInfo), {'Content-Type': 'application/json'});
 };
@@ -61,6 +87,7 @@ export const sessionGet = () => {
  * @return {Promise<Response>}
  */
 export const sessionDelete = () => {
+    CSRFToken = null;
     const apiUrl = new URL('session', BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
@@ -185,7 +212,7 @@ export const taskGet = (boardID, columnID, taskID) => {
  * @param {Object} task
  * @return {Promise<Response>}
  */
-export const taskPut = (boardID, columnID, taskID, task={}) => {
+export const taskPut = (boardID, columnID, taskID, task = {}) => {
     const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}`, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify(task));
 };

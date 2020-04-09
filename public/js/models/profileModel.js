@@ -115,6 +115,7 @@ export default class JoinModel {
                 case 400: // - (Невалидное тело запроса с информацией для обновления)
                     console.log('Bad request');
                     break;
+                case 403: // Не валидный токен
                 case 401: // (В запросе отсутствует кука)
                     this.eventBus.call('unauthorized');
                     break;
