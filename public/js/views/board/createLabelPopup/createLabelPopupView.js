@@ -1,4 +1,4 @@
-import './createLabelPopup.tmpl.js';
+import template from './createLabelPopup.tmpl.xml';
 import BaseView from '../../baseView.js';
 
 /**
@@ -40,7 +40,7 @@ export default class CreateLabelPopupView extends BaseView {
         const {left, top} = this.relativeTarget.getBoundingClientRect();
         popupDiv.style.left = `${left}px`;
         popupDiv.style.top = `${top}px`;
-        popupDiv.innerHTML = window.fest['js/views/board/createLabelPopup/createLabelPopup.tmpl'](boardLabelColors);
+        popupDiv.innerHTML = template(boardLabelColors);
 
         this.addEventListeners();
     }

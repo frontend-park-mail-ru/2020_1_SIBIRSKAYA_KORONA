@@ -1,4 +1,4 @@
-import './addLabelPopup.tmpl.js';
+import addLabelPopupTemplate from './addLabelPopup.tmpl.xml';
 import BaseView from '../../baseView.js';
 
 /**
@@ -43,7 +43,7 @@ export default class AddLabelPopupView extends BaseView {
         const {left, top} = this.relativeTarget.getBoundingClientRect();
         popupDiv.style.left = `${left}px`;
         popupDiv.style.top = `${top}px`;
-        popupDiv.innerHTML = window.fest['js/views/board/addLabelPopup/addLabelPopup.tmpl'](labelsInfo);
+        popupDiv.innerHTML = addLabelPopupTemplate(labelsInfo);
 
         this.addEventListeners();
     }
@@ -57,7 +57,6 @@ export default class AddLabelPopupView extends BaseView {
             this.eventBus.call('openCreateLabelPopup', this.relativeTarget);
         });
     }
-
 
     /**
      * Clears popover block from current pop-over

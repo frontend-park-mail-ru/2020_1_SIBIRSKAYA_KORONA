@@ -7,7 +7,6 @@
                         <div id="submitBoards" class="main-header-left__button--primary">Доски</div>
                     </fest:when>
                     <fest:otherwise>
-
                     </fest:otherwise>
                 </fest:choose>
             </div>

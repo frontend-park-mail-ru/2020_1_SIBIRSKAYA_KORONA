@@ -4,7 +4,7 @@ import Validator from '../libs/validator.js';
 /**
  * Profile model
  */
-export default class JoinModel {
+export default class ProfileModel {
     /**
      * Model constructor
      * @param {Object} eventBus to share events with join view

@@ -5,13 +5,15 @@ const ip = require('ip');
 
 const app = express();
 const publicFolder = path.resolve(__dirname, '..', 'public');
+const distFolder = path.resolve(publicFolder, 'dist');
 
 app.use(morgan('dev'));
-app.use(express.static(publicFolder));
+app.use(express.static(distFolder));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(publicFolder, 'index.html'));
+    res.sendFile(path.resolve(distFolder, 'index.html'));
 });
+
 
 // app.get('*', (req, res) => {
 //     res.redirect('/');

@@ -1,4 +1,5 @@
-import './loginView.tmpl.js';
+// import './loginView.tmpl.js';
+import template from './loginView.tmpl.xml';
 import BaseView from '../baseView.js';
 
 /**
@@ -21,7 +22,7 @@ export default class LoginView extends BaseView {
      * Render view method
      */
     render() {
-        this.root.innerHTML = window.fest['js/views/login/loginView.tmpl']();
+        this.root.innerHTML = template();
         this.addEventListeners();
     };
 

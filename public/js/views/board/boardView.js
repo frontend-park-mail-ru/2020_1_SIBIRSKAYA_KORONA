@@ -1,8 +1,7 @@
 import BaseView from '../baseView.js';
-import './addColumnForm.tmpl.js';
-import './addTaskForm.tmpl.js';
-import './board.tmpl.js';
-import './taskSettings/taskSettings.tmpl.js';
+import boardTemplate from './board.tmpl.xml';
+import addTaskFormTemplate from './addTaskForm.tmpl.xml';
+import addColumnFromTemplate from './addColumnForm.tmpl.xml';
 
 /**
  * Board view
@@ -50,7 +49,7 @@ export default class BoardView extends BaseView {
         });
         // console.log(this.lastTaskInColumnPosition);
 
-        this.root.innerHTML = window.fest['js/views/board/board.tmpl'](boardData);
+        this.root.innerHTML = boardTemplate(boardData);
         this.addEventListeners();
     }
 
@@ -114,7 +113,7 @@ export default class BoardView extends BaseView {
         const columnPosition = Number(node.dataset.position);
         node.classList.remove('task-list-add-task-button');
         node.removeEventListener('click', this.handleButtonClick);
-        node.innerHTML = window.fest['js/views/board/addTaskForm.tmpl']({
+        node.innerHTML = addTaskFormTemplate({
             form: true,
             id: columnID,
         });
@@ -137,7 +136,7 @@ export default class BoardView extends BaseView {
             event.stopPropagation();
             node.classList.add('task-list-add-task-button');
             node.addEventListener('click', this.handleButtonClick);
-            node.innerHTML = window.fest['js/views/board/addTaskForm.tmpl']({form: false});
+            node.innerHTML = addTaskFormTemplate({form: false});
         });
     }
 
@@ -148,7 +147,7 @@ export default class BoardView extends BaseView {
     showNewColumnForm(node) {
         node.classList.remove('column-list-add-column-button');
         node.removeEventListener('click', this.handleButtonClick);
-        node.innerHTML = window.fest['js/views/board/addColumnForm.tmpl']({form: true});
+        node.innerHTML = addColumnFromTemplate({form: true});
 
         document.getElementById('addColumnButton').addEventListener('click', () => {
             const newColumnTitleInput = document.getElementById('inputNewColumnTitle');
@@ -165,7 +164,7 @@ export default class BoardView extends BaseView {
             event.stopPropagation();
             node.classList.add('column-list-add-column-button');
             node.addEventListener('click', this.handleButtonClick);
-            node.innerHTML = window.fest['js/views/board/addColumnForm.tmpl']({form: false});
+            node.innerHTML = addColumnFromTemplate({form: false});
         });
     }
 
