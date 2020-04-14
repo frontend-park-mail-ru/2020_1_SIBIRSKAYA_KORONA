@@ -1,7 +1,7 @@
 // const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+// const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const path = require('path');
 
@@ -19,7 +19,7 @@ module.exports = {
     },
 
     devServer: isDev ? {
-        port: 5757,
+        port: 80,
         publicPath: '/',
         historyApiFallback: true,
         hot: true,
@@ -50,13 +50,10 @@ module.exports = {
     },
 
     plugins: [
-        // new HTMLWebpackPlugin({
-        //     template: path.resolve(__dirname, 'public/index.html'),
-        // }),
         new MiniCssExtractPlugin({
             filename: 'main.css',
         }),
-        new CleanWebpackPlugin(),
+        // new CleanWebpackPlugin(),
         new CopyPlugin([
             {
                 from: path.resolve(__dirname, 'public/index.html'),
@@ -66,8 +63,6 @@ module.exports = {
                 to: path.resolve(__dirname, 'public/dist/img'),
             },
         ]),
-
-
         // new ServiceWorkerWebpackPlugin({
         //     entry: path.join(__dirname, 'src/js/sw.js'),
         // }),

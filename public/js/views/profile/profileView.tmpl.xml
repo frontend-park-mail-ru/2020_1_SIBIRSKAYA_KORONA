@@ -43,8 +43,7 @@
                 </div>
                 <div class="profile-settings container-centered-col">
                     <div class="profile-settings__error hidden" id="inputNameError">
-                        Файл должен быть
-                        картинкой
+                        Файл должен быть картинкой
                     </div>
                     <div class="profile-settings__label">Аватар</div>
                     <img class="profile-settings__avatar--round" alt="MyName"

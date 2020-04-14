@@ -37,6 +37,8 @@ export default class ProfileView extends BaseView {
     renderUserData(data) {
         this.inputtedData = {};
         this.root.innerHTML = template(data);
+        console.log(data.url);
+
         this.addEventListeners();
     }
 

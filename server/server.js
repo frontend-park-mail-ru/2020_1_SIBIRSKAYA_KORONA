@@ -14,12 +14,11 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(distFolder, 'index.html'));
 });
 
-
 // app.get('*', (req, res) => {
 //     res.redirect('/');
 // });
 
-const PORT = process.env.PORT || 5757;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
     console.log(`Server working at:
     http://${ip.address()}:${PORT}

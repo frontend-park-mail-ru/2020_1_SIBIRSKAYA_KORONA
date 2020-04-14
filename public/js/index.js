@@ -11,7 +11,7 @@ import '../css/sass/reset.sass';
 import '../css/sass/base.sass';
 
 document.addEventListener('DOMContentLoaded', () => {
-/*    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js', {scope: '/'})
             .then((reg) => {
                 if (reg.installing) {
@@ -24,8 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch((error) => {
                 console.log('Registration failed with ' + error);
             });
-    }*/
-
+    }
 
     const root = document.getElementById('root');
     const router = new Router(root);

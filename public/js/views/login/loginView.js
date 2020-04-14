@@ -1,4 +1,3 @@
-// import './loginView.tmpl.js';
 import template from './loginView.tmpl.xml';
 import BaseView from '../baseView.js';
 
