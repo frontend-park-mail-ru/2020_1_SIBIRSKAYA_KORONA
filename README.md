@@ -18,3 +18,15 @@
 
 ## Репозиторий бекенда
 - [Бекенд](https://github.com/go-park-mail-ru/2020_1_SIBIRSKAYA_KORONA/)
+
+## Запуск
+
+- Запустить development сервер с автообновлением на порту `5555`
+<br> 
+`npm start` или `npm run dev`
+
+- Запустить production сервер на порту `80`
+<br> 
+`sudo npm run prod` 
+<br>
+Минифицированный bundle и css, полифилы

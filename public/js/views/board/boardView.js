@@ -13,7 +13,7 @@ export default class BoardView extends BaseView {
      */
     constructor(eventBus) {
         super(eventBus);
-
+        
         this.render = this.render.bind(this);
         this.renderBoard = this.renderBoard.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -48,7 +48,6 @@ export default class BoardView extends BaseView {
             this.lastTaskInColumnPosition[index] = (lastTask)? lastTask.position : 1;
         });
         // console.log(this.lastTaskInColumnPosition);
-
         this.root.innerHTML = boardTemplate(boardData);
         this.addEventListeners();
     }

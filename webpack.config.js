@@ -9,7 +9,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
     mode: (isDev) ? 'development' : 'production',
-    entry: path.resolve(__dirname, 'public/js/index.js'),
+    entry: ['@babel/polyfill', path.resolve(__dirname, 'public/js/index.js')],
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public/dist'),
@@ -19,14 +19,11 @@ module.exports = {
     },
 
     devServer: isDev ? {
-        port: 80,
+        port: 5555,
         publicPath: '/',
         historyApiFallback: true,
         hot: true,
         contentBase: 'public/dist',
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-        },
     } : {},
     devtool: isDev ? 'source-map' : '',
 
@@ -36,16 +33,26 @@ module.exports = {
             use: [{loader: 'fest-webpack-loader'}],
         }, {
             test: /\.sass$/,
-            use: [{
-                loader: MiniCssExtractPlugin.loader,
+            use: [
+                {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        hmr: isDev,
+                        reloadAll: isDev,
+                    },
+                },
+                'css-loader',
+                'sass-loader',
+            ],
+        }, {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: {
+                loader: 'babel-loader',
                 options: {
-                    hmr: isDev,
-                    reloadAll: isDev,
+                    presets: ['@babel/preset-env'],
                 },
             },
-            'css-loader',
-            'sass-loader',
-            ],
         }],
     },
 
