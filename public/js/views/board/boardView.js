@@ -1,7 +1,7 @@
 import BaseView from '../baseView.js';
-import boardTemplate from './board.tmpl.xml';
-import addTaskFormTemplate from './addTaskForm.tmpl.xml';
 import addColumnFromTemplate from './addColumnForm.tmpl.xml';
+import addTaskFormTemplate from './addTaskForm.tmpl.xml';
+import boardTemplate from './board.tmpl.xml';
 
 /**
  * Board view
@@ -13,7 +13,7 @@ export default class BoardView extends BaseView {
      */
     constructor(eventBus) {
         super(eventBus);
-        
+
         this.render = this.render.bind(this);
         this.renderBoard = this.renderBoard.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -45,7 +45,7 @@ export default class BoardView extends BaseView {
         this.lastTaskInColumnPosition = new Array(boardData.columns.length);
         boardData.columns.forEach((column, index) => {
             const lastTask = column.tasks[column.tasks.length - 1];
-            this.lastTaskInColumnPosition[index] = (lastTask)? lastTask.position : 1;
+            this.lastTaskInColumnPosition[index] = (lastTask) ? lastTask.position : 1;
         });
         // console.log(this.lastTaskInColumnPosition);
         this.root.innerHTML = boardTemplate(boardData);
@@ -252,7 +252,7 @@ export default class BoardView extends BaseView {
                         newTaskPos = tasks[i].pos + 1;
                     }
                 }
-                const eventBusCallParams= {
+                const eventBusCallParams = {
                     boardId: this.boardId,
                     newColumnId: Number(newColumn.dataset.columnId),
                     oldColumnId: Number(this.dragTask.element.closest('.board-column').dataset.columnId),
