@@ -18,24 +18,12 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(distFolder, 'index.html'));
 });
 
-// TODO(Alexandr): dev server
-// const isDev = process.env.NODE_ENV === 'development';
-const isDev = true;
-
-let certificate;
-let privateKey;
-if (isDev) {
-    certificate = fs.readFileSync('server/credentials/test.crt');
-    privateKey = fs.readFileSync('server/credentials/test.key');
-} else {
-    certificate = fs.readFileSync('server/credentials/prod.crt');
-    privateKey = fs.readFileSync('server/credentials/prod.key');
-}
-
 const httpServer = http.createServer(app);
 httpServer.listen(80, () => console.log(`HTTP server started`));
 
-
-const httpsServer = https.createServer({key: privateKey, cert: certificate}, app);
+const httpsServer = https.createServer({
+    key: fs.readFileSync('server/credentials/prod.key'),
+    cert: fs.readFileSync('server/credentials/prod.crt'),
+}, app);
 httpsServer.listen(443, () => console.log(`HTTPS server started`));
 

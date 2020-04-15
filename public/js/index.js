@@ -7,12 +7,14 @@ import ProfileController from './controllers/profileControl.js';
 import EventBus from './libs/eventBus.js';
 import Router from './libs/router.js';
 
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import '../css/sass/reset.sass';
 import '../css/sass/base.sass';
 
+
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js', {scope: '/'})
+        runtime.register()
             .then((reg) => {
                 if (reg.installing) {
                     console.log('Service worker installing');

@@ -1,3 +1,4 @@
+const {assets} = global.serviceWorkerOption;
 const CACHE_NAME = 'trelloCache';
 
 self.addEventListener('install', (event) => {
@@ -5,8 +6,8 @@ self.addEventListener('install', (event) => {
         caches.open(CACHE_NAME)
             .then((cache) => {
                 return cache.addAll([
-                    '/js/index.js',
-                    '/',
+                    ...assets,
+                    '/index.html',
                 ]);
             }),
     );
