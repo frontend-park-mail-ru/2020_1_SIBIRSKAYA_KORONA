@@ -33,9 +33,9 @@ if (isDev) {
 }
 
 const httpServer = http.createServer(app);
-httpServer.listen(5555, () => console.log(`HTTP server started`));
+httpServer.listen(80, () => console.log(`HTTP server started`));
 
 
 const httpsServer = https.createServer({key: privateKey, cert: certificate}, app);
-httpsServer.listen(8787, () => console.log(`HTTPS server started`));
+httpsServer.listen(443, () => console.log(`HTTPS server started`));
 
