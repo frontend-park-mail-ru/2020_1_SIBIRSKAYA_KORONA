@@ -7,7 +7,6 @@ import ProfileController from './controllers/profileControl.js';
 import EventBus from './libs/eventBus.js';
 import Router from './libs/router.js';
 
-import '../css/sass/reset.sass';
 import '../css/sass/base.sass';
 
 document.addEventListener('DOMContentLoaded', () => {

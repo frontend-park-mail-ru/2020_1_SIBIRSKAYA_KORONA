@@ -17,7 +17,7 @@
                         </a>
                     </fest:for>
                 </div>
-                <div class="board-header-center__button--primary js-addNewMember"
+                <div class="board-header-center__button--primary js-addNewUser"
                      id="inviteNewMemberButton">Пригласить
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     <div class="task-list" data-column-id="{column.id}">
                         <fest:for iterate="column.tasks" index="j" value="task">
                             <div class="task-mini js-taskSettings"
-                            	 data-column-id="{column.id}"
+                                 data-column-id="{column.id}"
                                  data-task-id="{task.id}"
                                  data-task-url="{task.url}"
                                  data-task-position="{task.position}">

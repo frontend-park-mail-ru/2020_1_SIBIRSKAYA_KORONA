@@ -16,6 +16,9 @@ export default class BoardSettingsView extends BaseView {
         this.render = this.render.bind(this);
         this.renderBoardSettings = this.renderBoardSettings.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
+
+        this.searchShownFor = ''; // members | admins
 
         this.eventBus.subscribe('gotBoardSettings', this.renderBoardSettings);
     }
@@ -45,19 +48,72 @@ export default class BoardSettingsView extends BaseView {
     addEventListeners() {
         const taskSettings = document.getElementById('popover-block');
 
-        const popoverWindow = taskSettings.getElementsByClassName('board-settings')[0];
+        const popoverWindow = taskSettings.querySelector('.board-settings');
         popoverWindow.addEventListener('click', (event) => {
             event.stopPropagation();
             this.eventBus.call(ChainLinkSignals.closeLastChainLink);
         });
 
-        const windowOverlay = taskSettings.getElementsByClassName('window-overlay')[0];
+        const windowOverlay = taskSettings.querySelector('.window-overlay');
         windowOverlay.addEventListener('click', (event) => {
             if (event.target === event.currentTarget) {
                 event.stopPropagation();
                 this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
             }
         });
+
+        const buttons = [
+            document.querySelector('.js-addNewMember'),
+            document.querySelector('.js-addNewAdmin'),
+        ];
+
+        buttons.forEach((button) => {
+            console.log(button);
+            button.addEventListener('click', this.handleButtonClick);
+        });
+    }
+
+    /**
+     * Handle all buttons click
+     * @param {object} event mouse click event
+     */
+    handleButtonClick(event) {
+        const target = event.currentTarget;
+        switch (true) {
+            case target.classList.contains('js-addNewMember'):
+            case target.classList.contains('js-addNewAdmin'):
+                if (!target.classList.contains('board-settings-members__add-button--rotated')) {
+                    this.showSearchForm(target);
+                } else {
+                    this.hideSearchForm(target);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Shows search form for adding users to board
+     * @param {HTMLElement} target - click event target
+     */
+    showSearchForm(target) {
+        target.classList.add('board-settings-members__add-button--rotated');
+        if (!document.querySelector('.js-search').classList.contains('display-none')) {
+            return;
+        }
+        const searchContainer = document.querySelector('.js-search');
+        searchContainer.classList.remove('display-none');
+    }
+
+    /**
+     * Hides search form and set plus buttons appearance to default
+     */
+    hideSearchForm() {
+        document.querySelector('.js-addNewMember').classList.remove('board-settings-members__add-button--rotated');
+        document.querySelector('.js-addNewAdmin').classList.remove('board-settings-members__add-button--rotated');
+        const searchContainer = document.querySelector('.js-search');
+        searchContainer.classList.add('display-none');
     }
 
     /**

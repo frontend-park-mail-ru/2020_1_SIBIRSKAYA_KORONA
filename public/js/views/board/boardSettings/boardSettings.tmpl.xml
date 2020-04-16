@@ -7,6 +7,14 @@
                 </div>
                 <div class="board-settings-title__hr--width-2"/>
             </div>
+            <div class="board-settings__label ">Название доски</div>
+            <input class="board-settings__input">
+                <fest:attributes>
+                    <fest:attribute name="value">
+                        <fest:value>board.title</fest:value>
+                    </fest:attribute>
+                </fest:attributes>
+            </input>
             <div class="container-2cols">
                 <div>
                     <div class="board-settings__label">Администраторы</div>
@@ -18,7 +26,20 @@
                                      title="{admin.nickname}"/>
                             </a>
                         </fest:for>
-                        <div class="board-settings-members__add-button" name="addNewMemberButton">+</div>
+                        <img class="board-settings-members__add-button js-addNewAdmin" src="/img/plus_icon.svg"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="board-settings__label">Участники</div>
+                    <div class="board-settings-members">
+                        <fest:for iterate="board.members" index="i" value="member">
+                            <a href="{member.url}">
+                                <img class="board-settings-members__member" src="{member.avatar}"
+                                     alt="{member.nickname}"
+                                     title="{member.nickname}"/>
+                            </a>
+                        </fest:for>
+                        <img class="board-settings-members__add-button js-addNewMember" src="/img/plus_icon.svg"/>
                     </div>
                 </div>
                 <!--<div>
@@ -34,6 +55,13 @@
                         <div class="button default" name="addNewLabelButton">+</div>
                     </div>
                 </div>-->
+            </div>
+            <div class="js-search display-none">
+                <div class="search-form">
+                    <div class="board-settings__label">Поиск нового участника</div>
+                    <input class="board-settings__input" placeholder="Никнейм нового пользователя" autocomplete="off"/>
+                    <div class="js-search-results"/>
+                </div>
             </div>
         </div>
     </div>

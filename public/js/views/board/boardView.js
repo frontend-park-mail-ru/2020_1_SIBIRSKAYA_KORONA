@@ -47,7 +47,7 @@ export default class BoardView extends BaseView {
             const lastTask = column.tasks[column.tasks.length - 1];
             this.lastTaskInColumnPosition[index] = (lastTask) ? lastTask.position : 1;
         });
-        // console.log(this.lastTaskInColumnPosition);
+        boardData.members = boardData.admins;
         this.root.innerHTML = boardTemplate(boardData);
         this.addEventListeners();
     }
@@ -59,7 +59,7 @@ export default class BoardView extends BaseView {
         const tasks = [...document.getElementsByClassName('js-taskSettings')];
         const buttons = [
             ...document.getElementsByClassName('js-openBoardSettings'),
-            ...document.getElementsByClassName('js-addNewMember'),
+            ...document.getElementsByClassName('js-addNewUser'),
             ...document.getElementsByClassName('js-addNewColumn'),
             ...document.getElementsByClassName('js-openColumnSettings'),
             ...document.getElementsByClassName('js-addNewTask'),
@@ -97,8 +97,8 @@ export default class BoardView extends BaseView {
                 this.eventBus.call('openBoardSettings', this.boardId);
                 break;
 
-            case target.classList.contains('js-addNewMember'):
-                this.eventBus.call('addNewMember');
+            case target.classList.contains('js-addNewUser'):
+                this.eventBus.call('addNewUser');
                 break;
         }
     }
@@ -110,13 +110,14 @@ export default class BoardView extends BaseView {
     showNewTaskForm(node) {
         const columnID = Number(node.dataset.columnId);
         const columnPosition = Number(node.dataset.position);
+
         node.classList.remove('task-list-add-task-button');
         node.removeEventListener('click', this.handleButtonClick);
         node.innerHTML = addTaskFormTemplate({
             form: true,
             id: columnID,
         });
-
+        node.scrollIntoView({block: 'end', behavior: 'smooth'});
         const addButtonID = 'addTaskButton' + columnID;
         document.getElementById(addButtonID).addEventListener('click', () => {
             const newTaskInput = document.getElementById('inputNewTaskTitle');
@@ -147,6 +148,8 @@ export default class BoardView extends BaseView {
         node.classList.remove('column-list-add-column-button');
         node.removeEventListener('click', this.handleButtonClick);
         node.innerHTML = addColumnFromTemplate({form: true});
+        node.scrollIntoView({inline: 'end', behavior: 'smooth'});
+        document.querySelector('.column-list').scroll(100500, 0);
 
         document.getElementById('addColumnButton').addEventListener('click', () => {
             const newColumnTitleInput = document.getElementById('inputNewColumnTitle');

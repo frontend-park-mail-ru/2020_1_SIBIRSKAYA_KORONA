@@ -22,7 +22,10 @@
                                          title="{member.nickname}"/>
                                 </a>
                             </fest:for>
-                            <div class="task-settings-members__add-button" name="addNewMemberButton">+</div>
+                            <a>
+                                <img class="task-settings-members__add-button js-addNewTaskMember"
+                                 src="/img/plus_icon.svg"/>
+                            </a>
                         </div>
                     </div>
                     <div>

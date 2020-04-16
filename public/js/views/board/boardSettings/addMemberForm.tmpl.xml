@@ -1,0 +1,6 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="search-form">
+        <div class="board-settings__label">Добавление пользователя</div>
+        <input class="board-settings__input" placeholder="Никнейм нового пользователя" autocomplete="off"/>
+    </div>
+</fest:template>

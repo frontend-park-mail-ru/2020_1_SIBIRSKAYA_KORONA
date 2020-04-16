@@ -17,7 +17,7 @@ export default class BoardController {
             'getBoardData',
             'gotBoardData',
             // TODO(Alexandr): 'gotBoardDataError',
-            'addNewMember',
+            'addNewUser',
             'addNewColumn',
             'addNewTask',
             'openBoardSettings',

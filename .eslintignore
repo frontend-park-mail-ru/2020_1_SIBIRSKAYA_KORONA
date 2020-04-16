@@ -2,4 +2,6 @@ node_modules
 
 dist
 
+*.tmpl.js
+
 validator.js

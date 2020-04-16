@@ -1,32 +1,47 @@
 .board-settings
     @extend .form
-    // display: flex
-    // flex-direction: column
-    width: 700px
     box-shadow: none
+    width: 600px
+    top: 10px
+
     &-title
         &__text
             @extend .title
             margin-left: 20px
             font-size: 20pt
+
         &__hr--width-2
             @extend .hr-width-2
+
     &-members
         @extend .member-container
         padding-top: 4px
+        overflow-x: unset
+
         &__member
             height: 60px
             width: 60px
             border-radius: 50%
+            margin-right: 10px
+
         &__add-button
-            background: #d4d5fa8a
+            height: 60px
+            width: 60px
+            border-radius: 50%
+            border: 2px dashed #afaeae
             transition: 0.3s
-            color: #000000
+            &--rotated
+
+                transform: rotate(45deg)
+
             &:hover
-                background: #d4d5fafa
+                border-style: solid
+                cursor: pointer
+
     &-controls
         margin-top: 20px
         @extend .controls-panel
+
         &__button
             &--primary
                 @extend .button--primary
@@ -36,9 +51,10 @@
 
     &__error
         @extend .input-error
+
     &__label
         margin-top: 30px
         @extend .form-input-label
+
     &__input
         @extend .form-input
-    &__textarea
