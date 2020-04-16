@@ -16,13 +16,11 @@
                                  title="{member.nickname}"/>
                         </a>
                     </fest:for>
-                </div>
-                <div class="board-header-center__button--primary js-addNewUser"
-                     id="inviteNewMemberButton">Пригласить
+                    <img class="board-header-center-members__add-button js-addNewUser" src="/img/plus_icon.svg"/>
                 </div>
             </div>
             <div class="board-header-right">
-                <div class="board-header-right__button--primary js-openBoardSettings"
+                <div class="board-header-right__button--secondary js-openBoardSettings"
                      id="boardSettingsButton">Настройки доски
                 </div>
             </div>

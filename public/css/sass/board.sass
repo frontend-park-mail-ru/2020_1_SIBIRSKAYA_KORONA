@@ -6,17 +6,20 @@
     flex-grow: 1
 
 .board-header
-    background-color: #18255f
-    padding: 10px 10px
+    padding: 0 10px 10px
+    background: #18255f
     @extend .header
 
     &-left
         @extend .header-block-left
 
         &__title
+            @extend .title
             width: 33%
             font-size: 35px
-            color: #ffeaea
+
+            color: #eaeeff
+
 
     &-center
         @extend .header-block-center
@@ -26,16 +29,26 @@
 
             &__member
                 @extend .board-member
+                margin-right: 3px
+            &__add-button
+                @extend .board-header-center-members__member
+                border: 2px dashed #afaeae
+                transition: 0.3s
+                &:hover
+                    border-style: solid
+                    cursor: pointer
 
-        &__button--primary
-            @extend .button--primary
+
+
+        &__button--secondary
+            @extend .button--secondary
             margin-left: 15px
 
     &-right
         @extend .header-block-right
 
-        &__button--primary
-            @extend .button--primary
+        &__button--secondary
+            @extend .button--secondary
 
 .member-container
     display: flex

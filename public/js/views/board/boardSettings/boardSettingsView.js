@@ -53,7 +53,6 @@ export default class BoardSettingsView extends BaseView {
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
         });
-        console.log(usersData);
     }
 
     /**

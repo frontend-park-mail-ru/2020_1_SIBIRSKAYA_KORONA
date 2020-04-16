@@ -167,7 +167,6 @@ export default class BoardModel {
      * @param {object} data - fields: boardId, columnTitle
      */
     addColumn(data) {
-        console.log(data);
         columnsPost(data.boardId, data.columnTitle, data.columnPosition).then((response) => {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
