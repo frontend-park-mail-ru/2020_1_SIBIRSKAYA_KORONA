@@ -36,7 +36,8 @@ self.addEventListener('fetch', (event) => {
 
         return caches.match(event.request)
             .then((response) => {
-                return response || fetch(event.request);
+                // TODO(Alexandr): change to another status
+                return response || new Response(null, {status: 500});
             });
     })());
 });

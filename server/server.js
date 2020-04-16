@@ -13,9 +13,11 @@ const distFolder = path.resolve(publicFolder, 'dist');
 
 app.use(morgan('dev'));
 app.use(express.static(distFolder));
+app.use(express.static(publicFolder));
+
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(distFolder, 'index.html'));
+    res.sendFile(path.resolve(publicFolder, 'index.html'));
 });
 
 const httpServer = http.createServer(app);
