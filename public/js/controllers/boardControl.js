@@ -2,6 +2,7 @@ import EventBus from '../libs/eventBus.js';
 import BoardModel from '../models/boardModel.js';
 import BoardView from '../views/board/boardView.js';
 import TaskSettingsController from './taskSettingsControl.js';
+import BoardSettingsController from './boardSettingsControl.js';
 
 /**
  * Board controller
@@ -20,6 +21,8 @@ export default class BoardController {
             'addNewColumn',
             'addNewTask',
             'openBoardSettings',
+            'closeBoardSettings',
+
             'openCardSettings',
             'openTaskSettings',
             'closeTaskSettings',
@@ -36,14 +39,32 @@ export default class BoardController {
 
         this.router = router;
         this.triggerTaskAndBoard = this.triggerTaskAndBoard.bind(this);
+        this.triggerBoardSettingsAndBoard = this.triggerBoardSettingsAndBoard.bind(this);
 
         this.eventBus.subscribe('unauthorized', () => router.go('/login'));
         this.eventBus.subscribe('goToBoards', () => router.go('/boards'));
+
+        this.eventBus.subscribe('openBoardSettings', (boardId) => {
+            this.router.go(`/boards/${boardId}/settings`);
+        });
         this.eventBus.subscribe('openTaskSettings', (boardId, columnId, taskId) => {
             this.router.go(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
         });
-        this.eventBus.subscribe('closeTaskSettings', () => {
-            router.go('/boards/' + this.view.boardId);
+
+        const redirectBoard = () => router.go('/boards/' + this.view.boardId);
+        this.eventBus.subscribe('closeBoardSettings', redirectBoard);
+        this.eventBus.subscribe('closeTaskSettings', redirectBoard);
+    }
+
+    /**
+     * Triggers board and task render
+     * @param {Object} dataFromUrl
+     */
+    triggerBoardSettingsAndBoard(dataFromUrl) {
+        const boardId = Number(dataFromUrl.boardId);
+        this.view.render(dataFromUrl).then(() => {
+            this.childController = new BoardSettingsController(this.eventBus, this.router, boardId);
+            this.childController.view.render();
         });
     }
 
@@ -55,7 +76,6 @@ export default class BoardController {
         const boardId = Number(dataFromUrl.boardId);
         const columnId = Number(dataFromUrl.columnId);
         const taskId = Number(dataFromUrl.taskId);
-
 
         this.view.render(dataFromUrl).then(() => {
             this.childController = new TaskSettingsController(this.eventBus, this.router, boardId, columnId, taskId);

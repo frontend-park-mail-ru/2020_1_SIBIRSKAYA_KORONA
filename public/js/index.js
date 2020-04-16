@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.setRoute('^/boards/(?<boardId>\\d+)/?$', boardController.view.render);
     router.setRoute('^/boards/(?<boardId>\\d+)/columns/(?<columnId>\\d+)/tasks/(?<taskId>\\d+)/?$',
         boardController.triggerTaskAndBoard);
+    router.setRoute('^/boards/(?<boardId>\\d+)/settings/?$', boardController.triggerBoardSettingsAndBoard);
 
     headerController.view.render({});
     router.go(window.location.pathname);

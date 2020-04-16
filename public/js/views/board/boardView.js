@@ -94,7 +94,7 @@ export default class BoardView extends BaseView {
                 break;
 
             case target.classList.contains('js-openBoardSettings'):
-                this.eventBus.call('openBoardSettings');
+                this.eventBus.call('openBoardSettings', this.boardId);
                 break;
 
             case target.classList.contains('js-addNewMember'):

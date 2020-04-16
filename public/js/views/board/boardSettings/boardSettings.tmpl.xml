@@ -1,0 +1,40 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
+    <div class="window-overlay popup">
+        <div class="board-settings">
+            <div class="board-settings-title">
+                <div class="board-settings-title__text">
+                    Настройки
+                </div>
+                <div class="board-settings-title__hr--width-2"/>
+            </div>
+            <div class="container-2cols">
+                <div>
+                    <div class="board-settings__label">Администраторы</div>
+                    <div class="board-settings-members">
+                        <fest:for iterate="board.admins" index="i" value="admin">
+                            <a href="{admin.url}">
+                                <img class="board-settings-members__member" src="{admin.avatar}"
+                                     alt="{admin.nickname}"
+                                     title="{admin.nickname}"/>
+                            </a>
+                        </fest:for>
+                        <div class="board-settings-members__add-button" name="addNewMemberButton">+</div>
+                    </div>
+                </div>
+                <!--<div>
+                    <div class="board__label">Метки</div>
+                    <div class="task-label-list">
+                        <fest:for iterate="board.labels" index="i" value="label">
+                            <div class="task-label-list__label-mini&#45;&#45;color-{label.color}">
+                                <fest:value>
+                                    label.title
+                                </fest:value>
+                            </div>
+                        </fest:for>
+                        <div class="button default" name="addNewLabelButton">+</div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</fest:template>

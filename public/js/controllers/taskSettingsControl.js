@@ -45,7 +45,7 @@ export default class TaskSettingsController extends ControllerChainLink {
             boardEventBus.call('closeTaskSettings');
         });
 
-        this.router =router;
+        this.router = router;
         this.view = new TaskSettingsView(this.eventBus);
         this.model = new TaskSettingsModel(this.eventBus, boardID, columnID, taskID);
 
