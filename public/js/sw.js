@@ -1,5 +1,5 @@
 const {assets} = global.serviceWorkerOption;
-const CACHE_NAME = 'trelloCache';
+const CACHE_NAME = 'trello-cache-v1';
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
@@ -39,4 +39,18 @@ self.addEventListener('fetch', (event) => {
                 return response || fetch(event.request);
             });
     })());
+});
+
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((keys) => Promise.all(
+            keys.map((key) => {
+                if (key !== CACHE_NAME) {
+                    caches.delete(key)
+                        .then(() => console.log(`Deleted cache: ${key}`));
+                }
+            }),
+        )),
+    );
 });
