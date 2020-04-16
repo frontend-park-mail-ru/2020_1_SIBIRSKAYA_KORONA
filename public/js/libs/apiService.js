@@ -217,7 +217,6 @@ export const taskPut = (boardID, columnID, taskID, task = {}) => {
     return fetchPut(apiUrl.href, JSON.stringify(task));
 };
 
-
 /**
  * Delete task
  * @param {Number} boardID
@@ -228,4 +227,27 @@ export const taskPut = (boardID, columnID, taskID, task = {}) => {
 export const taskDelete = (boardID, columnID, taskID) => {
     const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}`, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
+};
+
+/**
+ * Search users by part of nickname
+ * @param {Number} boardID
+ * @param {String} nicknamePart
+ * @param {Number} limit - result count limit
+ * @return {Promise<Response>}
+ */
+export const getUsers = (boardID, nicknamePart, limit) => {
+    const apiUrl = new URL(`/search/profile?nickname=${nicknamePart}&limit=${limit}`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Add user to board
+ * @param {Number} boardID
+ * @param {Number} userID
+ * @return {Promise<Response>}
+ */
+export const postMember = (boardID, userID) => {
+    const apiUrl = new URL(`/boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, null);
 };

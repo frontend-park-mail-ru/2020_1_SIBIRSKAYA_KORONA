@@ -1,8 +1,7 @@
+import ControllerChainLink, {ChainLinkSignals} from '../libs/controllerChainLink.js';
+import EventBus from '../libs/eventBus.js';
 import BoardSettingsModel from '../models/boardSettingsModel.js';
 import BoardSettingsView from '../views/board/boardSettings/boardSettingsView.js';
-import EventBus from '../libs/eventBus.js';
-import ControllerChainLink from '../libs/controllerChainLink.js';
-import {ChainLinkSignals} from '../libs/controllerChainLink.js';
 
 /**
  * Task settings controller
@@ -19,6 +18,13 @@ export default class TaskSettingsController extends ControllerChainLink {
         const actualSignals = [
             'getBoardSettings',
             'gotBoardSettings',
+
+            'getUsers',
+            'gotUsers',
+
+            'inviteUser',
+
+            'boardTitleChangeInput',
 
             'saveBoardSettings',
             'deleteBoard',

@@ -1,6 +1,7 @@
 import {ChainLinkSignals} from '../../../libs/controllerChainLink.js';
 import BaseView from '../../baseView.js';
 import template from './boardSettings.tmpl.xml';
+import searchResultsTemplate from './showSearchResults.tmpl.xml';
 
 /**
  * Task settings view
@@ -14,13 +15,12 @@ export default class BoardSettingsView extends BaseView {
         super(eventBus);
 
         this.render = this.render.bind(this);
-        this.renderBoardSettings = this.renderBoardSettings.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.handleUserInput = this.handleUserInput.bind(this);
 
-        this.searchShownFor = ''; // members | admins
-
-        this.eventBus.subscribe('gotBoardSettings', this.renderBoardSettings);
+        this.eventBus.subscribe('gotBoardSettings', this.renderBoardSettings.bind(this));
+        this.eventBus.subscribe('gotUsers', this.renderUsersSearchResult.bind(this));
     }
 
     /**
@@ -31,16 +31,30 @@ export default class BoardSettingsView extends BaseView {
     }
 
     /**
-     * Real render view method with task data from model
-     * @param {Object} boardData - task data to render
+     * Real render view method with board data from model
+     * @param {Object} boardData - board data to render
      */
     renderBoardSettings(boardData) {
-        console.log(boardData.board);
         const popoverDiv = document.getElementById('popover-block');
         popoverDiv.innerHTML = template(boardData.board);
         this.addEventListeners();
     }
 
+    /**
+     * Render users search results
+     * @param {Object} usersData - user data to render
+     */
+    renderUsersSearchResult(usersData) {
+        document.querySelector('.js-search-results').innerHTML = searchResultsTemplate(usersData);
+        const buttons = [
+            ...document.querySelectorAll('.js-addNewAdmin'),
+            ...document.querySelectorAll('.js-addNewMember'),
+        ];
+        buttons.forEach((button) => {
+            button.addEventListener('click', this.handleButtonClick);
+        });
+        console.log(usersData);
+    }
 
     /**
      * Add event listeners for interactive elements
@@ -63,14 +77,40 @@ export default class BoardSettingsView extends BaseView {
         });
 
         const buttons = [
-            document.querySelector('.js-addNewMember'),
-            document.querySelector('.js-addNewAdmin'),
+            document.querySelector('.js-findMember'),
+            document.querySelector('.js-findAdmin'),
         ];
-
         buttons.forEach((button) => {
-            console.log(button);
             button.addEventListener('click', this.handleButtonClick);
         });
+
+        const inputs = [
+            document.querySelector('#js-boardTitleInput'),
+            document.querySelector('#js-searchMembersInput'),
+        ];
+        inputs.forEach((input) => {
+            input.addEventListener('input', this.handleUserInput);
+        });
+    }
+
+    /**
+     * Handle user input in input fields
+     * @param {object} event input event
+     */
+    handleUserInput(event) {
+        const target = event.currentTarget;
+        switch (true) {
+            case target.id === 'js-boardTitleInput':
+                console.log('js-boardTitleInput');
+                break;
+            case target.id === 'js-searchMembersInput':
+                if (target.value.length > 2) {
+                    this.eventBus.call('getUsers', target.value);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -80,13 +120,18 @@ export default class BoardSettingsView extends BaseView {
     handleButtonClick(event) {
         const target = event.currentTarget;
         switch (true) {
-            case target.classList.contains('js-addNewMember'):
-            case target.classList.contains('js-addNewAdmin'):
+            case target.classList.contains('js-findMember'):
+            case target.classList.contains('js-findAdmin'):
                 if (!target.classList.contains('board-settings-members__add-button--rotated')) {
                     this.showSearchForm(target);
                 } else {
                     this.hideSearchForm(target);
                 }
+                break;
+            case target.classList.contains('js-addNewAdmin'):
+            case target.classList.contains('js-addNewMember'):
+                const userID = target.dataset.userId;
+                this.eventBus.call('inviteUser', userID);
                 break;
             default:
                 break;
@@ -110,8 +155,8 @@ export default class BoardSettingsView extends BaseView {
      * Hides search form and set plus buttons appearance to default
      */
     hideSearchForm() {
-        document.querySelector('.js-addNewMember').classList.remove('board-settings-members__add-button--rotated');
-        document.querySelector('.js-addNewAdmin').classList.remove('board-settings-members__add-button--rotated');
+        document.querySelector('.js-findMember').classList.remove('board-settings-members__add-button--rotated');
+        document.querySelector('.js-findAdmin').classList.remove('board-settings-members__add-button--rotated');
         const searchContainer = document.querySelector('.js-search');
         searchContainer.classList.add('display-none');
     }

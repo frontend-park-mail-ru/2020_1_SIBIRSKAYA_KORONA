@@ -47,7 +47,7 @@ export default class BoardView extends BaseView {
             const lastTask = column.tasks[column.tasks.length - 1];
             this.lastTaskInColumnPosition[index] = (lastTask) ? lastTask.position : 1;
         });
-        boardData.members = boardData.admins;
+        boardData.members.push(...boardData.admins);
         this.root.innerHTML = boardTemplate(boardData);
         this.addEventListeners();
     }

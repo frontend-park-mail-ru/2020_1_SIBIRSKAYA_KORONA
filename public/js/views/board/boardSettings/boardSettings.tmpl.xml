@@ -8,7 +8,7 @@
                 <div class="board-settings-title__hr--width-2"/>
             </div>
             <div class="board-settings__label ">Название доски</div>
-            <input class="board-settings__input">
+            <input class="board-settings__input" id="js-boardTitleInput">
                 <fest:attributes>
                     <fest:attribute name="value">
                         <fest:value>board.title</fest:value>
@@ -26,7 +26,7 @@
                                      title="{admin.nickname}"/>
                             </a>
                         </fest:for>
-                        <img class="board-settings-members__add-button js-addNewAdmin" src="/img/plus_icon.svg"/>
+                        <img class="board-settings-members__add-button js-findAdmin" src="/img/plus_icon.svg"/>
                     </div>
                 </div>
                 <div>
@@ -39,7 +39,7 @@
                                      title="{member.nickname}"/>
                             </a>
                         </fest:for>
-                        <img class="board-settings-members__add-button js-addNewMember" src="/img/plus_icon.svg"/>
+                        <img class="board-settings-members__add-button js-findMember" src="/img/plus_icon.svg"/>
                     </div>
                 </div>
                 <!--<div>
@@ -59,8 +59,11 @@
             <div class="js-search display-none">
                 <div class="search-form">
                     <div class="board-settings__label">Поиск нового участника</div>
-                    <input class="board-settings__input" placeholder="Никнейм нового пользователя" autocomplete="off"/>
+                    <input class="board-settings__input" id="js-searchMembersInput"
+                           placeholder="Никнейм нового пользователя" autocomplete="off"/>
                     <div class="js-search-results"/>
+                </div>
+                <div class="js-search-results">
                 </div>
             </div>
         </div>

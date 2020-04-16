@@ -1,7 +1,7 @@
 .board-settings
     @extend .form
     box-shadow: none
-    width: 600px
+    width: 750px
     top: 10px
 
     &-title
@@ -30,6 +30,7 @@
             border-radius: 50%
             border: 2px dashed #afaeae
             transition: 0.3s
+
             &--rotated
 
                 transform: rotate(45deg)
@@ -58,3 +59,34 @@
 
     &__input
         @extend .form-input
+
+.search-result
+    margin-top: 10px
+
+    &-row
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+        margin-top: 10px
+        width: 100%
+
+        &__avatar
+            display: flex
+            align-items: center
+
+        &__nickname
+            @extend .title
+            font-size: 14pt
+            margin-left: 5px
+
+        &--controls
+            @extend .controls-panel
+
+            &__button
+                &--primary
+                    @extend .button--primary
+
+                &--secondary
+                    @extend .button--secondary
+                    margin-right: 15px
