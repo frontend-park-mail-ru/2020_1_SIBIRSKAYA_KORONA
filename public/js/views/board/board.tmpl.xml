@@ -71,11 +71,11 @@
                                 </div>
                             </div>
                         </fest:for>
-                        <div class="task-list-add-task-button js-addNewTask"
-                             data-column-id="{column.id}"
-                             data-position="{column.position}">
-                            + Добавить задачу
-                        </div>
+                    </div>
+                    <div class="task-list-add-task-button js-addNewTask"
+                         data-column-id="{column.id}"
+                         data-position="{column.position}">
+                        + Добавить задачу
                     </div>
                 </div>
             </fest:for>

@@ -30,14 +30,15 @@
             &__member
                 @extend .board-member
                 margin-right: 3px
+
             &__add-button
                 @extend .board-header-center-members__member
                 border: 2px dashed #afaeae
                 transition: 0.3s
+
                 &:hover
                     border-style: solid
                     cursor: pointer
-
 
 
         &__button--secondary
@@ -122,7 +123,7 @@
     height: fit-content
     min-width: 272px
     max-width: 272px
-    max-height: 75vh
+    max-height: 74.2vh
     padding: 0 4px 8px
     margin: 0 5px
     background: #ededed
@@ -137,7 +138,7 @@
 
         &__title
             @extend .title
-            font-size: 22px
+            font-size: 20px
             word-wrap: break-word
             max-width: 90%
             margin: 15px 10px 10px 15px
@@ -149,6 +150,7 @@
             border-radius: 6px
             align-self: start
             transition: 0.2s
+
             &:before
                 color: #848484
                 font-weight: bold
@@ -169,26 +171,32 @@
 
     &-add-task-button
         padding: 9px
+        margin-left: 5px
+        margin-right: 5px
         background: transparent
         color: #6a6666
         font-size: 16pt
+        border-radius: 5px
 
         &:hover
-            @extend .task-mini
+            background: #d4d5fa8a
             color: black
+            box-shadow: 0 3px 5px -5px black
+            cursor: pointer
+
 
 .task-create-form
-    height: 80%
+    height: 147px
     display: flex
     flex-direction: column
-    justify-content: space-around
+    justify-content: space-between
     padding: 10px
 
     &__label
         @extend .form-input-label
 
     &__input
-        margin: 0 auto 30px
+        margin: 0 auto 10px
         @extend .form-input
 
     &-controls
@@ -210,14 +218,12 @@
     margin-bottom: 10px
     background: #d4d5fa8a
     cursor: pointer
-    box-shadow:  0 3px 5px -5px black
+    box-shadow: 0 3px 5px -5px black
 
     &:hover
         cursor: pointer
         background: #d4d5fafa
 
-    &:last-child
-        margin-bottom: 0
 
     &__description
         background: white
@@ -291,6 +297,7 @@
     flex-direction: column
     width: 700px
     box-shadow: none
+
     &-title
         &__text
             @extend .title
@@ -303,17 +310,21 @@
     &-settings
         margin: 0 auto 10px
         width: 660px
+
         &-members
             @extend .member-container
+
             &__member
                 height: 60px
                 width: 60px
                 border-radius: 50%
                 margin-right: 10px
+
             &__add-button
                 @extend .task-settings-members__member
                 border: 2px dashed #afaeae
                 transition: 0.3s
+
                 &:hover
                     border-style: solid
                     cursor: pointer
@@ -322,6 +333,7 @@
         &-controls
             margin-top: 20px
             @extend .controls-panel
+
             &__button
                 &--primary
                     @extend .button--primary
@@ -331,13 +343,16 @@
 
         &__error
             @extend .input-error
+
         &__label
             margin-top: 30px
             @extend .form-input-label
+
         &__input
             @extend .form-input
+
         &__textarea
-             @extend .form-textarea
+            @extend .form-textarea
 
 /*       END TASK       */
 
@@ -440,6 +455,7 @@
 .task-add-label
     background: #d4d5fa8a
     font-size: 16pt
+
     &:hover
         background: #d4d5fafa
 
