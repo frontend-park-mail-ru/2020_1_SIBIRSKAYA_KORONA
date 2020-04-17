@@ -233,27 +233,30 @@ export default class BoardView extends BaseView {
             const elem = document.elementFromPoint(event.clientX, event.clientY);
             if (elem && elem.closest('.board-column')) {
                 const newColumn = elem.closest('.board-column');
-                const taskList = newColumn.lastChild;
+                const taskList = newColumn.querySelector('.task-list');
                 const tasks = [];
-                [...taskList.childNodes].forEach((node) => {
-                    if (node.classList.contains('task-mini')) {
-                        const boundingRect = node.getBoundingClientRect();
-                        const verticalPosCenter = boundingRect.y + (boundingRect.height / 2);
-                        tasks.push({
-                            realPos: verticalPosCenter,
-                            pos: Number(node.dataset.taskPosition),
-                        });
-                    }
-                });
-                const newTaskRealPos = event.pageY;
                 let newTaskPos = 1;
-                for (let i = 0; i !== tasks.length; i++) {
-                    if (tasks[i].realPos > newTaskRealPos) {
-                        newTaskPos = (i === 0) ? tasks[i].pos / 2 : (tasks[i].pos + tasks[i - 1].pos) / 2;
-                        break;
-                    }
-                    if (i === tasks.length - 1) {
-                        newTaskPos = tasks[i].pos + 1;
+                if (taskList.childNodes) {
+                    [...taskList.childNodes].forEach((node) => {
+                        if (node.classList.contains('task-mini')) {
+                            const boundingRect = node.getBoundingClientRect();
+                            const verticalPosCenter = boundingRect.y + (boundingRect.height / 2);
+                            tasks.push({
+                                realPos: verticalPosCenter,
+                                pos: Number(node.dataset.taskPosition),
+                            });
+                        }
+                    });
+                    const newTaskRealPos = event.pageY;
+
+                    for (let i = 0; i !== tasks.length; i++) {
+                        if (tasks[i].realPos > newTaskRealPos) {
+                            newTaskPos = (i === 0) ? tasks[i].pos / 2 : (tasks[i].pos + tasks[i - 1].pos) / 2;
+                            break;
+                        }
+                        if (i === tasks.length - 1) {
+                            newTaskPos = tasks[i].pos + 1;
+                        }
                     }
                 }
                 const eventBusCallParams = {
