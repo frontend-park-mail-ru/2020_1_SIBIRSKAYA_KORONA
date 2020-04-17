@@ -1,9 +1,11 @@
-// const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-// const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+// const CopyPlugin = require('copy-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const path = require('path');
+const fs = require('fs');
+const morgan = require('morgan');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -20,10 +22,18 @@ module.exports = {
 
     devServer: isDev ? {
         port: 5555,
+        https: true,
+        key: fs.readFileSync(path.resolve(__dirname, 'server/credentials/test.key')),
+        cert: fs.readFileSync(path.resolve(__dirname, 'server/credentials/test.crt')),
+        setup: (app) => {
+            app.use(morgan('dev'));
+        },
+
         publicPath: '/',
         historyApiFallback: true,
         hot: true,
-        contentBase: 'public/dist',
+        contentBase: [path.resolve(__dirname, 'public/dist'), path.resolve(__dirname, 'public')],
+
     } : {},
     devtool: isDev ? 'source-map' : '',
 
@@ -60,18 +70,18 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'main.css',
         }),
-        // new CleanWebpackPlugin(),
-        new CopyPlugin([
-            {
-                from: path.resolve(__dirname, 'public/index.html'),
-                to: path.resolve(__dirname, 'public/dist/index.html'),
-            }, {
-                from: path.resolve(__dirname, 'public/img'),
-                to: path.resolve(__dirname, 'public/dist/img'),
-            },
-        ]),
-        // new ServiceWorkerWebpackPlugin({
-        //     entry: path.join(__dirname, 'src/js/sw.js'),
-        // }),
+        new CleanWebpackPlugin(),
+        // new CopyPlugin([
+        //     {
+        //         from: path.resolve(__dirname, 'public/index.html'),
+        //         to: path.resolve(__dirname, 'public/dist/index.html'),
+        //     }, {
+        //         from: path.resolve(__dirname, 'public/img'),
+        //         to: path.resolve(__dirname, 'public/dist/img'),
+        //     },
+        // ]),
+        new ServiceWorkerWebpackPlugin({
+            entry: path.join(__dirname, 'public/js/sw.js'),
+        }),
     ],
 };
