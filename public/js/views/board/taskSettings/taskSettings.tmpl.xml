@@ -24,7 +24,7 @@
                             </fest:for>
                             <a>
                                 <img class="task-settings-members__add-button js-addNewTaskMember"
-                                 src="/img/plus_icon.svg"/>
+                                     src="/img/plus_icon.svg"/>
                             </a>
                         </div>
                     </div>
@@ -44,28 +44,59 @@
                 </div>
 
                 <div class="task-settings__label">Название</div>
-                    <input class="task-settings__input" type="text" id="inputTitle"
-                           autocomplete="off">
-                        <fest:attributes>
-                            <fest:attribute name="value">
-                                <fest:value>task.title</fest:value>
-                            </fest:attribute>
-                        </fest:attributes>
-                    </input>
+                <input class="task-settings__input" type="text" id="inputTitle"
+                       autocomplete="off">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>task.title</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
 
                 <div class="task-settings__label">
                     Описание
                 </div>
-                <textarea class="task-settings__textarea" id="inputDescription">
+                <div contenteditable="" class="task-settings__input" id="inputDescription">
                     <fest:value>
                         task.description
                     </fest:value>
-                </textarea>
+                </div>
 
                 <div class="task-settings-controls">
                     <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
                     <div class="task-settings-controls__button--danger js-deleteTask">Удалить</div>
                 </div>
+
+                <div class="task-settings__label">
+                    Комментарии
+                </div>
+                <div class="task-settings-comments">
+                    <fest:for iterate="task.comments" index="i" value="comment">
+                        <div class="task-settings-comment">
+                            <div>
+                                <a href="{member.url}">
+                                    <img class="task-settings-members__member" src="{comment.avatar}"/>
+                                </a>
+                            </div>
+                            <div class="task-settings-comment-right-column">
+                                <div class="task-settings-comment__nickname">
+                                    <fest:value>comment.nickname</fest:value>
+                                </div>
+                                <div class="task-settings-comment__text">
+                                    <fest:value>comment.text</fest:value>
+                                </div>
+                            </div>
+                        </div>
+                    </fest:for>
+                </div>
+                <div class="task-settings-add-comment">
+                    <div class="task-settings__label">
+                        Ваш комментарий
+                    </div>
+                    <div contenteditable="" class="task-settings__input" placeholder="Ваш комментарий"/>
+                    <div class="task-settings-add-comment__button--secondary js-saveComment">Добавить</div>
+                </div>
+
             </div>
         </div>
     </div>

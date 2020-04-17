@@ -2,16 +2,21 @@
     <div class="search-result">
         <fest:for iterate="users" index="i" value="user">
             <div class="search-result-row">
-
-                <div class="search-result-row__avatar">
+                <div class="search-result-row__user">
                     <a href="{users.url}">
                         <img class="board-settings-members__member" src="{user.avatar}"
                              alt="@{user.nickname} {user.name} {user.surname}"
                              title="{user.name} {user.surname}"/>
                     </a>
-                    <div class="search-result-row__nickname">
-                        @
-                        <fest:value>user.nickname</fest:value>
+                    <div class="search-result-row__name">
+                        <div class="search-result-row__nickname">
+                            @
+                            <fest:value>user.nickname</fest:value>
+                        </div>
+                        <fest:script>
+                            var fullName = user.name + ' ' + user.surname;
+                        </fest:script>
+                        <fest:value>fullName</fest:value>
                     </div>
                 </div>
                 <div class="search-result-row--controls">

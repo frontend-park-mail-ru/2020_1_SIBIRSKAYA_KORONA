@@ -16,29 +16,33 @@
                 </fest:attributes>
             </input>
             <div class="container-2cols">
-                <div>
+                <div class="container-col">
                     <div class="board-settings__label">Администраторы</div>
-                    <div class="board-settings-members">
-                        <fest:for iterate="board.admins" index="i" value="admin">
-                            <a href="{admin.url}">
-                                <img class="board-settings-members__member" src="{admin.avatar}"
-                                     alt="{admin.nickname}"
-                                     title="{admin.nickname}"/>
-                            </a>
-                        </fest:for>
+                    <div class="container-row">
+                        <div class="board-settings-members">
+                            <fest:for iterate="board.admins" index="i" value="admin">
+                                <a href="{admin.url}">
+                                    <img class="board-settings-members__member" src="{admin.avatar}"
+                                         alt="{admin.nickname}"
+                                         title="{admin.nickname}"/>
+                                </a>
+                            </fest:for>
+                        </div>
                         <img class="board-settings-members__add-button js-findAdmin" src="/img/plus_icon.svg"/>
                     </div>
                 </div>
-                <div>
+                <div class="container-col">
                     <div class="board-settings__label">Участники</div>
-                    <div class="board-settings-members">
-                        <fest:for iterate="board.members" index="i" value="member">
-                            <a href="{member.url}">
-                                <img class="board-settings-members__member" src="{member.avatar}"
-                                     alt="{member.nickname}"
-                                     title="{member.nickname}"/>
-                            </a>
-                        </fest:for>
+                    <div class="container-row">
+                        <div class="board-settings-members">
+                            <fest:for iterate="board.members" index="i" value="member">
+                                <a href="{member.url}">
+                                    <img class="board-settings-members__member" src="{member.avatar}"
+                                         alt="{member.nickname}"
+                                         title="{member.nickname}"/>
+                                </a>
+                            </fest:for>
+                        </div>
                         <img class="board-settings-members__add-button js-findMember" src="/img/plus_icon.svg"/>
                     </div>
                 </div>

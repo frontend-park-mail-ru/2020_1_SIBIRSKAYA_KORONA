@@ -62,7 +62,7 @@ export default class TaskSettingsView extends BaseView {
         saveTaskButton.addEventListener('click', (event)=>{
             event.stopPropagation();
 
-            const description = taskSettings.querySelector('#inputDescription').value;
+            const description = taskSettings.querySelector('#inputDescription').innerText;
             const title = taskSettings.querySelector('#inputTitle').value;
 
             this.eventBus.call('saveTaskSettings', {title, description});

@@ -142,8 +142,8 @@ export default class ProfileModel {
                     });
                     break;
                 case 401: // - В запросе отсутствует кука
-                    // case 403: // - Forbidden (В запросе на данные отсутствует кука)
-                    // case 404: // - NotFound (Пользователя по куке не нашли)
+                case 403: // - Forbidden (В запросе на данные отсутствует кука)
+                case 404: // - NotFound (Пользователя по куке не нашли)
                     this.eventBus.call('unauthorized');
                     break;
                 case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)

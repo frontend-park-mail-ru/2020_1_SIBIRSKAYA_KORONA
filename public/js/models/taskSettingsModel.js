@@ -1,4 +1,4 @@
-import {taskPut, taskGet, taskDelete} from '../libs/apiService.js';
+import {taskDelete, taskGet, taskPut} from '../libs/apiService.js';
 
 /**
  * Task settings model
@@ -24,6 +24,29 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings);
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings);
         this.eventBus.subscribe('deleteTask', this.deleteTask);
+
+
+        this.comments = [{
+            avatar: 'https://localhost:5555/img/avatar/qweasd.jpeg',
+            nickname: 'qweasd',
+            text: 'a '.repeat(200),
+        }, {
+            avatar: 'https://localhost:5555/img/avatar/qweert.jpeg',
+            nickname: 'qweert',
+            text: 'ff tsa sa s a s a st '.repeat(7),
+        }, {
+            avatar: 'https://localhost:5555/img/avatar/qweqweqweqweqwe.jpeg',
+            nickname: 'qweqweqweqweqwe',
+            text: 'fdsfh k dfsdfg jkdhsf dhfjh djkf dfdsf dsf dsf '.repeat(4),
+        }, {
+            avatar: 'https://localhost:5555/img/avatar/qweqweasdasd.jpeg',
+            nickname: 'qweqweasdasd',
+            text: 'fks dfkshfdfhkjehkj fhesjkfh kjvcdnc jedghfvuiewh dncd '.repeat(8),
+        }, {
+            avatar: 'https://localhost:5555/img/avatar/qweqwe.jpeg',
+            nickname: 'qweqwe',
+            text: 'Comment text '.repeat(18),
+        }];
     }
 
     /**
@@ -55,8 +78,6 @@ export default class TaskSettingsModel {
         const actualTaskData = (await getTaskDataResponse.json())['task'];
 
         const defaultTaskData = {
-            title: 'UNKNOWN',
-            description: 'UNKNOWN',
             members: [
                 {
                     url: '/mem1',
@@ -79,6 +100,7 @@ export default class TaskSettingsModel {
                     color: 'darkblue',
                 },
             ],
+            comments: this.comments,
         };
         this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...actualTaskData});
     }
@@ -92,7 +114,7 @@ export default class TaskSettingsModel {
         const response = await taskPut(this.boardId, this.columnId, this.taskId, taskData);
         switch (response.status) {
             case 200:
-                this.eventBus.call('closeSelf');
+                this.getTaskSettings();
                 break;
             case 401:
                 this.eventBus.call('unauthorized');

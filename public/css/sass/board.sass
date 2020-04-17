@@ -61,6 +61,7 @@
     height: 35px
     width: 35px
     border-radius: 50%
+    object-fit: cover
 
 
 .column-list
@@ -160,7 +161,6 @@
                 margin-right: 4px
                 background: #d4d5fabf
 
-
 .task-list
     display: flex
     flex-direction: column
@@ -171,8 +171,7 @@
 
     &-add-task-button
         padding: 9px
-        margin-left: 5px
-        margin-right: 5px
+        margin: 5px 5px 0
         background: transparent
         color: #6a6666
         font-size: 16pt
@@ -296,6 +295,8 @@
     display: flex
     flex-direction: column
     width: 700px
+    max-height: 70vh
+    overflow-y: auto
     box-shadow: none
 
     &-title
@@ -311,6 +312,27 @@
         margin: 0 auto 10px
         width: 660px
 
+        &-comments
+            margin: 20px
+
+        &-comment
+            display: flex
+            margin-bottom: 20px
+
+            &__text
+                margin-top: 13px
+
+            &__nickname
+                @extend .title
+                font-size: 12pt
+
+        &-add-comment
+            width: 100%
+            &__button--secondary
+                margin-top: 20px
+                @extend .button--secondary
+
+
         &-members
             @extend .member-container
 
@@ -319,6 +341,7 @@
                 width: 60px
                 border-radius: 50%
                 margin-right: 10px
+                object-fit: cover
 
             &__add-button
                 @extend .task-settings-members__member
@@ -329,7 +352,6 @@
                     border-style: solid
                     cursor: pointer
 
-
         &-controls
             margin-top: 20px
             @extend .controls-panel
@@ -338,6 +360,9 @@
                 &--primary
                     @extend .button--primary
 
+                &--secondary
+                    @extend .button--secondary
+
                 &--danger
                     @extend .button--danger
 
@@ -345,14 +370,12 @@
             @extend .input-error
 
         &__label
-            margin-top: 30px
             @extend .form-input-label
+            margin-top: 30px
 
         &__input
             @extend .form-input
 
-        &__textarea
-            @extend .form-textarea
 
 /*       END TASK       */
 
