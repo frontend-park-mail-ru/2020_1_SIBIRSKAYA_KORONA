@@ -1,5 +1,6 @@
 import Validator from '../libs/validator.js';
 import {settingsPost} from '../libs/apiService.js';
+import {strToUTF8Array} from '../libs/utils.js';
 
 /**
  * Join(Registration) model
@@ -68,7 +69,7 @@ export default class JoinModel {
         if (!this.validateAll(userInfo)) {
             return;
         }
-
+        userInfo.password = strToUTF8Array(userInfo.password);
         settingsPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (Успешная регистрация)
