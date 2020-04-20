@@ -137,8 +137,8 @@ export default class ProfileModel {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
                     response.json().then((responseJson) => {
-                        this.eventBus.call('gotData', responseJson.user); // for local eventBus (View subscribed)
-                        this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
+                        this.eventBus.call('gotData', responseJson); // for local eventBus (View subscribed)
+                        this.eventBus.call('userDataChanged', responseJson); // for global eventBus (Header)
                     });
                     break;
                 case 401: // - В запросе отсутствует кука

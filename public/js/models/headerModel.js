@@ -66,8 +66,7 @@ export default class HeaderModel {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     response.json().then((responseJson) => {
-                        const data = responseJson.user;
-                        this.onLogin(data);
+                        this.onLogin(responseJson);
                     });
                     break;
                 case 401:

@@ -57,13 +57,13 @@ export default class BoardModel {
         // GET BOARD INFO
         let newBoardData;
         const boardResponse = await boardGet(boardId);
-        if (!(await handleResponseStatus(boardResponse, (body) => newBoardData = body.board))) {
+        if (!(await handleResponseStatus(boardResponse, (body) => newBoardData = body))) {
             return;
         }
 
         // GET COLUMNS INFO
         const columnsResponse = await columnsGet(boardId);
-        if (!(await handleResponseStatus(columnsResponse, (body) => newBoardData.columns = body.columns))) {
+        if (!(await handleResponseStatus(columnsResponse, (body) => newBoardData.columns = body))) {
             return;
         }
 
@@ -76,7 +76,7 @@ export default class BoardModel {
 
         for (const [i, columnsTasksResponse] of columnsTasksResponses.entries()) {
             if (!(await handleResponseStatus(columnsTasksResponse, (body) => {
-                const columnTasks = body.tasks;
+                const columnTasks = body;
                 for (const task of columnTasks) {
                     task.labels = [{
                         title: 'Example label',

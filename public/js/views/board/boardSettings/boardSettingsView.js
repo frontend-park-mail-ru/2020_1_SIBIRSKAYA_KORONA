@@ -36,7 +36,7 @@ export default class BoardSettingsView extends BaseView {
      */
     renderBoardSettings(boardData) {
         const popoverDiv = document.getElementById('popover-block');
-        popoverDiv.innerHTML = template(boardData.board);
+        popoverDiv.innerHTML = template(boardData);
         this.addEventListeners();
     }
 
