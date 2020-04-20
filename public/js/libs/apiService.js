@@ -237,7 +237,8 @@ export const taskDelete = (boardID, columnID, taskID) => {
  * @return {Promise<Response>}
  */
 export const getUsers = (boardID, nicknamePart, limit) => {
-    const apiUrl = new URL(`/search/profile?nickname=${nicknamePart}&limit=${limit}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`/boards/${boardID}/search_for_invite?nickname=${nicknamePart}&limit=${limit}`,
+        BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
 
