@@ -31,7 +31,7 @@ export default class TaskSettingsModel {
         switch (searchUsersResponse.status) {
             case 200:
                 const users = await searchUsersResponse.json();
-                this.eventBus.call('gotUsers', users.user);
+                this.eventBus.call('gotUsers', users);
                 break;
             case 401:
                 this.eventBus.call('unauthorized');
