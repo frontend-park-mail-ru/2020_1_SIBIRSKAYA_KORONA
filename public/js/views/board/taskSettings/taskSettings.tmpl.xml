@@ -22,10 +22,8 @@
                                          title="{member.nickname}"/>
                                 </a>
                             </fest:for>
-                            <a>
-                                <img class="task-settings-members__add-button js-addNewTaskMember"
-                                     src="/img/plus_icon.svg"/>
-                            </a>
+                            <img class="task-settings-members__add-button js-addNewTaskMember"
+                                 src="/img/plus_icon.svg"/>
                         </div>
                     </div>
                     <div>
@@ -38,14 +36,13 @@
                                     </fest:value>
                                 </div>
                             </fest:for>
-                            <div class="button default" name="addNewLabelButton">+</div>
+                            <div class="button default js-addNewLabel">+</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="task-settings__label">Название</div>
-                <input class="task-settings__input" type="text" id="inputTitle"
-                       autocomplete="off">
+                <input class="task-settings__input js-inputTitle" type="text" autocomplete="off">
                     <fest:attributes>
                         <fest:attribute name="value">
                             <fest:value>task.title</fest:value>
@@ -56,7 +53,7 @@
                 <div class="task-settings__label">
                     Описание
                 </div>
-                <div contenteditable="" class="task-settings__input" id="inputDescription">
+                <div contenteditable="" class="task-settings__input js-inputDescription">
                     <fest:value>
                         task.description
                     </fest:value>

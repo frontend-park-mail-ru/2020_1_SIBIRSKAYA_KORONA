@@ -94,12 +94,9 @@ export default class BoardView extends BaseView {
                 this.eventBus.call('openColumnSettings');
                 break;
 
+            case target.classList.contains('js-addNewUser'):
             case target.classList.contains('js-openBoardSettings'):
                 this.eventBus.call('openBoardSettings', this.boardId);
-                break;
-
-            case target.classList.contains('js-addNewUser'):
-                this.eventBus.call('addNewUser');
                 break;
         }
     }
@@ -216,7 +213,7 @@ export default class BoardView extends BaseView {
 
     /**
      * Handle task move end.
-     * Opens triggers eventBus to open task settings or to change task position/column
+     * Triggers eventBus to open task settings or to change task position/column
      * @param {MouseEvent} event
      */
     handleTaskDragEnd(event) {
