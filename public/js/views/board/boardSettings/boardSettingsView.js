@@ -103,7 +103,7 @@ export default class BoardSettingsView extends BaseView {
                 console.log('js-boardTitleInput');
                 break;
             case target.id === 'js-searchMembersInput':
-                if (target.value.length > 2) {
+                if (target.value.length !== 0) {
                     this.eventBus.call('getUsers', target.value);
                 }
                 break;

@@ -19,6 +19,7 @@ export default class TaskSettingsView extends BaseView {
         this.closeSelf = this.closeSelf.bind(this);
 
         this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings);
+        this.scrollHeight = 0;
     }
 
     /**
@@ -33,8 +34,8 @@ export default class TaskSettingsView extends BaseView {
      * @param {Object} taskData - task data to render
      */
     renderTaskSettings(taskData) {
-        const popoverDiv = document.getElementById('popover-block');
-        popoverDiv.innerHTML = template(taskData);
+        document.getElementById('popover-block').innerHTML = template(taskData);
+        document.querySelector('.task')?.scrollTo(0, this.scrollHeight);
         this.addEventListeners();
     }
 
@@ -61,18 +62,28 @@ export default class TaskSettingsView extends BaseView {
         const saveTaskButton = taskSettings.querySelector('.js-saveTask');
         saveTaskButton.addEventListener('click', (event)=>{
             event.stopPropagation();
-
             const description = taskSettings.querySelector('#inputDescription').innerText;
             const title = taskSettings.querySelector('#inputTitle').value;
-
             this.eventBus.call('saveTaskSettings', {title, description});
         });
 
         const deleteTaskButton = taskSettings.querySelector('.js-deleteTask');
         deleteTaskButton.addEventListener('click', (event)=>{
-            event.stopPropagation();
-
             this.eventBus.call('deleteTask');
+        });
+
+        const addMemberButton = taskSettings.querySelector('.js-addNewTaskMember');
+        addMemberButton.addEventListener('click', (event) => {
+            // addMemberButton.
+        });
+
+        const saveCommentButton = taskSettings.querySelector('.js-saveComment');
+        saveCommentButton.addEventListener('click', (event) => {
+            const commentText = taskSettings.querySelector('.js-commentText').innerText;
+            if (commentText.length !== 0) {
+                this.scrollHeight = popoverWindow.scrollTop + 300;
+                this.eventBus.call('addComment', commentText);
+            }
         });
 
         const windowOverlay = taskSettings.getElementsByClassName('window-overlay')[0];

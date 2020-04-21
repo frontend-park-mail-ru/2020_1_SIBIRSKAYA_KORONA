@@ -205,6 +205,31 @@ export const taskGet = (boardID, columnID, taskID) => {
 };
 
 /**
+ * Get task comments
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @return {Promise<Response>}
+ */
+export const taskCommentsGet = (boardID, columnID, taskID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/comments`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Post task comment
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {String} text - comment text
+ * @return {Promise<Response>}
+ */
+export const taskCommentsPost = (boardID, columnID, taskID, text) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/comments`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, JSON.stringify({text: text}));
+};
+
+/**
  * Updates task info
  * @param {Number} boardID
  * @param {Number} columnID
@@ -252,3 +277,5 @@ export const postMember = (boardID, userID) => {
     const apiUrl = new URL(`/boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, null);
 };
+
+

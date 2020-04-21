@@ -33,6 +33,8 @@ export default class TaskSettingsController extends ControllerChainLink {
             'saveTaskSettings',
             'deleteTask',
 
+            'addComment',
+
             'unauthorized',
             'goToBoards',
         ];

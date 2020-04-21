@@ -67,9 +67,12 @@
                     <div class="task-settings-controls__button--danger js-deleteTask">Удалить</div>
                 </div>
 
-                <div class="task-settings__label">
-                    Комментарии
-                </div>
+
+                <fest:if test="task.comments.length !== 0">
+                    <div class="task-settings__label">
+                        Комментарии
+                    </div>
+                </fest:if>
                 <div class="task-settings-comments">
                     <fest:for iterate="task.comments" index="i" value="comment">
                         <div class="task-settings-comment">
@@ -79,8 +82,13 @@
                                 </a>
                             </div>
                             <div class="task-settings-comment-right-column">
-                                <div class="task-settings-comment__nickname">
-                                    <fest:value>comment.nickname</fest:value>
+                                <div class="container-2cols">
+                                    <div class="task-settings-comment__nickname">
+                                        <fest:value>comment.nickname</fest:value>
+                                    </div>
+                                    <div class="task-settings-comment__date">
+                                        <fest:value>comment.date</fest:value>
+                                    </div>
                                 </div>
                                 <div class="task-settings-comment__text">
                                     <fest:value>comment.text</fest:value>
@@ -93,7 +101,7 @@
                     <div class="task-settings__label">
                         Ваш комментарий
                     </div>
-                    <div contenteditable="" class="task-settings__input" placeholder="Ваш комментарий"/>
+                    <div contenteditable="" class="task-settings__input js-commentText" placeholder="Ваш комментарий"/>
                     <div class="task-settings-add-comment__button--secondary js-saveComment">Добавить</div>
                 </div>
 
