@@ -287,105 +287,7 @@
 
 /*       END BOARD        */
 
-/*       TASK SETTINGS    */
-
-// .settings-form
-.task
-    @extend .form
-    display: flex
-    flex-direction: column
-    width: 700px
-    max-height: 70vh
-    overflow-y: auto
-    box-shadow: none
-
-    &-title
-        &__text
-            @extend .title
-            margin-left: 20px
-            font-size: 20pt
-
-        &__hr--width-2
-            @extend .hr-width-2
-
-    &-settings
-        margin: 0 auto 10px
-        width: 660px
-
-        &-comments
-            margin: 20px
-
-        &-comment
-            display: flex
-            margin-bottom: 20px
-
-            &__text
-                margin-top: 13px
-
-            &__nickname
-                @extend .title
-                font-size: 12pt
-
-        &-add-comment
-            width: 100%
-            &__button--secondary
-                margin-top: 20px
-                @extend .button--secondary
-
-
-        &-members
-            @extend .member-container
-
-            &__member
-                height: 60px
-                width: 60px
-                border-radius: 50%
-                margin-right: 10px
-                object-fit: cover
-
-            &__add-button
-                @extend .task-settings-members__member
-                border: 2px dashed #afaeae
-                transition: 0.3s
-
-                &:hover
-                    border-style: solid
-                    cursor: pointer
-
-        &-controls
-            margin-top: 20px
-            @extend .controls-panel
-
-            &__button
-                &--primary
-                    @extend .button--primary
-
-                &--secondary
-                    @extend .button--secondary
-
-                &--danger
-                    @extend .button--danger
-
-        &__error
-            @extend .input-error
-
-        &__label
-            @extend .form-input-label
-            margin-top: 30px
-
-        &__input
-            @extend .form-input
-
-
-/*       END TASK       */
-
-/*       BOARD SETTINGS */
-
-
-/*       END BOARD SETTINGS */
-
 /*       LABEL          */
-
 .task-label
     display: flex
     flex-direction: row
@@ -426,8 +328,6 @@
     width: 68%
 
 // .task-label-item .button
-
-
 
 .task-label-color
     &-yellow
@@ -483,21 +383,3 @@
         background: #d4d5fafa
 
 /*       END LABEL          */
-
-/*       CREATE LABEL       */
-
-.task-color-palette
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
-
-.task-palette-color
-    height: 15px
-    width: 30px
-    margin: 5px
-    justify-content: center
-
-.task-palette-color.active:before
-    content: "\2713"
-
-/*       END CREATE LABEL       */

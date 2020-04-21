@@ -75,7 +75,7 @@ export default class TaskSettingsModel {
                 return;
         }
 
-        const actualTaskData = (await getTaskDataResponse.json())['task'];
+        const actualTaskData = await getTaskDataResponse.json();
 
         const defaultTaskData = {
             members: [

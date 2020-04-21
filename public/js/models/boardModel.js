@@ -57,13 +57,13 @@ export default class BoardModel {
         // GET BOARD INFO
         let newBoardData;
         const boardResponse = await boardGet(boardId);
-        if (!(await handleResponseStatus(boardResponse, (body) => newBoardData = body.board))) {
+        if (!(await handleResponseStatus(boardResponse, (body) => newBoardData = body))) {
             return;
         }
 
         // GET COLUMNS INFO
         const columnsResponse = await columnsGet(boardId);
-        if (!(await handleResponseStatus(columnsResponse, (body) => newBoardData.columns = body.columns))) {
+        if (!(await handleResponseStatus(columnsResponse, (body) => newBoardData.columns = body))) {
             return;
         }
 
@@ -76,7 +76,7 @@ export default class BoardModel {
 
         for (const [i, columnsTasksResponse] of columnsTasksResponses.entries()) {
             if (!(await handleResponseStatus(columnsTasksResponse, (body) => {
-                const columnTasks = body.tasks;
+                const columnTasks = body;
                 for (const task of columnTasks) {
                     task.labels = [{
                         title: 'Example label',
@@ -126,7 +126,6 @@ export default class BoardModel {
             return 1;
         });
 
-        // console.log(newBoardData);
         this.boardData = newBoardData;
         this.eventBus.call('gotBoardData', newBoardData);
     }
@@ -136,15 +135,11 @@ export default class BoardModel {
      * @param {object} data - fields: boardId, columnID, taskTitle
      */
     addTask(data) {
-        console.log(data);
         tasksPost(data.boardId, data.columnID, {title: data.taskTitle, position: data.taskPosition})
             .then((response) => {
                 switch (response.status) {
                     case 200: // - OK (Валидный запрос данных пользователя)
                         this.eventBus.call('getBoardData', data.boardId);
-                        // response.json().then((responseJson) => {
-                        //     console.log(responseJson);
-                        // });
                         break;
                     case 401:
                         this.eventBus.call('unauthorized');
@@ -171,9 +166,6 @@ export default class BoardModel {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
                     this.eventBus.call('getBoardData', data.boardId);
-                    response.json().then((responseJson) => {
-                        console.log(responseJson);
-                    });
                     break;
                 case 401:
                     this.eventBus.call('unauthorized');
