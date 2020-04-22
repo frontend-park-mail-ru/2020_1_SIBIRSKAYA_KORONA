@@ -63,9 +63,9 @@ export default class TaskSettingsController extends ControllerChainLink {
         });
 
         this.eventBus.subscribe('openAddCheckListPopup', (button) => {
-            const checkListPopupController = new AddCheckListPopupController(this.eventBus);
-            this.setChildEventBus(checkListPopupController.eventBus);
-            checkListPopupController.view.render(button);
+            const checklistPopupController = new AddCheckListPopupController(this.eventBus);
+            this.setChildEventBus(checklistPopupController.eventBus);
+            checklistPopupController.view.render(button);
         });
 
         this.eventBus.subscribe('unauthorized', () => router.go('/login'));

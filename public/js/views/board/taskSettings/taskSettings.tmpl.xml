@@ -68,18 +68,39 @@
 
                 <div class="task-checklists">
                     <fest:for iterate="task.checklists" index="i" value="checklist">
-                        <div class="task-settings__label">
-                            <fest:value>checklist.name</fest:value>
+                        <div class="checklist" data-checklist-id="{checklist.id}">
+                            <div class="task-settings__label">
+                                <fest:value>checklist.name</fest:value>
+                            </div>
+                            <div class="task-settings-checklist-items">
+                                <fest:for iterate="checklist.items" index="j" value="item">
+                                    <div class="checklist-item" data-item-id="{item.id}">
+                                        <input type="checkbox" id="{i}-{j}" name="{i}-{j}">
+                                            <fest:attributes>
+                                                <fest:if test="item.isDone">
+                                                    <fest:attribute name="checked">
+                                                    </fest:attribute>
+                                                </fest:if>
+                                            </fest:attributes>
+                                        </input>
+                                        <label for="{i}-{j}">
+                                            <fest:value>item.text</fest:value>
+                                        </label>
+                                    </div>
+                                </fest:for>
+                            </div>
+                            <div class="checklist-add-item-form">
+                                <!--TODO  add item popup-->
+                            </div>
+                            <div class="task-settings-controls">
+                                <div class="task-settings-controls__button--secondary js-addNewCheckListItem">
+                                    Добавить элемент
+                                </div>
+                                <div class="task-settings-controls__button--danger js-deleteCheckList">
+                                    Удалить чеклист
+                                </div>
+                            </div>
                         </div>
-                        <div class="task-settings-checklist-items"/>
-                       <!-- <div class="task-settings-controls">
-                            <div class="task-settings-controls__button&#45;&#45;secondary js-addNewCheckListItem">
-                                Добавить элемент
-                            </div>
-                            <div class="task-settings-controls__button&#45;&#45;danger js-deleteCheckList">
-                                Удалить чеклист
-                            </div>
-                        </div>-->
                     </fest:for>
                 </div>
 

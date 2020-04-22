@@ -1,4 +1,14 @@
-import {taskCommentsGet, taskCommentsPost, taskDelete, taskGet, taskPut} from '../libs/apiService.js';
+// eslint-disable-next-line max-len
+import {
+    taskChecklistGet,
+    taskChecklistPost,
+    taskCommentsGet,
+    taskCommentsPost,
+    taskDelete,
+    taskGet,
+    taskPut,
+} from '../libs/apiService.js';
+
 
 /**
  * Task settings model
@@ -22,8 +32,6 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('deleteTask', this.deleteTask.bind(this));
         this.eventBus.subscribe('addComment', this.addTaskComment.bind(this));
         this.eventBus.subscribe('addCheckList', this.addChecklist.bind(this));
-
-        this.checklists = [];
     }
 
     /**
@@ -52,13 +60,30 @@ export default class TaskSettingsModel {
     }
 
     /**
-     * Add new checkList
+     * Add new checklist
      * @param {String} checklistName
      */
     async addChecklist(checklistName) {
-        const id = this.checklists.length;
-        this.checklists.push({id, name: checklistName});
-        this.getTaskSettings();
+        console.log('ZALUPA');
+        const response = await taskChecklistPost(this.boardId, this.columnId, this.taskId, checklistName);
+        switch (response.status) {
+            case 200:
+                this.getTaskSettings();
+                console.log(await response.json());
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 403:
+                this.eventBus.call('goToBoards');
+                break;
+            case 400:
+            case 500:
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                break;
+        }
     }
 
     /**
@@ -66,72 +91,61 @@ export default class TaskSettingsModel {
      */
     async getTaskSettings() {
         // TODO(Alexandr): убрать заглушки на лейюлы и участников
-
-        const getTaskDataResponse = await taskGet(this.boardId, this.columnId, this.taskId);
-        switch (getTaskDataResponse.status) {
-            case 200:
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                return;
-            case 403:
-                this.eventBus.call('goToBoards');
-                return;
-            case 400:
-            case 500:
-                this.eventBus.call('closeSelf');
-                return;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                return;
+        const handleResponseStatus = async (response, onSuccess) => {
+            switch (response.status) {
+                case 200:
+                    const body = await response.json();
+                    onSuccess(body);
+                    return true;
+                case 401:
+                    this.eventBus.call('unauthorized');
+                    return false;
+                case 400:
+                case 403:
+                case 500:
+                    this.eventBus.call('goToBoards');
+                    return false;
+                default:
+                    console.log('Бекендер молодец!!!');
+                    this.eventBus.call('goToBoards');
+                    return false;
+            }
+        };
+        let taskData;
+        const taskResponse = await taskGet(this.boardId, this.columnId, this.taskId);
+        if (!(await handleResponseStatus(taskResponse, (body) => taskData = body))) {
+            return;
+        }
+        const checklistResponse = await taskChecklistGet(this.boardId, this.columnId, this.taskId);
+        if (!(await handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
+            return;
+        }
+        const commentsResponse = await taskCommentsGet(this.boardId, this.columnId, this.taskId);
+        if (!(await handleResponseStatus(commentsResponse, (body) => {
+            taskData.comments = new Array(body.length);
+            body.forEach((comment, i) => {
+                const date = new Date(comment.createdAt * 1000);
+                const parsedDate = {
+                    day: (date.getDate() > 9) ? date.getDate() : '0' + date.getDate(),
+                    month: (date.getMonth() > 9) ? date.getMonth() : '0' + date.getMonth(),
+                    year: date.getFullYear(),
+                    hours: (date.getHours() > 9) ? date.getHours() : '0' + date.getHours(),
+                    minutes: (date.getMinutes() > 9) ? date.getMinutes() : '0' + date.getMinutes(),
+                    seconds: (date.getSeconds() > 9) ? date.getSeconds() : '0' + date.getSeconds(),
+                };
+                let dateString = `${parsedDate.day}.${parsedDate.month}.${parsedDate.year}`;
+                dateString += ` ${parsedDate.hours}:${parsedDate.minutes}:${parsedDate.seconds}`;
+                taskData.comments[i] = {
+                    date: dateString,
+                    text: comment.text,
+                    avatar: comment.avatar || '/img/default_avatar.png',
+                    nickname: comment.nickname || 'vasYa_pupKin',
+                };
+            });
+        }))) {
+            return;
         }
 
-        const getTaskCommentsResponse = await taskCommentsGet(this.boardId, this.columnId, this.taskId);
-        switch (getTaskCommentsResponse.status) {
-            case 200:
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                return;
-            case 403:
-                this.eventBus.call('goToBoards');
-                return;
-            case 400:
-            case 500:
-                this.eventBus.call('closeSelf');
-                return;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                return;
-        }
-
-        const actualTaskData = await getTaskDataResponse.json();
-        const comments = await getTaskCommentsResponse.json();
-
-        actualTaskData.comments = new Array(comments.length);
-        comments.forEach((comment, i) => {
-            const date = new Date(comment.createdAt * 1000);
-
-            const parsedDate = {
-                day: (date.getDate() > 9) ? date.getDate() : '0' + date.getDate(),
-                month: (date.getMonth() > 9) ? date.getMonth() : '0' + date.getMonth(),
-                year: date.getFullYear(),
-                hours: (date.getHours() > 9) ? date.getHours() : '0' + date.getHours(),
-                minutes: (date.getMinutes() > 9) ? date.getMinutes() : '0' + date.getMinutes(),
-                seconds: (date.getSeconds() > 9) ? date.getSeconds() : '0' + date.getSeconds(),
-            };
-
-            let dateString = `${parsedDate.day}.${parsedDate.month}.${parsedDate.year}`;
-            dateString += ` ${parsedDate.hours}:${parsedDate.minutes}:${parsedDate.seconds}`;
-            actualTaskData.comments[i] = {
-                date: dateString,
-                text: comment.text,
-                avatar: comment.avatar || '/img/default_avatar.png',
-                nickname: comment.nickname || 'vasYa_pupKin',
-            };
-        });
         const defaultTaskData = {
             members: [
                 {
@@ -155,10 +169,9 @@ export default class TaskSettingsModel {
                     color: 'darkblue',
                 },
             ],
-            checklists: this.checklists,
         };
 
-        this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...actualTaskData});
+        this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...taskData});
     }
 
     /**
