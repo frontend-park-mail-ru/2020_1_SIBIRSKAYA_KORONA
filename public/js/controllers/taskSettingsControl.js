@@ -1,10 +1,11 @@
+import ControllerChainLink, {ChainLinkSignals} from '../libs/controllerChainLink.js';
+import EventBus from '../libs/eventBus.js';
+
 import TaskSettingsModel from '../models/taskSettingsModel.js';
 import TaskSettingsView from '../views/board/taskSettings/taskSettingsView.js';
-import EventBus from '../libs/eventBus.js';
-import AddLabelPopupController from './addLabelPopupControl.js';
+import AddCheckListPopupController from './addCheckListPopupControl.js';
 
-import ControllerChainLink from '../libs/controllerChainLink.js';
-import {ChainLinkSignals} from '../libs/controllerChainLink.js';
+import AddLabelPopupController from './addLabelPopupControl.js';
 
 /**
  * Task settings controller
@@ -29,6 +30,10 @@ export default class TaskSettingsController extends ControllerChainLink {
 
             'openAddMemberPopup',
             'closedAddMemberPopup',
+
+            'openAddCheckListPopup',
+            'addCheckList',
+            'closeAddCheckListPopup',
 
             'saveTaskSettings',
             'deleteTask',
@@ -55,6 +60,12 @@ export default class TaskSettingsController extends ControllerChainLink {
             const childController = new AddLabelPopupController(this.eventBus);
             this.setChildEventBus(childController.eventBus);
             childController.view.render(button);
+        });
+
+        this.eventBus.subscribe('openAddCheckListPopup', (button) => {
+            const checkListPopupController = new AddCheckListPopupController(this.eventBus);
+            this.setChildEventBus(checkListPopupController.eventBus);
+            checkListPopupController.view.render(button);
         });
 
         this.eventBus.subscribe('unauthorized', () => router.go('/login'));

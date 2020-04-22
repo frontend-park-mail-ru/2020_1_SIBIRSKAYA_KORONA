@@ -192,6 +192,34 @@ export const tasksPost = (boardID, columnID, task = {position: 1, description: '
     return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
 };
 
+/** ******************* BOARD SETTINGS ************************/
+
+/**
+ * Search users by part of nickname
+ * @param {Number} boardID
+ * @param {String} nicknamePart
+ * @param {Number} limit - result count limit
+ * @return {Promise<Response>}
+ */
+export const usersGet = (boardID, nicknamePart, limit) => {
+    const apiUrl = new URL(`/boards/${boardID}/search_for_invite?nickname=${nicknamePart}&limit=${limit}`,
+        BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Add user to board
+ * @param {Number} boardID
+ * @param {Number} userID
+ * @return {Promise<Response>}
+ */
+export const postMember = (boardID, userID) => {
+    const apiUrl = new URL(`/boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, null);
+};
+
+/** ******************* TASK SETTINGS ************************/
+
 /**
  * Get task
  * @param {Number} boardID
@@ -202,31 +230,6 @@ export const tasksPost = (boardID, columnID, task = {position: 1, description: '
 export const taskGet = (boardID, columnID, taskID) => {
     const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
-};
-
-/**
- * Get task comments
- * @param {Number} boardID
- * @param {Number} columnID
- * @param {Number} taskID
- * @return {Promise<Response>}
- */
-export const taskCommentsGet = (boardID, columnID, taskID) => {
-    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/comments`, BACKEND_ADDRESS);
-    return fetchGet(apiUrl.href);
-};
-
-/**
- * Post task comment
- * @param {Number} boardID
- * @param {Number} columnID
- * @param {Number} taskID
- * @param {String} text - comment text
- * @return {Promise<Response>}
- */
-export const taskCommentsPost = (boardID, columnID, taskID, text) => {
-    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/comments`, BACKEND_ADDRESS);
-    return fetchPost(apiUrl.href, JSON.stringify({text: text}));
 };
 
 /**
@@ -254,28 +257,130 @@ export const taskDelete = (boardID, columnID, taskID) => {
     return fetchDelete(apiUrl.href);
 };
 
+/** ******************* COMMENTS ************************/
+
 /**
- * Search users by part of nickname
+ * Get task comments
  * @param {Number} boardID
- * @param {String} nicknamePart
- * @param {Number} limit - result count limit
+ * @param {Number} columnID
+ * @param {Number} taskID
  * @return {Promise<Response>}
  */
-export const getUsers = (boardID, nicknamePart, limit) => {
-    const apiUrl = new URL(`/boards/${boardID}/search_for_invite?nickname=${nicknamePart}&limit=${limit}`,
-        BACKEND_ADDRESS);
+export const taskCommentsGet = (boardID, columnID, taskID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/comments`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
 
 /**
- * Add user to board
+ * Post task comment
  * @param {Number} boardID
- * @param {Number} userID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {String} text - comment text
  * @return {Promise<Response>}
  */
-export const postMember = (boardID, userID) => {
-    const apiUrl = new URL(`/boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
-    return fetchPost(apiUrl.href, null);
+export const taskCommentsPost = (boardID, columnID, taskID, text) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/comments`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, JSON.stringify({text: text}));
 };
 
+/** ******************* CHECKLISTS ************************/
 
+/**
+ * Get all checklists in task
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @return {Promise<Response>}
+ */
+export const taskChecklistGet = (boardID, columnID, taskID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/checklists`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Create checklist
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {String} checkListName
+ * @return {Promise<Response>}
+ */
+export const taskChecklistPost = (boardID, columnID, taskID, checkListName) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/checklists`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, {name: checkListName});
+};
+
+/**
+ * Update checklist
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {Number} checkListID
+ * @param {String} checkListName
+ * @return {Promise<Response>}
+ */
+export const taskChecklistPut = (boardID, columnID, taskID, checkListID, checkListName) => {
+    const url = `boards/${boardID}/columns/${columnID}/tasks/${taskID}/checklists/${checkListID}`;
+    const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, {name: checkListName});
+};
+
+/**
+ * Delete checklist
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {Number} checkListID
+ * @return {Promise<Response>}
+ */
+export const taskChecklistDelete = (boardID, columnID, taskID, checkListID) => {
+    const url = `boards/${boardID}/columns/${columnID}/tasks/${taskID}/checklists/${checkListID}`;
+    const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
+
+/**
+ * Create item in checklist
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {Number} checkListID
+ * @param {String} itemText
+ * @return {Promise<Response>}
+ */
+export const taskChecklistItemPost = (boardID, columnID, taskID, checkListID, itemText) => {
+    const url = `boards/${boardID}/columns/${columnID}/tasks/${taskID}/checklists/${checkListID}`;
+    const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, {text: itemText});
+};
+
+/**
+ * Update item in checklist
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {Number} checkListID
+ * @param {Object} itemData {id, text, isDone}
+ * @return {Promise<Response>}
+ */
+export const taskChecklistItemPut = (boardID, columnID, taskID, checkListID, itemData) => {
+    const url = `boards/${boardID}/columns/${columnID}/tasks/${taskID}/checklists/${checkListID}/items/${itemData.id}`;
+    const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, itemData);
+};
+
+/**
+ * Delete item
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {Number} checkListID
+ * @param {Number} itemId
+ * @return {Promise<Response>}
+ */
+export const taskChecklistItemDelete = (boardID, columnID, taskID, checkListID, itemId) => {
+    const url = `boards/${boardID}/columns/${columnID}/tasks/${taskID}/checklists/${checkListID}/items/${itemId}`;
+    const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};

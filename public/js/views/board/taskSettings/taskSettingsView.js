@@ -2,7 +2,6 @@ import {ChainLinkSignals} from '../../../libs/controllerChainLink.js';
 import BaseView from '../../baseView.js';
 import template from './taskSettings.tmpl.xml';
 
-
 /**
  * Task settings view
  */
@@ -49,9 +48,11 @@ export default class TaskSettingsView extends BaseView {
         const taskSettingsElements = [
             this.root.querySelector('.task'),
             this.root.querySelector('.js-addNewLabel'),
+            this.root.querySelector('.js-addNewTaskMember'),
+            this.root.querySelector('.js-addNewCheckList'),
+            this.root.querySelector('.js-attachFile'),
             this.root.querySelector('.js-saveTask'),
             this.root.querySelector('.js-deleteTask'),
-            this.root.querySelector('.js-addNewTaskMember'),
             this.root.querySelector('.js-saveComment'),
             this.root.querySelector('.window-overlay'),
         ];
@@ -66,34 +67,40 @@ export default class TaskSettingsView extends BaseView {
      * @param {MouseEvent} event
      */
     handleClick(event) {
+        const classList = event.currentTarget.classList;
         switch (true) {
-            case event.currentTarget.classList.contains('task'):
+            case classList.contains('task'):
                 event.stopPropagation();
                 this.eventBus.call(ChainLinkSignals.closeLastChainLink);
                 break;
 
-            case event.currentTarget.classList.contains('js-addNewLabel'):
+            case classList.contains('js-addNewLabel'):
                 event.stopPropagation();
                 this.eventBus.call('openAddLabelPopup', event.target);
                 break;
 
-            case event.currentTarget.classList.contains('js-saveTask'):
+            case classList.contains('js-addNewCheckList'):
+                event.stopPropagation();
+                this.eventBus.call('openAddCheckListPopup', event.target);
+                break;
+
+            case classList.contains('js-saveTask'):
                 event.stopPropagation();
                 const description = this.root.querySelector('.js-inputDescription').innerText;
                 const title = this.root.querySelector('.js-inputTitle').value;
                 this.eventBus.call('saveTaskSettings', {title, description});
                 break;
 
-            case event.currentTarget.classList.contains('js-deleteTask'):
+            case classList.contains('js-deleteTask'):
                 event.stopPropagation();
                 this.eventBus.call('deleteTask');
                 break;
 
-            case event.currentTarget.classList.contains('js-addNewTaskMember'):
+            case classList.contains('js-addNewTaskMember'):
                 // todo
                 break;
 
-            case event.currentTarget.classList.contains('js-saveComment'):
+            case classList.contains('js-saveComment'):
                 event.stopPropagation();
                 const commentText = this.root.querySelector('.js-commentText').innerText;
                 if (commentText.length !== 0) {
@@ -102,13 +109,15 @@ export default class TaskSettingsView extends BaseView {
                 }
                 break;
 
-            case event.target.classList.contains('window-overlay'):
+            case classList.contains('window-overlay'):
                 if (event.target === event.currentTarget) {
                     event.stopPropagation();
                     this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
                 }
                 break;
 
+            case classList.contains('.js-attachFile'):
+                break;
             default:
                 break;
         }

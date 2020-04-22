@@ -21,29 +21,9 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this));
         this.eventBus.subscribe('deleteTask', this.deleteTask.bind(this));
         this.eventBus.subscribe('addComment', this.addTaskComment.bind(this));
+        this.eventBus.subscribe('addCheckList', this.addChecklist.bind(this));
 
-
-        /*        this.comments = [{
-                    avatar: 'https://localhost:5555/img/avatar/qweasd.jpeg',
-                    nickname: 'qweasd',
-                    text: 'a '.repeat(200),
-                }, {
-                    avatar: 'https://localhost:5555/img/avatar/qweert.jpeg',
-                    nickname: 'qweert',
-                    text: 'ff tsa sa s a s a st '.repeat(7),
-                }, {
-                    avatar: 'https://localhost:5555/img/avatar/qweqweqweqweqwe.jpeg',
-                    nickname: 'qweqweqweqweqwe',
-                    text: 'fdsfh k dfsdfg jkdhsf dhfjh djkf dfdsf dsf dsf '.repeat(4),
-                }, {
-                    avatar: 'https://localhost:5555/img/avatar/qweqweasdasd.jpeg',
-                    nickname: 'qweqweasdasd',
-                    text: 'fks dfkshfdfhkjehkj fhesjkfh kjvcdnc jedghfvuiewh dncd '.repeat(8),
-                }, {
-                    avatar: 'https://localhost:5555/img/avatar/qweqwe.jpeg',
-                    nickname: 'qweqwe',
-                    text: 'Comment text '.repeat(18),
-                }];*/
+        this.checklists = [];
     }
 
     /**
@@ -71,6 +51,15 @@ export default class TaskSettingsModel {
         }
     }
 
+    /**
+     * Add new checkList
+     * @param {String} checklistName
+     */
+    async addChecklist(checklistName) {
+        const id = this.checklists.length;
+        this.checklists.push({id, name: checklistName});
+        this.getTaskSettings();
+    }
 
     /**
      * Returns task information
@@ -166,7 +155,9 @@ export default class TaskSettingsModel {
                     color: 'darkblue',
                 },
             ],
+            checklists: this.checklists,
         };
+
         this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...actualTaskData});
     }
 

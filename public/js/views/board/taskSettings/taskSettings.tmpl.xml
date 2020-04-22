@@ -61,9 +61,27 @@
 
                 <div class="task-settings-controls">
                     <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
-                    <div class="task-settings-controls__button--danger js-deleteTask">Удалить</div>
+                    <div class="task-settings-controls__button--secondary js-addNewCheckList">Добавить чеклист</div>
+                    <div class="task-settings-controls__button--secondary js-attachFile">Прикрепить файл</div>
+                    <div class="task-settings-controls__button--danger js-deleteTask">Удалить задачу</div>
                 </div>
 
+                <div class="task-checklists">
+                    <fest:for iterate="task.checklists" index="i" value="checklist">
+                        <div class="task-settings__label">
+                            <fest:value>checklist.name</fest:value>
+                        </div>
+                        <div class="task-settings-checklist-items"/>
+                       <!-- <div class="task-settings-controls">
+                            <div class="task-settings-controls__button&#45;&#45;secondary js-addNewCheckListItem">
+                                Добавить элемент
+                            </div>
+                            <div class="task-settings-controls__button&#45;&#45;danger js-deleteCheckList">
+                                Удалить чеклист
+                            </div>
+                        </div>-->
+                    </fest:for>
+                </div>
 
                 <fest:if test="task.comments.length !== 0">
                     <div class="task-settings__label">

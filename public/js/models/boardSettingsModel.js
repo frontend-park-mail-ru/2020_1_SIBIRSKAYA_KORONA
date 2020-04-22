@@ -1,4 +1,4 @@
-import {boardGet, getUsers, postMember} from '../libs/apiService.js';
+import {boardGet, usersGet, postMember} from '../libs/apiService.js';
 
 /**
  * Board settings model
@@ -27,7 +27,7 @@ export default class TaskSettingsModel {
      */
     async searchUsers(nicknamePart) {
         const limit = 5;
-        const searchUsersResponse = await getUsers(this.boardId, nicknamePart, limit);
+        const searchUsersResponse = await usersGet(this.boardId, nicknamePart, limit);
         switch (searchUsersResponse.status) {
             case 200:
                 const users = await searchUsersResponse.json();
