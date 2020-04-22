@@ -1,4 +1,4 @@
-import {taskCommentsGet, taskCommentsPost, taskDelete, taskGet, taskPut} from '../libs/apiService.js';
+import {/* taskCommentsGet, */ taskCommentsPost, taskDelete, taskGet, taskPut} from '../libs/apiService.js';
 
 /**
  * Task settings model
@@ -7,15 +7,11 @@ export default class TaskSettingsModel {
     /**
      * Task settings model constructor
      * @param {Object} eventBus to share events with task settings view
-     * @param {number} boardID - board id
-     * @param {number} columnID - column id
-     * @param {number} taskID - task id
+     * @param {Object} taskData - information about current task
      */
-    constructor(eventBus, boardID, columnID, taskID) {
+    constructor(eventBus, taskData) {
         this.eventBus = eventBus;
-        this.boardId = boardID;
-        this.columnId = columnID;
-        this.taskId = taskID;
+        this.taskData = taskData;
 
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings.bind(this));
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this));
@@ -51,7 +47,11 @@ export default class TaskSettingsModel {
      * @param {String} commentText
      */
     async addTaskComment(commentText) {
-        const response = await taskCommentsPost(this.boardId, this.columnId, this.taskId, commentText);
+        const response = await taskCommentsPost(
+            this.taskData.boardID,
+            this.taskData.columnID,
+            this.taskData.id,
+            commentText);
         switch (response.status) {
             case 200:
                 this.getTaskSettings();
@@ -60,7 +60,7 @@ export default class TaskSettingsModel {
                 this.eventBus.call('unauthorized');
                 break;
             case 403:
-                this.eventBus.call('goToBoards');
+                this.eventBus.call('goBack');
                 break;
             case 400:
             case 500:
@@ -78,48 +78,50 @@ export default class TaskSettingsModel {
     async getTaskSettings() {
         // TODO(Alexandr): убрать заглушки на лейюлы и участников
 
-        const getTaskDataResponse = await taskGet(this.boardId, this.columnId, this.taskId);
+        const getTaskDataResponse = await taskGet(this.taskData.boardID, this.taskData.columnID, this.taskData.id);
         switch (getTaskDataResponse.status) {
             case 200:
                 break;
             case 401:
                 this.eventBus.call('unauthorized');
                 return;
-            case 403:
-                this.eventBus.call('goToBoards');
-                return;
             case 400:
+            case 403:
+                this.eventBus.call('goBack');
+                return;
             case 500:
                 this.eventBus.call('closeSelf');
                 return;
             default:
                 console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
+                this.eventBus.call('goBack');
                 return;
         }
 
-        const getTaskCommentsResponse = await taskCommentsGet(this.boardId, this.columnId, this.taskId);
-        switch (getTaskCommentsResponse.status) {
-            case 200:
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                return;
-            case 403:
-                this.eventBus.call('goToBoards');
-                return;
-            case 400:
-            case 500:
-                this.eventBus.call('closeSelf');
-                return;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                return;
-        }
+        // const getTaskCommentsResponse = await
+        // taskCommentsGet(this.taskData.boardID, this.taskData.columnID, this.taskData.id);
+        // switch (getTaskCommentsResponse.status) {
+        //     case 200:
+        //         break;
+        //     case 401:
+        //         this.eventBus.call('unauthorized');
+        //         return;
+        //     case 403:
+        //         this.eventBus.call('goBack');
+        //         return;
+        //     case 400:
+        //     case 500:
+        //         this.eventBus.call('closeSelf');
+        //         return;
+        //     default:
+        //         console.log('Бекендер молодец!!!');
+        //         this.eventBus.call('goBack');
+        //         return;
+        // }
 
         const actualTaskData = await getTaskDataResponse.json();
-        const comments = await getTaskCommentsResponse.json();
+        // const comments = await getTaskCommentsResponse.json();
+        const comments = [];
 
         actualTaskData.comments = new Array(comments.length);
         comments.forEach((comment, i) => {
@@ -176,7 +178,7 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async saveTaskSettings(taskData) {
-        const response = await taskPut(this.boardId, this.columnId, this.taskId, taskData);
+        const response = await taskPut(this.taskData.boardID, this.taskData.columnID, this.taskData.id, taskData);
         switch (response.status) {
             case 200:
                 this.getTaskSettings();
@@ -185,7 +187,7 @@ export default class TaskSettingsModel {
                 this.eventBus.call('unauthorized');
                 break;
             case 403:
-                this.eventBus.call('goToBoards');
+                this.eventBus.call('goBack');
                 break;
             case 400:
             case 500:
@@ -201,7 +203,7 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async deleteTask() {
-        const response = await taskDelete(this.boardId, this.columnId, this.taskId);
+        const response = await taskDelete(this.taskData.boardID, this.taskData.columnID, this.taskData.id);
         switch (response.status) {
             case 200:
                 this.eventBus.call('closeSelf');
@@ -210,7 +212,7 @@ export default class TaskSettingsModel {
                 this.eventBus.call('unauthorized');
                 break;
             case 403:
-                this.eventBus.call('goToBoards');
+                this.eventBus.call('goBack');
                 break;
             case 400:
             case 500:
