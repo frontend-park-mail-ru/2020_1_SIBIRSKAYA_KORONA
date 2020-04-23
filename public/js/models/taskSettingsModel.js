@@ -163,10 +163,12 @@ export default class TaskSettingsModel {
         if (!(await handleResponseStatus(taskResponse, (body) => taskData = body))) {
             return;
         }
+
         const checklistResponse = await taskChecklistGet(this.taskData);
         if (!(await handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
             return;
         }
+
         const commentsResponse = await taskCommentsGet(this.taskData);
         if (!(await handleResponseStatus(commentsResponse, (body) => {
             taskData.comments = new Array(body.length);
