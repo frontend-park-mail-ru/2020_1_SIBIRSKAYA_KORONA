@@ -36,6 +36,7 @@ export default class TaskSettingsController extends ControllerChainLink {
 
             'addChecklist',
             'addChecklistItem',
+            'updateChecklistItem',
             'deleteChecklist',
 
             'saveTaskSettings',

@@ -74,17 +74,19 @@
                             </div>
                             <div class="task-settings-checklist-items">
                                 <fest:for iterate="checklist.items" index="j" value="item">
-                                    <div class="checklist-item" data-item-id="{item.id}">
-                                        <input type="checkbox" id="{i}-{j}" name="{i}-{j}">
-                                            <fest:attributes>
-                                                <fest:if test="item.isDone">
-                                                    <fest:attribute name="checked">
-                                                    </fest:attribute>
-                                                </fest:if>
-                                            </fest:attributes>
-                                        </input>
-                                        <label for="{i}-{j}">
-                                            <fest:value>item.text</fest:value>
+                                    <div class="checklist-item">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" class="js-checklistItem" data-item-id="{item.id}">
+                                                <fest:attributes>
+                                                    <fest:if test="item.done">
+                                                        <fest:attribute name="checked"/>
+                                                    </fest:if>
+                                                </fest:attributes>
+                                            </input>
+                                            <div class="custom-label">
+                                                <fest:value>item.text</fest:value>
+                                            </div>
+                                            <div class="custom-checkbox"/>
                                         </label>
                                     </div>
                                 </fest:for>

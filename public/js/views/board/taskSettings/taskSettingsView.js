@@ -17,6 +17,7 @@ export default class TaskSettingsView extends BaseView {
         this.renderTaskSettings = this.renderTaskSettings.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleToggleCheckBox = this.handleToggleCheckBox.bind(this);
 
         this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings);
         this.scrollHeight = 0;
@@ -58,9 +59,9 @@ export default class TaskSettingsView extends BaseView {
             ...this.root.querySelectorAll('.js-addNewChecklistItem'),
             ...this.root.querySelectorAll('.js-closeChecklistItemForm'),
             ...this.root.querySelectorAll('.js-createChecklistItem'),
+            ...this.root.querySelectorAll('.js-checklistItem'),
             ...this.root.querySelectorAll('.js-deleteChecklist'),
         ];
-
         taskSettingsElements.forEach((element) => {
             element.addEventListener('click', this.handleClick);
         });
@@ -106,8 +107,18 @@ export default class TaskSettingsView extends BaseView {
                 const checklistID = checklistElement.dataset.checklistId;
                 const text = checklistElement.querySelector('.js-inputNewItemTitle').value;
                 if (text) {
+                    this.scrollHeight = this.root.querySelector('.task').scrollTop;
                     this.eventBus.call('addChecklistItem', {checklistID, text, isDone: false});
                 }
+                break;
+
+            case classList.contains('js-checklistItem'):
+                const itemData = {
+                    id: Number(event.target.dataset.itemId),
+                    done: event.target.checked,
+                };
+                const checklistId = event.currentTarget.closest('.checklist').dataset.checklistId;
+                this.eventBus.call('updateChecklistItem', checklistId, itemData);
                 break;
 
             case classList.contains('js-saveTask'):
@@ -137,6 +148,14 @@ export default class TaskSettingsView extends BaseView {
             default:
                 break;
         }
+    }
+
+    /**
+     * Handles changing value of checklist item
+     * @param {Event} event
+     */
+    handleToggleCheckBox(event) {
+        console.log(event.target);
     }
 
     /**

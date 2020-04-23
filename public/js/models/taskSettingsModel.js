@@ -2,6 +2,7 @@ import {
     taskChecklistDelete,
     taskChecklistGet,
     taskChecklistItemPost,
+    taskChecklistItemPut,
     taskChecklistPost,
     taskCommentsGet,
     taskCommentsPost,
@@ -32,6 +33,7 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('addChecklist', this.addChecklist.bind(this));
         this.eventBus.subscribe('deleteChecklist', this.deleteChecklist.bind(this));
         this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
+        this.eventBus.subscribe('updateChecklistItem', this.updateChecklistItem.bind(this));
     }
 
     /**
@@ -115,6 +117,32 @@ export default class TaskSettingsModel {
      */
     async addChecklistItem(itemData) {
         const response = await taskChecklistItemPost(this.taskData, itemData);
+        switch (response.status) {
+            case 200:
+                this.getTaskSettings();
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 400:
+            case 403:
+            case 500:
+                this.eventBus.call('goToBoards');
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                this.eventBus.call('goToBoards');
+                break;
+        }
+    }
+
+    /**
+     * Update item value
+     * @param {Number} checklistId
+     * @param {Object} itemData
+     */
+    async updateChecklistItem(checklistId, itemData) {
+        const response = await taskChecklistItemPut(this.taskData, checklistId, itemData);
         switch (response.status) {
             case 200:
                 this.getTaskSettings();

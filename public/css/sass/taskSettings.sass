@@ -1,11 +1,12 @@
 .task
     @extend .form
+    position: absolute
+    top: 8vh
     display: flex
     flex-direction: column
     width: 700px
-    max-height: 70vh
+    max-height: 80vh
     overflow-y: auto
-    box-shadow: none
 
     &-title
         &__text
@@ -103,6 +104,9 @@
                 @extend .form-input-label
 
 .checklist
+    &-item
+        margin-bottom: 10px
+        height: 25px
     &-add-item-form
         &__input
             @extend .form-input

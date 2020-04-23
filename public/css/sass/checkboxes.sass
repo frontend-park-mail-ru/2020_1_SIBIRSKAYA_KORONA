@@ -1,0 +1,61 @@
+.checkbox-container
+    display: flex
+    align-items: center
+    position: relative
+    padding-left: 35px
+    cursor: pointer
+    height: 100%
+    user-select: none
+
+
+.checkbox-container input
+    position: absolute
+    opacity: 0
+    cursor: pointer
+    height: 0
+    width: 0
+
+
+.custom-checkbox
+    position: absolute
+    top: 0
+    left: 0
+    height: 25px
+    width: 25px
+    border-radius: 4px
+    background-color: white
+    border: 1px solid #cac6c6
+    box-shadow: 0 0 2px 0 #cac6c6
+
+.custom-label
+    letter-spacing: 0.05em
+
+.checkbox-container:hover input ~ .custom-checkbox
+    background-color: #e3dfdf
+
+.checkbox-container input:checked ~ .custom-checkbox
+    background-color: #2a87fe
+    border: none
+
+
+.checkbox-container input:checked ~ .custom-label
+    color: #797777ba
+    text-decoration: line-through
+
+.custom-checkbox:after
+    content: ""
+    position: absolute
+    display: none
+
+
+.checkbox-container input:checked ~ .custom-checkbox:after
+    display: block
+
+.checkbox-container .custom-checkbox:after
+    left: 9px
+    top: 5px
+    width: 5px
+    height: 10px
+    border: solid white
+    border-width: 0 3px 3px 0
+    transform: rotate(45deg)
