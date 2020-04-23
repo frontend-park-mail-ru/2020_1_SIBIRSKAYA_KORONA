@@ -301,7 +301,7 @@ export const labelsGet = (boardID) => {
  * @param {Object} labelData - label text and color
  * @return {Promise<Response>}
  */
-export const labelsPost = (boardID, labelData = {title: '', color: 'black'}) => {
+export const labelsPost = (boardID, labelData = {title: void 0, color: void 0}) => {
     const apiUrl = new URL(`/boards/${boardID}/labels`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify(labelData));
 };
@@ -324,7 +324,7 @@ export const labelGet = (boardID, labelID) => {
  * @param {Object}  labelData - label text and color
  * @return {Promise<Response>}
  */
-export const labelPut = (boardID, labelID, labelData) => {
+export const labelPut = (boardID, labelID, labelData = {title: void 0, color: void 0}) => {
     const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify(labelData));
 };

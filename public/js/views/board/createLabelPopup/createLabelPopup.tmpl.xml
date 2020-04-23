@@ -1,4 +1,4 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="labels" xmlns:fesr="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="labelColors" xmlns:fesr="http://fest.mail.ru">
     <div class="form pop-over">
 
         <div class="form-block">
@@ -8,29 +8,20 @@
         </div>
 
         <div class="form-block">
-            <input class="form-input" placeholder="Name"/>
+            <input class="form-input js-inputLabelTitle" placeholder="Name"/>
         </div>
-
-        <fest:script>var labelColors = [
-            'yellow',
-            'orange',
-            'red',
-            'purple',
-            'darkblue',
-            'black',
-            ]
-        </fest:script>
 
         <div class="form-block">
             <div class="task-color-palette">
                 <fest:for iterate="labelColors" index="i" value="labelColor">
-                    <div class="task-label task-palette-color task-label-color-{labelColor} mod-selectable"></div>
+                    <div class="task-label task-palette-color task-label-color-{labelColor} mod-selectable js-chooseColor"
+                    data-label-color="{labelColor}"></div>
                 </fest:for>
             </div>
         </div>
 
         <div class="form-block">
-            <div class="button primary">
+            <div class="button primary js-createLabel">
                 Create
             </div>
         </div>

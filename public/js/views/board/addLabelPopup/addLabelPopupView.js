@@ -52,7 +52,7 @@ export default class AddLabelPopupView extends BaseView {
      * Add event listeners for interactive elements
      */
     addEventListeners() {
-        const openCreateLabelPopupButton = document.getElementById('openCreateLabelPopupButton');
+        const openCreateLabelPopupButton = document.getElementsByClassName('js-openCreateLabelPopup')[0];
         openCreateLabelPopupButton.addEventListener('click', (event) => {
             this.eventBus.call('openCreateLabelPopup', this.relativeTarget);
         });

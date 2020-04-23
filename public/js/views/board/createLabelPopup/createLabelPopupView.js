@@ -13,12 +13,16 @@ export default class CreateLabelPopupView extends BaseView {
         super(eventBus);
 
         this.relativeTarget = null;
+        this.labelData = {title: void 0, color: void 0};
 
         this.render = this.render.bind(this);
         this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
 
+
         this.eventBus.subscribe('gotLabelColors', this.renderAddLabelPopup);
+        this.eventBus.subscribe('createLabel', this.createLabel);
     }
 
     /**
@@ -49,9 +53,56 @@ export default class CreateLabelPopupView extends BaseView {
      * Add event listeners for interactive elements
      */
     addEventListeners() {
-        // const popupDiv = document.getElementById('popup-block');
+        const popupDiv = document.getElementById('popup-block');
+        const buttons = [
+            ...popupDiv.getElementsByClassName('js-chooseColor'),
+            ...popupDiv.getElementsByClassName('js-createLabel'),
+        ];
+
+        for (const button of buttons) {
+            button.addEventListener('click', this.handleButtonClick);
+        }
     }
 
+    /**
+     * Handle all buttons click
+     * @param {Event} event mouse click event
+     */
+    handleButtonClick(event) {
+        const target = event.currentTarget;
+
+        switch (true) {
+            case target.classList.contains('js-chooseColor'):
+                event.stopPropagation();
+                this.chooseColor(target.dataset['labelColor']);
+                break;
+            case target.classList.contains('js-createLabel'):
+                event.stopPropagation();
+
+                this.labelData.title = document.getElementById('popup-block')
+                    .querySelector(`.js-inputLabelTitle`).value;
+                this.eventBus.call('createLabel', this.labelData);
+                break;
+        }
+    }
+
+    /**
+     * Choose color
+     * @param {String} color
+     */
+    chooseColor(color) {
+        const popupBlock = document.getElementById('popup-block');
+        if (this.labelData.color) {
+            const previousColorButton = popupBlock
+                .querySelector(`.js-chooseColor.task-label-color-${this.labelData.color}`);
+            previousColorButton.classList.remove('active');
+        }
+
+        this.labelData.color = color;
+        const currentColorChoiceButton = popupBlock
+            .querySelector(`.js-chooseColor.task-label-color-${this.labelData.color}`);
+        currentColorChoiceButton.classList.add('active');
+    }
 
     /**
      * Clears popover block from current pop-over
