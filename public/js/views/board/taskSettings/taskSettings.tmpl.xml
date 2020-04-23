@@ -61,7 +61,7 @@
 
                 <div class="task-settings-controls">
                     <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
-                    <div class="task-settings-controls__button--secondary js-addNewCheckList">Добавить чеклист</div>
+                    <div class="task-settings-controls__button--secondary js-addNewChecklist">Добавить чеклист</div>
                     <div class="task-settings-controls__button--secondary js-attachFile">Прикрепить файл</div>
                     <div class="task-settings-controls__button--danger js-deleteTask">Удалить задачу</div>
                 </div>
@@ -89,14 +89,25 @@
                                     </div>
                                 </fest:for>
                             </div>
-                            <div class="checklist-add-item-form">
-                                <!--TODO  add item popup-->
+
+                            <div class="checklist-add-item-form js-checklist-add-item-form display-none">
+                                <div class="checklist-add-item-form-controls">
+                                    <input class="checklist-add-item-form__input js-inputNewItemTitle" type="text"
+                                           autocomplete="off"
+                                           placehilder="Новый элемент"/>
+                                    <div class="checklist-add-item-form-controls__button--secondary js-createChecklistItem">
+                                        Добавить
+                                    </div>
+                                    <div class="checklist-add-item-form-controls__button--danger js-closeChecklistItemForm">
+                                        Закрыть
+                                    </div>
+                                </div>
                             </div>
-                            <div class="task-settings-controls">
-                                <div class="task-settings-controls__button--secondary js-addNewCheckListItem">
+                            <div class="task-settings-controls js-checklist-controls">
+                                <div class="task-settings-controls__button--secondary js-addNewChecklistItem">
                                     Добавить элемент
                                 </div>
-                                <div class="task-settings-controls__button--danger js-deleteCheckList">
+                                <div class="task-settings-controls__button--danger js-deleteChecklist">
                                     Удалить чеклист
                                 </div>
                             </div>

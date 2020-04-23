@@ -1,6 +1,7 @@
-// eslint-disable-next-line max-len
 import {
+    taskChecklistDelete,
     taskChecklistGet,
+    taskChecklistItemPost,
     taskChecklistPost,
     taskCommentsGet,
     taskCommentsPost,
@@ -8,7 +9,6 @@ import {
     taskGet,
     taskPut,
 } from '../libs/apiService.js';
-
 
 /**
  * Task settings model
@@ -23,15 +23,15 @@ export default class TaskSettingsModel {
      */
     constructor(eventBus, boardID, columnID, taskID) {
         this.eventBus = eventBus;
-        this.boardId = boardID;
-        this.columnId = columnID;
-        this.taskId = taskID;
+        this.taskData = {boardID, columnID, taskID};
 
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings.bind(this));
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this));
         this.eventBus.subscribe('deleteTask', this.deleteTask.bind(this));
         this.eventBus.subscribe('addComment', this.addTaskComment.bind(this));
-        this.eventBus.subscribe('addCheckList', this.addChecklist.bind(this));
+        this.eventBus.subscribe('addChecklist', this.addChecklist.bind(this));
+        this.eventBus.subscribe('deleteChecklist', this.deleteChecklist.bind(this));
+        this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
     }
 
     /**
@@ -39,7 +39,7 @@ export default class TaskSettingsModel {
      * @param {String} commentText
      */
     async addTaskComment(commentText) {
-        const response = await taskCommentsPost(this.boardId, this.columnId, this.taskId, commentText);
+        const response = await taskCommentsPost(this.taskData, commentText);
         switch (response.status) {
             case 200:
                 this.getTaskSettings();
@@ -64,12 +64,10 @@ export default class TaskSettingsModel {
      * @param {String} checklistName
      */
     async addChecklist(checklistName) {
-        console.log('ZALUPA');
-        const response = await taskChecklistPost(this.boardId, this.columnId, this.taskId, checklistName);
+        const response = await taskChecklistPost(this.taskData, checklistName);
         switch (response.status) {
             case 200:
                 this.getTaskSettings();
-                console.log(await response.json());
                 break;
             case 401:
                 this.eventBus.call('unauthorized');
@@ -87,10 +85,59 @@ export default class TaskSettingsModel {
     }
 
     /**
+     * Delete checklist from task
+     * @param {Number} checklistID
+     */
+    async deleteChecklist(checklistID) {
+        const response = await taskChecklistDelete(this.taskData, checklistID);
+        switch (response.status) {
+            case 200:
+                this.getTaskSettings();
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 400:
+            case 403:
+            case 500:
+                this.eventBus.call('goToBoards');
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                this.eventBus.call('goToBoards');
+                break;
+        }
+    }
+
+    /**
+     * Add new item in checklist
+     * @param {Object} itemData
+     */
+    async addChecklistItem(itemData) {
+        const response = await taskChecklistItemPost(this.taskData, itemData);
+        switch (response.status) {
+            case 200:
+                this.getTaskSettings();
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 400:
+            case 403:
+            case 500:
+                this.eventBus.call('goToBoards');
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                this.eventBus.call('goToBoards');
+                break;
+        }
+    }
+
+    /**
      * Returns task information
      */
     async getTaskSettings() {
-        // TODO(Alexandr): убрать заглушки на лейюлы и участников
         const handleResponseStatus = async (response, onSuccess) => {
             switch (response.status) {
                 case 200:
@@ -112,15 +159,15 @@ export default class TaskSettingsModel {
             }
         };
         let taskData;
-        const taskResponse = await taskGet(this.boardId, this.columnId, this.taskId);
+        const taskResponse = await taskGet(this.taskData);
         if (!(await handleResponseStatus(taskResponse, (body) => taskData = body))) {
             return;
         }
-        const checklistResponse = await taskChecklistGet(this.boardId, this.columnId, this.taskId);
+        const checklistResponse = await taskChecklistGet(this.taskData);
         if (!(await handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
             return;
         }
-        const commentsResponse = await taskCommentsGet(this.boardId, this.columnId, this.taskId);
+        const commentsResponse = await taskCommentsGet(this.taskData);
         if (!(await handleResponseStatus(commentsResponse, (body) => {
             taskData.comments = new Array(body.length);
             body.forEach((comment, i) => {
@@ -180,7 +227,7 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async saveTaskSettings(taskData) {
-        const response = await taskPut(this.boardId, this.columnId, this.taskId, taskData);
+        const response = await taskPut(this.taskData, taskData);
         switch (response.status) {
             case 200:
                 this.getTaskSettings();
@@ -205,7 +252,7 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async deleteTask() {
-        const response = await taskDelete(this.boardId, this.columnId, this.taskId);
+        const response = await taskDelete(this.taskData);
         switch (response.status) {
             case 200:
                 this.eventBus.call('closeSelf');

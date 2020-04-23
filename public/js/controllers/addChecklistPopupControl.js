@@ -1,12 +1,12 @@
 import ControllerChainLink, {ChainLinkSignals} from '../libs/controllerChainLink.js';
 import EventBus from '../libs/eventBus.js';
-import AddCheckListPopupView from '../views/board/addCheckListPopup/addCheckListPopupView.js';
+import AddChecklistPopupView from '../views/board/addChecklistPopup/addChecklistPopupView.js';
 
 
 /**
  * Add checklist popup controller
  */
-export default class AddCheckListPopupController extends ControllerChainLink {
+export default class AddChecklistPopupController extends ControllerChainLink {
     /**
      * Controller constructor
      * @param {EventBus} parentEventBus - for communication with parent mvc
@@ -17,9 +17,9 @@ export default class AddCheckListPopupController extends ControllerChainLink {
 
         this.setCustomCloseFunction(() => {
             this.view.closeSelf();
-            // parentEventBus.call('closeAddCheckListPopup');
+            // parentEventBus.call('closeAddChecklistPopup');
         });
 
-        this.view = new AddCheckListPopupView(parentEventBus);
+        this.view = new AddChecklistPopupView(parentEventBus);
     }
 }

@@ -41,21 +41,6 @@ export default class BoardSettingsView extends BaseView {
     }
 
     /**
-     * Render users search results
-     * @param {Object} usersData - user data to render
-     */
-    renderUsersSearchResult(usersData) {
-        document.querySelector('.js-search-results').innerHTML = searchResultsTemplate(usersData);
-        const buttons = [
-            ...document.querySelectorAll('.js-addNewAdmin'),
-            ...document.querySelectorAll('.js-addNewMember'),
-        ];
-        buttons.forEach((button) => {
-            button.addEventListener('click', this.handleButtonClick);
-        });
-    }
-
-    /**
      * Add event listeners for interactive elements
      */
     addEventListeners() {
@@ -89,6 +74,21 @@ export default class BoardSettingsView extends BaseView {
         ];
         inputs.forEach((input) => {
             input.addEventListener('input', this.handleUserInput);
+        });
+    }
+
+    /**
+     * Render users search results
+     * @param {Object} usersData - user data to render
+     */
+    renderUsersSearchResult(usersData) {
+        document.querySelector('.js-search-results').innerHTML = searchResultsTemplate(usersData);
+        const buttons = [
+            ...document.querySelectorAll('.js-addNewAdmin'),
+            ...document.querySelectorAll('.js-addNewMember'),
+        ];
+        buttons.forEach((button) => {
+            button.addEventListener('click', this.handleButtonClick);
         });
     }
 
@@ -148,6 +148,7 @@ export default class BoardSettingsView extends BaseView {
         }
         const searchContainer = document.querySelector('.js-search');
         searchContainer.classList.remove('display-none');
+        searchContainer.querySelector('#js-searchMembersInput').focus();
     }
 
     /**

@@ -47,14 +47,18 @@ export default class TaskSettingsView extends BaseView {
     addEventListeners() {
         const taskSettingsElements = [
             this.root.querySelector('.task'),
+            this.root.querySelector('.window-overlay'),
             this.root.querySelector('.js-addNewLabel'),
             this.root.querySelector('.js-addNewTaskMember'),
-            this.root.querySelector('.js-addNewCheckList'),
             this.root.querySelector('.js-attachFile'),
             this.root.querySelector('.js-saveTask'),
             this.root.querySelector('.js-deleteTask'),
             this.root.querySelector('.js-saveComment'),
-            this.root.querySelector('.window-overlay'),
+            this.root.querySelector('.js-addNewChecklist'),
+            ...this.root.querySelectorAll('.js-addNewChecklistItem'),
+            ...this.root.querySelectorAll('.js-closeChecklistItemForm'),
+            ...this.root.querySelectorAll('.js-createChecklistItem'),
+            ...this.root.querySelectorAll('.js-deleteChecklist'),
         ];
 
         taskSettingsElements.forEach((element) => {
@@ -70,7 +74,6 @@ export default class TaskSettingsView extends BaseView {
         const classList = event.currentTarget.classList;
         switch (true) {
             case classList.contains('task'):
-                event.stopPropagation();
                 this.eventBus.call(ChainLinkSignals.closeLastChainLink);
                 break;
 
@@ -79,29 +82,45 @@ export default class TaskSettingsView extends BaseView {
                 this.eventBus.call('openAddLabelPopup', event.target);
                 break;
 
-            case classList.contains('js-addNewCheckList'):
+            case classList.contains('js-addNewChecklist'):
                 event.stopPropagation();
-                this.eventBus.call('openAddCheckListPopup', event.target);
+                this.eventBus.call('openAddChecklistPopup', event.target);
+                break;
+
+            case classList.contains('js-addNewChecklistItem'):
+            case classList.contains('js-closeChecklistItemForm'): {
+                const checklistElement = event.currentTarget.closest('.checklist');
+                checklistElement.querySelector('.js-checklist-add-item-form').classList.toggle('display-none');
+                checklistElement.querySelector('.js-checklist-controls').classList.toggle('display-none');
+                checklistElement.querySelector('.js-inputNewItemTitle').focus();
+                break;
+            }
+            case classList.contains('js-deleteChecklist'): {
+                const checklistElement = event.currentTarget.closest('.checklist');
+                const checklistID = checklistElement.dataset.checklistId;
+                this.eventBus.call('deleteChecklist', checklistID);
+                break;
+            }
+            case classList.contains('js-createChecklistItem'):
+                const checklistElement = event.currentTarget.closest('.checklist');
+                const checklistID = checklistElement.dataset.checklistId;
+                const text = checklistElement.querySelector('.js-inputNewItemTitle').value;
+                if (text) {
+                    this.eventBus.call('addChecklistItem', {checklistID, text, isDone: false});
+                }
                 break;
 
             case classList.contains('js-saveTask'):
-                event.stopPropagation();
-                const description = this.root.querySelector('.js-inputDescription').innerText;
-                const title = this.root.querySelector('.js-inputTitle').value;
+                const description = this.root.querySelector('.js-inputDescription')?.innerText;
+                const title = this.root.querySelector('.js-inputTitle')?.value;
                 this.eventBus.call('saveTaskSettings', {title, description});
                 break;
 
             case classList.contains('js-deleteTask'):
-                event.stopPropagation();
                 this.eventBus.call('deleteTask');
                 break;
 
-            case classList.contains('js-addNewTaskMember'):
-                // todo
-                break;
-
             case classList.contains('js-saveComment'):
-                event.stopPropagation();
                 const commentText = this.root.querySelector('.js-commentText').innerText;
                 if (commentText.length !== 0) {
                     this.scrollHeight = this.root.querySelector('.task').scrollTop + 300;
@@ -111,13 +130,10 @@ export default class TaskSettingsView extends BaseView {
 
             case classList.contains('window-overlay'):
                 if (event.target === event.currentTarget) {
-                    event.stopPropagation();
                     this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
                 }
                 break;
 
-            case classList.contains('.js-attachFile'):
-                break;
             default:
                 break;
         }

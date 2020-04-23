@@ -3,7 +3,7 @@ import EventBus from '../libs/eventBus.js';
 
 import TaskSettingsModel from '../models/taskSettingsModel.js';
 import TaskSettingsView from '../views/board/taskSettings/taskSettingsView.js';
-import AddCheckListPopupController from './addCheckListPopupControl.js';
+import AddChecklistPopupController from './addChecklistPopupControl.js';
 
 import AddLabelPopupController from './addLabelPopupControl.js';
 
@@ -31,9 +31,12 @@ export default class TaskSettingsController extends ControllerChainLink {
             'openAddMemberPopup',
             'closedAddMemberPopup',
 
-            'openAddCheckListPopup',
-            'addCheckList',
-            'closeAddCheckListPopup',
+            'openAddChecklistPopup',
+            'closeAddChecklistPopup',
+
+            'addChecklist',
+            'addChecklistItem',
+            'deleteChecklist',
 
             'saveTaskSettings',
             'deleteTask',
@@ -62,8 +65,8 @@ export default class TaskSettingsController extends ControllerChainLink {
             childController.view.render(button);
         });
 
-        this.eventBus.subscribe('openAddCheckListPopup', (button) => {
-            const checklistPopupController = new AddCheckListPopupController(this.eventBus);
+        this.eventBus.subscribe('openAddChecklistPopup', (button) => {
+            const checklistPopupController = new AddChecklistPopupController(this.eventBus);
             this.setChildEventBus(checklistPopupController.eventBus);
             checklistPopupController.view.render(button);
         });

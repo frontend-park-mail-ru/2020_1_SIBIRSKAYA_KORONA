@@ -116,6 +116,7 @@ export default class BoardView extends BaseView {
             id: columnID,
         });
         node.scrollIntoView({block: 'end', behavior: 'smooth'});
+        node.querySelector('#inputNewTaskTitle').focus();
         const addButtonID = 'addTaskButton' + columnID;
         document.getElementById(addButtonID).addEventListener('click', () => {
             const newTaskInput = document.getElementById('inputNewTaskTitle');
@@ -148,6 +149,7 @@ export default class BoardView extends BaseView {
         node.innerHTML = addColumnFromTemplate({form: true});
         node.scrollIntoView({inline: 'end', behavior: 'smooth'});
         document.querySelector('.column-list').scroll(100500, 0);
+        node.querySelector('#inputNewColumnTitle').focus();
 
         document.getElementById('addColumnButton').addEventListener('click', () => {
             const newColumnTitleInput = document.getElementById('inputNewColumnTitle');

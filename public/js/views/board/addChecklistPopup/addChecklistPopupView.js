@@ -1,10 +1,10 @@
-import template from './addCheckListPopup.tmpl.xml';
+import template from './addChecklistPopup.tmpl.xml';
 import BaseView from '../../baseView.js';
 
 /**
  * View of 'Add label' popup
  */
-export default class AddCheckListPopupView extends BaseView {
+export default class AddChecklistPopupView extends BaseView {
     /**
      * Constructor
      * @param {Object} parentEventBus  - parentEventBus to share events with model
@@ -32,9 +32,10 @@ export default class AddCheckListPopupView extends BaseView {
      * Add event listeners
      */
     addEventListeners() {
+        this.root.querySelector('.js-inputChecklistName').focus();
         this.root.querySelector('.js-createChecklist').addEventListener('click', () => {
-            const newCheckListName = this.root.querySelector('.js-inputChecklistName')?.value || 'Чек-лист';
-            this.eventBus.call('addCheckList', newCheckListName);
+            const newChecklistName = this.root.querySelector('.js-inputChecklistName').value || 'Чек-лист';
+            this.eventBus.call('addChecklist', newChecklistName);
             this.eventBus.call('closeLastChild');
         });
         this.root.querySelector('.js-closeChecklistForm').addEventListener('click', () => {

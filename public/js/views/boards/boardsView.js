@@ -55,8 +55,8 @@ export default class BoardsView extends BaseView {
         fakeBoard.classList.add('group-mini-board');
         fakeBoard.removeEventListener('click', this.handleAddBoardButtonClick);
         fakeBoard.innerHTML = addBoardFormTemplate({form: true});
-
         const newBoardTitleInput = document.getElementById('inputNewBoardTitle');
+        newBoardTitleInput.focus();
         document.getElementById('submitAddBoard').addEventListener('click', () => {
             if (newBoardTitleInput.value) {
                 this.eventBus.call('addBoard', newBoardTitleInput.value);

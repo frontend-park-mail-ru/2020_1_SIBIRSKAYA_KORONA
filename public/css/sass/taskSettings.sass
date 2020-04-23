@@ -102,6 +102,28 @@
             &__label
                 @extend .form-input-label
 
+.checklist
+    &-add-item-form
+        &__input
+            @extend .form-input
+        &-controls
+            margin-top: 20px
+            display: flex
+            justify-content: center
+
+            &__button
+                &--primary
+                    @extend .button--primary
+
+                &--secondary
+                    margin-left: 12px
+                    @extend .button--secondary
+
+                &--danger
+                    margin-left: 12px
+                    @extend .button--danger
+
+
 /*    MEMBERS POPUP    */
 
 
