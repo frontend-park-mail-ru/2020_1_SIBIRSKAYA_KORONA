@@ -145,7 +145,7 @@ export default class TaskSettingsModel {
         const response = await taskChecklistItemPut(this.taskData, checklistId, itemData);
         switch (response.status) {
             case 200:
-                this.getTaskSettings();
+                // this.getTaskSettings();
                 break;
             case 401:
                 this.eventBus.call('unauthorized');
@@ -195,6 +195,20 @@ export default class TaskSettingsModel {
         const checklistResponse = await taskChecklistGet(this.taskData);
         if (!(await handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
             return;
+        }
+
+        for (const checklist of taskData.checklists) {
+            if (checklist.items) {
+                let itemsDone = 0;
+                checklist.items.forEach((item) => {
+                    if (item.done) {
+                        itemsDone++;
+                    }
+                });
+                checklist.progress = Math.floor(itemsDone / checklist.items.length * 100) || 0;
+                checklist.progressColor = (checklist.progress < 33) ? '#eb5a46' :
+                    (checklist.progress < 66) ? '#f2d600' : '#61bd4f';
+            }
         }
 
         const commentsResponse = await taskCommentsGet(this.taskData);

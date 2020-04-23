@@ -113,12 +113,7 @@ export default class TaskSettingsView extends BaseView {
                 break;
 
             case classList.contains('js-checklistItem'):
-                const itemData = {
-                    id: Number(event.target.dataset.itemId),
-                    done: event.target.checked,
-                };
-                const checklistId = event.currentTarget.closest('.checklist').dataset.checklistId;
-                this.eventBus.call('updateChecklistItem', checklistId, itemData);
+                this.handleToggleCheckBox(event.target);
                 break;
 
             case classList.contains('js-saveTask'):
@@ -152,10 +147,31 @@ export default class TaskSettingsView extends BaseView {
 
     /**
      * Handles changing value of checklist item
-     * @param {Event} event
+     * @param {EventTarget} item
      */
-    handleToggleCheckBox(event) {
-        console.log(event.target);
+    handleToggleCheckBox(item) {
+        const itemData = {
+            id: Number(item.dataset.itemId),
+            done: item.checked,
+        };
+        const checklist = item.closest('.checklist');
+        const checklistId = checklist.dataset.checklistId;
+        this.eventBus.call('updateChecklistItem', checklistId, itemData);
+
+        let itemsDone = 0;
+        const items = checklist.querySelectorAll('.js-checklistItem');
+        items.forEach((item) => {
+            if (item.checked) {
+                itemsDone++;
+            }
+        });
+        const progress = Math.floor(itemsDone / items.length * 100) || 0;
+        const color = (progress === 0) ? 'transparent' :
+            (progress < 33) ? '#eb5a46' : (progress < 66) ? '#f2d600' : '#61bd4f';
+        const progressBar = checklist.querySelector('.checklist-progressbar-progress');
+        progressBar.style.width = progress + '%';
+        progressBar.style.background = color;
+        checklist.querySelector('.checklist-title-percents').innerText = progress + '%';
     }
 
     /**

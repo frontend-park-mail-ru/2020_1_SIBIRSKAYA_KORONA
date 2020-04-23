@@ -104,12 +104,16 @@
                 @extend .form-input-label
 
 .checklist
+    width: 100%
+
     &-item
         margin-bottom: 10px
         height: 25px
+
     &-add-item-form
         &__input
             @extend .form-input
+
         &-controls
             margin-top: 20px
             display: flex
@@ -126,6 +130,32 @@
                 &--danger
                     margin-left: 12px
                     @extend .button--danger
+
+    &-title
+        margin-top: 30px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        @extend .form-input-label
+
+        &-percents
+            font-family: 'Scada', sans-serif
+            color: #444746
+            font-size: 14px
+            letter-spacing: 1px
+            font-weight: normal
+
+    &-progressbar
+        display: flex
+        justify-content: flex-start
+        height: 8px
+        border-radius: 4px
+        background: #cac6c654
+        margin: 10px 0
+
+        &-progress
+            border-radius: inherit
+            transition: 0.3s ease-in-out, background 0.3s ease-out
 
 
 /*    MEMBERS POPUP    */

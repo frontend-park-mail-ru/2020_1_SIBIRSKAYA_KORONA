@@ -69,9 +69,22 @@
                 <div class="task-checklists">
                     <fest:for iterate="task.checklists" index="i" value="checklist">
                         <div class="checklist" data-checklist-id="{checklist.id}">
-                            <div class="task-settings__label">
+
+                            <div class="checklist-title">
                                 <fest:value>checklist.name</fest:value>
+                                <fest:if test="checklist.items.length">
+                                    <div class="checklist-title-percents">
+                                        <fest:value>checklist.progress</fest:value>%
+                                    </div>
+                                </fest:if>
                             </div>
+
+                            <fest:if test="checklist.items.length">
+                                <div class="checklist-progressbar">
+                                    <div class="checklist-progressbar-progress"
+                                         style="width: {checklist.progress}%; background: {checklist.progressColor} "/>
+                                </div>
+                            </fest:if>
                             <div class="task-settings-checklist-items">
                                 <fest:for iterate="checklist.items" index="j" value="item">
                                     <div class="checklist-item">
