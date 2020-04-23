@@ -17,7 +17,7 @@ export default class CreateLabelPopupView extends BaseView {
 
         this.render = this.render.bind(this);
         this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
-        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
 
 
@@ -46,6 +46,8 @@ export default class CreateLabelPopupView extends BaseView {
         popupDiv.style.top = `${top}px`;
         popupDiv.innerHTML = template(boardLabelColors);
 
+        this.chooseColor('red');
+
         this.addEventListeners();
     }
 
@@ -60,7 +62,7 @@ export default class CreateLabelPopupView extends BaseView {
         ];
 
         for (const button of buttons) {
-            button.addEventListener('click', this.handleButtonClick);
+            button.addEventListener('click', this.handleClick);
         }
     }
 
@@ -68,7 +70,7 @@ export default class CreateLabelPopupView extends BaseView {
      * Handle all buttons click
      * @param {Event} event mouse click event
      */
-    handleButtonClick(event) {
+    handleClick(event) {
         const target = event.currentTarget;
 
         switch (true) {

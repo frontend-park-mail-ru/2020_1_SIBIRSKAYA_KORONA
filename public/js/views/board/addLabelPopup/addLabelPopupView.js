@@ -16,9 +16,12 @@ export default class AddLabelPopupView extends BaseView {
 
         this.render = this.render.bind(this);
         this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.updateLabelStatus = this.updateLabelStatus.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
 
         this.eventBus.subscribe('gotLabels', this.renderAddLabelPopup);
+        this.eventBus.subscribe('labelStatusChanged', this.updateLabelStatus);
     }
 
     /**
@@ -52,11 +55,66 @@ export default class AddLabelPopupView extends BaseView {
      * Add event listeners for interactive elements
      */
     addEventListeners() {
-        const openCreateLabelPopupButton = document.getElementsByClassName('js-openCreateLabelPopup')[0];
-        openCreateLabelPopupButton.addEventListener('click', (event) => {
-            this.eventBus.call('openCreateLabelPopup', this.relativeTarget);
-        });
+        const popupBlock = document.getElementById('popup-block');
+        const buttons = [
+            ...popupBlock.getElementsByClassName('js-openCreateLabelPopup'),
+            ...popupBlock.getElementsByClassName('js-addOrRemoveLabel'),
+        ];
+
+        for (const button of buttons) {
+            button.addEventListener('click', this.handleClick);
+        }
     }
+
+    /**
+     * Handle all buttons click
+     * @param {Event} event mouse click event
+     */
+    handleClick(event) {
+        const target = event.currentTarget;
+
+        switch (true) {
+            case target.classList.contains('js-openCreateLabelPopup'):
+                event.stopPropagation();
+                this.eventBus.call('openCreateLabelPopup', this.relativeTarget);
+                break;
+            case target.classList.contains('js-addOrRemoveLabel'):
+                event.stopPropagation();
+                const labelID = target.dataset['labelId'];
+                const isActive = target.classList.contains('active');
+
+                if (isActive) {
+                    this.eventBus.call('removeLabel', labelID);
+                } else {
+                    this.eventBus.call('addLabel', labelID);
+                }
+                break;
+        }
+    }
+
+    /**
+     * Update label status (active or not)
+     * @param {Number} labelID
+     * @param {Boolean} isActive
+     */
+    updateLabelStatus(labelID, isActive) {
+        const popupBlock = document.getElementById('popup-block');
+        const allLabels = popupBlock.getElementsByClassName('js-addOrRemoveLabel');
+        for (const label of allLabels) {
+            if (label.dataset['labelId'] !== labelID) {
+                continue;
+            }
+
+            if (isActive && !label.classList.contains('active')) {
+                label.classList.add('active');
+            } else if (label.classList.contains('active')) {
+                label.classList.remove('active');
+            }
+
+            break;
+        }
+    }
+
 
     /**
      * Clears popover block from current pop-over

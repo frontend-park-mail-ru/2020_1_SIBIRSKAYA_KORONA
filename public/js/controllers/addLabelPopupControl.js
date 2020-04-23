@@ -22,6 +22,10 @@ export default class AddLabelPopupController extends ControllerChainLink {
             'getLabels',
             'gotLabels',
 
+            'addLabel',
+            'removeLabel',
+            'labelStatusChanged',
+
             'openCreateLabelPopup',
             'closedCreateLabelPopup',
 

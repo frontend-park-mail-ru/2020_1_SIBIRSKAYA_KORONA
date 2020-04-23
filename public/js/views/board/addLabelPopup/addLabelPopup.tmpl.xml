@@ -10,10 +10,11 @@
             <div class="task-label-container">
                 <fest:for iterate="labels" index="i" value="label">
                     <div class="task-label-item">
-                        <div class="task-label task-label-color-{label.color} mod-selectable">
-                            <fesr:value>
+                        <div class="task-label task-label-color-{label.color} mod-selectable js-addOrRemoveLabel"
+                        data-label-id="{label.id}">
+                            <fest:value>
                                 label.title
-                            </fesr:value>
+                            </fest:value>
                             <fest:if test="label.isActive">
                                 <div class="task-label-status active"></div>
                             </fest:if>

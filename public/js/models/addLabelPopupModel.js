@@ -1,4 +1,4 @@
-import {labelsGet} from '../libs/apiService.js';
+import {labelsGet, taskLabelPost, taskLabelDelete} from '../libs/apiService.js';
 import {ChainLinkSignals} from '../libs/controllerChainLink.js';
 
 /**
@@ -15,8 +15,13 @@ export default class AddLabelPopupModel {
         this.taskData = taskData;
 
         this.getLabels = this.getLabels.bind(this);
+        this.addLabel = this.addLabel.bind(this);
+        this.removeLabel = this.removeLabel.bind(this);
+
 
         this.eventBus.subscribe('getLabels', this.getLabels);
+        this.eventBus.subscribe('addLabel', this.addLabel);
+        this.eventBus.subscribe('removeLabel', this.removeLabel);
     }
 
     /**
@@ -34,7 +39,7 @@ export default class AddLabelPopupModel {
                 break;
             default:
                 console.log('Бэкэндер молодец!');
-                this.eventBus.call(ChainLinkSignals.closeAllChildChainLinksAndSelf);
+                this.eventBus.call(ChainLinkSignals.closeCurrentLink);
                 return;
         }
 
@@ -50,5 +55,49 @@ export default class AddLabelPopupModel {
         });
 
         this.eventBus.call('gotLabels', labelsInfo);
+    }
+
+    /**
+     * Add label to task
+     * @param {Number} labelID
+     * @return {Promise<void>}
+     */
+    async addLabel(labelID) {
+        const addLabelResponse = await taskLabelPost(this.taskData.boardID,
+            this.taskData.columnID,
+            this.taskData.id,
+            labelID);
+
+        // TODO(Alexandr): check status
+        switch (addLabelResponse.status) {
+            case 200:
+                this.eventBus.call('labelStatusChanged', labelID, true);
+                break;
+            default:
+                console.log('Бэкэндер молодец!');
+                break;
+        }
+    }
+
+    /**
+     * Remove label from task
+     * @param {Number} labelID
+     * @return {Promise<void>}
+     */
+    async removeLabel(labelID) {
+        const removeLabelResponse = await taskLabelDelete(this.taskData.boardID,
+            this.taskData.columnID,
+            this.taskData.id,
+            labelID);
+
+        // TODO(Alexandr): check status
+        switch (removeLabelResponse.status) {
+            case 200:
+                this.eventBus.call('labelStatusChanged', labelID, false);
+                break;
+            default:
+                console.log('Бэкэндер молодец!');
+                break;
+        }
     }
 }
