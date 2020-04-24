@@ -371,3 +371,33 @@ export const taskChecklistItemDelete = (taskData, checklistID, itemId) => {
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
+
+/** ******************* ASSIGNS ************************/
+
+// POST boards/{bid}/columns/{cid}/tasks/{tid}/members/{uid} на назначение
+/**
+ * Create assign
+ * @param {Object} taskData - {boardID, columnID, taskID}
+ * @param {Number} userId
+ * @return {Promise<Response>}
+ */
+export const taskAssignPost = (taskData, userId) => {
+    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const url = `${taskUrlPart}/members/${userId}`;
+    const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, '');
+};
+
+// DELETE boards/{bid}/columns/{cid}/tasks/{tid}/members/{uid} на снятие с задачи
+/**
+ * Delete assign
+ * @param {Object} taskData - {boardID, columnID, taskID}
+ * @param {Number} userId
+ * @return {Promise<Response>}
+ */
+export const taskAssignDelete = (taskData, userId) => {
+    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const url = `${taskUrlPart}/members/${userId}`;
+    const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};

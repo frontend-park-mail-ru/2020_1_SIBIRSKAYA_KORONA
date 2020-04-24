@@ -4,8 +4,8 @@ import EventBus from '../libs/eventBus.js';
 import TaskSettingsModel from '../models/taskSettingsModel.js';
 import TaskSettingsView from '../views/board/taskSettings/taskSettingsView.js';
 import AddChecklistPopupController from './addChecklistPopupControl.js';
-
 import AddLabelPopupController from './addLabelPopupControl.js';
+import AddAssignsPopupController from './addAssignsPopupControl.js';
 
 /**
  * Task settings controller
@@ -28,16 +28,19 @@ export default class TaskSettingsController extends ControllerChainLink {
             'openAddLabelPopup',
             'closedAddLabelPopup',
 
-            'openAddMemberPopup',
-            'closedAddMemberPopup',
+            'openAssignsPopup',
+            'getTaskAssigns',
+            'gotTaskAssigns',
+            'updateAssign',
+            'assignSuccess',
+            'closeAssignsPopup',
 
             'openAddChecklistPopup',
-            'closeAddChecklistPopup',
-
             'addChecklist',
             'addChecklistItem',
             'updateChecklistItem',
             'deleteChecklist',
+            'closeAddChecklistPopup',
 
             'saveTaskSettings',
             'deleteTask',
@@ -66,10 +69,16 @@ export default class TaskSettingsController extends ControllerChainLink {
             childController.view.render(button);
         });
 
-        this.eventBus.subscribe('openAddChecklistPopup', (button) => {
+        this.eventBus.subscribe('openAddChecklistPopup', (clickCoords) => {
             const checklistPopupController = new AddChecklistPopupController(this.eventBus);
             this.setChildEventBus(checklistPopupController.eventBus);
-            checklistPopupController.view.render(button);
+            checklistPopupController.view.render(clickCoords);
+        });
+
+        this.eventBus.subscribe('openAssignsPopup', (clickCoords) => {
+            const assignsPopupController = new AddAssignsPopupController(this.eventBus);
+            this.setChildEventBus(assignsPopupController.eventBus);
+            assignsPopupController.view.render(clickCoords);
         });
 
         this.eventBus.subscribe('unauthorized', () => router.go('/login'));

@@ -65,7 +65,10 @@
             &__add-button
                 @extend .task-settings-members__member
                 border: 2px dashed #afaeae
-                transition: 0.3s
+                transition: 0.2s
+
+                &--rotated
+                    transform: rotate(45deg)
 
                 &:hover
                     border-style: solid
@@ -102,6 +105,17 @@
 
             &__label
                 @extend .form-input-label
+
+    &-assigns
+        &-form
+            @extend .form
+
+            &__label
+                @extend .form-input-label
+        &-controls
+            display: flex
+            justify-content: flex-end
+            align-items: center
 
 .checklist
     width: 100%
@@ -159,6 +173,14 @@
 
 
 /*    MEMBERS POPUP    */
+.assign
+    height: 70px
+
+
+
+
+        //flex-direction: column
+        //justify-content: center
 
 
 

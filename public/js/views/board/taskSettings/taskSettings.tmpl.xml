@@ -14,15 +14,17 @@
                 <div class="container-2cols">
                     <div>
                         <div class="task-settings__label">Участники</div>
-                        <div class="task-settings-members">
-                            <fest:for iterate="task.members" index="i" value="member">
-                                <a href="{member.url}">
-                                    <img class="task-settings-members__member" src="{member.avatar}"
-                                         alt="{member.nickname}"
-                                         title="{member.nickname}"/>
-                                </a>
-                            </fest:for>
-                            <img class="task-settings-members__add-button js-addNewTaskMember"
+                        <div class="container-row">
+                            <div class="task-settings-members">
+                                <fest:for iterate="task.members" index="i" value="member">
+                                    <a href="{member.url}">
+                                        <img class="task-settings-members__member" src="{member.avatar}"
+                                             alt="{member.nickname}"
+                                             title="{member.nickname}"/>
+                                    </a>
+                                </fest:for>
+                            </div>
+                            <img class="task-settings-members__add-button js-addAssign"
                                  src="/img/plus_icon.svg"/>
                         </div>
                     </div>
@@ -170,4 +172,5 @@
             </div>
         </div>
     </div>
+
 </fest:template>

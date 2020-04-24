@@ -14,12 +14,15 @@ export default class TaskSettingsView extends BaseView {
         super(eventBus);
 
         this.render = this.render.bind(this);
-        this.renderTaskSettings = this.renderTaskSettings.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleToggleCheckBox = this.handleToggleCheckBox.bind(this);
 
-        this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings);
+        this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings.bind(this));
+        this.eventBus.subscribe('closeAssignsPopup', this.handleCloseAssignsPopup.bind(this));
+        this.eventBus.subscribe('assignSuccess', this.handleAssignSuccess.bind(this));
+
+        this.assignPopupOpened = false;
         this.scrollHeight = 0;
 
         this.root = document.getElementById('popover-block');
@@ -50,7 +53,7 @@ export default class TaskSettingsView extends BaseView {
             this.root.querySelector('.task'),
             this.root.querySelector('.window-overlay'),
             this.root.querySelector('.js-addNewLabel'),
-            this.root.querySelector('.js-addNewTaskMember'),
+            this.root.querySelector('.js-addAssign'),
             this.root.querySelector('.js-attachFile'),
             this.root.querySelector('.js-saveTask'),
             this.root.querySelector('.js-deleteTask'),
@@ -83,9 +86,21 @@ export default class TaskSettingsView extends BaseView {
                 this.eventBus.call('openAddLabelPopup', event.target);
                 break;
 
+            case classList.contains('js-addAssign'):
+                if (!this.assignPopupOpened) {
+                    this.assignPopupOpened = true;
+                    event.stopPropagation();
+                    event.target.classList.add('task-settings-members__add-button--rotated');
+                    this.eventBus.call('openAssignsPopup', {x: event.pageX, y: event.pageY});
+                } else {
+                    this.handleCloseAssignsPopup();
+                }
+                break;
+
+
             case classList.contains('js-addNewChecklist'):
                 event.stopPropagation();
-                this.eventBus.call('openAddChecklistPopup', event.target);
+                this.eventBus.call('openAddChecklistPopup', {x: event.pageX, y: event.pageY});
                 break;
 
             case classList.contains('js-addNewChecklistItem'):
@@ -172,6 +187,22 @@ export default class TaskSettingsView extends BaseView {
         progressBar.style.width = progress + '%';
         progressBar.style.background = color;
         checklist.querySelector('.checklist-title-percents').innerText = progress + '%';
+    }
+
+    /**
+     * This view reaction for closing assigns popup
+     */
+    handleCloseAssignsPopup() {
+        this.assignPopupOpened = false;
+        const classRotated = 'task-settings-members__add-button--rotated';
+        this.root.querySelector('.' + classRotated)?.classList.remove(classRotated);
+    }
+
+    /**
+     * Rerender task members on assigns success update
+     */
+    handleAssignSuccess() {
+        this.render();
     }
 
     /**

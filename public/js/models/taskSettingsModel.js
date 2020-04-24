@@ -1,4 +1,6 @@
 import {
+    boardGet,
+    taskAssignPost, taskAssignDelete,
     taskChecklistDelete,
     taskChecklistGet,
     taskChecklistItemPost,
@@ -27,6 +29,8 @@ export default class TaskSettingsModel {
         this.taskData = {boardID, columnID, taskID};
 
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings.bind(this));
+        this.eventBus.subscribe('getTaskAssigns', this.getTaskAssign.bind(this));
+
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this));
         this.eventBus.subscribe('deleteTask', this.deleteTask.bind(this));
         this.eventBus.subscribe('addComment', this.addTaskComment.bind(this));
@@ -34,7 +38,38 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('deleteChecklist', this.deleteChecklist.bind(this));
         this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
         this.eventBus.subscribe('updateChecklistItem', this.updateChecklistItem.bind(this));
+        this.eventBus.subscribe('updateAssign', this.updateAssign.bind(this));
     }
+
+    /**
+     * Handles response from api calls, call callback in case of status 200
+     * @param {Object} response from backend
+     * @param {Function} onSuccess - calls it in case of response status 200;
+     * @return {Promise<boolean>} - true if response status is 200, otherwise call eventBus with error reaction signal
+     */
+    async handleResponseStatus(response, onSuccess) {
+        switch (response.status) {
+            case 200:
+                let body;
+                try {
+                    body = await response.json();
+                } catch (e) {}
+                onSuccess(body);
+                return true;
+            case 401:
+                this.eventBus.call('unauthorized');
+                return false;
+            case 400:
+            case 403:
+            case 500:
+                this.eventBus.call('goToBoards');
+                return false;
+            default:
+                console.log('Бекендер молодец!!!');
+                this.eventBus.call('goToBoards');
+                return false;
+        }
+    };
 
     /**
      * Add comment to task
@@ -166,34 +201,14 @@ export default class TaskSettingsModel {
      * Returns task information
      */
     async getTaskSettings() {
-        const handleResponseStatus = async (response, onSuccess) => {
-            switch (response.status) {
-                case 200:
-                    const body = await response.json();
-                    onSuccess(body);
-                    return true;
-                case 401:
-                    this.eventBus.call('unauthorized');
-                    return false;
-                case 400:
-                case 403:
-                case 500:
-                    this.eventBus.call('goToBoards');
-                    return false;
-                default:
-                    console.log('Бекендер молодец!!!');
-                    this.eventBus.call('goToBoards');
-                    return false;
-            }
-        };
         let taskData;
         const taskResponse = await taskGet(this.taskData);
-        if (!(await handleResponseStatus(taskResponse, (body) => taskData = body))) {
+        if (!(await this.handleResponseStatus(taskResponse, (body) => taskData = body))) {
             return;
         }
 
         const checklistResponse = await taskChecklistGet(this.taskData);
-        if (!(await handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
+        if (!(await this.handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
             return;
         }
 
@@ -212,7 +227,7 @@ export default class TaskSettingsModel {
         }
 
         const commentsResponse = await taskCommentsGet(this.taskData);
-        if (!(await handleResponseStatus(commentsResponse, (body) => {
+        if (!(await this.handleResponseStatus(commentsResponse, (body) => {
             taskData.comments = new Array(body.length);
             body.forEach((comment, i) => {
                 const date = new Date(comment.createdAt * 1000);
@@ -238,18 +253,18 @@ export default class TaskSettingsModel {
         }
 
         const defaultTaskData = {
-            members: [
-                {
-                    url: '/mem1',
-                    nickname: 'member 1',
-                    avatar: '/img/default_avatar.png',
-                },
-                {
-                    url: '/mem2',
-                    nickname: 'member 2',
-                    avatar: '/img/default_avatar.png',
-                },
-            ],
+            /*            members: [
+                            {
+                                url: '/mem1',
+                                nickname: 'member 1',
+                                avatar: '/img/default_avatar.png',
+                            },
+                            {
+                                url: '/mem2',
+                                nickname: 'member 2',
+                                avatar: '/img/default_avatar.png',
+                            },
+                        ],*/
             labels: [
                 {
                     title: 'label 1',
@@ -263,6 +278,49 @@ export default class TaskSettingsModel {
         };
 
         this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...taskData});
+    }
+
+    /**
+     * Returns board members with assigned to task flag;
+     */
+    async getTaskAssign() {
+        let boardMembers;
+        const boardResponse = await boardGet(this.taskData.boardID);
+        if (!(await this.handleResponseStatus(boardResponse, (body) => {
+            boardMembers = [...(body.members || []), ...(body.admins || [])];
+        }))) {
+            return;
+        }
+
+        let assignedMembers;
+        const assignsResponse = await taskGet(this.taskData);
+        if (!(await this.handleResponseStatus(assignsResponse, (body) => {
+            assignedMembers = new Set(body.members?.map((id, i) => body.members[i].id));
+        }))) {
+            return;
+        }
+
+        boardMembers.forEach((member) => {
+            member.assigned = assignedMembers.has(member.id);
+        });
+        this.eventBus.call('gotTaskAssigns', boardMembers);
+    }
+
+    /**
+     * Set or unset task assign on user
+     * @param {number} userId
+     * @param {boolean} assigned
+     */
+    async updateAssign(userId, assigned) {
+        let response;
+        if (assigned) {
+            response = await taskAssignPost(this.taskData, userId);
+        } else {
+            response = await taskAssignDelete(this.taskData, userId);
+        }
+        await this.handleResponseStatus(response, () => {
+            this.eventBus.call('assignSuccess');
+        });
     }
 
     /**

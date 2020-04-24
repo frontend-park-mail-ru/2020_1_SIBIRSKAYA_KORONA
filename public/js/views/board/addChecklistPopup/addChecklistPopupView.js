@@ -16,14 +16,14 @@ export default class AddChecklistPopupView extends BaseView {
         this.closeSelf = this.closeSelf.bind(this);
     }
 
+
     /**
      * Render view method
-     * @param {HTMLElement} relativeTarget - html element which will be used as base for render
+     * @param {Object} clickCoords - {x, y}
      */
-    render(relativeTarget) {
-        const {left, top} = relativeTarget.getBoundingClientRect();
-        this.root.style.left = left + 'px';
-        this.root.style.top = top + 'px';
+    render(clickCoords) {
+        this.root.style.left = clickCoords.x + 'px';
+        this.root.style.top = clickCoords.y + 'px';
         this.root.innerHTML = template();
         this.addEventListeners();
     }
