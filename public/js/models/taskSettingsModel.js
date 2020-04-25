@@ -9,6 +9,7 @@ import {
     taskChecklistPost,
     taskCommentsGet,
     taskCommentsPost,
+    taskCommentsDelete,
     taskDelete,
     taskGet,
     taskPut,
@@ -34,6 +35,7 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this));
         this.eventBus.subscribe('deleteTask', this.deleteTask.bind(this));
         this.eventBus.subscribe('addComment', this.addTaskComment.bind(this));
+        this.eventBus.subscribe('deleteComment', this.deleteTaskComment.bind(this));
         this.eventBus.subscribe('addChecklist', this.addChecklist.bind(this));
         this.eventBus.subscribe('deleteChecklist', this.deleteChecklist.bind(this));
         this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
@@ -57,6 +59,15 @@ export default class TaskSettingsModel {
      */
     async addTaskComment(commentText) {
         const response = await taskCommentsPost(this.taskData, commentText);
+        this.handleResponseStatus(response, () => this.getTaskSettings());
+    }
+
+    /**
+     * Delete task comment
+     * @param {Number} commentID
+     */
+    async deleteTaskComment(commentID) {
+        const response = await taskCommentsDelete(this.taskData, commentID);
         this.handleResponseStatus(response, () => this.getTaskSettings());
     }
 
@@ -142,16 +153,18 @@ export default class TaskSettingsModel {
                 let dateString = `${parsedDate.day}.${parsedDate.month}.${parsedDate.year}`;
                 dateString += ` ${parsedDate.hours}:${parsedDate.minutes}:${parsedDate.seconds}`;
                 taskData.comments[i] = {
-                    date: dateString,
+                    id: comment.id,
                     text: comment.text,
+                    date: dateString,
                     avatar: comment.avatar || '/img/default_avatar.png',
                     nickname: comment.nickname || 'vasYa_pupKin',
+                    deletable: comment.readerIsAuthor,
                 };
             });
         }))) {
             return;
         }
-  
+
         this.eventBus.call('gotTaskSettings', taskData);
     }
 

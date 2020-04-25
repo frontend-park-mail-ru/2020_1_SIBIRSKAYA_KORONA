@@ -46,6 +46,7 @@ export default class TaskSettingsController extends ControllerChainLink {
             'deleteTask',
 
             'addComment',
+            'deleteComment',
 
             'unauthorized',
             'goBack',

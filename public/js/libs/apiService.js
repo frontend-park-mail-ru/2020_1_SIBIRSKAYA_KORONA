@@ -24,6 +24,15 @@ const getCSRFToken = async () => {
     return response;
 };
 
+/**
+ * Transform task data object in url
+ * @param {Object} taskData - {boardID, columnID, taskID}
+ * @return {string} - part of url with task data
+ */
+const buildTaskUrlPart = (taskData) => {
+    return `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+};
+
 /** ******************* SETTINGS ************************/
 
 /**
@@ -231,7 +240,7 @@ export const postMember = (boardID, userID) => {
  * @return {Promise<Response>}
  */
 export const taskGet = (taskData) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const apiUrl = new URL(`${taskUrlPart}`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
@@ -243,7 +252,7 @@ export const taskGet = (taskData) => {
  * @return {Promise<Response>}
  */
 export const taskPut = (taskData, body) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const apiUrl = new URL(`${taskUrlPart}`, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify(body));
 };
@@ -254,7 +263,7 @@ export const taskPut = (taskData, body) => {
  * @return {Promise<Response>}
  */
 export const taskDelete = (taskData) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const apiUrl = new URL(`${taskUrlPart}`, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
@@ -267,7 +276,7 @@ export const taskDelete = (taskData) => {
  * @return {Promise<Response>}
  */
 export const taskCommentsGet = (taskData) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const apiUrl = new URL(`${taskUrlPart}/comments`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
@@ -279,9 +288,21 @@ export const taskCommentsGet = (taskData) => {
  * @return {Promise<Response>}
  */
 export const taskCommentsPost = (taskData, text) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const apiUrl = new URL(`${taskUrlPart}/comments`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify({text: text}));
+};
+
+/**
+ * Delete task comment
+ * @param {Object} taskData - {boardID, columnID, taskID}
+ * @param {Number} commentID
+ * @return {Promise<Response>}
+ */
+export const taskCommentsDelete = (taskData, commentID) => {
+    const taskUrlPart = buildTaskUrlPart(taskData);
+    const apiUrl = new URL(`${taskUrlPart}/comments/${commentID}`, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
 };
 
 /** ******************* CHECKLISTS ************************/
@@ -292,7 +313,7 @@ export const taskCommentsPost = (taskData, text) => {
  * @return {Promise<Response>}
  */
 export const taskChecklistGet = (taskData) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const apiUrl = new URL(`${taskUrlPart}/checklists`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
@@ -304,7 +325,7 @@ export const taskChecklistGet = (taskData) => {
  * @return {Promise<Response>}
  */
 export const taskChecklistPost = (taskData, checklistName) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const apiUrl = new URL(`${taskUrlPart}/checklists`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify({name: checklistName}));
 };
@@ -317,7 +338,7 @@ export const taskChecklistPost = (taskData, checklistName) => {
  * @return {Promise<Response>}
  */
 export const taskChecklistPut = (taskData, checklistID, checklistName) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const url = `${taskUrlPart}/checklists/${checklistID}`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify({name: checklistName}));
@@ -330,7 +351,7 @@ export const taskChecklistPut = (taskData, checklistID, checklistName) => {
  * @return {Promise<Response>}
  */
 export const taskChecklistDelete = (taskData, checklistID) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const url = `${taskUrlPart}/checklists/${checklistID}`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
@@ -343,7 +364,7 @@ export const taskChecklistDelete = (taskData, checklistID) => {
  * @return {Promise<Response>}
  */
 export const taskChecklistItemPost = (taskData, itemData) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const url = `${taskUrlPart}/checklists/${itemData.checklistID}/items`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify({text: itemData.text, isDone: itemData.isDone}));
@@ -357,7 +378,7 @@ export const taskChecklistItemPost = (taskData, itemData) => {
  * @return {Promise<Response>}
  */
 export const taskChecklistItemPut = (taskData, checklistID, itemData) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const url = `${taskUrlPart}/checklists/${checklistID}/items/${itemData.id}`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify(itemData));
@@ -371,7 +392,7 @@ export const taskChecklistItemPut = (taskData, checklistID, itemData) => {
  * @return {Promise<Response>}
  */
 export const taskChecklistItemDelete = (taskData, checklistID, itemId) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const url = `${taskUrlPart}/checklists/${checklistID}/items/${itemId}`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
@@ -462,7 +483,6 @@ export const taskLabelDelete = (boardID, columnID, taskID, labelID) => {
 
 /** ******************* ASSIGNS ************************/
 
-// POST boards/{bid}/columns/{cid}/tasks/{tid}/members/{uid} на назначение
 /**
  * Create assign
  * @param {Object} taskData - {boardID, columnID, taskID}
@@ -470,13 +490,12 @@ export const taskLabelDelete = (boardID, columnID, taskID, labelID) => {
  * @return {Promise<Response>}
  */
 export const taskAssignPost = (taskData, userId) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const url = `${taskUrlPart}/members/${userId}`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, '');
 };
 
-// DELETE boards/{bid}/columns/{cid}/tasks/{tid}/members/{uid} на снятие с задачи
 /**
  * Delete assign
  * @param {Object} taskData - {boardID, columnID, taskID}
@@ -484,7 +503,7 @@ export const taskAssignPost = (taskData, userId) => {
  * @return {Promise<Response>}
  */
 export const taskAssignDelete = (taskData, userId) => {
-    const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const taskUrlPart = buildTaskUrlPart(taskData);
     const url = `${taskUrlPart}/members/${userId}`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
