@@ -16,9 +16,9 @@ export default class AddLabelPopupController extends ControllerChainLink {
     /**
      * Controller constructor
      * @param {EventBus} parentEventBus - for communication with parent mvc
-     * @param {Object} taskData - information about current task (board id, column id, task id)
+     * @param {Object} taskData - (boardID, columnID, taskID, labels)
      */
-    constructor(parentEventBus, taskData = {boardID: null, columnID: null, taskID: null}) {
+    constructor(parentEventBus, taskData = {boardID: null, columnID: null, taskID: null, labels: null}) {
         const chainLinkSignalsArray = Object.values(ChainLinkSignals);
         const actualSignals = [
             'getLabels',
@@ -27,6 +27,7 @@ export default class AddLabelPopupController extends ControllerChainLink {
             'addLabel',
             'removeLabel',
             'labelStatusChanged',
+            'updatedTaskLabel',
 
             'openCreateLabelPopup',
             'closedCreateLabelPopup',
@@ -47,6 +48,10 @@ export default class AddLabelPopupController extends ControllerChainLink {
         this.view = new AddLabelPopupView(this.eventBus);
         this.model = new AddLabelPopupModel(this.eventBus, this.taskData);
 
+
+        this.eventBus.subscribe('updatedTaskLabel', () => {
+            this.parentEventBus.call('updatedTaskLabel');
+        });
 
         this.eventBus.subscribe('openCreateLabelPopup', (button) => {
             const childController = new CreateLabelPopupController(this.eventBus, this.taskData.boardID);

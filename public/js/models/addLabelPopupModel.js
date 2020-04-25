@@ -8,9 +8,9 @@ export default class AddLabelPopupModel {
     /**
      * Constructor of model of "Add label" popup
      * @param {Object} eventBus
-     * @param {Object} taskData - information about current task
+     * @param {Object} taskData - (boardID, columnID, taskID, labels)
      */
-    constructor(eventBus, taskData) {
+    constructor(eventBus, taskData = {boardID: null, columnID: null, taskID: null, labels: null}) {
         this.eventBus = eventBus;
         this.taskData = taskData;
 
@@ -45,12 +45,15 @@ export default class AddLabelPopupModel {
 
         const boardLabels = await boardLabelsResponse.json();
         const taskLabelIds = [];
+        for (const taskLabel of this.taskData.labels) {
+            taskLabelIds.push(taskLabel.id);
+        }
 
 
         // TODO(Alexandr): labels will have unique id for board. You should check id equality
         const labelsInfo = [];
         boardLabels.forEach((boardLabel) => {
-            boardLabel['isActive'] = taskLabelIds.includes(boardLabel.taskID);
+            boardLabel['isActive'] = taskLabelIds.includes(boardLabel.id);
             labelsInfo.push(boardLabel);
         });
 
@@ -72,6 +75,7 @@ export default class AddLabelPopupModel {
         switch (addLabelResponse.status) {
             case 200:
                 this.eventBus.call('labelStatusChanged', labelID, true);
+                this.eventBus.call('updatedTaskLabel');
                 break;
             default:
                 console.log('Бэкэндер молодец!');
@@ -94,6 +98,7 @@ export default class AddLabelPopupModel {
         switch (removeLabelResponse.status) {
             case 200:
                 this.eventBus.call('labelStatusChanged', labelID, false);
+                this.eventBus.call('updatedTaskLabel');
                 break;
             default:
                 console.log('Бэкэндер молодец!');

@@ -15,12 +15,6 @@
                             <fest:value>
                                 label.title
                             </fest:value>
-                            <fest:if test="label.isActive">
-                                <div class="task-label-status active"></div>
-                            </fest:if>
-                            <fest:if test="!label.isActive">
-                                <div class="task-label-status"></div>
-                            </fest:if>
                         </div>
 
                         <div class="button--secondary js-openChangeLabelPopup"

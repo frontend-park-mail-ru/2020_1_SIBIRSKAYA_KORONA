@@ -27,13 +27,14 @@ export default class TaskSettingsController extends ControllerChainLink {
 
             'openAddLabelPopup',
             'closedAddLabelPopup',
+            'addedTaskLabel',
 
             'openAssignsPopup',
             'getTaskAssigns',
             'gotTaskAssigns',
             'updateAssign',
             'assignSuccess',
-            'closeAssignsPopup',
+            'updatedTaskLabel',
 
             'openAddChecklistPopup',
             'addChecklist',

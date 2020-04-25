@@ -151,7 +151,8 @@ export default class TaskSettingsModel {
         }))) {
             return;
         }
-  
+
+        this.taskData = Object.assign(this.taskData, taskData);
         this.eventBus.call('gotTaskSettings', taskData);
     }
 

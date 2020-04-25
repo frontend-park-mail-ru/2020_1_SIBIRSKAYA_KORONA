@@ -21,6 +21,8 @@ export default class TaskSettingsView extends BaseView {
         this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings.bind(this));
         this.eventBus.subscribe('closeAssignsPopup', this.handleCloseAssignsPopup.bind(this));
         this.eventBus.subscribe('assignSuccess', this.handleAssignSuccess.bind(this));
+        this.eventBus.subscribe('updatedTaskLabel', this.render);
+
 
         this.assignPopupOpened = false;
         this.scrollHeight = 0;
