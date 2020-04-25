@@ -58,6 +58,7 @@ export default class AddLabelPopupView extends BaseView {
         const popupBlock = document.getElementById('popup-block');
         const buttons = [
             ...popupBlock.getElementsByClassName('js-openCreateLabelPopup'),
+            ...popupBlock.getElementsByClassName('js-openChangeLabelPopup'),
             ...popupBlock.getElementsByClassName('js-addOrRemoveLabel'),
         ];
 
@@ -78,6 +79,14 @@ export default class AddLabelPopupView extends BaseView {
                 event.stopPropagation();
                 this.eventBus.call('openCreateLabelPopup', this.relativeTarget);
                 break;
+
+            case target.classList.contains('js-openChangeLabelPopup'): {
+                event.stopPropagation();
+                const labelID = target.dataset['labelId'];
+                this.eventBus.call('openChangeLabelPopup', this.relativeTarget, labelID);
+                break;
+            }
+
             case target.classList.contains('js-addOrRemoveLabel'):
                 event.stopPropagation();
                 const labelID = target.dataset['labelId'];

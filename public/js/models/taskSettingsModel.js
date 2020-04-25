@@ -50,7 +50,7 @@ export default class TaskSettingsModel {
         const response = await taskCommentsPost(
             this.taskData.boardID,
             this.taskData.columnID,
-            this.taskData.id,
+            this.taskData.taskID,
             commentText);
         switch (response.status) {
             case 200:
@@ -78,7 +78,7 @@ export default class TaskSettingsModel {
     async getTaskSettings() {
         // TODO(Alexandr): убрать заглушки на лейюлы и участников
 
-        const getTaskDataResponse = await taskGet(this.taskData.boardID, this.taskData.columnID, this.taskData.id);
+        const getTaskDataResponse = await taskGet(this.taskData.boardID, this.taskData.columnID, this.taskData.taskID);
         switch (getTaskDataResponse.status) {
             case 200:
                 break;
@@ -99,7 +99,7 @@ export default class TaskSettingsModel {
         }
 
         // const getTaskCommentsResponse = await
-        // taskCommentsGet(this.taskData.boardID, this.taskData.columnID, this.taskData.id);
+        // taskCommentsGet(this.taskData.boardID, this.taskData.columnID, this.taskData.taskID);
         // switch (getTaskCommentsResponse.status) {
         //     case 200:
         //         break;
@@ -158,17 +158,8 @@ export default class TaskSettingsModel {
                     avatar: '/img/default_avatar.png',
                 },
             ],
-            labels: [
-                {
-                    title: 'label 1',
-                    color: 'red',
-                },
-                {
-                    title: 'label 2',
-                    color: 'darkblue',
-                },
-            ],
         };
+
         this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...actualTaskData});
     }
 
@@ -178,7 +169,7 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async saveTaskSettings(taskData) {
-        const response = await taskPut(this.taskData.boardID, this.taskData.columnID, this.taskData.id, taskData);
+        const response = await taskPut(this.taskData.boardID, this.taskData.columnID, this.taskData.taskID, taskData);
         switch (response.status) {
             case 200:
                 this.getTaskSettings();
@@ -203,7 +194,7 @@ export default class TaskSettingsModel {
      * @return {Promise<void>}
      */
     async deleteTask() {
-        const response = await taskDelete(this.taskData.boardID, this.taskData.columnID, this.taskData.id);
+        const response = await taskDelete(this.taskData.boardID, this.taskData.columnID, this.taskData.taskID);
         switch (response.status) {
             case 200:
                 this.eventBus.call('closeSelf');

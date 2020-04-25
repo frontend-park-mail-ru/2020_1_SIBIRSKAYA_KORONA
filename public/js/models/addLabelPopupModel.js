@@ -50,7 +50,7 @@ export default class AddLabelPopupModel {
         // TODO(Alexandr): labels will have unique id for board. You should check id equality
         const labelsInfo = [];
         boardLabels.forEach((boardLabel) => {
-            boardLabel['isActive'] = taskLabelIds.includes(boardLabel.id);
+            boardLabel['isActive'] = taskLabelIds.includes(boardLabel.taskID);
             labelsInfo.push(boardLabel);
         });
 
@@ -65,7 +65,7 @@ export default class AddLabelPopupModel {
     async addLabel(labelID) {
         const addLabelResponse = await taskLabelPost(this.taskData.boardID,
             this.taskData.columnID,
-            this.taskData.id,
+            this.taskData.taskID,
             labelID);
 
         // TODO(Alexandr): check status
@@ -87,7 +87,7 @@ export default class AddLabelPopupModel {
     async removeLabel(labelID) {
         const removeLabelResponse = await taskLabelDelete(this.taskData.boardID,
             this.taskData.columnID,
-            this.taskData.id,
+            this.taskData.taskID,
             labelID);
 
         // TODO(Alexandr): check status

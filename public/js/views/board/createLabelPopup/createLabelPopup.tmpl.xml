@@ -8,7 +8,7 @@
         </div>
 
         <div class="form-block">
-            <input class="form-input js-inputLabelTitle" placeholder="Name"/>
+            <input class="form-input js-inputLabelTitle" placeholder="Название"/>
         </div>
 
         <div class="form-block">

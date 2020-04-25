@@ -11,7 +11,7 @@
                 <fest:for iterate="labels" index="i" value="label">
                     <div class="task-label-item">
                         <div class="task-label task-label-color-{label.color} mod-selectable js-addOrRemoveLabel"
-                        data-label-id="{label.id}">
+                             data-label-id="{label.id}">
                             <fest:value>
                                 label.title
                             </fest:value>
@@ -23,7 +23,8 @@
                             </fest:if>
                         </div>
 
-                        <div class="button default">
+                        <div class="button--secondary js-openChangeLabelPopup"
+                             data-label-id="{label.id}">
                             &#x270E;
                         </div>
                     </div>

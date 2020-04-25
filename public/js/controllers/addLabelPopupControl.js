@@ -1,6 +1,8 @@
 import AddLabelPopupModel from '../models/addLabelPopupModel.js';
 import AddLabelPopupView from '../views/board/addLabelPopup/addLabelPopupView.js';
 import CreateLabelPopupController from './createLabelPopupControl.js';
+import ChangeLabelPopupController from './changeLabelPopupControl.js';
+
 import EventBus from '../libs/eventBus.js';
 
 import ControllerChainLink from '../libs/controllerChainLink.js';
@@ -14,9 +16,9 @@ export default class AddLabelPopupController extends ControllerChainLink {
     /**
      * Controller constructor
      * @param {EventBus} parentEventBus - for communication with parent mvc
-     * @param {Object} taskData - information about current task
+     * @param {Object} taskData - information about current task (board id, column id, task id)
      */
-    constructor(parentEventBus, taskData) {
+    constructor(parentEventBus, taskData = {boardID: null, columnID: null, taskID: null}) {
         const chainLinkSignalsArray = Object.values(ChainLinkSignals);
         const actualSignals = [
             'getLabels',
@@ -45,8 +47,18 @@ export default class AddLabelPopupController extends ControllerChainLink {
         this.view = new AddLabelPopupView(this.eventBus);
         this.model = new AddLabelPopupModel(this.eventBus, this.taskData);
 
+
         this.eventBus.subscribe('openCreateLabelPopup', (button) => {
             const childController = new CreateLabelPopupController(this.eventBus, this.taskData.boardID);
+            this.setChildEventBus(childController.eventBus);
+            childController.view.render(button);
+        });
+
+        this.eventBus.subscribe('openChangeLabelPopup', (button, labelID) => {
+            const childController = new ChangeLabelPopupController(this.eventBus, {
+                labelID,
+                boardID: this.taskData.boardID,
+            });
             this.setChildEventBus(childController.eventBus);
             childController.view.render(button);
         });
