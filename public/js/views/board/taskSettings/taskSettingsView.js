@@ -151,7 +151,7 @@ export default class TaskSettingsView extends BaseView {
                 }
                 break;
             case classList.contains('js-deleteComment'):
-                this.eventBus.call('deleteComment', Number(event.target.dataset.commentId));
+                this.eventBus.call('deleteComment', Number(event.currentTarget.dataset.commentId));
                 break;
             case classList.contains('window-overlay'):
                 if (event.target === event.currentTarget) {
