@@ -1,28 +1,27 @@
-import template from './createLabelPopup.tmpl.xml';
+import template from './changeLabel.tmpl.xml';
 import BaseView from '../../baseView.js';
 
 /**
- * View of 'Create label' popup
+ * View of 'Change label' popup
  */
-export default class CreateLabelPopupView extends BaseView {
+export default class ChangeLabelPopupView extends BaseView {
     /**
-     * Constructor of view of 'Add label' popup
+     * Constructor of view of 'Change label' popup
      * @param {Object} eventBus  - eventBus to share events with model
      */
     constructor(eventBus) {
         super(eventBus);
 
         this.relativeTarget = null;
-        this.labelData = {title: void 0, color: void 0};
+        this.labelData = {color: null, title: null};
 
         this.render = this.render.bind(this);
-        this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
+        this.renderChangeLabelPopup = this.renderChangeLabelPopup.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
 
 
-        this.eventBus.subscribe('gotLabelColors', this.renderAddLabelPopup);
-        this.eventBus.subscribe('createLabel', this.createLabel);
+        this.eventBus.subscribe('gotLabel', this.renderChangeLabelPopup);
     }
 
     /**
@@ -31,22 +30,23 @@ export default class CreateLabelPopupView extends BaseView {
      */
     render(relativeTarget) {
         this.relativeTarget = relativeTarget;
-        this.eventBus.call('getLabelColors');
+        this.eventBus.call('getLabel');
     }
 
     /**
      * Real render view method with label data from model
-     * @param {Object} boardLabelColors - information about board label colors
+     * @param {Object} labelData - label color and title
      */
-    renderAddLabelPopup(boardLabelColors) {
+    renderChangeLabelPopup(labelData) {
+        this.labelData = labelData;
         const popupDiv = document.getElementById('popup-block');
 
         const {left, top} = this.relativeTarget.getBoundingClientRect();
         popupDiv.style.left = `${left}px`;
         popupDiv.style.top = `${top}px`;
-        popupDiv.innerHTML = template(boardLabelColors);
+        popupDiv.innerHTML = template(labelData);
 
-        this.chooseColor('red');
+        this.chooseColor(this.labelData.color);
 
         this.addEventListeners();
     }
@@ -59,6 +59,8 @@ export default class CreateLabelPopupView extends BaseView {
         const buttons = [
             ...popupDiv.getElementsByClassName('js-chooseColor'),
             ...popupDiv.getElementsByClassName('js-createLabel'),
+            ...popupDiv.getElementsByClassName('js-saveLabel'),
+            ...popupDiv.getElementsByClassName('js-deleteLabel'),
         ];
 
         for (const button of buttons) {
@@ -78,12 +80,16 @@ export default class CreateLabelPopupView extends BaseView {
                 event.stopPropagation();
                 this.chooseColor(target.dataset['labelColor']);
                 break;
-            case target.classList.contains('js-createLabel'):
+            case target.classList.contains('js-saveLabel'):
                 event.stopPropagation();
-
                 this.labelData.title = document.getElementById('popup-block')
                     .querySelector(`.js-inputLabelTitle`).value;
-                this.eventBus.call('createLabel', this.labelData);
+
+                this.eventBus.call('saveLabel', this.labelData);
+                break;
+            case target.classList.contains('js-deleteLabel'):
+                event.stopPropagation();
+                this.eventBus.call('deleteLabel', this.labelData);
                 break;
         }
     }

@@ -138,6 +138,9 @@ export const boardGet = (boardID) => {
     return fetchGet(apiUrl.href);
 };
 
+
+/** ********************* COLUMNS ***********************/
+
 /**
  * @description Create new column
  * @param {Number} boardID
@@ -163,6 +166,8 @@ export const columnsGet = (boardID) => {
     const apiUrl = new URL(`boards/${boardID}/columns`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
+
+/** ********************* TASKS ***********************/
 
 /**
  * @description Get all tasks
@@ -369,6 +374,89 @@ export const taskChecklistItemDelete = (taskData, checklistID, itemId) => {
     const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
     const url = `${taskUrlPart}/checklists/${checklistID}/items/${itemId}`;
     const apiUrl = new URL(url, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
+
+/** ********************* LABELS ***********************/
+
+/**
+ * Get board labels
+ * @param {Number} boardID
+ * @return {Promise<Response>}
+ */
+export const labelsGet = (boardID) => {
+    const apiUrl = new URL(`/boards/${boardID}/labels`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Create new label in board
+ * @param {Number} boardID
+ * @param {Object} labelData - label text and color
+ * @return {Promise<Response>}
+ */
+export const labelsPost = (boardID, labelData = {title: void 0, color: void 0}) => {
+    const apiUrl = new URL(`/boards/${boardID}/labels`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, JSON.stringify(labelData));
+};
+
+/**
+ * Get label info
+ * @param {Number} boardID
+ * @param {Number} labelID
+ * @return {Promise<Response>}
+ */
+export const labelGet = (boardID, labelID) => {
+    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Update some label params
+ * @param {Number} boardID
+ * @param {Number}  labelID
+ * @param {Object}  labelData - label text and color
+ * @return {Promise<Response>}
+ */
+export const labelPut = (boardID, labelID, labelData = {title: void 0, color: void 0}) => {
+    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, JSON.stringify(labelData));
+};
+
+/**
+ * Delete label from board
+ * @param {Number} boardID
+ * @param {Number} labelID
+ * @return {Promise<Response>}
+ */
+export const labelDelete = (boardID, labelID) => {
+    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
+
+/**
+ * Add label to task
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {Number} labelID
+ * @return {Promise<Response>}
+ */
+export const taskLabelPost = (boardID, columnID, taskID, labelID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/labels/${labelID}`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, null);
+};
+
+/**
+ * Remove label from task
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @param {Number} taskID
+ * @param {Number} labelID
+ * @return {Promise<Response>}
+ */
+export const taskLabelDelete = (boardID, columnID, taskID, labelID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}/tasks/${taskID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
 

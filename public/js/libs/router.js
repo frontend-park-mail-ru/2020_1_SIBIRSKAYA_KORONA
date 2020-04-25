@@ -43,6 +43,13 @@ export default class Router {
     }
 
     /**
+     * Go back in history
+     */
+    goBack() {
+        window.history.back();
+    }
+
+    /**
      * Click handler
      * @param {Object} event - mouse event
      */

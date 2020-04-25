@@ -48,6 +48,7 @@ export default class TaskSettingsController extends ControllerChainLink {
             'addComment',
 
             'unauthorized',
+            'goBack',
             'goToBoards',
         ];
 
@@ -59,12 +60,13 @@ export default class TaskSettingsController extends ControllerChainLink {
             boardEventBus.call('closeTaskSettings');
         });
 
+        this.taskData = {boardID, columnID, taskID};
         this.router = router;
         this.view = new TaskSettingsView(this.eventBus);
-        this.model = new TaskSettingsModel(this.eventBus, boardID, columnID, taskID);
+        this.model = new TaskSettingsModel(this.eventBus, this.taskData);
 
         this.eventBus.subscribe('openAddLabelPopup', (button) => {
-            const childController = new AddLabelPopupController(this.eventBus);
+            const childController = new AddLabelPopupController(this.eventBus, this.taskData);
             this.setChildEventBus(childController.eventBus);
             childController.view.render(button);
         });
@@ -86,5 +88,6 @@ export default class TaskSettingsController extends ControllerChainLink {
             this.view.closeSelfAndAllChildren();
         });
         this.eventBus.subscribe('goToBoards', () => router.go('/boards'));
+        this.eventBus.subscribe('goBack', () => router.goBack());
     }
 }

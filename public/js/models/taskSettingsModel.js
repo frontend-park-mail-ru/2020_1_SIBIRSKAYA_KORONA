@@ -22,13 +22,11 @@ export default class TaskSettingsModel {
     /**
      * Task settings model constructor
      * @param {Object} eventBus to share events with task settings view
-     * @param {number} boardID - board id
-     * @param {number} columnID - column id
-     * @param {number} taskID - task id
+     * @param {Object} taskData - information about current task
      */
-    constructor(eventBus, boardID, columnID, taskID) {
+    constructor(eventBus, taskData) {
         this.eventBus = eventBus;
-        this.taskData = {boardID, columnID, taskID};
+        this.taskData = taskData;
 
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings.bind(this));
         this.eventBus.subscribe('getTaskAssigns', this.getTaskAssign.bind(this));
@@ -153,33 +151,8 @@ export default class TaskSettingsModel {
         }))) {
             return;
         }
-
-        const defaultTaskData = {
-            /*            members: [
-                            {
-                                url: '/mem1',
-                                nickname: 'member 1',
-                                avatar: '/img/default_avatar.png',
-                            },
-                            {
-                                url: '/mem2',
-                                nickname: 'member 2',
-                                avatar: '/img/default_avatar.png',
-                            },
-                        ],*/
-            labels: [
-                {
-                    title: 'label 1',
-                    color: 'red',
-                },
-                {
-                    title: 'label 2',
-                    color: 'darkblue',
-                },
-            ],
-        };
-
-        this.eventBus.call('gotTaskSettings', {...defaultTaskData, ...taskData});
+  
+        this.eventBus.call('gotTaskSettings', taskData);
     }
 
     /**
