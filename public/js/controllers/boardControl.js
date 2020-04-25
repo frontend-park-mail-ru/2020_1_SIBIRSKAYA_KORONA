@@ -1,8 +1,8 @@
 import EventBus from '../libs/eventBus.js';
 import BoardModel from '../models/boardModel.js';
 import BoardView from '../views/board/boardView.js';
-import TaskSettingsController from './taskSettingsControl.js';
 import BoardSettingsController from './boardSettingsControl.js';
+import TaskSettingsController from './taskSettingsControl.js';
 
 /**
  * Board controller
@@ -51,7 +51,7 @@ export default class BoardController {
             this.router.go(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
         });
 
-        const redirectBoard = () => router.go('/boards/' + this.view.boardId);
+        const redirectBoard = () => router.go('/boards/' + this.view.boardID);
         this.eventBus.subscribe('closeBoardSettings', redirectBoard);
         this.eventBus.subscribe('closeTaskSettings', redirectBoard);
     }
@@ -62,10 +62,9 @@ export default class BoardController {
      */
     triggerBoardSettingsAndBoard(dataFromUrl) {
         const boardId = Number(dataFromUrl.boardId);
-        this.view.render(dataFromUrl).then(() => {
-            this.childController = new BoardSettingsController(this.eventBus, this.router, boardId);
-            this.childController.view.render();
-        });
+        this.view.render(dataFromUrl);
+        this.childController = new BoardSettingsController(this.eventBus, this.router, boardId);
+        this.childController.view.render();
     }
 
     /**
@@ -77,9 +76,8 @@ export default class BoardController {
         const columnId = Number(dataFromUrl.columnId);
         const taskId = Number(dataFromUrl.taskId);
 
-        this.view.render(dataFromUrl).then(() => {
-            this.childController = new TaskSettingsController(this.eventBus, this.router, boardId, columnId, taskId);
-            this.childController.view.render();
-        });
+        this.view.render(dataFromUrl);
+        this.childController = new TaskSettingsController(this.eventBus, this.router, boardId, columnId, taskId);
+        this.childController.view.render();
     }
 }

@@ -234,13 +234,13 @@ export const taskGet = (taskData) => {
 /**
  * Updates task info
  * @param {Object} taskData - {boardID, columnID, taskID}
- * @param {Object} task
+ * @param {Object} body = {new task data}
  * @return {Promise<Response>}
  */
-export const taskPut = (taskData, task = {}) => {
+export const taskPut = (taskData, body) => {
     const taskUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
     const apiUrl = new URL(`${taskUrlPart}`, BACKEND_ADDRESS);
-    return fetchPut(apiUrl.href, JSON.stringify(task));
+    return fetchPut(apiUrl.href, JSON.stringify(body));
 };
 
 /**

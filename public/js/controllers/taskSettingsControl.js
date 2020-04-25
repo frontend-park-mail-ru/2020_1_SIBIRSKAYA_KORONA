@@ -81,7 +81,10 @@ export default class TaskSettingsController extends ControllerChainLink {
             assignsPopupController.view.render(clickCoords);
         });
 
-        this.eventBus.subscribe('unauthorized', () => router.go('/login'));
+        this.eventBus.subscribe('unauthorized', () => {
+            router.go('/login');
+            this.view.closeSelfAndAllChildren();
+        });
         this.eventBus.subscribe('goToBoards', () => router.go('/boards'));
     }
 }

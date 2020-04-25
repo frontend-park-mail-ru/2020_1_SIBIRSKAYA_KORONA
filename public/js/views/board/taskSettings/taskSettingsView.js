@@ -75,6 +75,7 @@ export default class TaskSettingsView extends BaseView {
      * @param {MouseEvent} event
      */
     handleClick(event) {
+        this.scrollHeight = this.root.querySelector('.task').scrollTop;
         const classList = event.currentTarget.classList;
         switch (true) {
             case classList.contains('task'):
@@ -84,6 +85,7 @@ export default class TaskSettingsView extends BaseView {
             case classList.contains('js-addNewLabel'):
                 event.stopPropagation();
                 this.eventBus.call('openAddLabelPopup', event.target);
+                this.handleCloseAssignsPopup();
                 break;
 
             case classList.contains('js-addAssign'):
@@ -101,6 +103,7 @@ export default class TaskSettingsView extends BaseView {
             case classList.contains('js-addNewChecklist'):
                 event.stopPropagation();
                 this.eventBus.call('openAddChecklistPopup', {x: event.pageX, y: event.pageY});
+                this.handleCloseAssignsPopup();
                 break;
 
             case classList.contains('js-addNewChecklistItem'):
@@ -122,7 +125,6 @@ export default class TaskSettingsView extends BaseView {
                 const checklistID = checklistElement.dataset.checklistId;
                 const text = checklistElement.querySelector('.js-inputNewItemTitle').value;
                 if (text) {
-                    this.scrollHeight = this.root.querySelector('.task').scrollTop;
                     this.eventBus.call('addChecklistItem', {checklistID, text, isDone: false});
                 }
                 break;
@@ -144,7 +146,6 @@ export default class TaskSettingsView extends BaseView {
             case classList.contains('js-saveComment'):
                 const commentText = this.root.querySelector('.js-commentText').innerText;
                 if (commentText.length !== 0) {
-                    this.scrollHeight = this.root.querySelector('.task').scrollTop + 300;
                     this.eventBus.call('addComment', commentText);
                 }
                 break;
@@ -203,6 +204,14 @@ export default class TaskSettingsView extends BaseView {
      */
     handleAssignSuccess() {
         this.render();
+    }
+
+    /**
+     * Closes all
+     */
+    closeSelfAndAllChildren() {
+        this.eventBus.call(ChainLinkSignals.closeAllChildChainLinksAndSelf);
+        this.closeSelf();
     }
 
     /**

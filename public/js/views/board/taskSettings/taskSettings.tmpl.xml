@@ -17,11 +17,11 @@
                         <div class="container-row">
                             <div class="task-settings-members">
                                 <fest:for iterate="task.members" index="i" value="member">
-                                    <a href="{member.url}">
+                                    <!--<a href="{member.url}">-->
                                         <img class="task-settings-members__member" src="{member.avatar}"
                                              alt="{member.nickname}"
                                              title="{member.nickname}"/>
-                                    </a>
+                                    <!--</a>-->
                                 </fest:for>
                             </div>
                             <img class="task-settings-members__add-button js-addAssign"
@@ -141,9 +141,9 @@
                     <fest:for iterate="task.comments" index="i" value="comment">
                         <div class="task-settings-comment">
                             <div>
-                                <a href="{member.url}">
+                                <!--<a href="{comment.url}">-->
                                     <img class="task-settings-members__member" src="{comment.avatar}"/>
-                                </a>
+                                <!--</a>-->
                             </div>
                             <div class="task-settings-comment-right-column">
                                 <div class="container-2cols">

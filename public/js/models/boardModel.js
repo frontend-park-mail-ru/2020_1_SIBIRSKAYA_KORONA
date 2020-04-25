@@ -189,8 +189,8 @@ export default class BoardModel {
      * @return {Promise<void>}
      */
     async saveTask(data) {
-        const response = await taskPut(data.boardId, data.oldColumnId, data.taskId, {
-            cid: data.newColumnId,
+        const response = await taskPut(data, {
+            cid: data.newColumnID,
             position: data.newTaskPos,
         });
 

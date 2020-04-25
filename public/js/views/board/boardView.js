@@ -29,11 +29,10 @@ export default class BoardView extends BaseView {
     /**
      * Triggers getting data from model
      * @param {Object} dataFromURL - fields: boardId, taskId(optional)
-     * @return {Promise}
      */
     render(dataFromURL) {
-        this.boardId = Number(dataFromURL.boardId);
-        return this.eventBus.call('getBoardData', dataFromURL.boardId);
+        this.boardID = Number(dataFromURL.boardId);
+        this.eventBus.call('getBoardData', dataFromURL.boardId);
     }
 
     /**
@@ -96,7 +95,7 @@ export default class BoardView extends BaseView {
 
             case target.classList.contains('js-addNewUser'):
             case target.classList.contains('js-openBoardSettings'):
-                this.eventBus.call('openBoardSettings', this.boardId);
+                this.eventBus.call('openBoardSettings', this.boardID);
                 break;
         }
     }
@@ -122,7 +121,7 @@ export default class BoardView extends BaseView {
             const newTaskInput = document.getElementById('inputNewTaskTitle');
             if (newTaskInput.value) {
                 this.eventBus.call('addNewTask', {
-                    boardId: this.boardId,
+                    boardId: this.boardID,
                     columnID: columnID,
                     taskTitle: newTaskInput.value,
                     taskPosition: this.lastTaskInColumnPosition[columnPosition] + 1,
@@ -155,7 +154,7 @@ export default class BoardView extends BaseView {
             const newColumnTitleInput = document.getElementById('inputNewColumnTitle');
             if (newColumnTitleInput.value) {
                 this.eventBus.call('addNewColumn', {
-                    boardId: this.boardId,
+                    boardId: this.boardID,
                     columnTitle: newColumnTitleInput.value,
                     columnPosition: this.lastColumnIndex + 1,
                 });
@@ -194,6 +193,8 @@ export default class BoardView extends BaseView {
                 x: event.pageX,
                 y: event.pageY,
             },
+            width: box.width + 'px',
+            height: box.height + 'px',
         };
         document.addEventListener('mousemove', this.handleTaskDrag);
         document.addEventListener('mouseup', this.handleTaskDragEnd);
@@ -205,12 +206,15 @@ export default class BoardView extends BaseView {
      * @param {MouseEvent} event
      */
     handleTaskDrag(event) {
+        event.preventDefault();
         this.dragTask.element.removeEventListener('click', this.handleButtonClick);
         this.dragTask.element.style.background = '#d4d5fa';
         this.dragTask.element.style.position = 'absolute';
         this.dragTask.element.style.zIndex = '10';
         this.dragTask.element.style.top = Math.round(event.pageY - this.dragTask.shift.y) + 'px';
         this.dragTask.element.style.left = Math.round(event.pageX - this.dragTask.shift.x) + 'px';
+        this.dragTask.element.style.width = this.dragTask.width;
+        this.dragTask.element.style.height = this.dragTask.height;
     }
 
     /**
@@ -224,7 +228,7 @@ export default class BoardView extends BaseView {
         document.removeEventListener('selectstart', this.preventDefault);
         if (event.pageX === this.dragTask.mouseDown.x && event.pageY === this.dragTask.mouseDown.y) {
             this.eventBus.call('openTaskSettings',
-                this.boardId,
+                this.boardID,
                 Number(this.dragTask.element.dataset.columnId),
                 Number(this.dragTask.element.dataset.taskId));
         } else {
@@ -247,7 +251,6 @@ export default class BoardView extends BaseView {
                         }
                     });
                     const newTaskRealPos = event.pageY;
-
                     for (let i = 0; i !== tasks.length; i++) {
                         if (tasks[i].realPos > newTaskRealPos) {
                             newTaskPos = (i === 0) ? tasks[i].pos / 2 : (tasks[i].pos + tasks[i - 1].pos) / 2;
@@ -259,11 +262,11 @@ export default class BoardView extends BaseView {
                     }
                 }
                 const eventBusCallParams = {
-                    boardId: this.boardId,
-                    newColumnId: Number(newColumn.dataset.columnId),
-                    oldColumnId: Number(this.dragTask.element.closest('.board-column').dataset.columnId),
-                    taskId: Number(this.dragTask.element.dataset.taskId),
-                    newTaskPos: newTaskPos,
+                    boardID: this.boardID,
+                    newColumnID: Number(newColumn.dataset.columnId),
+                    columnID: Number(this.dragTask.element.closest('.board-column').dataset.columnId),
+                    taskID: Number(this.dragTask.element.dataset.taskId),
+                    newTaskPos,
                 };
                 this.eventBus.call('taskMoved', eventBusCallParams);
                 return;

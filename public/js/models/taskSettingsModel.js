@@ -1,6 +1,7 @@
 import {
     boardGet,
-    taskAssignPost, taskAssignDelete,
+    taskAssignDelete,
+    taskAssignPost,
     taskChecklistDelete,
     taskChecklistGet,
     taskChecklistItemPost,
@@ -12,6 +13,7 @@ import {
     taskGet,
     taskPut,
 } from '../libs/apiService.js';
+import responseSwitchBuilder from '../libs/responseSwitchBuilder.js';
 
 /**
  * Task settings model
@@ -39,37 +41,17 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
         this.eventBus.subscribe('updateChecklistItem', this.updateChecklistItem.bind(this));
         this.eventBus.subscribe('updateAssign', this.updateAssign.bind(this));
-    }
 
-    /**
-     * Handles response from api calls, call callback in case of status 200
-     * @param {Object} response from backend
-     * @param {Function} onSuccess - calls it in case of response status 200;
-     * @return {Promise<boolean>} - true if response status is 200, otherwise call eventBus with error reaction signal
-     */
-    async handleResponseStatus(response, onSuccess) {
-        switch (response.status) {
-            case 200:
-                let body;
-                try {
-                    body = await response.json();
-                } catch (e) {}
-                onSuccess(body);
-                return true;
-            case 401:
-                this.eventBus.call('unauthorized');
-                return false;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                return false;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                return false;
-        }
-    };
+        const errorResponseStatusMap = new Map([
+            [401, () => this.eventBus.call('unauthorized')],
+            [400, () => this.eventBus.call('goToBoards')],
+            [403, () => this.eventBus.call('goToBoards')],
+            [500, () => this.eventBus.call('goToBoards')],
+            ['default', () => this.eventBus.call('goToBoards')],
+        ]);
+
+        this.handleResponseStatus = responseSwitchBuilder(errorResponseStatusMap).bind(this);
+    }
 
     /**
      * Add comment to task
@@ -77,23 +59,7 @@ export default class TaskSettingsModel {
      */
     async addTaskComment(commentText) {
         const response = await taskCommentsPost(this.taskData, commentText);
-        switch (response.status) {
-            case 200:
-                this.getTaskSettings();
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 403:
-                this.eventBus.call('goToBoards');
-                break;
-            case 400:
-            case 500:
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                break;
-        }
+        this.handleResponseStatus(response, () => this.getTaskSettings());
     }
 
     /**
@@ -102,23 +68,7 @@ export default class TaskSettingsModel {
      */
     async addChecklist(checklistName) {
         const response = await taskChecklistPost(this.taskData, checklistName);
-        switch (response.status) {
-            case 200:
-                this.getTaskSettings();
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 403:
-                this.eventBus.call('goToBoards');
-                break;
-            case 400:
-            case 500:
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                break;
-        }
+        this.handleResponseStatus(response, () => this.getTaskSettings());
     }
 
     /**
@@ -127,23 +77,7 @@ export default class TaskSettingsModel {
      */
     async deleteChecklist(checklistID) {
         const response = await taskChecklistDelete(this.taskData, checklistID);
-        switch (response.status) {
-            case 200:
-                this.getTaskSettings();
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                break;
-        }
+        this.handleResponseStatus(response, () => this.getTaskSettings());
     }
 
     /**
@@ -152,23 +86,7 @@ export default class TaskSettingsModel {
      */
     async addChecklistItem(itemData) {
         const response = await taskChecklistItemPost(this.taskData, itemData);
-        switch (response.status) {
-            case 200:
-                this.getTaskSettings();
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                break;
-        }
+        this.handleResponseStatus(response, () => this.getTaskSettings());
     }
 
     /**
@@ -178,23 +96,7 @@ export default class TaskSettingsModel {
      */
     async updateChecklistItem(checklistId, itemData) {
         const response = await taskChecklistItemPut(this.taskData, checklistId, itemData);
-        switch (response.status) {
-            case 200:
-                // this.getTaskSettings();
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                break;
-        }
+        this.handleResponseStatus(response);
     }
 
     /**
@@ -318,9 +220,7 @@ export default class TaskSettingsModel {
         } else {
             response = await taskAssignDelete(this.taskData, userId);
         }
-        await this.handleResponseStatus(response, () => {
-            this.eventBus.call('assignSuccess');
-        });
+        await this.handleResponseStatus(response, () => this.eventBus.call('assignSuccess'));
     }
 
     /**
@@ -330,23 +230,7 @@ export default class TaskSettingsModel {
      */
     async saveTaskSettings(taskData) {
         const response = await taskPut(this.taskData, taskData);
-        switch (response.status) {
-            case 200:
-                this.getTaskSettings();
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 403:
-                this.eventBus.call('goToBoards');
-                break;
-            case 400:
-            case 500:
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                break;
-        }
+        this.handleResponseStatus(response, () => this.getTaskSettings());
     }
 
     /**
@@ -355,22 +239,6 @@ export default class TaskSettingsModel {
      */
     async deleteTask() {
         const response = await taskDelete(this.taskData);
-        switch (response.status) {
-            case 200:
-                this.eventBus.call('closeSelf');
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 403:
-                this.eventBus.call('goToBoards');
-                break;
-            case 400:
-            case 500:
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                break;
-        }
+        this.handleResponseStatus(response, () => this.eventBus.call('closeSelf'));
     }
 }
