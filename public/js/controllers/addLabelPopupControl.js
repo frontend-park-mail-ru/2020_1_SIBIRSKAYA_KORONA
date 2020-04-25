@@ -66,5 +66,8 @@ export default class AddLabelPopupController extends ControllerChainLink {
         this.eventBus.subscribe('closedCreateLabelPopup', () => {
             this.view.render();
         });
+        this.eventBus.subscribe('closedChangeLabelPopup', () => {
+            this.view.render();
+        });
     }
 }
