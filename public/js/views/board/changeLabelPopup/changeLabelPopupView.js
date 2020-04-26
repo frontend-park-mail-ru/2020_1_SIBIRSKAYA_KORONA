@@ -102,14 +102,14 @@ export default class ChangeLabelPopupView extends BaseView {
         const popupBlock = document.getElementById('popup-block');
         if (this.labelData.color) {
             const previousColorButton = popupBlock
-                .querySelector(`.js-chooseColor.task-label-color-${this.labelData.color}`);
-            previousColorButton.classList.remove('active');
+                .querySelector(`.js-chooseColor.task-label--color--${this.labelData.color}`);
+            previousColorButton.classList.remove('label-color-palette__label-color--active');
         }
 
         this.labelData.color = color;
         const currentColorChoiceButton = popupBlock
-            .querySelector(`.js-chooseColor.task-label-color-${this.labelData.color}`);
-        currentColorChoiceButton.classList.add('active');
+            .querySelector(`.js-chooseColor.task-label--color--${this.labelData.color}`);
+        currentColorChoiceButton.classList.add('label-color-palette__label-color--active');
     }
 
     /**

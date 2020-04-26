@@ -1,17 +1,84 @@
-
-/*       LABEL          */
-.task-label
-  display: flex
-  flex-direction: row
+/*        LABELS BASE    */
+.task-label-base
+  display: inline-block
   border-radius: 5px
   padding: 10px
-  word-break: break-all
-  justify-content: space-between
+  height: 1em
+  min-width: 1em
+  box-sizing: content-box
+  text-overflow: ellipsis
+  overflow: hidden
+  white-space: nowrap
   user-select: none
 
 
+.task-label
+  &--color
+    &--yellow
+      @extend .task-label-base
+      transition: 0.2s
+      background: #f2d600
+      &.mod-selectable
+        &:hover
+          background: #ffe837
+    &--orange
+      @extend .task-label-base
+      transition: 0.2s
+      background: #ff9f1a
+      &.mod-selectable
+        &:hover
+          background: #fdaf43
+    &--red
+      @extend .task-label-base
+      transition: 0.2s
+      background: #eb5a46
+      &.mod-selectable
+        &:hover
+          background: #f36d5b
+    &--purple
+      @extend .task-label-base
+      transition: 0.2s
+      background: #c377e0
+      &.mod-selectable
+        &:hover
+          background: #ce88e8
+    &--darkblue
+      @extend .task-label-base
+      transition: 0.2s
+      background: #0079bf
+      color: #f8f8ff
+      &.mod-selectable
+        &:hover
+          background: #2a97d6
+    &--black
+      @extend .task-label-base
+      transition: 0.2s
+      background: #344563
+      color: #f8f8ff
+      &.mod-selectable
+        &:hover
+          background: #495771
 
-.task-label-container
+
+.task-label-list
+  display: flex
+  align-items: center
+  flex-direction: row
+  flex-wrap: wrap
+
+  &__label
+    @extend .task-label-base
+    margin-right: 4px
+
+    &--size--mini
+      @extend .task-label-list__label
+      margin: 2px
+
+
+
+/*       ADD LABEL POPUP          */
+
+.task-label-options
   display: flex
   flex-direction: column
   max-height: 50vh
@@ -19,120 +86,61 @@
   padding-right: 10px
   padding-left: 10px
 
-  .task-label-item
-    margin-bottom: 5px
+  &__item
+    @extend .container-row
+    margin-bottom: 3px
 
+  &__label
+    flex-grow: 1
+    margin-right: 8px
 
-.task-label-item
-  display: flex
-  flex-direction: row
-  justify-content: space-between
-  width: 100%
-
-
-.task-label-status
-  align-content: center
-  margin-left: 5px
-  width: 10px
-  align-self: center
-
-.task-label-status.active:before
-  content: "\2713"
-
-.task-label-item .task-label
-  width: 68%
-
-// .task-label-item .button
-
-.task-label-color
-  &-yellow
-    background: #f2d600
-    transition: 0.2s
-
-    &.mod-selectable
-      &:hover
-        background: #ffe837
-      &.active
+    &--active
+      &.task-label--color--yellow
         box-shadow: -8px 0px #d9b51c
 
-  &-orange
-    background: #ff9f1a
-    transition: 0.2s
+      &.task-label--color--orange
+          box-shadow: -8px 0px #cd8313
 
-    &.mod-selectable
-      &:hover
-        background: #fdaf43
-      &.active
-        box-shadow: -8px 0px #cd8313
+      &.task-label--color--red
+          box-shadow: -8px 0px #b04632
+
+      &.task-label--color--purple
+          box-shadow: -8px 0px #89609e
+
+      &.task-label--color--darkblue
+          box-shadow: -8px 0px #055a8c
+
+      &.task-label--color--black
+          box-shadow: -8px 0px #091e42
 
 
-  &-red
-    background: #eb5a46
-    transition: 0.2s
-
-    &.mod-selectable
-      &:hover
-        background: #f36d5b
-      &.active
-        box-shadow: -8px 0px #b04632
-
-  &-purple
-    background: #c377e0
-    transition: 0.2s
-
-    &.mod-selectable
-      &:hover
-        background: #ce88e8
-      &.active
-        box-shadow: -8px 0px #89609e
-
-  &-darkblue
-    background: #0079bf
-    color: #f8f8ff
-    transition: 0.2s
-
-    &.mod-selectable
-      &:hover
-        background: #2a97d6
-      &.active
-        box-shadow: -8px 0px #055a8c
-
-  &-black
-    background: #344563
-    color: #f8f8ff
-    transition: 0.2s
-
-    &.mod-selectable
-      &:hover
-        background: #495771
-      &.active
-        box-shadow: -8px 0px #091e42
+/*       END ADD LABEL POPUP          */
 
 
 
-/*       END LABEL          */
-
-
-
-/*       CREATE LABEL       */
-.task-color-palette
+/*      CREATE OR CHANGE LABEL    */
+.label-color-palette
   display: flex
   flex-direction: row
   flex-wrap: wrap
 
-.task-palette-color
-  height: 15px
-  width: 30px
-  margin: 5px
-  justify-content: center
+  &__label-color
+    @extend .task-label-base
+    height: 15px
+    width: 30px
+    margin: 5px
+    justify-content: center
+    text-align: center
 
-.task-palette-color.active:before
-  content: "\2713"
-/*       END CREATE LABEL       */
+    &--active
+      box-shadow: -2px 2px #00000033
+      &:before
+        content: "\2713"
 
-.task-add-label
-  background: #d4d5fa8a
-  font-size: 16pt
 
-  &:hover
-    background: #d4d5fafa
+
+
+/*       END CREATE OR CHANGE LABEL       */
+
+
+

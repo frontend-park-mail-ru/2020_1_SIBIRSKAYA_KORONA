@@ -3,7 +3,7 @@
 
         <div class="form-block">
             <div class="title-big">
-                Change label
+                Изменить метку
             </div>
         </div>
 
@@ -24,19 +24,21 @@
         <div class="form-block">
             <div class="task-color-palette">
                 <fest:for iterate="labelColors" index="i" value="labelColor">
-                    <div class="task-label task-palette-color task-label-color-{labelColor} mod-selectable js-chooseColor"
+                    <div class="label-color-palette__label-color task-label--color--{labelColor} mod-selectable js-chooseColor"
                          data-label-color="{labelColor}"></div>
                 </fest:for>
             </div>
         </div>
 
-        <div class="form-block">
+        <div class="form-block controls-panel">
             <div class="button--primary js-saveLabel">
-                Save
+                Сохранить
             </div>
             <div class="button--danger js-deleteLabel">
-                Delete
+                Удалить
             </div>
+            <i class="fas fa-trash-alt"></i>
+
         </div>
 
     </div>

@@ -94,7 +94,7 @@ export default class AddLabelPopupView extends BaseView {
             case target.classList.contains('js-addOrRemoveLabel'):
                 event.stopPropagation();
                 const labelID = Number(target.dataset['labelId']);
-                const isActive = target.classList.contains('active');
+                const isActive = target.classList.contains('task-label-options__label--active');
 
                 if (isActive) {
                     this.eventBus.call('removeLabel', labelID);
@@ -118,10 +118,10 @@ export default class AddLabelPopupView extends BaseView {
                 continue;
             }
 
-            if (isActive && !label.classList.contains('active')) {
-                label.classList.add('active');
-            } else if (label.classList.contains('active')) {
-                label.classList.remove('active');
+            if (isActive && !label.classList.contains('task-label-options__label--active')) {
+                label.classList.add('task-label-options__label--active');
+            } else if (label.classList.contains('task-label-options__label--active')) {
+                label.classList.remove('task-label-options__label--active');
             }
 
             break;

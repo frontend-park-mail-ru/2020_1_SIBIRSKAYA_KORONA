@@ -1,6 +1,6 @@
 import {fetchDelete, fetchGet, fetchPost, fetchPut} from './httpUtils.js';
 
-const BACKEND_ADDRESS = 'http://localhost:8080/';
+const BACKEND_ADDRESS = 'https://localhost:8080/';
 // const BACKEND_ADDRESS = 'http://89.208.197.150:8080/';
 
 let CSRFToken;

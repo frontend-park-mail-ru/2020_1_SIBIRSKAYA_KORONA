@@ -32,7 +32,7 @@
                         <div class="task-settings__label">Метки</div>
                         <div class="task-label-list">
                             <fest:for iterate="task.labels" index="i" value="label">
-                                <div class="task-label-list__label-mini--color-{label.color}">
+                                <div class="task-label-list__label task-label--color--{label.color}">
                                     <fest:value>
                                         label.title
                                     </fest:value>
