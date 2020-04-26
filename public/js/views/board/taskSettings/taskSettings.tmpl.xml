@@ -3,7 +3,7 @@
         <svg class="cross" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
              viewBox="20 20 56 56">
             <style>.cross {fill: #afaeae;} .cross:hover {fill: #dd4857; scale: 2 }</style>
-            <g  transform="rotate(45, 48, 48)">
+            <g transform="rotate(45, 48, 48)">
                 <path d="M75.5,44.3v7.5c0,1-0.4,1.9-1.1,2.7s-1.6,1.1-2.7,1.1H55.5v16.3c0,1-0.4,1.9-1.1,2.7
 		    s-1.6,1.1-2.7,1.1h-7.5c-1,0-1.9-0.4-2.7-1.1s-1.1-1.6-1.1-2.7V55.5H24.3c-1,0-1.9-0.4-2.7-1.1s-1.1-1.6-1.1-2.7v-7.5
 		    c0-1,0.4-1.9,1.1-2.7s1.6-1.1,2.7-1.1h16.3V24.3c0-1,0.4-1.9,1.1-2.7s1.6-1.1,2.7-1.1h7.5c1,0,1.9,0.4,2.7,1.1s1.1,1.6,1.1,2.7
@@ -14,6 +14,38 @@
 
     <div class="window-overlay popup">
         <div class="task">
+            <svg class="close-triangle-button js-closeTaskButton" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 36 36">
+                <defs>
+                    <style>
+                        .close-triangle-gradient {
+                            fill:url(#grad1);
+                        }
+                        .close-triangle-lines {
+                            fill:none;
+                            stroke:#300b0d;
+                            stroke-miterlimit:10;
+                        }
+                        .close-triangle-lines:hover, .close-triangle-gradient:hover ~ .close-triangle-lines {
+                            stroke:#f8f8ff;
+                        }
+                    </style>
+                    <linearGradient id="grad1" x1="232.41" y1="264.84" x2="265.45" y2="235.84"
+                                    gradientUnits="userSpaceOnUse">
+                        <stop offset="0.47" stop-color="#7c272d"/>
+                        <stop offset="0.55" stop-color="#86262c"/>
+                        <stop offset="0.7" stop-color="#a1232a"/>
+                        <stop offset="0.88" stop-color="#cc1f27"/>
+                        <stop offset="1" stop-color="#ed1c24"/>
+                    </linearGradient>
+                </defs>
+                <path class="close-triangle-gradient" d="M267.6,267.75l-36-36h29.75A6.25,6.25,0,0,1,267.6,238Z"
+                      transform="translate(-231.2 -231.9)"/>
+                <g class="close-triangle-lines">
+                    <line x1="19.33" y1="4.32" x2="29.98" y2="14.97"/>
+                    <line x1="19.33" y1="14.97" x2="29.98" y2="4.32"/>
+                </g>
+            </svg>
             <div class="task-title">
                 <div class="task-title__text">
                     <fest:value>

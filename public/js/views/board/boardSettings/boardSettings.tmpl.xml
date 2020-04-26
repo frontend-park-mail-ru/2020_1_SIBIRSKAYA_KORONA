@@ -1,6 +1,38 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
     <div class="window-overlay popup">
         <div class="board-settings">
+            <svg class="close-triangle-button js-closeBoardSettingsButton" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 36 36">
+                <defs>
+                    <style>
+                        .close-triangle-gradient {
+                            fill:url(#grad1);
+                        }
+                        .close-triangle-lines {
+                            fill:none;
+                            stroke:#300b0d;
+                            stroke-miterlimit:10;
+                        }
+                        .close-triangle-lines:hover, .close-triangle-gradient:hover ~ .close-triangle-lines {
+                            stroke:#f8f8ff;
+                        }
+                    </style>
+                    <linearGradient id="grad1" x1="232.41" y1="264.84" x2="265.45" y2="235.84"
+                                    gradientUnits="userSpaceOnUse">
+                        <stop offset="0.47" stop-color="#7c272d"/>
+                        <stop offset="0.55" stop-color="#86262c"/>
+                        <stop offset="0.7" stop-color="#a1232a"/>
+                        <stop offset="0.88" stop-color="#cc1f27"/>
+                        <stop offset="1" stop-color="#ed1c24"/>
+                    </linearGradient>
+                </defs>
+                <path class="close-triangle-gradient" d="M267.6,267.75l-36-36h29.75A6.25,6.25,0,0,1,267.6,238Z"
+                      transform="translate(-231.2 -231.9)"/>
+                <g class="close-triangle-lines">
+                    <line x1="19.33" y1="4.32" x2="29.98" y2="14.97"/>
+                    <line x1="19.33" y1="14.97" x2="29.98" y2="4.32"/>
+                </g>
+            </svg>
             <div class="board-settings-title">
                 <div class="board-settings-title__text">
                     Настройки

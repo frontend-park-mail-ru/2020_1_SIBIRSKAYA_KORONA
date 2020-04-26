@@ -63,6 +63,7 @@ export default class BoardSettingsView extends BaseView {
         const buttons = [
             document.querySelector('.js-findMember'),
             document.querySelector('.js-findAdmin'),
+            document.querySelector('.js-closeBoardSettingsButton'),
         ];
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
@@ -119,6 +120,10 @@ export default class BoardSettingsView extends BaseView {
     handleButtonClick(event) {
         const target = event.currentTarget;
         switch (true) {
+            case target.classList.contains('js-closeBoardSettingsButton'):
+                event.stopPropagation();
+                this.closeSelf();
+                break;
             case target.classList.contains('js-findMember'):
             case target.classList.contains('js-findAdmin'):
                 if (!target.classList.contains('board-settings-members__add-button--rotated')) {

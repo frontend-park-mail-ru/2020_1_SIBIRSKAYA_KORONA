@@ -59,6 +59,7 @@ export default class TaskSettingsView extends BaseView {
             this.root.querySelector('.js-deleteTask'),
             this.root.querySelector('.js-saveComment'),
             this.root.querySelector('.js-addNewChecklist'),
+            this.root.querySelector('.js-closeTaskButton'),
             ...this.root.querySelectorAll('.js-addNewChecklistItem'),
             ...this.root.querySelectorAll('.js-closeChecklistItemForm'),
             ...this.root.querySelectorAll('.js-createChecklistItem'),
@@ -153,11 +154,17 @@ export default class TaskSettingsView extends BaseView {
             case classList.contains('js-deleteComment'):
                 this.eventBus.call('deleteComment', Number(event.currentTarget.dataset.commentId));
                 break;
+
             case classList.contains('window-overlay'):
                 if (event.target === event.currentTarget) {
                     this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
                 }
                 break;
+            case classList.contains('js-closeTaskButton'):
+                event.stopPropagation();
+                this.closeSelf();
+                break;
+
             default:
                 break;
         }
