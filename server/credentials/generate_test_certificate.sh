@@ -2,7 +2,7 @@
 
 
 openssl genrsa -out test.key 2048
-openssl req -x509 -new -nodes -addext "subjectAltName = DNS:localhost" -key test.key -sha256 -days 1024 -out test.crt
+openssl req -x509 -new -nodes -addext "subjectAltName = DNS:192.168.0.104" -key test.key -sha256 -days 1024 -out test.crt
 
 ## This doesn't work
 #openssl genrsa -out test.key 2048

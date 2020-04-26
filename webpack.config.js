@@ -1,3 +1,5 @@
+
+const webpack = require('webpack');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const CopyPlugin = require('copy-webpack-plugin');
@@ -6,8 +8,10 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 const morgan = require('morgan');
+const address = require('ip').address;
 
 const isDev = process.env.NODE_ENV === 'development';
+const IP_ADDRESS = address();
 
 module.exports = {
     mode: (isDev) ? 'development' : 'production',
@@ -23,6 +27,7 @@ module.exports = {
     devServer: isDev ? {
         port: 5555,
         https: true,
+        host: IP_ADDRESS,
         key: fs.readFileSync(path.resolve(__dirname, 'server/credentials/test.key')),
         cert: fs.readFileSync(path.resolve(__dirname, 'server/credentials/test.crt')),
         setup: (app) => {
@@ -70,6 +75,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'main.css',
         }),
+        new webpack.DefinePlugin({
+            'IP_ADDRESS': JSON.stringify(IP_ADDRESS),
+        }),
         new CleanWebpackPlugin(),
         // new CopyPlugin([
         //     {
@@ -84,4 +92,5 @@ module.exports = {
             entry: path.join(__dirname, 'public/js/sw.js'),
         }),
     ],
-};
+}
+;

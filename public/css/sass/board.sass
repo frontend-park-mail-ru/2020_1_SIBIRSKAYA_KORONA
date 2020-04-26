@@ -6,22 +6,29 @@
     flex-grow: 1
 
 .board-header
+    @media screen and (max-width: $phone-breakpoint)
+        justify-content: space-between !important
     padding: 0 10px 10px
     background: #18255f
     @extend .header
 
     &-left
+        @media screen and (max-width: $phone-breakpoint)
+            max-width: 50% !important
         @extend .header-block-left
 
         &__title
+            @media screen and (max-width: $tablet-breakpoint)
+                font-size: 20px
             @extend .title
             width: 33%
             font-size: 35px
-
             color: #eaeeff
 
 
     &-center
+        @media screen and (max-width: $phone-breakpoint)
+            max-width: 50% !important
         @extend .header-block-center
 
         &-members
@@ -32,6 +39,8 @@
                 margin-right: 3px
 
             &__add-button
+                @media screen and (max-width: $phone-breakpoint)
+                    display: none !important
                 @extend .board-header-center-members__member
                 border: 2px dashed #afaeae
                 transition: 0.3s
@@ -46,6 +55,8 @@
             margin-left: 15px
 
     &-right
+        @media screen and (max-width: $phone-breakpoint)
+            display: none !important
         @extend .header-block-right
 
         &__button--secondary
@@ -76,6 +87,8 @@
         flex: 0 0 5px
 
     &-add-column-button
+        @media screen and (max-width: $phone-breakpoint)
+            display: none !important
         @extend .board-column
         box-shadow: #8c8888f5 0 0 10px 1px
         background: #ededed4f
@@ -170,6 +183,8 @@
     padding: 0 4px
 
     &-add-task-button
+        @media screen and (max-width: $phone-breakpoint)
+            display: none !important
         padding: 9px
         margin: 5px 5px 0
         background: transparent

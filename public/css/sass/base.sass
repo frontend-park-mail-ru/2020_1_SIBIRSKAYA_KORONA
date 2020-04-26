@@ -1,3 +1,9 @@
+$iphone-5-breakpoint: 350px
+$phone-breakpoint: 450px
+$tablet-breakpoint: 780px
+$desktop-breakpoint: 1350px
+
+
 @import 'auth'
 @import 'board'
 @import 'boardSettings'
@@ -7,7 +13,6 @@
 @import 'reset'
 @import 'taskSettings'
 @import 'checkboxes'
-
 
 /*   COMMON   */
 body
@@ -50,13 +55,13 @@ a:hover
 
     &--primary
         @extend .button
-        color: #61bd4f
+        color: #28a745
         background-color: transparent
         background-image: none
-        box-shadow: 0 0 1px 1px #61bd4f
+        box-shadow: 0 0 1px 1px #28a745
 
         &:hover
-            background-color: #61bd4f
+            background-color: #28a745
             color: white
 
     &--secondary
@@ -171,6 +176,7 @@ input[type=file]
     outline: none
     transition: 0.3s
     background-color: transparent
+
     &:focus
         padding-left: 5%
         width: 95%
@@ -185,6 +191,7 @@ input[type=file]
     background-color: transparent
     border: 2px solid #cac6c6
     width: 99%
+
     &:focus
         padding-left: 5%
         width: 94%

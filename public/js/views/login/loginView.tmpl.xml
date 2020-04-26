@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="auth-login__logo">
+    <div class="auth__logo">
         <div class="auth">
             <div class="auth-form-login">
                 <div class="title auth-form__title">
