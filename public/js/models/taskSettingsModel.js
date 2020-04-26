@@ -152,6 +152,9 @@ export default class TaskSettingsModel {
             return;
         }
 
+        if (!taskData.labels) {
+            taskData.labels = [];
+        }
         this.taskData = Object.assign(this.taskData, taskData);
         this.eventBus.call('gotTaskSettings', taskData);
     }

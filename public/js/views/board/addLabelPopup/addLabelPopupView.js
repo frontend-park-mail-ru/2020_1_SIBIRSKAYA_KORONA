@@ -48,6 +48,10 @@ export default class AddLabelPopupView extends BaseView {
         popupDiv.style.top = `${top}px`;
         popupDiv.innerHTML = addLabelPopupTemplate(labelsInfo);
 
+        for (const label of labelsInfo) {
+            this.updateLabelStatus(label.id, label.isActive);
+        }
+
         this.addEventListeners();
     }
 
@@ -82,14 +86,14 @@ export default class AddLabelPopupView extends BaseView {
 
             case target.classList.contains('js-openChangeLabelPopup'): {
                 event.stopPropagation();
-                const labelID = target.dataset['labelId'];
+                const labelID = Number(target.dataset['labelId']);
                 this.eventBus.call('openChangeLabelPopup', this.relativeTarget, labelID);
                 break;
             }
 
             case target.classList.contains('js-addOrRemoveLabel'):
                 event.stopPropagation();
-                const labelID = target.dataset['labelId'];
+                const labelID = Number(target.dataset['labelId']);
                 const isActive = target.classList.contains('active');
 
                 if (isActive) {
@@ -110,7 +114,7 @@ export default class AddLabelPopupView extends BaseView {
         const popupBlock = document.getElementById('popup-block');
         const allLabels = popupBlock.getElementsByClassName('js-addOrRemoveLabel');
         for (const label of allLabels) {
-            if (label.dataset['labelId'] !== labelID) {
+            if (Number(label.dataset['labelId']) !== labelID) {
                 continue;
             }
 

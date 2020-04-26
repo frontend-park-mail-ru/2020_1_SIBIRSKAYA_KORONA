@@ -2,7 +2,7 @@
     <div class="form pop-over">
         <div class="form-block">
             <div class="title-big">
-                Labels
+                Доступные метки
             </div>
         </div>
 
@@ -28,7 +28,7 @@
 
         <div class="form-block">
             <div class="task-label task-add-label mod-selectable js-openCreateLabelPopup">
-                + Create new label
+                + Создать
             </div>
         </div>
 

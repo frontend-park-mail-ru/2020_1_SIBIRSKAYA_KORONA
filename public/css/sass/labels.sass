@@ -1,0 +1,138 @@
+
+/*       LABEL          */
+.task-label
+  display: flex
+  flex-direction: row
+  border-radius: 5px
+  padding: 10px
+  word-break: break-all
+  justify-content: space-between
+  user-select: none
+
+
+
+.task-label-container
+  display: flex
+  flex-direction: column
+  max-height: 50vh
+  overflow-y: auto
+  padding-right: 10px
+  padding-left: 10px
+
+  .task-label-item
+    margin-bottom: 5px
+
+
+.task-label-item
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  width: 100%
+
+
+.task-label-status
+  align-content: center
+  margin-left: 5px
+  width: 10px
+  align-self: center
+
+.task-label-status.active:before
+  content: "\2713"
+
+.task-label-item .task-label
+  width: 68%
+
+// .task-label-item .button
+
+.task-label-color
+  &-yellow
+    background: #f2d600
+    transition: 0.2s
+
+    &.mod-selectable
+      &:hover
+        background: #ffe837
+      &.active
+        box-shadow: -8px 0px #d9b51c
+
+  &-orange
+    background: #ff9f1a
+    transition: 0.2s
+
+    &.mod-selectable
+      &:hover
+        background: #fdaf43
+      &.active
+        box-shadow: -8px 0px #cd8313
+
+
+  &-red
+    background: #eb5a46
+    transition: 0.2s
+
+    &.mod-selectable
+      &:hover
+        background: #f36d5b
+      &.active
+        box-shadow: -8px 0px #b04632
+
+  &-purple
+    background: #c377e0
+    transition: 0.2s
+
+    &.mod-selectable
+      &:hover
+        background: #ce88e8
+      &.active
+        box-shadow: -8px 0px #89609e
+
+  &-darkblue
+    background: #0079bf
+    color: #f8f8ff
+    transition: 0.2s
+
+    &.mod-selectable
+      &:hover
+        background: #2a97d6
+      &.active
+        box-shadow: -8px 0px #055a8c
+
+  &-black
+    background: #344563
+    color: #f8f8ff
+    transition: 0.2s
+
+    &.mod-selectable
+      &:hover
+        background: #495771
+      &.active
+        box-shadow: -8px 0px #091e42
+
+
+
+/*       END LABEL          */
+
+
+
+/*       CREATE LABEL       */
+.task-color-palette
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+
+.task-palette-color
+  height: 15px
+  width: 30px
+  margin: 5px
+  justify-content: center
+
+.task-palette-color.active:before
+  content: "\2713"
+/*       END CREATE LABEL       */
+
+.task-add-label
+  background: #d4d5fa8a
+  font-size: 16pt
+
+  &:hover
+    background: #d4d5fafa
