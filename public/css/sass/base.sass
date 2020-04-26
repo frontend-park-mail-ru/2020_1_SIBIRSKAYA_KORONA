@@ -15,6 +15,9 @@ $desktop-breakpoint: 1350px
 @import 'checkboxes'
 
 /*   COMMON   */
+html
+    height: 100%
+
 body
     font-family: 'Fox', sans-serif
 
@@ -35,6 +38,9 @@ a:hover
     display: flex
     flex-direction: column
     height: 100vh
+    @media screen and (max-width: $phone-breakpoint)
+        flex-grow: 1
+
 
 #application
     display: flex
@@ -134,19 +140,18 @@ input[type=file]
 
 
 #popup-block
+    @media screen and (max-width: $tablet-breakpoint)
+       left: 0 !important
     position: absolute
     z-index: 100
 
 
 #popover-block
-    // position: absolute
     z-index: 10
 
 .window-overlay
     position: absolute
     background: #00000080
-    width: 100vw
-    height: 100vh
 
 
 .avatar-round
@@ -358,11 +363,15 @@ input[type=file]
 ::-webkit-scrollbar
     width: 6px
     height: 6px
+    @media screen and (max-width: $tablet-breakpoint)
+        display: none
 
 
 ::-webkit-scrollbar-track
     background-color: rgba(0, 0, 0, .1)
     border-radius: 5px
+    @media screen and (max-width: $tablet-breakpoint)
+        display: none
 
 
 ::-webkit-scrollbar-track:hover
@@ -372,6 +381,8 @@ input[type=file]
 ::-webkit-scrollbar-thumb
     background-color: rgba(0, 0, 0, .2)
     border-radius: 5px
+    @media screen and (max-width: $tablet-breakpoint)
+        display: none
 
 
 ::-webkit-scrollbar-thumb:hover

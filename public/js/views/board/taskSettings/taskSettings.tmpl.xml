@@ -36,9 +36,9 @@
                                          title="{member.nickname}"/>
                                     <!--</a>-->
                                 </fest:for>
+                                <img class="task-settings-members__add-button js-addAssign"
+                                     src="/img/plus_icon.svg"/>
                             </div>
-                            <img class="task-settings-members__add-button js-addAssign"
-                                 src="/img/plus_icon.svg"/>
                         </div>
                     </div>
                     <div>
@@ -153,9 +153,9 @@
                 <div class="task-settings-comments">
                     <fest:for iterate="task.comments" index="i" value="comment">
                         <div class="task-settings-comment">
-                            <div class="task-settings-members__member">
+                            <div class="task-settings-comment__author--avatar">
                                 <!--<a href="{comment.url}">-->
-                                <img class="task-settings-members__member" src="{comment.avatar}"/>
+                                <img class="task-settings-comment__author--avatar" src="{comment.avatar}"/>
                                 <!--</a>-->
                             </div>
                             <div class="task-settings-comment-data">

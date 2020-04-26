@@ -1,4 +1,12 @@
 .task
+    @media screen and (max-width: $tablet-breakpoint)
+        margin: 0
+        padding-top: 0
+        width: unset
+        max-height: unset
+        bottom: 0
+        right: 0
+        left: 0
     @extend .form
     position: absolute
     top: 8vh
@@ -19,6 +27,10 @@
 
     &-settings
         margin: 0 auto 10px
+        @media screen and (max-width: $tablet-breakpoint)
+            margin: 0
+            width: unset
+            height: unset
         width: 660px
 
         &-comments
@@ -26,6 +38,13 @@
         &-comment
             display: flex
             margin-bottom: 20px
+            &__author--avatar
+                height: 60px
+                width: 60px
+                border-radius: 50%
+                margin-right: 10px
+                object-fit: cover
+
             &:hover
                 box-shadow: -2px 1px 2px 0px #cac6c6
                 border-radius: 30px 0 0 30px
@@ -52,6 +71,7 @@
                 height: 16px
                 cursor: pointer
                 margin-top: -1px
+
                 &:hover
                     width: 18px
                     height: 18px
@@ -74,13 +94,16 @@
 
 
         &-members
+            overflow: hidden
             @extend .member-container
+            flex-wrap: wrap
 
             &__member
                 height: 60px
                 width: 60px
                 border-radius: 50%
                 margin-right: 10px
+                margin-bottom: 10px
                 object-fit: cover
 
             &__add-button
@@ -97,17 +120,26 @@
 
         &-controls
             margin-top: 20px
+            flex-flow: wrap
             @extend .controls-panel
 
             &__button
+                @media screen and (max-width: $phone-breakpoint)
+                    margin: 0 auto 10px
+                    width: 70% !important
+                    display: flex
+                    justify-content: center
                 &--primary
                     @extend .button--primary
+                    @extend .task-settings-controls__button
 
                 &--secondary
                     @extend .button--secondary
+                    @extend .task-settings-controls__button
 
                 &--danger
                     @extend .button--danger
+                    @extend .task-settings-controls__button
 
         &__error
             @extend .input-error
@@ -154,6 +186,8 @@
             margin-top: 20px
             display: flex
             justify-content: center
+            @media screen and (max-width: $phone-breakpoint)
+                flex-flow: column
 
             &__button
                 &--primary
@@ -161,10 +195,20 @@
 
                 &--secondary
                     margin-left: 12px
+                    @media screen and (max-width: $phone-breakpoint)
+                        margin: 10px auto 10px
+                        width: 70% !important
+                        display: flex
+                        justify-content: center
                     @extend .button--secondary
 
                 &--danger
                     margin-left: 12px
+                    @media screen and (max-width: $phone-breakpoint)
+                        margin: 0 auto 10px
+                        width: 70% !important
+                        display: flex
+                        justify-content: center
                     @extend .button--danger
 
     &-title
