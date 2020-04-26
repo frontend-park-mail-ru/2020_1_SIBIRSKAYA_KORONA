@@ -48,7 +48,7 @@
                                  data-task-position="{task.position}">
                                 <div class="task-label-list">
                                     <fest:for iterate="task.labels" index="k" value="label">
-                                        <div class="task-label-list__label-mini--color-{label.color}">
+                                        <div class="task-label-list__label--size--mini task-label--color--{label.color}">
                                             <fest:value>
                                                 label.title
                                             </fest:value>
