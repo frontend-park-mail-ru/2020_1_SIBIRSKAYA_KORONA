@@ -19,7 +19,7 @@
 
                         <div class="button--secondary js-openChangeLabelPopup"
                              data-label-id="{label.id}">
-                            &#x270E;
+                            <i class="far fa-edit"></i>
                         </div>
                     </div>
                 </fest:for>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-block controls-panel">
-            <div class="button--primary task-label task-add-label mod-selectable js-openCreateLabelPopup">
+            <div class="button--primary task-label-options__item mod-selectable js-openCreateLabelPopup">
                 + Создать
             </div>
         </div>

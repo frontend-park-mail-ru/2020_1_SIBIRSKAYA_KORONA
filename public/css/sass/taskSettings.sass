@@ -111,13 +111,29 @@
     &-attachments
         margin-top: 20px
         &__item
-            margin-top: 3px
             @extend .container-2cols
+            margin-top: 3px
+            transition: 0.1s
+            border-radius: 4px
+            padding: 4px
+
+            &:hover
+                background: #d4d5fa8a
+
             &--info
-                @extend .controls-panel
+                @extend .container-row
+                flex-grow: 1
+            &--file-icon
+                padding-left: 10px
+                padding-right: 10px
+            &--filename
+                padding-left: 5px
+                padding-right: 5px
+
             &--controls
-                width: 200px
                 @extend .controls-panel
+                div
+                    margin-right: 10px
 
 
     &-checklists

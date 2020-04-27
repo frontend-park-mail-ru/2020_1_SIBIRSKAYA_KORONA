@@ -32,12 +32,11 @@
 
         <div class="form-block controls-panel">
             <div class="button--primary js-saveLabel">
-                Сохранить
+                <i class="fas fa-save"></i>
             </div>
             <div class="button--danger js-deleteLabel">
-                Удалить
+                <i class="fas fa-trash-alt"></i>
             </div>
-            <i class="fas fa-trash-alt"></i>
 
         </div>
 

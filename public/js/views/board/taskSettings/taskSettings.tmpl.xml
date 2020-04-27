@@ -39,7 +39,9 @@
                                     </fest:value>
                                 </div>
                             </fest:for>
-                            <div class="task-label-list__label task-settings-labels__add-button js-addNewLabel">+</div>
+                            <div class="task-label-list__label task-settings-labels__add-button js-addNewLabel">
+                                <i class="fas fa-plus"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,14 +81,20 @@
                     <fest:for index="i" iterate="task.files" value="file">
                         <div class="task-attachments__item">
                             <div class="task-attachments__item--info">
-                                <fest:value>file.filename</fest:value>
+                                <i class="task-attachments__item--file-icon fas fa-file-image"></i>
+                                <div class="task-attachments__item--filename">
+                                    <fest:value>file.filename</fest:value>
+                                </div>
                             </div>
                             <div class="task-attachments__item--controls">
                                 <div class="button--primary js-downloadAttach"
                                      data-file-url="{file.url}"
-                                     data-attach-name="{file.filename}">Скачать</div>
+                                     data-attach-name="{file.filename}">
+                                    <i class="fas fa-download"></i>
+                                </div>
                                 <div class="button--danger js-deleteAttach"
-                                     data-attach-id="{file.id}">Удалить
+                                     data-attach-id="{file.id}">
+                                    <i class="fas fa-trash-alt"></i>
                                 </div>
                             </div>
                         </div>
