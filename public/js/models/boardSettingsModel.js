@@ -1,4 +1,5 @@
-import {boardGet, usersGet, postMember} from '../libs/apiService.js';
+import {boardDelete, boardGet, boardPut, postMember, usersGet} from '../libs/apiService.js';
+import responseSwitchBuilder from '../libs/responseSwitchBuilder.js';
 
 /**
  * Board settings model
@@ -14,11 +15,23 @@ export default class TaskSettingsModel {
 
         this.boardId = boardID;
 
-        this.eventBus.subscribe('getBoardSettings', this.getBoardSettings.bind(this));
+        this.getBoardSettings = this.getBoardSettings.bind(this);
+
+        this.eventBus.subscribe('getBoardSettings', this.getBoardSettings);
         this.eventBus.subscribe('getUsers', this.searchUsers.bind(this));
         this.eventBus.subscribe('inviteUser', this.inviteUser.bind(this));
-        // this.eventBus.subscribe('saveBoardSettings', this.saveBoardSettings.bind(this);
-        // this.eventBus.subscribe('deleteBoard', this.deleteBoard.bind(this);
+        this.eventBus.subscribe('saveBoard', this.saveBoard.bind(this));
+        this.eventBus.subscribe('deleteBoard', this.deleteBoard.bind(this));
+
+        const errorResponseStatusMap = new Map([
+            [401, () => this.eventBus.call('unauthorized')],
+            [400, () => this.eventBus.call('goToBoards')],
+            [403, () => alert('Удалить доску может только администратор.')],
+            [500, () => this.eventBus.call('goToBoards')],
+            ['default', () => this.eventBus.call('goToBoards')],
+        ]);
+
+        this.handleResponseStatus = responseSwitchBuilder(errorResponseStatusMap).bind(this);
     }
 
     /**
@@ -28,24 +41,7 @@ export default class TaskSettingsModel {
     async searchUsers(nicknamePart) {
         const limit = 5;
         const searchUsersResponse = await usersGet(this.boardId, nicknamePart, limit);
-        switch (searchUsersResponse.status) {
-            case 200:
-                const users = await searchUsersResponse.json();
-                this.eventBus.call('gotUsers', users);
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                break;
-        }
+        this.handleResponseStatus(searchUsersResponse, (body) => this.eventBus.call('gotUsers', body));
     };
 
     /**
@@ -55,23 +51,26 @@ export default class TaskSettingsModel {
      */
     async inviteUser(userId, role = 'member') {
         const postMemberResponse = await postMember(this.boardId, userId);
-        switch (postMemberResponse.status) {
-            case 200:
-                this.getBoardSettings();
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                break;
-        }
+        this.handleResponseStatus(postMemberResponse, this.getBoardSettings);
+    }
+
+
+    /**
+     * Update board data
+     * @param {Object} newData - {title}
+     * @return {Promise<void>}
+     */
+    async saveBoard(newData) {
+        const response = await boardPut(this.boardId, newData);
+        this.handleResponseStatus(response, this.getBoardSettings);
+    }
+
+    /**
+     * Delete board method
+     */
+    async deleteBoard() {
+        const response = await boardDelete(this.boardId);
+        this.handleResponseStatus(response, () => this.eventBus.call('goToBoards'));
     }
 
     /**
@@ -79,23 +78,6 @@ export default class TaskSettingsModel {
      */
     async getBoardSettings() {
         const boardResponse = await boardGet(this.boardId);
-        switch (boardResponse.status) {
-            case 200:
-                const boardData = await boardResponse.json();
-                this.eventBus.call('gotBoardSettings', boardData);
-                break;
-            case 401:
-                this.eventBus.call('unauthorized');
-                break;
-            case 400:
-            case 403:
-            case 500:
-                this.eventBus.call('goToBoards');
-                break;
-            default:
-                console.log('Бекендер молодец!!!');
-                this.eventBus.call('goToBoards');
-                break;
-        }
+        this.handleResponseStatus(boardResponse, (body) => this.eventBus.call('gotBoardSettings', body));
     }
 };

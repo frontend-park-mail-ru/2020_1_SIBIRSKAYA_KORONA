@@ -44,6 +44,7 @@ export default class BoardModel {
                     return false;
                 case 400:
                 case 403:
+                case 404:
                 case 500:
                     this.eventBus.call('goToBoards');
                     return false;
@@ -146,6 +147,7 @@ export default class BoardModel {
                         break;
                     case 400:
                     case 403:
+                    case 404:
                         this.eventBus.call('goToBoards');
                         break;
                     case 500:
@@ -172,6 +174,7 @@ export default class BoardModel {
                     break;
                 case 400:
                 case 403:
+                case 404:
                     this.eventBus.call('goToBoards');
                     break;
                 case 500:
@@ -202,6 +205,7 @@ export default class BoardModel {
                 this.eventBus.call('unauthorized');
                 break;
             case 403:
+            case 404:
                 this.eventBus.call('goToBoards');
                 break;
             case 400:

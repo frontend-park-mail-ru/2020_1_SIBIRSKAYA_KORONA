@@ -146,6 +146,26 @@ export const boardGet = (boardID) => {
     return fetchGet(apiUrl.href);
 };
 
+/**
+ * Delete board
+ * @param {Number} boardID
+ * @return {Promise<Response>}
+ */
+export const boardDelete = (boardID) => {
+    const apiUrl = new URL(`boards/${boardID}`, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
+
+/**
+ * Put board
+ * @param {Number} boardID
+ * @param {Object} newData - {title}
+ * @return {Promise<Response>}
+ */
+export const boardPut = (boardID, newData) => {
+    const apiUrl = new URL(`boards/${boardID}`, BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, JSON.stringify(newData));
+};
 
 /** ********************* COLUMNS ***********************/
 

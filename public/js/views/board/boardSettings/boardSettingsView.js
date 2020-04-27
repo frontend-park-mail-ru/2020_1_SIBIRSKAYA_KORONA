@@ -64,6 +64,8 @@ export default class BoardSettingsView extends BaseView {
             document.querySelector('.js-findMember'),
             document.querySelector('.js-findAdmin'),
             document.querySelector('.js-closeBoardSettingsButton'),
+            document.querySelector('.js-saveBoard'),
+            document.querySelector('.js-deleteBoard'),
         ];
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
@@ -99,17 +101,14 @@ export default class BoardSettingsView extends BaseView {
      */
     handleUserInput(event) {
         const target = event.currentTarget;
-        switch (true) {
-            case target.id === 'js-boardTitleInput':
-                console.log('js-boardTitleInput');
-                break;
-            case target.id === 'js-searchMembersInput':
-                if (target.value.length !== 0) {
+        if (target.value.length !== 0) {
+            switch (true) {
+                case target.id === 'js-searchMembersInput':
                     this.eventBus.call('getUsers', target.value);
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -136,6 +135,18 @@ export default class BoardSettingsView extends BaseView {
             case target.classList.contains('js-addNewMember'):
                 const userID = target.dataset.userId;
                 this.eventBus.call('inviteUser', userID);
+                break;
+            case target.classList.contains('js-saveBoard'):
+                const title = document.querySelector('#js-boardTitleInput')?.value;
+                if (title) {
+                    this.eventBus.call('saveBoard', {title});
+                }
+                break;
+            case target.classList.contains('js-deleteBoard'):
+                if (confirm('Доска будет удалена безвозвратно для всех участников!')) {
+                    this.eventBus.call('deleteBoard');
+                    this.closeSelf();
+                }
                 break;
             default:
                 break;

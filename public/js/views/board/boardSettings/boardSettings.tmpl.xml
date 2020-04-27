@@ -6,15 +6,15 @@
                 <defs>
                     <style>
                         .close-triangle-gradient {
-                            fill:url(#grad1);
+                        fill:url(#grad1);
                         }
                         .close-triangle-lines {
-                            fill:none;
-                            stroke:#300b0d;
-                            stroke-miterlimit:10;
+                        fill:none;
+                        stroke:#300b0d;
+                        stroke-miterlimit:10;
                         }
                         .close-triangle-lines:hover, .close-triangle-gradient:hover ~ .close-triangle-lines {
-                            stroke:#f8f8ff;
+                        stroke:#f8f8ff;
                         }
                     </style>
                     <linearGradient id="grad1" x1="232.41" y1="264.84" x2="265.45" y2="235.84"
@@ -40,13 +40,22 @@
                 <div class="board-settings-title__hr--width-2"/>
             </div>
             <div class="board-settings__label ">Название доски</div>
-            <input class="board-settings__input" id="js-boardTitleInput">
+            <input autocomplete="off" class="board-settings__input" id="js-boardTitleInput">
                 <fest:attributes>
                     <fest:attribute name="value">
                         <fest:value>board.title</fest:value>
                     </fest:attribute>
                 </fest:attributes>
             </input>
+            <div class="board-settings-controls">
+                <div class="board-settings-controls__button--primary js-saveBoard">
+                    Сохранить
+                </div>
+                <div class="board-settings-controls__button--danger js-deleteBoard">
+                    Удалить доску
+                </div>
+            </div>
+
             <div class="container-2cols">
                 <div class="container-col">
                     <div class="board-settings__label">Администраторы</div>
