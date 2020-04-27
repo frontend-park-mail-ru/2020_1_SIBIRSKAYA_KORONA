@@ -28,6 +28,7 @@
                                  src="/img/plus_icon.svg"/>
                         </div>
                     </div>
+
                     <div>
                         <div class="task-settings__label">Метки</div>
                         <div class="task-label-list">
@@ -38,7 +39,7 @@
                                     </fest:value>
                                 </div>
                             </fest:for>
-                            <div class="button default js-addNewLabel">+</div>
+                            <div class="task-label-list__label task-settings-labels__add-button js-addNewLabel">+</div>
                         </div>
                     </div>
                 </div>
