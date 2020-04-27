@@ -25,8 +25,10 @@ export default class TaskSettingsController extends ControllerChainLink {
             'getTaskSettings',
             'gotTaskSettings',
 
+            'updatedTaskLabel',
             'openAddLabelPopup',
             'closedAddLabelPopup',
+            'addedTaskLabel',
 
             'openAssignsPopup',
             'getTaskAssigns',
@@ -47,6 +49,11 @@ export default class TaskSettingsController extends ControllerChainLink {
 
             'addComment',
             'deleteComment',
+
+            'uploadAttach',
+            'uploadAttachSuccess',
+            'deleteAttach',
+            'deleteAttachSuccess',
 
             'unauthorized',
             'goBack',

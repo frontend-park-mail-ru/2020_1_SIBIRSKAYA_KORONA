@@ -12,7 +12,7 @@
                         </fest:attributes>
                     </input>
                     <div class="custom-checkbox"/>
-                    <img class="task-settings-members__member" src="{member.avatar}"
+                    <img class="assign-members__member" src="{member.avatar}"
                          alt="{member.nickname}"
                          title="{member.nickname}"/>
                     <div class="search-result-row__user">

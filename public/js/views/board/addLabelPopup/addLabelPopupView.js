@@ -12,7 +12,10 @@ export default class AddLabelPopupView extends BaseView {
     constructor(eventBus) {
         super(eventBus);
 
-        this.relativeTarget = null;
+        this.position = {
+            left: '0%',
+            top: '0%',
+        };
 
         this.render = this.render.bind(this);
         this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
@@ -26,11 +29,14 @@ export default class AddLabelPopupView extends BaseView {
 
     /**
      * Method which triggers getting data from model and sets render position
-     * @param {HTMLElement} [relativeTarget] - html element which will be used as base for further render
+     * @param {Object} clickCoords - {x, y}
      */
-    render(relativeTarget) {
-        if (relativeTarget !== void 0) {
-            this.relativeTarget = relativeTarget;
+    render(clickCoords) {
+        if (clickCoords) {
+            this.position = {
+                left: `${clickCoords.x / window.innerWidth * 100}%`,
+                top: `${clickCoords.y / window.innerHeight * 100}%`,
+            };
         }
 
         this.eventBus.call('getLabels');
@@ -43,10 +49,13 @@ export default class AddLabelPopupView extends BaseView {
     renderAddLabelPopup(labelsInfo) {
         const popupDiv = document.getElementById('popup-block');
 
-        const {left, top} = this.relativeTarget.getBoundingClientRect();
-        popupDiv.style.left = `${left}px`;
-        popupDiv.style.top = `${top}px`;
+        popupDiv.style.left = this.position.left;
+        popupDiv.style.top = this.position.top;
         popupDiv.innerHTML = addLabelPopupTemplate(labelsInfo);
+
+        for (const label of labelsInfo) {
+            this.updateLabelStatus(label.id, label.isActive);
+        }
 
         this.addEventListeners();
     }
@@ -77,20 +86,20 @@ export default class AddLabelPopupView extends BaseView {
         switch (true) {
             case target.classList.contains('js-openCreateLabelPopup'):
                 event.stopPropagation();
-                this.eventBus.call('openCreateLabelPopup', this.relativeTarget);
+                this.eventBus.call('openCreateLabelPopup', this.position);
                 break;
 
             case target.classList.contains('js-openChangeLabelPopup'): {
                 event.stopPropagation();
-                const labelID = target.dataset['labelId'];
-                this.eventBus.call('openChangeLabelPopup', this.relativeTarget, labelID);
+                const labelID = Number(target.dataset['labelId']);
+                this.eventBus.call('openChangeLabelPopup', this.position, labelID);
                 break;
             }
 
             case target.classList.contains('js-addOrRemoveLabel'):
                 event.stopPropagation();
-                const labelID = target.dataset['labelId'];
-                const isActive = target.classList.contains('active');
+                const labelID = Number(target.dataset['labelId']);
+                const isActive = target.classList.contains('task-label-options__label--active');
 
                 if (isActive) {
                     this.eventBus.call('removeLabel', labelID);
@@ -110,14 +119,14 @@ export default class AddLabelPopupView extends BaseView {
         const popupBlock = document.getElementById('popup-block');
         const allLabels = popupBlock.getElementsByClassName('js-addOrRemoveLabel');
         for (const label of allLabels) {
-            if (label.dataset['labelId'] !== labelID) {
+            if (Number(label.dataset['labelId']) !== labelID) {
                 continue;
             }
 
-            if (isActive && !label.classList.contains('active')) {
-                label.classList.add('active');
-            } else if (label.classList.contains('active')) {
-                label.classList.remove('active');
+            if (isActive && !label.classList.contains('task-label-options__label--active')) {
+                label.classList.add('task-label-options__label--active');
+            } else if (label.classList.contains('task-label-options__label--active')) {
+                label.classList.remove('task-label-options__label--active');
             }
 
             break;

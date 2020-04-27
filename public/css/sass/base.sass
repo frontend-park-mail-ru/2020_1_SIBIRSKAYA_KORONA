@@ -8,6 +8,7 @@ $desktop-breakpoint: 1350px
 @import 'board'
 @import 'boardSettings'
 @import 'boards'
+@import 'labels'
 @import 'header'
 @import 'profile'
 @import 'reset'
@@ -57,6 +58,7 @@ a:hover
     border-radius: 7px
     cursor: pointer
     font-size: 14pt
+    user-select: none
     transition: 0.2s
 
     &--primary
@@ -96,6 +98,10 @@ a:hover
     display: flex
     justify-content: space-between
     align-items: center
+
+
+.mod-selectable
+    cursor: pointer
 
 
 textarea

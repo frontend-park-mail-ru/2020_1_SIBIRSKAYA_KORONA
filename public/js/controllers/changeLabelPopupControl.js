@@ -23,10 +23,15 @@ export default class ChangeLabelPopupController extends ControllerChainLink {
 
             'saveLabel',
             'deleteLabel',
+            'updatedTaskLabel',
         ];
 
         const eventBus = new EventBus(actualSignals.concat(chainLinkSignalsArray));
         super(eventBus, parentEventBus);
+
+        this.eventBus.subscribe('updatedTaskLabel', ()=>{
+            this.parentEventBus.call('updatedTaskLabel');
+        });
 
         this.setCustomCloseFunction(() => {
             this.view.closeSelf();

@@ -2,39 +2,33 @@
     <div class="form pop-over">
         <div class="form-block">
             <div class="title-big">
-                Labels
+                Доступные метки
             </div>
         </div>
 
         <div class="form-block">
-            <div class="task-label-container">
+            <div class="task-label-options">
                 <fest:for iterate="labels" index="i" value="label">
-                    <div class="task-label-item">
-                        <div class="task-label task-label-color-{label.color} mod-selectable js-addOrRemoveLabel"
+                    <div class="task-label-options__item">
+                        <div class="task-label-options__label task-label--color--{label.color} mod-selectable js-addOrRemoveLabel"
                              data-label-id="{label.id}">
                             <fest:value>
                                 label.title
                             </fest:value>
-                            <fest:if test="label.isActive">
-                                <div class="task-label-status active"></div>
-                            </fest:if>
-                            <fest:if test="!label.isActive">
-                                <div class="task-label-status"></div>
-                            </fest:if>
                         </div>
 
                         <div class="button--secondary js-openChangeLabelPopup"
                              data-label-id="{label.id}">
-                            &#x270E;
+                            <i class="far fa-edit"></i>
                         </div>
                     </div>
                 </fest:for>
             </div>
         </div>
 
-        <div class="form-block">
-            <div class="task-label task-add-label mod-selectable js-openCreateLabelPopup">
-                + Create new label
+        <div class="form-block controls-panel">
+            <div class="button--primary task-label-options__item mod-selectable js-openCreateLabelPopup">
+                + Создать
             </div>
         </div>
 

@@ -17,10 +17,15 @@ export default class TaskSettingsView extends BaseView {
         this.closeSelf = this.closeSelf.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleToggleCheckBox = this.handleToggleCheckBox.bind(this);
+        this.handleFileInput = this.handleFileInput.bind(this);
 
         this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings.bind(this));
         this.eventBus.subscribe('closeAssignsPopup', this.handleCloseAssignsPopup.bind(this));
         this.eventBus.subscribe('assignSuccess', this.handleAssignSuccess.bind(this));
+        this.eventBus.subscribe('uploadAttachSuccess', this.render);
+        this.eventBus.subscribe('deleteAttachSuccess', this.render);
+        this.eventBus.subscribe('updatedTaskLabel', this.render);
+
 
         this.assignPopupOpened = false;
         this.scrollHeight = 0;
@@ -54,7 +59,6 @@ export default class TaskSettingsView extends BaseView {
             this.root.querySelector('.window-overlay'),
             this.root.querySelector('.js-addNewLabel'),
             this.root.querySelector('.js-addAssign'),
-            this.root.querySelector('.js-attachFile'),
             this.root.querySelector('.js-saveTask'),
             this.root.querySelector('.js-deleteTask'),
             this.root.querySelector('.js-saveComment'),
@@ -65,11 +69,16 @@ export default class TaskSettingsView extends BaseView {
             ...this.root.querySelectorAll('.js-createChecklistItem'),
             ...this.root.querySelectorAll('.js-checklistItem'),
             ...this.root.querySelectorAll('.js-deleteChecklist'),
+            ...this.root.querySelectorAll('.js-downloadAttach'),
             ...this.root.querySelectorAll('.js-deleteComment'),
+            ...this.root.querySelectorAll('.js-deleteAttach'),
         ];
         taskSettingsElements.forEach((element) => {
             element.addEventListener('click', this.handleClick);
         });
+
+        const fileInput = this.root.querySelector('.js-attachFile');
+        fileInput.addEventListener('change', this.handleFileInput);
 
         const comments = [...this.root.querySelectorAll('.task-settings-comment')];
         comments.forEach((comment) => {
@@ -94,7 +103,8 @@ export default class TaskSettingsView extends BaseView {
                 break;
             case classList.contains('js-addNewLabel'):
                 event.stopPropagation();
-                this.eventBus.call('openAddLabelPopup', event.target);
+                const {x, y} = event.currentTarget.getBoundingClientRect();
+                this.eventBus.call('openAddLabelPopup', {x, y});
                 this.handleCloseAssignsPopup();
                 break;
             case classList.contains('js-addAssign'):
@@ -126,6 +136,25 @@ export default class TaskSettingsView extends BaseView {
                 this.eventBus.call('deleteChecklist', checklistID);
                 break;
             }
+
+            case classList.contains('js-downloadAttach'): {
+                event.stopPropagation();
+                const downloadButton = document.createElement('a');
+                downloadButton.href = event.currentTarget.dataset['fileUrl'];
+                downloadButton.download = event.currentTarget.dataset['attachName'];
+
+                document.body.appendChild(downloadButton);
+                downloadButton.click();
+                document.body.removeChild(downloadButton);
+                break;
+            }
+
+            case classList.contains('js-deleteAttach'): {
+                event.stopPropagation();
+                this.eventBus.call('deleteAttach', event.currentTarget.dataset['attachId']);
+                break;
+            }
+
             case classList.contains('js-createChecklistItem'):
                 const checklistElement = event.currentTarget.closest('.checklist');
                 const checklistID = checklistElement.dataset.checklistId;
@@ -162,7 +191,7 @@ export default class TaskSettingsView extends BaseView {
                 break;
             case classList.contains('js-closeTaskButton'):
                 event.stopPropagation();
-                this.closeSelf();
+                this.eventBus.call(ChainLinkSignals.closeAllChildChainLinksAndSelf);
                 break;
 
             default:
@@ -197,6 +226,16 @@ export default class TaskSettingsView extends BaseView {
         progressBar.style.width = progress + '%';
         progressBar.style.background = color;
         checklist.querySelector('.checklist-title-percents').innerText = progress + '%';
+    }
+
+    /**
+     * Handler for file input
+     * @param {Event} event
+     */
+    handleFileInput(event) {
+        event.stopPropagation();
+        const file = event.target.files[0];
+        this.eventBus.call('uploadAttach', file);
     }
 
     /**

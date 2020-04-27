@@ -14,20 +14,23 @@
 
     <div class="window-overlay popup">
         <div class="task">
-            <svg class="close-triangle-button js-closeTaskButton" xmlns="http://www.w3.org/2000/svg"
+            <svg class="close-triangle-button" xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 36 36">
                 <defs>
                     <style>
+                        .icon-root:hover {
+                            cursor: pointer
+                        }
                         .close-triangle-gradient {
-                            fill:url(#grad1);
+                        fill:url(#grad1);
                         }
                         .close-triangle-lines {
-                            fill:none;
-                            stroke:#300b0d;
-                            stroke-miterlimit:10;
+                        fill:none;
+                        stroke:#300b0d;
+                        stroke-miterlimit:10;
                         }
                         .close-triangle-lines:hover, .close-triangle-gradient:hover ~ .close-triangle-lines {
-                            stroke:#f8f8ff;
+                        stroke:#f8f8ff;
                         }
                     </style>
                     <linearGradient id="grad1" x1="232.41" y1="264.84" x2="265.45" y2="235.84"
@@ -39,11 +42,13 @@
                         <stop offset="1" stop-color="#ed1c24"/>
                     </linearGradient>
                 </defs>
-                <path class="close-triangle-gradient" d="M267.6,267.75l-36-36h29.75A6.25,6.25,0,0,1,267.6,238Z"
-                      transform="translate(-231.2 -231.9)"/>
-                <g class="close-triangle-lines">
-                    <line x1="19.33" y1="4.32" x2="29.98" y2="14.97"/>
-                    <line x1="19.33" y1="14.97" x2="29.98" y2="4.32"/>
+                <g class="icon-root js-closeTaskButton">
+                    <path class="close-triangle-gradient" d="M267.6,267.75l-36-36h29.75A6.25,6.25,0,0,1,267.6,238Z"
+                          transform="translate(-231.2 -231.9)"/>
+                    <g class="close-triangle-lines">
+                        <line x1="19.33" y1="4.32" x2="29.98" y2="14.97"/>
+                        <line x1="19.33" y1="14.97" x2="29.98" y2="4.32"/>
+                    </g>
                 </g>
             </svg>
             <div class="task-title">
@@ -73,17 +78,20 @@
                             </div>
                         </div>
                     </div>
+
                     <div>
                         <div class="task-settings__label">Метки</div>
                         <div class="task-label-list">
                             <fest:for iterate="task.labels" index="i" value="label">
-                                <div class="task-label-list__label-mini--color-{label.color}">
+                                <div class="task-label-list__label task-label--color--{label.color}">
                                     <fest:value>
                                         label.title
                                     </fest:value>
                                 </div>
                             </fest:for>
-                            <div class="button default js-addNewLabel">+</div>
+                            <div class="task-label-list__label task-settings-labels__add-button js-addNewLabel">
+                                <i class="fas fa-plus"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -109,8 +117,37 @@
                 <div class="task-settings-controls">
                     <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
                     <div class="task-settings-controls__button--secondary js-addNewChecklist">Добавить чеклист</div>
-                    <div class="task-settings-controls__button--secondary js-attachFile">Прикрепить файл</div>
+                    <div>
+                        <input class="js-attachFile" id="fileInput" type="file"/>
+                        <label for="fileInput">
+                            <div class="task-settings-controls__button--secondary">Прикрепить файл</div>
+                        </label>
+                    </div>
                     <div class="task-settings-controls__button--danger js-deleteTask">Удалить задачу</div>
+                </div>
+
+                <div class="task-attachments">
+                    <fest:for index="i" iterate="task.files" value="file">
+                        <div class="task-attachments__item">
+                            <div class="task-attachments__item--info">
+                                <i class="task-attachments__item--file-icon fas fa-file-image"></i>
+                                <div class="task-attachments__item--filename">
+                                    <fest:value>file.filename</fest:value>
+                                </div>
+                            </div>
+                            <div class="task-attachments__item--controls">
+                                <div class="button--primary js-downloadAttach"
+                                     data-file-url="{file.url}"
+                                     data-attach-name="{file.filename}">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div class="button--danger js-deleteAttach"
+                                     data-attach-id="{file.id}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </fest:for>
                 </div>
 
                 <div class="task-checklists">

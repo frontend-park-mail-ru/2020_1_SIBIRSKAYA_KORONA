@@ -77,27 +77,7 @@ export default class BoardModel {
 
         for (const [i, columnsTasksResponse] of columnsTasksResponses.entries()) {
             if (!(await handleResponseStatus(columnsTasksResponse, (body) => {
-                const columnTasks = body;
-                // for (const task of columnTasks) {
-                //     task.labels = [{
-                //         title: 'Example label',
-                //         color: 'black',
-                //     }, {
-                //         title: 'Example label',
-                //         color: 'orange',
-                //     }];
-                //     task.members = [{
-                //         url: '/mem1',
-                //         nickname: 'member 1',
-                //         avatar: '/img/default_avatar.png',
-                //     }, {
-                //         url: '/mem2',
-                //         nickname: 'member 2',
-                //         avatar: '/img/default_avatar.png',
-                //     }];
-                //     task.url = `/boards/${boardId}/columns/${task.cid}/tasks/${task.id}`;
-                // }
-                newBoardData['columns'][i]['tasks'] = columnTasks;
+                newBoardData['columns'][i]['tasks'] = body;
             }))) {
                 return;
             }

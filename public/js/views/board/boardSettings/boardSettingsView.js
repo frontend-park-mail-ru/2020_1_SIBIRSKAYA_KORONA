@@ -120,8 +120,8 @@ export default class BoardSettingsView extends BaseView {
         const target = event.currentTarget;
         switch (true) {
             case target.classList.contains('js-closeBoardSettingsButton'):
+                this.eventBus.call(ChainLinkSignals.closeAllChildChainLinksAndSelf);
                 event.stopPropagation();
-                this.closeSelf();
                 break;
             case target.classList.contains('js-findMember'):
             case target.classList.contains('js-findAdmin'):

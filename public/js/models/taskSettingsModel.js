@@ -10,6 +10,9 @@ import {
     taskCommentsGet,
     taskCommentsPost,
     taskCommentsDelete,
+    taskFilesGet,
+    taskFilesPost,
+    taskFileDelete,
     taskDelete,
     taskGet,
     taskPut,
@@ -41,6 +44,9 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
         this.eventBus.subscribe('updateChecklistItem', this.updateChecklistItem.bind(this));
         this.eventBus.subscribe('updateAssign', this.updateAssign.bind(this));
+        this.eventBus.subscribe('uploadAttach', this.uploadAttach.bind(this));
+        this.eventBus.subscribe('deleteAttach', this.deleteAttach.bind(this));
+
 
         const errorResponseStatusMap = new Map([
             [401, () => this.eventBus.call('unauthorized')],
@@ -117,6 +123,9 @@ export default class TaskSettingsModel {
         if (!(await this.handleResponseStatus(taskResponse, (body) => taskData = body))) {
             return;
         }
+        if (!taskData.labels) {
+            taskData.labels = [];
+        }
 
         const checklistResponse = await taskChecklistGet(this.taskData);
         if (!(await this.handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
@@ -165,6 +174,14 @@ export default class TaskSettingsModel {
             return;
         }
 
+        const filesResponse = await taskFilesGet(this.taskData);
+        if (!(await this.handleResponseStatus(filesResponse, (body) => {
+            taskData.files = body;
+        }))) {
+            return;
+        }
+
+        this.taskData = Object.assign(this.taskData, taskData);
         this.eventBus.call('gotTaskSettings', taskData);
     }
 
@@ -207,6 +224,29 @@ export default class TaskSettingsModel {
             response = await taskAssignDelete(this.taskData, userId);
         }
         await this.handleResponseStatus(response, () => this.eventBus.call('assignSuccess'));
+    }
+
+    /**
+     * Upload attach file
+     * @param {File} file
+     * @return {Promise<void>}
+     */
+    async uploadAttach(file) {
+        const fileForm = new FormData();
+        fileForm.append('file', file);
+
+        const uploadFileResponse = await taskFilesPost(this.taskData, fileForm);
+        await this.handleResponseStatus(uploadFileResponse, () => this.eventBus.call('uploadAttachSuccess'));
+    }
+
+    /**
+     * Delete attach file
+     * @param {Number} fileID
+     * @return {Promise<void>}
+     */
+    async deleteAttach(fileID) {
+        const deleteFileResponse = await taskFileDelete(this.taskData, fileID);
+        await this.handleResponseStatus(deleteFileResponse, () => this.eventBus.call('deleteAttachSuccess'));
     }
 
     /**

@@ -52,6 +52,7 @@ export default class ChangeLabelPopupModel {
         switch (addLabelResponse.status) {
             case 200:
                 this.eventBus.call(ChainLinkSignals.closeCurrentLink);
+                this.eventBus.call('updatedTaskLabel');
                 break;
             default:
                 console.log('Бэкэндер молодец!');
@@ -70,6 +71,7 @@ export default class ChangeLabelPopupModel {
         switch (deleteLabelResponse.status) {
             case 200:
                 this.eventBus.call(ChainLinkSignals.closeCurrentLink);
+                this.eventBus.call('updatedTaskLabel');
                 break;
             default:
                 console.log('Бэкэндер молодец!');

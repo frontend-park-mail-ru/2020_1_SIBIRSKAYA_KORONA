@@ -118,6 +118,16 @@
                     border-style: solid
                     cursor: pointer
 
+        &-labels__add-button
+            text-align: center
+            font-weight: bold
+            border: 2px dashed #afaeae
+            color: #656565
+            transition: 0.2s
+            &:hover
+                border-style: solid
+                cursor: pointer
+
         &-controls
             margin-top: 20px
             flex-flow: wrap
@@ -150,6 +160,34 @@
 
         &__input
             @extend .form-input
+
+    &-attachments
+        margin-top: 20px
+        &__item
+            @extend .container-2cols
+            margin-top: 3px
+            transition: 0.1s
+            border-radius: 4px
+            padding: 4px
+
+            &:hover
+                background: #d4d5fa8a
+
+            &--info
+                @extend .container-row
+                flex-grow: 1
+            &--file-icon
+                padding-left: 10px
+                padding-right: 10px
+            &--filename
+                padding-left: 5px
+                padding-right: 5px
+
+            &--controls
+                @extend .controls-panel
+                div
+                    margin-right: 10px
+
 
     &-checklists
         &-form
@@ -241,6 +279,12 @@
 /*    MEMBERS POPUP    */
 .assign
     height: 70px
+    &-members__member
+        height: 60px
+        width: 60px
+        border-radius: 50%
+        margin-right: 10px
+        object-fit: cover
 
 
 //flex-direction: column
@@ -250,18 +294,4 @@
 
 /*    END MEMBERS POPUP    */
 
-/*       CREATE LABEL       */
-.task-color-palette
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
 
-.task-palette-color
-    height: 15px
-    width: 30px
-    margin: 5px
-    justify-content: center
-
-.task-palette-color.active:before
-    content: "\2713"
-/*       END CREATE LABEL       */

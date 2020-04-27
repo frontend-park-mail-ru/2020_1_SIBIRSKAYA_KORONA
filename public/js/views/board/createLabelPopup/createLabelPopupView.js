@@ -12,7 +12,10 @@ export default class CreateLabelPopupView extends BaseView {
     constructor(eventBus) {
         super(eventBus);
 
-        this.relativeTarget = null;
+        this.position = {
+            left: '0%',
+            top: '0%',
+        };
         this.labelData = {title: void 0, color: void 0};
 
         this.render = this.render.bind(this);
@@ -27,10 +30,13 @@ export default class CreateLabelPopupView extends BaseView {
 
     /**
      * Method which triggers getting data from model and sets render position
-     * @param {HTMLElement} [relativeTarget] - html element which will be used as base for further render
+     * @param {Object} clickCoords - {x, y}
      */
-    render(relativeTarget) {
-        this.relativeTarget = relativeTarget;
+    render(clickCoords) {
+        this.position = {
+            left: `${clickCoords.x / window.innerWidth * 100}%`,
+            top: `${clickCoords.y / window.innerHeight * 100}%`,
+        };
         this.eventBus.call('getLabelColors');
     }
 
@@ -41,12 +47,11 @@ export default class CreateLabelPopupView extends BaseView {
     renderAddLabelPopup(boardLabelColors) {
         const popupDiv = document.getElementById('popup-block');
 
-        const {left, top} = this.relativeTarget.getBoundingClientRect();
-        popupDiv.style.left = `${left}px`;
-        popupDiv.style.top = `${top}px`;
+        popupDiv.style.left = this.position.left;
+        popupDiv.style.top = this.position.top;
         popupDiv.innerHTML = template(boardLabelColors);
 
-        this.chooseColor('red');
+        this.chooseColor('yellow');
 
         this.addEventListeners();
     }
@@ -96,14 +101,14 @@ export default class CreateLabelPopupView extends BaseView {
         const popupBlock = document.getElementById('popup-block');
         if (this.labelData.color) {
             const previousColorButton = popupBlock
-                .querySelector(`.js-chooseColor.task-label-color-${this.labelData.color}`);
-            previousColorButton.classList.remove('active');
+                .querySelector(`.js-chooseColor.task-label--color--${this.labelData.color}`);
+            previousColorButton.classList.remove('label-color-palette__label-color--active');
         }
 
         this.labelData.color = color;
         const currentColorChoiceButton = popupBlock
-            .querySelector(`.js-chooseColor.task-label-color-${this.labelData.color}`);
-        currentColorChoiceButton.classList.add('active');
+            .querySelector(`.js-chooseColor.task-label--color--${this.labelData.color}`);
+        currentColorChoiceButton.classList.add('label-color-palette__label-color--active');
     }
 
     /**
