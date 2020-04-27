@@ -2,17 +2,25 @@
     margin: 20px
 
     &-title
+        @media screen and (max-width: $tablet-breakpoint)
+            margin: 0
         margin-bottom: 25px
 
         &__text
+            @media screen and (max-width: $tablet-breakpoint)
+                font-size: 20px
+                margin: 0
             margin: 20px 45px 0
-            font-size: 20pt
+            font-size: 26px
             @extend .title
 
         &__hr--width-2
             @extend .hr-width-2
 
 .group
+    @media screen and (max-width: $desktop-breakpoint)
+        margin: 0 auto 0
+        justify-content: center
     display: flex
     flex-flow: row wrap
     margin-left: 35px
@@ -32,11 +40,13 @@
             cursor: pointer
 
         &__title
+            @media screen and (max-width: $phone-breakpoint)
+                font-weight: normal
             margin-top: 20px
             margin-left: 26px
             font-size: 16pt
             color: black
-            @extend .title
+            font-weight: bold
 
     &-fake-board
         @extend .group-mini-board

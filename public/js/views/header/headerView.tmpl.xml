@@ -1,5 +1,19 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
-    <div class="main-header">
+    <div>
+        <fest:attributes>
+            <fest:choose>
+                <fest:when test="data.auth === true">
+                    <fest:attribute name="class">
+                        <fest:value>"authorized main-header"</fest:value>
+                    </fest:attribute>
+                </fest:when>
+                <fest:otherwise>
+                    <fest:attribute name="class">
+                        <fest:value>"main-header"</fest:value>
+                    </fest:attribute>
+                </fest:otherwise>
+            </fest:choose>
+        </fest:attributes>
         <div class="main-header-left">
             <div>
                 <fest:choose>
@@ -7,7 +21,6 @@
                         <div id="submitBoards" class="main-header-left__button--primary">Доски</div>
                     </fest:when>
                     <fest:otherwise>
-
                     </fest:otherwise>
                 </fest:choose>
             </div>
@@ -24,13 +37,15 @@
                     <div class="main-header-right__nickname">
                         <fest:value>'@'+data.nickname</fest:value>
                     </div>
-                    <img id="submitSettings" class="main-header-right__avatar--round">
-                        <fest:attributes>
-                            <fest:attribute name="src">
-                                <fest:value>data.avatar</fest:value>
-                            </fest:attribute>
-                        </fest:attributes>
-                    </img>
+                    <div>
+                        <img id="submitSettings" width="35" height="35" class="main-header-right__avatar--round">
+                            <fest:attributes>
+                                <fest:attribute name="src">
+                                    <fest:value>data.avatar</fest:value>
+                                </fest:attribute>
+                            </fest:attributes>
+                        </img>
+                    </div>
                     <div id="submitLogout" class="main-header-right__button--danger">Выйти</div>
                 </fest:when>
                 <fest:otherwise>

@@ -13,8 +13,9 @@ export default class CreateLabelPopupController extends ControllerChainLink {
     /**
      * Controller constructor
      * @param {EventBus} parentEventBus - for communication with parent mvc
+     * @param {Number} boardID
      */
-    constructor(parentEventBus) {
+    constructor(parentEventBus, boardID) {
         const chainLinkSignalsArray = Object.values(ChainLinkSignals);
         const actualSignals = [
             'getLabelColors',
@@ -32,6 +33,6 @@ export default class CreateLabelPopupController extends ControllerChainLink {
         });
 
         this.view = new CreateLabelPopupView(this.eventBus);
-        this.model = new CreateLabelPopupModel(this.eventBus);
+        this.model = new CreateLabelPopupModel(this.eventBus, boardID);
     }
 }

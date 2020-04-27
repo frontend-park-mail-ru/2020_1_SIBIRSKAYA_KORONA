@@ -1,4 +1,4 @@
-import './headerView.tmpl.js';
+import template from './headerView.tmpl.xml';
 import BaseView from '../baseView.js';
 
 /**
@@ -36,7 +36,7 @@ export default class HeaderView extends BaseView {
      */
     renderUserData(data) {
         data = data || {auth: false};
-        this.root.innerHTML = window.fest['js/views/header/headerView.tmpl'](data);
+        this.root.innerHTML = template(data);
         this.addEventListeners(data.auth);
     }
 

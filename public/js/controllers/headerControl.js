@@ -17,7 +17,7 @@ export default class HeaderController {
             'login',
             'logout',
             'gotData',
-            'redirectLogin',
+            'unauthorized',
             // view calls
             'getData',
             'submitLogin',
@@ -30,12 +30,12 @@ export default class HeaderController {
         this.model = new HeaderModel(this.eventBus);
 
         this.eventBus.subscribe('submitSettings', () => router.go('/profile'));
-        this.eventBus.subscribe('redirectLogin', () => router.go('/login'));
+        this.eventBus.subscribe('unauthorized', () => router.go('/login'));
         this.eventBus.subscribe('submitBoards', () => router.go('/boards'));
         this.eventBus.subscribe('submitLogin', () => router.go('/login'));
         this.eventBus.subscribe('submitJoin', () => router.go('/join'));
 
-        globalEventBus.subscribe('login', this.model.onLogin);
+        globalEventBus.subscribe('login', this.model.getUserData);
         globalEventBus.subscribe('logout', this.model.onLogout);
         globalEventBus.subscribe('userDataChanged', this.model.onLogin);
     }

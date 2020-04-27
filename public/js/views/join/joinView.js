@@ -1,5 +1,5 @@
+import template from './joinView.tmpl.xml';
 import BaseView from '../baseView.js';
-import './joinView.tmpl.js';
 
 /**
  * View of join page
@@ -23,7 +23,7 @@ export default class JoinView extends BaseView {
      * Render view method
      */
     render() {
-        this.root.innerHTML = window.fest['js/views/join/joinView.tmpl'](this.inputtedData);
+        this.root.innerHTML = template(this.inputtedData);
         this.addEventListeners();
     }
 

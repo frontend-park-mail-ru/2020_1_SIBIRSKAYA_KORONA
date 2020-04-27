@@ -1,4 +1,4 @@
-import './profileView.tmpl.js';
+import template from './profileView.tmpl.xml';
 import BaseView from '../baseView.js';
 
 /**
@@ -36,7 +36,7 @@ export default class ProfileView extends BaseView {
      */
     renderUserData(data) {
         this.inputtedData = {};
-        this.root.innerHTML = window.fest['js/views/profile/profileView.tmpl'](data);
+        this.root.innerHTML = template(data);
         this.addEventListeners();
     }
 

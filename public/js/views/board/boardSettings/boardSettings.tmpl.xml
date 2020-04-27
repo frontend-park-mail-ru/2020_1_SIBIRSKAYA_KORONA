@@ -1,0 +1,121 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
+    <div class="window-overlay popup">
+        <div class="board-settings">
+            <svg class="close-triangle-button" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 36 36">
+                <defs>
+                    <style>
+                        .icon-root:hover {
+                        cursor: pointer
+                        }
+                        .close-triangle-gradient {
+                        fill:url(#grad1);
+                        }
+                        .close-triangle-lines {
+                        fill:none;
+                        stroke:#300b0d;
+                        stroke-miterlimit:10;
+                        }
+                        .close-triangle-lines:hover, .close-triangle-gradient:hover ~ .close-triangle-lines {
+                        stroke:#f8f8ff;
+                        }
+                    </style>
+                    <linearGradient id="grad1" x1="232.41" y1="264.84" x2="265.45" y2="235.84"
+                                    gradientUnits="userSpaceOnUse">
+                        <stop offset="0.47" stop-color="#7c272d"/>
+                        <stop offset="0.55" stop-color="#86262c"/>
+                        <stop offset="0.7" stop-color="#a1232a"/>
+                        <stop offset="0.88" stop-color="#cc1f27"/>
+                        <stop offset="1" stop-color="#ed1c24"/>
+                    </linearGradient>
+                </defs>
+                <g class="icon-root js-closeBoardSettingsButton">
+                    <path class="close-triangle-gradient" d="M267.6,267.75l-36-36h29.75A6.25,6.25,0,0,1,267.6,238Z"
+                          transform="translate(-231.2 -231.9)"/>
+                    <g class="close-triangle-lines">
+                        <line x1="19.33" y1="4.32" x2="29.98" y2="14.97"/>
+                        <line x1="19.33" y1="14.97" x2="29.98" y2="4.32"/>
+                    </g>
+                </g>
+            </svg>
+            <div class="board-settings-title">
+                <div class="board-settings-title__text">
+                    Настройки
+                </div>
+                <div class="board-settings-title__hr--width-2"/>
+            </div>
+            <div class="board-settings__label ">Название доски</div>
+            <input autocomplete="off" class="board-settings__input" id="js-boardTitleInput">
+                <fest:attributes>
+                    <fest:attribute name="value">
+                        <fest:value>board.title</fest:value>
+                    </fest:attribute>
+                </fest:attributes>
+            </input>
+            <div class="board-settings-controls">
+                <div class="board-settings-controls__button--primary js-saveBoard">
+                    Сохранить
+                </div>
+                <div class="board-settings-controls__button--danger js-deleteBoard">
+                    Удалить доску
+                </div>
+            </div>
+
+            <div class="container-2cols">
+                <div class="container-col">
+                    <div class="board-settings__label">Администраторы</div>
+                    <div class="container-row">
+                        <div class="board-settings-members">
+                            <fest:for iterate="board.admins" index="i" value="admin">
+                                <a href="{admin.url}">
+                                    <img class="board-settings-members__member" src="{admin.avatar}"
+                                         alt="{admin.nickname}"
+                                         title="{admin.nickname}"/>
+                                </a>
+                            </fest:for>
+                        </div>
+                        <img class="board-settings-members__add-button js-findAdmin" src="/img/plus_icon.svg"/>
+                    </div>
+                </div>
+                <div class="container-col">
+                    <div class="board-settings__label">Участники</div>
+                    <div class="container-row">
+                        <div class="board-settings-members">
+                            <fest:for iterate="board.members" index="i" value="member">
+                                <a href="{member.url}">
+                                    <img class="board-settings-members__member" src="{member.avatar}"
+                                         alt="{member.nickname}"
+                                         title="{member.nickname}"/>
+                                </a>
+                            </fest:for>
+                        </div>
+                        <img class="board-settings-members__add-button js-findMember" src="/img/plus_icon.svg"/>
+                    </div>
+                </div>
+                <!--<div>
+                    <div class="board__label">Метки</div>
+                    <div class="task-label-list">
+                        <fest:for iterate="board.labels" index="i" value="label">
+                            <div class="task-label-list__label-mini&#45;&#45;color-{label.color}">
+                                <fest:value>
+                                    label.title
+                                </fest:value>
+                            </div>
+                        </fest:for>
+                        <div class="button default" name="addNewLabelButton">+</div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="js-search display-none">
+                <div class="search-form">
+                    <div class="board-settings__label">Поиск нового участника</div>
+                    <input class="board-settings__input" id="js-searchMembersInput"
+                           placeholder="Никнейм нового пользователя" autocomplete="off"/>
+                    <div class="js-search-results"/>
+                </div>
+                <div class="js-search-results">
+                </div>
+            </div>
+        </div>
+    </div>
+</fest:template>

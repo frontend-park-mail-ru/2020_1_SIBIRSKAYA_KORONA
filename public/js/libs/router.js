@@ -39,7 +39,17 @@ export default class Router {
         }
         if (pushState && URL !== oldURL) {
             window.history.pushState({url: URL}, '', URL);
+        } else {
+            document.querySelector('#popup-block').innerHTML = '';
+            document.querySelector('#popover-block').innerHTML = '';
         }
+    }
+
+    /**
+     * Go back in history
+     */
+    goBack() {
+        window.history.back();
     }
 
     /**
