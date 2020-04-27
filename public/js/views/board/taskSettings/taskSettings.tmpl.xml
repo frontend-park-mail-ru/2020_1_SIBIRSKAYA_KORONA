@@ -117,12 +117,10 @@
                 <div class="task-settings-controls">
                     <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
                     <div class="task-settings-controls__button--secondary js-addNewChecklist">Добавить чеклист</div>
-                    <div>
-                        <input class="js-attachFile" id="fileInput" type="file"/>
-                        <label for="fileInput">
-                            <div class="task-settings-controls__button--secondary">Прикрепить файл</div>
-                        </label>
-                    </div>
+                    <input class="js-attachFile" id="fileInput" type="file"/>
+                    <label class="task-settings-controls__button--secondary" for="fileInput">
+                        Прикрепить файл
+                    </label>
                     <div class="task-settings-controls__button--danger js-deleteTask">Удалить задачу</div>
                 </div>
 
