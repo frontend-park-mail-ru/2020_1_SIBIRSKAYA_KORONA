@@ -75,7 +75,7 @@ module.exports = {
             filename: 'main.css',
         }),
         new webpack.DefinePlugin({
-            'IP_ADDRESS': (isDev) ? JSON.stringify(IP_ADDRESS) : 'drello.works',
+            'IP_ADDRESS': (isDev) ? JSON.stringify(IP_ADDRESS) : JSON.stringify('drello.works'),
         }),
         new CleanWebpackPlugin(),
         // new CopyPlugin([
