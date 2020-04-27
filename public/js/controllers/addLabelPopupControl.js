@@ -53,19 +53,19 @@ export default class AddLabelPopupController extends ControllerChainLink {
             this.parentEventBus.call('updatedTaskLabel');
         });
 
-        this.eventBus.subscribe('openCreateLabelPopup', (button) => {
+        this.eventBus.subscribe('openCreateLabelPopup', (position) => {
             const childController = new CreateLabelPopupController(this.eventBus, this.taskData.boardID);
             this.setChildEventBus(childController.eventBus);
-            childController.view.render(button);
+            childController.view.render(position);
         });
 
-        this.eventBus.subscribe('openChangeLabelPopup', (button, labelID) => {
+        this.eventBus.subscribe('openChangeLabelPopup', (position, labelID) => {
             const childController = new ChangeLabelPopupController(this.eventBus, {
                 labelID,
                 boardID: this.taskData.boardID,
             });
             this.setChildEventBus(childController.eventBus);
-            childController.view.render(button);
+            childController.view.render(position);
         });
 
         this.eventBus.subscribe('closedCreateLabelPopup', () => {

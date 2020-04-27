@@ -191,7 +191,8 @@ export default class TaskSettingsView extends BaseView {
                 break;
             case classList.contains('js-closeTaskButton'):
                 event.stopPropagation();
-                this.eventBus.call(ChainLinkSignals.closeAllChildChainLinksAndSelf);
+                document.getElementById('popover-block').innerHTML = '';
+                document.getElementById('popup-block').innerHTML = '';
                 break;
 
             default:

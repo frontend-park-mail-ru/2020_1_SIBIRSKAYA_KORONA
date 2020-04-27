@@ -29,7 +29,7 @@ export default class AddLabelPopupView extends BaseView {
 
     /**
      * Method which triggers getting data from model and sets render position
-     * @param {Object} clickCoords - {x, y}
+     * @param {Object} [clickCoords] - {x, y}
      */
     render(clickCoords) {
         if (clickCoords) {
