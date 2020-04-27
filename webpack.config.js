@@ -1,4 +1,3 @@
-
 const webpack = require('webpack');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -76,7 +75,7 @@ module.exports = {
             filename: 'main.css',
         }),
         new webpack.DefinePlugin({
-            'IP_ADDRESS': JSON.stringify(IP_ADDRESS),
+            'IP_ADDRESS': (isDev) ? JSON.stringify(IP_ADDRESS) : 'drello.works',
         }),
         new CleanWebpackPlugin(),
         // new CopyPlugin([
