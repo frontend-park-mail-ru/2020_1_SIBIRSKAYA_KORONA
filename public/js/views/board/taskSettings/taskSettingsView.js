@@ -193,6 +193,7 @@ export default class TaskSettingsView extends BaseView {
                 event.stopPropagation();
                 document.getElementById('popover-block').innerHTML = '';
                 document.getElementById('popup-block').innerHTML = '';
+                this.eventBus.call(ChainLinkSignals.closeCurrentLink);
                 break;
 
             default:
