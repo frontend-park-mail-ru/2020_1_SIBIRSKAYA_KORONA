@@ -17,7 +17,7 @@ export default class AddAssignsPopupController extends ControllerChainLink {
 
         this.setCustomCloseFunction(() => {
             this.view.closeSelf();
-            parentEventBus.call('closeAssignsPopup');
+            parentEventBus.call('closedAssignsPopup');
         });
 
         this.view = new AddAssignsPopupView(parentEventBus);

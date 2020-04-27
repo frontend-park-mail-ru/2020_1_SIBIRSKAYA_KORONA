@@ -30,6 +30,7 @@ export default class TaskSettingsController extends ControllerChainLink {
             'addedTaskLabel',
 
             'openAssignsPopup',
+            'closedAssignsPopup',
             'getTaskAssigns',
             'gotTaskAssigns',
             'updateAssign',
