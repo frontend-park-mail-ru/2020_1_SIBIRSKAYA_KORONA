@@ -48,6 +48,8 @@ export default class LoginModel {
         if (!this.validateLogin(userInfo.nickname) || !this.validatePassword(userInfo.password)) {
             return;
         }
+
+        userInfo.password = btoa(userInfo.password);
         sessionPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)

@@ -1,11 +1,24 @@
-@import 'reset'
-@import 'header'
+$iphone-5-breakpoint: 350px
+$phone-breakpoint: 450px
+$tablet-breakpoint: 780px
+$desktop-breakpoint: 1350px
+
+
 @import 'auth'
 @import 'board'
+@import 'boardSettings'
 @import 'boards'
+@import 'labels'
+@import 'header'
 @import 'profile'
+@import 'reset'
+@import 'taskSettings'
+@import 'checkboxes'
 
 /*   COMMON   */
+html
+    height: 100%
+
 body
     font-family: 'Fox', sans-serif
 
@@ -19,10 +32,16 @@ a:hover
 .link-none, .link-none:hover, .link-none:focus
     text-decoration: none
 
+.display-none
+    display: none !important
+
 #root
     display: flex
     flex-direction: column
     height: 100vh
+    @media screen and (max-width: $phone-breakpoint)
+        flex-grow: 1
+
 
 #application
     display: flex
@@ -39,6 +58,7 @@ a:hover
     border-radius: 7px
     cursor: pointer
     font-size: 14pt
+    user-select: none
     transition: 0.2s
 
     &--primary
@@ -80,6 +100,10 @@ a:hover
     align-items: center
 
 
+.mod-selectable
+    cursor: pointer
+
+
 textarea
     resize: none
 
@@ -112,6 +136,7 @@ input[type=file]
     right: 0
     bottom: 0
     display: flex
+    // max-height: 100%
     justify-content: center
     align-items: center
     z-index: 10
@@ -121,22 +146,30 @@ input[type=file]
 
 
 #popup-block
+    @media screen and (max-width: $tablet-breakpoint)
+        left: 0 !important
     position: absolute
     z-index: 100
 
 
 #popover-block
-    position: absolute
     z-index: 10
 
 .window-overlay
     position: absolute
     background: #00000080
-    width: 100vw
-    height: 100vh
 
+
+.close-triangle-button
+    position: absolute
+    left: 0
+    top: 0
+    width: 60px
+    height: 60px
+    transform: scaleX(-1)
 
 .avatar-round
+    object-fit: cover
     border-radius: 50%
 
 .form
@@ -147,7 +180,7 @@ input[type=file]
 
 .form-input-label
     margin-bottom: 10px
-    font-size: 11pt
+    font-size: 13pt
     font-weight: bold
     letter-spacing: 1px
     word-spacing: 5px
@@ -162,6 +195,7 @@ input[type=file]
     outline: none
     transition: 0.3s
     background-color: transparent
+
     &:focus
         padding-left: 5%
         width: 95%
@@ -176,6 +210,7 @@ input[type=file]
     background-color: transparent
     border: 2px solid #cac6c6
     width: 99%
+
     &:focus
         padding-left: 5%
         width: 94%
@@ -210,6 +245,7 @@ input[type=file]
     display: flex
     justify-content: center
     align-items: center
+    max-width: 33%
 
 .header-block-right
     min-width: 33%
@@ -252,6 +288,13 @@ input[type=file]
     display: flex
     justify-content: space-between
     flex-flow: wrap-reverse
+
+.container-col
+    max-width: 100%
+
+.container-row
+    display: flex
+    align-items: center
 
 .container-centered-col
     display: flex
@@ -334,11 +377,15 @@ input[type=file]
 ::-webkit-scrollbar
     width: 6px
     height: 6px
+    @media screen and (max-width: $tablet-breakpoint)
+        display: none
 
 
 ::-webkit-scrollbar-track
     background-color: rgba(0, 0, 0, .1)
     border-radius: 5px
+    @media screen and (max-width: $tablet-breakpoint)
+        display: none
 
 
 ::-webkit-scrollbar-track:hover
@@ -348,6 +395,8 @@ input[type=file]
 ::-webkit-scrollbar-thumb
     background-color: rgba(0, 0, 0, .2)
     border-radius: 5px
+    @media screen and (max-width: $tablet-breakpoint)
+        display: none
 
 
 ::-webkit-scrollbar-thumb:hover

@@ -44,6 +44,7 @@ export default class BoardModel {
                     return false;
                 case 400:
                 case 403:
+                case 404:
                 case 500:
                     this.eventBus.call('goToBoards');
                     return false;
@@ -57,13 +58,13 @@ export default class BoardModel {
         // GET BOARD INFO
         let newBoardData;
         const boardResponse = await boardGet(boardId);
-        if (!(await handleResponseStatus(boardResponse, (body) => newBoardData = body.board))) {
+        if (!(await handleResponseStatus(boardResponse, (body) => newBoardData = body))) {
             return;
         }
 
         // GET COLUMNS INFO
         const columnsResponse = await columnsGet(boardId);
-        if (!(await handleResponseStatus(columnsResponse, (body) => newBoardData.columns = body.columns))) {
+        if (!(await handleResponseStatus(columnsResponse, (body) => newBoardData.columns = body))) {
             return;
         }
 
@@ -76,27 +77,7 @@ export default class BoardModel {
 
         for (const [i, columnsTasksResponse] of columnsTasksResponses.entries()) {
             if (!(await handleResponseStatus(columnsTasksResponse, (body) => {
-                const columnTasks = body.tasks;
-                for (const task of columnTasks) {
-                    task.labels = [{
-                        title: 'Example label',
-                        color: 'black',
-                    }, {
-                        title: 'Example label',
-                        color: 'orange',
-                    }];
-                    task.members = [{
-                        url: '/mem1',
-                        nickname: 'member 1',
-                        avatar: '/img/default_avatar.png',
-                    }, {
-                        url: '/mem2',
-                        nickname: 'member 2',
-                        avatar: '/img/default_avatar.png',
-                    }];
-                    task.url = `/boards/${boardId}/columns/${task.cid}/tasks/${task.id}`;
-                }
-                newBoardData['columns'][i]['tasks'] = columnTasks;
+                newBoardData['columns'][i]['tasks'] = body;
             }))) {
                 return;
             }
@@ -126,7 +107,6 @@ export default class BoardModel {
             return 1;
         });
 
-        // console.log(newBoardData);
         this.boardData = newBoardData;
         this.eventBus.call('gotBoardData', newBoardData);
     }
@@ -136,21 +116,18 @@ export default class BoardModel {
      * @param {object} data - fields: boardId, columnID, taskTitle
      */
     addTask(data) {
-        console.log(data);
         tasksPost(data.boardId, data.columnID, {title: data.taskTitle, position: data.taskPosition})
             .then((response) => {
                 switch (response.status) {
                     case 200: // - OK (Валидный запрос данных пользователя)
                         this.eventBus.call('getBoardData', data.boardId);
-                        // response.json().then((responseJson) => {
-                        //     console.log(responseJson);
-                        // });
                         break;
                     case 401:
                         this.eventBus.call('unauthorized');
                         break;
                     case 400:
                     case 403:
+                    case 404:
                         this.eventBus.call('goToBoards');
                         break;
                     case 500:
@@ -167,20 +144,17 @@ export default class BoardModel {
      * @param {object} data - fields: boardId, columnTitle
      */
     addColumn(data) {
-        console.log(data);
         columnsPost(data.boardId, data.columnTitle, data.columnPosition).then((response) => {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
                     this.eventBus.call('getBoardData', data.boardId);
-                    response.json().then((responseJson) => {
-                        console.log(responseJson);
-                    });
                     break;
                 case 401:
                     this.eventBus.call('unauthorized');
                     break;
                 case 400:
                 case 403:
+                case 404:
                     this.eventBus.call('goToBoards');
                     break;
                 case 500:
@@ -198,8 +172,8 @@ export default class BoardModel {
      * @return {Promise<void>}
      */
     async saveTask(data) {
-        const response = await taskPut(data.boardId, data.oldColumnId, data.taskId, {
-            cid: data.newColumnId,
+        const response = await taskPut(data, {
+            cid: data.newColumnID,
             position: data.newTaskPos,
         });
 
@@ -211,6 +185,7 @@ export default class BoardModel {
                 this.eventBus.call('unauthorized');
                 break;
             case 403:
+            case 404:
                 this.eventBus.call('goToBoards');
                 break;
             case 400:

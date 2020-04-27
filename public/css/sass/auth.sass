@@ -1,29 +1,36 @@
+.auth__logo
+    background-image: url('/img/sibirskaya_korona.svg')
+    background-repeat: no-repeat
+    background-position-x: center
+    background-size: 800px auto
+    @media screen and (max-width: $tablet-breakpoint)
+        background: none
+
 .auth
+    @media screen and (max-width: $tablet-breakpoint)
+        display: block
+
     display: flex
     justify-content: center
     align-items: center
     align-self: center
     height: 90vh
 
-.auth-join__logo
-    background-image: url('/img/sibirskaya_korona.svg')
-    background-repeat: no-repeat
-    background-position-x: center
-    background-size: 800px auto
-
-.auth-login__logo
-    background-image: url('/img/sibirskaya_korona.svg')
-    background-repeat: no-repeat
-    background-position-x: center
-    background-size: 800px auto
-
 .auth-form-join
+    @media screen and (max-width: $tablet-breakpoint)
+        position: unset
+    @media screen and (max-width: $phone-breakpoint)
+        width: unset
     @extend .form
     width: 400px
     position: absolute
     top: 410px
 
 .auth-form-login
+    @media screen and (max-width: $tablet-breakpoint)
+        position: unset
+    @media screen and (max-width: $phone-breakpoint)
+        width: unset
     @extend .form
     width: 400px
     position: absolute
@@ -54,3 +61,11 @@
 
 .auth-form__input-error
     @extend .input-error
+
+
+@media screen and (max-width: $phone-breakpoint)
+    .auth-form-join, .auth-form-login
+        position: unset
+        width: unset
+    .auth
+

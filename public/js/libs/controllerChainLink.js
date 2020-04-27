@@ -39,7 +39,7 @@ export const ChainLinkSignals = {
  */
 const checkEventBusValidity = (eventBus) => {
     const chainLinkSignals = Object.values(ChainLinkSignals);
-    const eventBusSignals = Array.from(eventBus.signalHandlers.keys());
+    const eventBusSignals = Array.from(eventBus.signalHandlers?.keys());
 
     for (const chainLinkSignal of chainLinkSignals) {
         if (!eventBusSignals.includes(chainLinkSignal)) {

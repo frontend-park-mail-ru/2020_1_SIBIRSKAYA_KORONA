@@ -48,7 +48,7 @@ export default class HeaderModel {
                 case 200: // - OK (успешный запрос)
                 case 401: // - (В запросе куки нет)
                     this.onLogout();
-                    this.eventBus.call('redirectLogin');
+                    this.eventBus.call('unauthorized');
                     break;
                 case 500: // - Internal Server Error (На сервере ошибка удаления куки из хранилища)
                     break;
@@ -66,8 +66,7 @@ export default class HeaderModel {
             switch (response.status) {
                 case 200: // - OK (успешный запрос)
                     response.json().then((responseJson) => {
-                        const data = responseJson.user;
-                        this.onLogin(data);
+                        this.onLogin(responseJson);
                     });
                     break;
                 case 401:

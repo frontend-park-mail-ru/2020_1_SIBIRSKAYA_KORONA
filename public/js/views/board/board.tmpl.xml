@@ -9,20 +9,16 @@
             <div class="board-header-center">
                 <div class="board-header-center-members">
                     <fest:for iterate="board.members" index="i" value="member">
-                        <a href="{member.url}">
-                            <img class="board-header-center-members__member"
-                                 src="{member.avatar}"
-                                 alt="{member.nickname}"
-                                 title="{member.nickname}"/>
-                        </a>
+                        <img class="board-header-center-members__member"
+                             src="{member.avatar}"
+                             alt="{member.nickname}"
+                             title="{member.nickname}"/>
                     </fest:for>
-                </div>
-                <div class="board-header-center__button--primary js-addNewMember"
-                     id="inviteNewMemberButton">Пригласить
+                    <img class="board-header-center-members__add-button js-addNewUser" src="/img/plus_icon.svg"/>
                 </div>
             </div>
             <div class="board-header-right">
-                <div class="board-header-right__button--primary js-openBoardSettings"
+                <div class="board-header-right__button--secondary js-openBoardSettings"
                      id="boardSettingsButton">Настройки доски
                 </div>
             </div>
@@ -44,13 +40,13 @@
                     <div class="task-list" data-column-id="{column.id}">
                         <fest:for iterate="column.tasks" index="j" value="task">
                             <div class="task-mini js-taskSettings"
-                            	 data-column-id="{column.id}"
+                                 data-column-id="{column.id}"
                                  data-task-id="{task.id}"
                                  data-task-url="{task.url}"
                                  data-task-position="{task.position}">
                                 <div class="task-label-list">
                                     <fest:for iterate="task.labels" index="k" value="label">
-                                        <div class="task-label-list__label-mini--color-{label.color}">
+                                        <div class="task-label-list__label--size--mini task-label--color--{label.color}">
                                             <fest:value>
                                                 label.title
                                             </fest:value>
@@ -73,11 +69,11 @@
                                 </div>
                             </div>
                         </fest:for>
-                        <div class="task-list-add-task-button js-addNewTask"
-                             data-column-id="{column.id}"
-                             data-position="{column.position}">
-                            + Добавить задачу
-                        </div>
+                    </div>
+                    <div class="task-list-add-task-button js-addNewTask"
+                         data-column-id="{column.id}"
+                         data-position="{column.position}">
+                        + Добавить задачу
                     </div>
                 </div>
             </fest:for>
@@ -91,6 +87,4 @@
             </div>
         </div>
     </div>
-    <div id="popup-block"/>
-    <div id="popover-block"/>
 </fest:template>

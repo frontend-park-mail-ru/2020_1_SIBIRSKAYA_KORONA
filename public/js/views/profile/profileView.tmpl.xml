@@ -5,7 +5,7 @@
                 <div class="profile-settings-title__text">О нас</div>
                 <div class="profile-settings-title__hr--width-2"/>
             </div>
-            <div class="container-2cols">
+            <div class="profile-container-2cols">
                 <div class="profile-settings">
                     <div class="profile-settings__error hidden" id="inputNameError">Недопустимое имя</div>
                     <div class="profile-settings__label">Имя</div>
@@ -43,8 +43,7 @@
                 </div>
                 <div class="profile-settings container-centered-col">
                     <div class="profile-settings__error hidden" id="inputNameError">
-                        Файл должен быть
-                        картинкой
+                        Файл должен быть картинкой
                     </div>
                     <div class="profile-settings__label">Аватар</div>
                     <img class="profile-settings__avatar--round" alt="MyName"

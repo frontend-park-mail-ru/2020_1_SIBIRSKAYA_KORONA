@@ -4,7 +4,7 @@ import Validator from '../libs/validator.js';
 /**
  * Profile model
  */
-export default class JoinModel {
+export default class ProfileModel {
     /**
      * Model constructor
      * @param {Object} eventBus to share events with join view
@@ -115,6 +115,7 @@ export default class JoinModel {
                 case 400: // - (Невалидное тело запроса с информацией для обновления)
                     console.log('Bad request');
                     break;
+                case 403: // Не валидный токен
                 case 401: // (В запросе отсутствует кука)
                     this.eventBus.call('unauthorized');
                     break;
@@ -136,13 +137,13 @@ export default class JoinModel {
             switch (response.status) {
                 case 200: // - OK (Валидный запрос данных пользователя)
                     response.json().then((responseJson) => {
-                        this.eventBus.call('gotData', responseJson.user); // for local eventBus (View subscribed)
-                        this.eventBus.call('userDataChanged', responseJson.user); // for global eventBus (Header)
+                        this.eventBus.call('gotData', responseJson); // for local eventBus (View subscribed)
+                        this.eventBus.call('userDataChanged', responseJson); // for global eventBus (Header)
                     });
                     break;
                 case 401: // - В запросе отсутствует кука
-                    // case 403: // - Forbidden (В запросе на данные отсутствует кука)
-                    // case 404: // - NotFound (Пользователя по куке не нашли)
+                case 403: // - Forbidden (В запросе на данные отсутствует кука)
+                case 404: // - NotFound (Пользователя по куке не нашли)
                     this.eventBus.call('unauthorized');
                     break;
                 case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)

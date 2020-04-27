@@ -1,6 +1,56 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="task">
+    <fest:set name="delete-button">
+        <svg class="cross" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+             viewBox="20 20 56 56">
+            <style>.cross {fill: #afaeae;} .cross:hover {fill: #dd4857; scale: 2 }</style>
+            <g transform="rotate(45, 48, 48)">
+                <path d="M75.5,44.3v7.5c0,1-0.4,1.9-1.1,2.7s-1.6,1.1-2.7,1.1H55.5v16.3c0,1-0.4,1.9-1.1,2.7
+		    s-1.6,1.1-2.7,1.1h-7.5c-1,0-1.9-0.4-2.7-1.1s-1.1-1.6-1.1-2.7V55.5H24.3c-1,0-1.9-0.4-2.7-1.1s-1.1-1.6-1.1-2.7v-7.5
+		    c0-1,0.4-1.9,1.1-2.7s1.6-1.1,2.7-1.1h16.3V24.3c0-1,0.4-1.9,1.1-2.7s1.6-1.1,2.7-1.1h7.5c1,0,1.9,0.4,2.7,1.1s1.1,1.6,1.1,2.7
+		    v16.3h16.3c1,0,1.9,0.4,2.7,1.1S75.5,43.2,75.5,44.3z"/>
+            </g>
+        </svg>
+    </fest:set>
+
     <div class="window-overlay popup">
         <div class="task">
+            <svg class="close-triangle-button" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 36 36">
+                <defs>
+                    <style>
+                        .icon-root:hover {
+                            cursor: pointer
+                        }
+                        .close-triangle-gradient {
+                        fill:url(#grad1);
+                        }
+                        .close-triangle-lines {
+                        fill:none;
+                        stroke:#300b0d;
+                        stroke-miterlimit:10;
+                        }
+                        .close-triangle-lines:hover, .close-triangle-gradient:hover ~ .close-triangle-lines {
+                        stroke:#f8f8ff;
+                        }
+                    </style>
+                    <linearGradient id="grad1" x1="232.41" y1="264.84" x2="265.45" y2="235.84"
+                                    gradientUnits="userSpaceOnUse">
+                        <stop offset="0.47" stop-color="#7c272d"/>
+                        <stop offset="0.55" stop-color="#86262c"/>
+                        <stop offset="0.7" stop-color="#a1232a"/>
+                        <stop offset="0.88" stop-color="#cc1f27"/>
+                        <stop offset="1" stop-color="#ed1c24"/>
+                    </linearGradient>
+                </defs>
+                <g class="icon-root js-closeTaskButton">
+                    <path class="close-triangle-gradient" d="M267.6,267.75l-36-36h29.75A6.25,6.25,0,0,1,267.6,238Z"
+                          transform="translate(-231.2 -231.9)"/>
+                    <g class="close-triangle-lines">
+                        <line x1="19.33" y1="4.32" x2="29.98" y2="14.97"/>
+                        <line x1="19.33" y1="14.97" x2="29.98" y2="4.32"/>
+                    </g>
+                </g>
+            </svg>
             <div class="task-title">
                 <div class="task-title__text">
                     <fest:value>
@@ -14,56 +64,201 @@
                 <div class="container-2cols">
                     <div>
                         <div class="task-settings__label">Участники</div>
-                        <div class="task-settings-members">
-                            <fest:for iterate="task.members" index="i" value="member">
-                                <a href="{member.url}">
+                        <div class="container-row">
+                            <div class="task-settings-members">
+                                <fest:for iterate="task.members" index="i" value="member">
+                                    <!--<a href="{member.url}">-->
                                     <img class="task-settings-members__member" src="{member.avatar}"
                                          alt="{member.nickname}"
                                          title="{member.nickname}"/>
-                                </a>
-                            </fest:for>
-                            <div class="task-settings-members__add-button" name="addNewMemberButton">+</div>
+                                    <!--</a>-->
+                                </fest:for>
+                                <img class="task-settings-members__add-button js-addAssign"
+                                     src="/img/plus_icon.svg"/>
+                            </div>
                         </div>
                     </div>
+
                     <div>
                         <div class="task-settings__label">Метки</div>
                         <div class="task-label-list">
                             <fest:for iterate="task.labels" index="i" value="label">
-                                <div class="task-label-list__label-mini--color-{label.color}">
+                                <div class="task-label-list__label task-label--color--{label.color}">
                                     <fest:value>
                                         label.title
                                     </fest:value>
                                 </div>
                             </fest:for>
-                            <div class="button default" name="addNewLabelButton">+</div>
+                            <div class="task-label-list__label task-settings-labels__add-button js-addNewLabel">
+                                <i class="fas fa-plus"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="task-settings__label">Название</div>
-                    <input class="task-settings__input" type="text" id="inputTitle"
-                           autocomplete="off">
-                        <fest:attributes>
-                            <fest:attribute name="value">
-                                <fest:value>task.title</fest:value>
-                            </fest:attribute>
-                        </fest:attributes>
-                    </input>
+                <input class="task-settings__input js-inputTitle" type="text" autocomplete="off">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>task.title</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
 
                 <div class="task-settings__label">
                     Описание
                 </div>
-                <textarea class="task-settings__textarea" id="inputDescription">
+                <div contenteditable="" class="task-settings__input js-inputDescription">
                     <fest:value>
                         task.description
                     </fest:value>
-                </textarea>
+                </div>
 
                 <div class="task-settings-controls">
                     <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
-                    <div class="task-settings-controls__button--danger js-deleteTask">Удалить</div>
+                    <div class="task-settings-controls__button--secondary js-addNewChecklist">Добавить чеклист</div>
+                    <input class="js-attachFile" id="fileInput" type="file"/>
+                    <label class="task-settings-controls__button--secondary" for="fileInput">
+                        Прикрепить файл
+                    </label>
+                    <div class="task-settings-controls__button--danger js-deleteTask">Удалить задачу</div>
                 </div>
+
+                <div class="task-attachments">
+                    <fest:for index="i" iterate="task.files" value="file">
+                        <div class="task-attachments__item">
+                            <div class="task-attachments__item--info">
+                                <i class="task-attachments__item--file-icon fas fa-file-image"></i>
+                                <div class="task-attachments__item--filename">
+                                    <fest:value>file.filename</fest:value>
+                                </div>
+                            </div>
+                            <div class="task-attachments__item--controls">
+                                <div class="button--primary js-downloadAttach"
+                                     data-file-url="{file.url}"
+                                     data-attach-name="{file.filename}">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div class="button--danger js-deleteAttach"
+                                     data-attach-id="{file.id}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </fest:for>
+                </div>
+
+                <div class="task-checklists">
+                    <fest:for iterate="task.checklists" index="i" value="checklist">
+                        <div class="checklist" data-checklist-id="{checklist.id}">
+
+                            <div class="checklist-title">
+                                <fest:value>checklist.name</fest:value>
+                                <fest:if test="checklist.items.length">
+                                    <div class="checklist-title-percents">
+                                        <fest:value>checklist.progress</fest:value>%
+                                    </div>
+                                </fest:if>
+                            </div>
+
+                            <fest:if test="checklist.items.length">
+                                <div class="checklist-progressbar">
+                                    <div class="checklist-progressbar-progress"
+                                         style="width: {checklist.progress}%; background: {checklist.progressColor} "/>
+                                </div>
+                            </fest:if>
+                            <div class="task-settings-checklist-items">
+                                <fest:for iterate="checklist.items" index="j" value="item">
+                                    <div class="checklist-item">
+                                        <label class="checkbox-container">
+                                            <input type="checkbox" class="js-checklistItem" data-item-id="{item.id}">
+                                                <fest:attributes>
+                                                    <fest:if test="item.done">
+                                                        <fest:attribute name="checked"/>
+                                                    </fest:if>
+                                                </fest:attributes>
+                                            </input>
+                                            <div class="custom-label">
+                                                <fest:value>item.text</fest:value>
+                                            </div>
+                                            <div class="custom-checkbox"/>
+                                        </label>
+                                    </div>
+                                </fest:for>
+                            </div>
+
+                            <div class="checklist-add-item-form js-checklist-add-item-form display-none">
+                                <div class="checklist-add-item-form-controls">
+                                    <input class="checklist-add-item-form__input js-inputNewItemTitle" type="text"
+                                           autocomplete="off"
+                                           placehilder="Новый элемент"/>
+                                    <div class="checklist-add-item-form-controls__button--secondary js-createChecklistItem">
+                                        Добавить
+                                    </div>
+                                    <div class="checklist-add-item-form-controls__button--danger js-closeChecklistItemForm">
+                                        Закрыть
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-settings-controls js-checklist-controls">
+                                <div class="task-settings-controls__button--secondary js-addNewChecklistItem">
+                                    Добавить элемент
+                                </div>
+                                <div class="task-settings-controls__button--danger js-deleteChecklist">
+                                    Удалить чеклист
+                                </div>
+                            </div>
+                        </div>
+                    </fest:for>
+                </div>
+
+                <fest:if test="task.comments.length !== 0">
+                    <div class="task-settings__label">
+                        Комментарии
+                    </div>
+                </fest:if>
+                <div class="task-settings-comments">
+                    <fest:for iterate="task.comments" index="i" value="comment">
+                        <div class="task-settings-comment">
+                            <div class="task-settings-comment__author--avatar">
+                                <!--<a href="{comment.url}">-->
+                                <img class="task-settings-comment__author--avatar" src="{comment.avatar}"/>
+                                <!--</a>-->
+                            </div>
+                            <div class="task-settings-comment-data">
+                                <div class="container-2cols">
+                                    <div class="task-settings-comment__nickname">
+                                        <fest:value>comment.nickname</fest:value>
+                                    </div>
+                                    <div class="task-settings-comment-controls display-none">
+                                        <div class="task-settings-comment__date">
+                                            <fest:value>comment.date</fest:value>
+                                        </div>
+                                        <fest:if test="comment.deletable">
+                                            <div class="task-settings-comment__delete-icon js-deleteComment"
+                                                 data-comment-id="{comment.id}">
+                                                <fest:get name="delete-button"/>
+                                            </div>
+                                        </fest:if>
+                                    </div>
+                                </div>
+                                <div class="task-settings-comment__text">
+                                    <fest:value>comment.text</fest:value>
+                                </div>
+                            </div>
+                        </div>
+                    </fest:for>
+                </div>
+                <div class="task-settings-add-comment">
+                    <div class="task-settings__label">
+                        Ваш комментарий
+                    </div>
+                    <div contenteditable="" class="task-settings__input js-commentText" placeholder="Ваш комментарий"/>
+                    <div class="task-settings-add-comment__button--secondary js-saveComment">Добавить</div>
+                </div>
+
             </div>
         </div>
     </div>
+
 </fest:template>

@@ -1,14 +1,31 @@
+.profile-container-2cols
+    display: flex
+    justify-content: space-between
+    @media screen and (max-width: $tablet-breakpoint)
+        flex-flow: column-reverse
+        align-items: center
+
 .profile
     @extend .form
+    @media screen and (max-width: $tablet-breakpoint)
+        margin: 0
+        padding-top: 10px !important
     padding: 32px 32px 5px 32px
     margin: 30px 0
 
     &-settings
         margin: 15px
-        width: 330px
+        max-width: 330px
+        width: 50%
+        @media screen and (max-width: $tablet-breakpoint)
+            margin: 0 auto 0
+            width: 100%
 
         &-title
+            @media screen and (max-width: $tablet-breakpoint)
+                margin-top: 10px
             margin-top: 20px
+
             @extend .group-title
 
             &__text
@@ -24,6 +41,8 @@
             @extend .form-input-label
 
         &__input
+            @media screen and (max-width: $phone-breakpoint)
+                margin: 0 auto 20px
             margin: 0 auto 30px
             @extend .form-input
 

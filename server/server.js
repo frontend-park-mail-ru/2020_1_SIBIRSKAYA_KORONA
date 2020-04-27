@@ -1,25 +1,40 @@
-const express = require('express');
+const http = require('http');
+const https = require('https');
+
+const fs = require('fs');
 const path = require('path');
+const express = require('express');
 const morgan = require('morgan');
-const ip = require('ip');
 
-const app = express();
+// INIT HTTPS SERVER
 const publicFolder = path.resolve(__dirname, '..', 'public');
+const distFolder = path.resolve(publicFolder, 'dist');
 
-app.use(morgan('dev'));
-app.use(express.static(publicFolder));
+const appHttps = express();
+appHttps.use(morgan('dev'));
+appHttps.use(express.static(distFolder));
+appHttps.use(express.static(publicFolder));
 
-app.get('*', (req, res) => {
+
+appHttps.get('*', (req, res) => {
     res.sendFile(path.resolve(publicFolder, 'index.html'));
 });
 
-// app.get('*', (req, res) => {
-//     res.redirect('/');
-// });
 
-const PORT = process.env.PORT || 5757;
-app.listen(PORT, () => {
-    console.log(`Server working at:
-    http://${ip.address()}:${PORT}
-    http://localhost:${PORT}`);
+const httpsServer = https.createServer({
+    key: fs.readFileSync('server/credentials/prod.key'),
+    cert: fs.readFileSync('server/credentials/prod.crt'),
+}, appHttps);
+httpsServer.listen(443, () => console.log(`HTTPS server started`));
+
+
+// INIT HTTP REDIRECT SERVER
+const appHttp = express();
+appHttp.use(morgan('dev'));
+
+appHttp.get('*', function(req, res) {
+    res.redirect('https://' + req.headers.host + req.url);
 });
+
+const httpServer = http.createServer(appHttp);
+httpServer.listen(80, () => console.log(`HTTP server started`));

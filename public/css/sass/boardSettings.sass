@@ -1,0 +1,93 @@
+.board-settings
+    @extend .form
+    position: absolute
+    top: 8vh
+    box-shadow: none
+    width: 763px
+
+    &-title
+        &__text
+            @extend .title
+            margin-left: 20px
+            font-size: 20pt
+
+        &__hr--width-2
+            @extend .hr-width-2
+
+    &-members
+        @extend .member-container
+        padding-top: 4px
+        overflow-x: auto
+
+        &__member
+            height: 60px
+            width: 60px
+            border-radius: 50%
+            margin-right: 10px
+            object-fit: cover
+
+        &__add-button
+            height: 60px
+            width: 60px
+            border-radius: 50%
+            border: 2px dashed #afaeae
+            transition: 0.3s
+
+            &--rotated
+                transform: rotate(45deg)
+
+            &:hover
+                border-style: solid
+                cursor: pointer
+
+    &-controls
+        margin-top: 20px
+        @extend .controls-panel
+
+        &__button
+            &--primary
+                @extend .button--primary
+
+            &--danger
+                @extend .button--danger
+
+    &__error
+        @extend .input-error
+
+    &__label
+        margin-top: 30px
+        @extend .form-input-label
+
+    &__input
+        @extend .form-input
+
+.search-result
+
+    &-row
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+        margin-top: 10px
+        width: 100%
+
+        &__user
+            display: flex
+            align-items: center
+
+        &__nickname
+            font-family: 'Scada', sans-serif
+            font-size: 13pt
+            margin-bottom: 10px
+            margin-top: -5px
+
+        &--controls
+            @extend .controls-panel
+
+            &__button
+                &--primary
+                    @extend .button--primary
+
+                &--secondary
+                    @extend .button--secondary
+                    margin-right: 15px

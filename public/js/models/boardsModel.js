@@ -51,25 +51,25 @@ export default class HeaderModel {
      * Call api to add new board
      * @param {String} boardTitle - new board title
      */
-    addNewBoard(boardTitle) {
-        boardsPost(boardTitle).then((response) => {
-            switch (response.status) {
-                case 200: // Успешно создали доску
-                    response.json().then(this.getBoards);
-                    break;
-                case 400: // Невалидное тело
-                    console.log('Bad request');
-                    break;
-                case 401:
-                case 403: // В запросе отсутствует кука
-                    this.eventBus.call('unauthorized');
-                    break;
-                case 500:
-                    console.log('Server error');
-                    break;
-                default:
-                    console.log('Бекендер молодец!!!');
-            }
-        });
+    async addNewBoard(boardTitle) {
+        const response = await boardsPost(boardTitle);
+        switch (response.status) {
+            case 200: // Успешно создали доску
+                const newBoardID = (await response.json()).id;
+                this.eventBus.call('goToBoard', newBoardID);
+                break;
+            case 400: // Невалидное тело
+                console.log('Bad request');
+                break;
+            case 401:
+            case 403: // В запросе отсутствует кука
+                this.eventBus.call('unauthorized');
+                break;
+            case 500:
+                console.log('Server error');
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+        }
     }
 }

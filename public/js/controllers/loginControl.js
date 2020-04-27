@@ -1,6 +1,6 @@
+import EventBus from '../libs/eventBus.js';
 import LoginModel from '../models/loginModel.js';
 import LoginView from '../views/login/loginView.js';
-import EventBus from '../libs/eventBus.js';
 
 /**
  * Login controller
@@ -9,8 +9,9 @@ export default class LoginController {
     /**
      * Controller constructor
      * @param {Object} router - for model to redirect on success login
+     * @param {Object} globalEventBus - for trigger login global event
      */
-    constructor(router) {
+    constructor(router, globalEventBus) {
         this.eventBus = new EventBus([
             'submit',
             'inputError',
@@ -20,7 +21,8 @@ export default class LoginController {
         this.model = new LoginModel(this.eventBus);
 
         this.eventBus.subscribe('loginSuccess', (userData) => {
-            router.go('/profile');
+            router.go('/');
+            globalEventBus.call('login');
         });
     }
 }

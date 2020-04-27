@@ -1,10 +1,11 @@
+import ControllerChainLink, {ChainLinkSignals} from '../libs/controllerChainLink.js';
+import EventBus from '../libs/eventBus.js';
+
 import TaskSettingsModel from '../models/taskSettingsModel.js';
 import TaskSettingsView from '../views/board/taskSettings/taskSettingsView.js';
-import EventBus from '../libs/eventBus.js';
+import AddChecklistPopupController from './addChecklistPopupControl.js';
 import AddLabelPopupController from './addLabelPopupControl.js';
-
-import ControllerChainLink from '../libs/controllerChainLink.js';
-import {ChainLinkSignals} from '../libs/controllerChainLink.js';
+import AddAssignsPopupController from './addAssignsPopupControl.js';
 
 /**
  * Task settings controller
@@ -24,16 +25,38 @@ export default class TaskSettingsController extends ControllerChainLink {
             'getTaskSettings',
             'gotTaskSettings',
 
+            'updatedTaskLabel',
             'openAddLabelPopup',
             'closedAddLabelPopup',
+            'addedTaskLabel',
 
-            'openAddMemberPopup',
-            'closedAddMemberPopup',
+            'openAssignsPopup',
+            'getTaskAssigns',
+            'gotTaskAssigns',
+            'updateAssign',
+            'assignSuccess',
+            'closeAssignsPopup',
+
+            'openAddChecklistPopup',
+            'addChecklist',
+            'addChecklistItem',
+            'updateChecklistItem',
+            'deleteChecklist',
+            'closeAddChecklistPopup',
 
             'saveTaskSettings',
             'deleteTask',
 
+            'addComment',
+            'deleteComment',
+
+            'uploadAttach',
+            'uploadAttachSuccess',
+            'deleteAttach',
+            'deleteAttachSuccess',
+
             'unauthorized',
+            'goBack',
             'goToBoards',
         ];
 
@@ -45,17 +68,34 @@ export default class TaskSettingsController extends ControllerChainLink {
             boardEventBus.call('closeTaskSettings');
         });
 
-        this.router =router;
+        this.taskData = {boardID, columnID, taskID};
+        this.router = router;
         this.view = new TaskSettingsView(this.eventBus);
-        this.model = new TaskSettingsModel(this.eventBus, boardID, columnID, taskID);
+        this.model = new TaskSettingsModel(this.eventBus, this.taskData);
 
         this.eventBus.subscribe('openAddLabelPopup', (button) => {
-            const childController = new AddLabelPopupController(this.eventBus);
+            const childController = new AddLabelPopupController(this.eventBus, this.taskData);
             this.setChildEventBus(childController.eventBus);
             childController.view.render(button);
         });
 
-        this.eventBus.subscribe('unauthorized', () => router.go('/login'));
+        this.eventBus.subscribe('openAddChecklistPopup', (clickCoords) => {
+            const checklistPopupController = new AddChecklistPopupController(this.eventBus);
+            this.setChildEventBus(checklistPopupController.eventBus);
+            checklistPopupController.view.render(clickCoords);
+        });
+
+        this.eventBus.subscribe('openAssignsPopup', (clickCoords) => {
+            const assignsPopupController = new AddAssignsPopupController(this.eventBus);
+            this.setChildEventBus(assignsPopupController.eventBus);
+            assignsPopupController.view.render(clickCoords);
+        });
+
+        this.eventBus.subscribe('unauthorized', () => {
+            router.go('/login');
+            this.view.closeSelfAndAllChildren();
+        });
         this.eventBus.subscribe('goToBoards', () => router.go('/boards'));
+        this.eventBus.subscribe('goBack', () => router.goBack());
     }
 }

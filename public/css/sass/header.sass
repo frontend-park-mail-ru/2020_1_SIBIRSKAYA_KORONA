@@ -1,4 +1,5 @@
 .main-header
+    max-width: 100%
     background: #18255f
     padding: 10px 0
     @extend .header
@@ -16,6 +17,9 @@
             @extend .header__button--danger
 
     &-center
+        @media screen and (max-width: $tablet-breakpoint)
+            margin: 0 auto 0
+            width: 100%
         @extend .header-block-center
 
         &__title
@@ -35,26 +39,41 @@
         @extend .header-block-right
 
         &__button--primary
+            @media screen and (max-width: $tablet-breakpoint)
+                display: none !important
             @extend .header__button--primary
 
         &__button--secondary
+            @media screen and (max-width: $tablet-breakpoint)
+                display: none !important
             @extend .header__button--secondary
 
         &__button--danger
             @extend .header__button--danger
 
         &__nickname
+            @media screen and (max-width: $iphone-5-breakpoint)
+                display: none
             @extend .title
             color: white
             font-size: 14pt
             margin: 0 10px
 
         &__avatar
+            @media screen and (max-width: $phone-breakpoint)
+                margin: 4px 0 0 0
+            @media screen and (max-width: $iphone-5-breakpoint)
+                margin-right: 100px
             height: 35px
             width: 35px
-            margin: 0 10px
+            margin: 4px 10px 0 10px
             cursor: pointer
 
             &--round
                 @extend .main-header-right__avatar
                 @extend .avatar-round
+
+.authorized
+    @media screen and (max-width: $tablet-breakpoint)
+        .main-header-center
+            display: none !important
