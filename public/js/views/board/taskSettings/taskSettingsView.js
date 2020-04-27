@@ -17,10 +17,12 @@ export default class TaskSettingsView extends BaseView {
         this.closeSelf = this.closeSelf.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleToggleCheckBox = this.handleToggleCheckBox.bind(this);
+        this.handleFileInput = this.handleFileInput.bind(this);
 
         this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings.bind(this));
         this.eventBus.subscribe('closedAssignsPopup', this.handleCloseAssignsPopup.bind(this));
         this.eventBus.subscribe('assignSuccess', this.handleAssignSuccess.bind(this));
+        this.eventBus.subscribe('uploadFileSuccess', this.render);
         this.eventBus.subscribe('updatedTaskLabel', this.render);
 
 
@@ -56,7 +58,6 @@ export default class TaskSettingsView extends BaseView {
             this.root.querySelector('.window-overlay'),
             this.root.querySelector('.js-addNewLabel'),
             this.root.querySelector('.js-addAssign'),
-            this.root.querySelector('.js-attachFile'),
             this.root.querySelector('.js-saveTask'),
             this.root.querySelector('.js-deleteTask'),
             this.root.querySelector('.js-saveComment'),
@@ -70,6 +71,9 @@ export default class TaskSettingsView extends BaseView {
         taskSettingsElements.forEach((element) => {
             element.addEventListener('click', this.handleClick);
         });
+
+        const fileInput = this.root.querySelector('.js-attachFile');
+        fileInput.addEventListener('change', this.handleFileInput);
     }
 
     /**
@@ -100,7 +104,6 @@ export default class TaskSettingsView extends BaseView {
                     this.handleCloseAssignsPopup();
                 }
                 break;
-
 
             case classList.contains('js-addNewChecklist'):
                 event.stopPropagation();
@@ -190,6 +193,16 @@ export default class TaskSettingsView extends BaseView {
         progressBar.style.width = progress + '%';
         progressBar.style.background = color;
         checklist.querySelector('.checklist-title-percents').innerText = progress + '%';
+    }
+
+    /**
+     * Handler for file input
+     * @param {Event} event
+     */
+    handleFileInput(event) {
+        event.stopPropagation();
+        const file = event.target.files[0];
+        this.eventBus.call('uploadFile', file);
     }
 
     /**

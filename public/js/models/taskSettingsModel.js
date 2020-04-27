@@ -9,6 +9,9 @@ import {
     taskChecklistPost,
     taskCommentsGet,
     taskCommentsPost,
+    taskFilesGet,
+    taskFilesPost,
+    // taskFileDelete,
     taskDelete,
     taskGet,
     taskPut,
@@ -39,6 +42,8 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
         this.eventBus.subscribe('updateChecklistItem', this.updateChecklistItem.bind(this));
         this.eventBus.subscribe('updateAssign', this.updateAssign.bind(this));
+        this.eventBus.subscribe('uploadFile', this.uploadFile.bind(this));
+
 
         const errorResponseStatusMap = new Map([
             [401, () => this.eventBus.call('unauthorized')],
@@ -106,6 +111,9 @@ export default class TaskSettingsModel {
         if (!(await this.handleResponseStatus(taskResponse, (body) => taskData = body))) {
             return;
         }
+        if (!taskData.labels) {
+            taskData.labels = [];
+        }
 
         const checklistResponse = await taskChecklistGet(this.taskData);
         if (!(await this.handleResponseStatus(checklistResponse, (body) => taskData.checklists = body))) {
@@ -152,9 +160,14 @@ export default class TaskSettingsModel {
             return;
         }
 
-        if (!taskData.labels) {
-            taskData.labels = [];
+        const filesResponse = await taskFilesGet(this.taskData);
+        if (!(await this.handleResponseStatus(filesResponse, (body) => {
+            taskData.files = body;
+        }))) {
+            return;
         }
+
+
         this.taskData = Object.assign(this.taskData, taskData);
         this.eventBus.call('gotTaskSettings', taskData);
     }
@@ -198,6 +211,19 @@ export default class TaskSettingsModel {
             response = await taskAssignDelete(this.taskData, userId);
         }
         await this.handleResponseStatus(response, () => this.eventBus.call('assignSuccess'));
+    }
+
+    /**
+     * Upload attach file
+     * @param {File} file
+     * @return {Promise<void>}
+     */
+    async uploadFile(file) {
+        const fileForm = new FormData();
+        fileForm.append('file', file);
+
+        const uploadFileResponse = await taskFilesPost(this.taskData, fileForm);
+        await this.handleResponseStatus(uploadFileResponse, () => this.eventBus.call('uploadFileSuccess'));
     }
 
     /**

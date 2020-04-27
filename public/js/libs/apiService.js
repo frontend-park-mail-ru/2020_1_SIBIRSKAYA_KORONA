@@ -489,3 +489,41 @@ export const taskAssignDelete = (taskData, userId) => {
     const apiUrl = new URL(url, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
+
+/** ******************* FILES ************************/
+
+/**
+ * Get attaches from task
+ * @param {Object} taskData - {boardID, columnID, taskID}
+ * @return {Promise<Response>}
+ */
+export const taskFilesGet = (taskData) => {
+    const apiUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}/files`;
+    const apiUrl = new URL(apiUrlPart, BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Upload attach file
+ * @param {Object} taskData - {boardID, columnID, taskID}
+ * @param {FormData} fileForm - form with file
+ * @return {Promise<Response>}
+ */
+export const taskFilesPost = (taskData, fileForm) => {
+    const apiUrlPart = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}/files`;
+    const apiUrl = new URL(apiUrlPart, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, fileForm);
+};
+
+/**
+ * Delete attach from task
+ * @param {Object} taskData - {boardID, columnID, taskID}
+ * @param {Number} fileID
+ * @return {Promise<Response>}
+ */
+export const taskFileDelete = (taskData, fileID) => {
+    const apiUrlPart1 = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
+    const apiUrlPart2 = `/files/${fileID}`;
+    const apiUrl = new URL(apiUrlPart1 + apiUrlPart2, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
