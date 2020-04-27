@@ -93,7 +93,8 @@ export default class TaskSettingsView extends BaseView {
 
             case classList.contains('js-addNewLabel'):
                 event.stopPropagation();
-                this.eventBus.call('openAddLabelPopup', event.target);
+                const {x, y} = event.target.getBoundingClientRect();
+                this.eventBus.call('openAddLabelPopup', {x, y});
                 this.handleCloseAssignsPopup();
                 break;
 
