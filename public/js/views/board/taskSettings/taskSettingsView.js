@@ -22,7 +22,8 @@ export default class TaskSettingsView extends BaseView {
         this.eventBus.subscribe('gotTaskSettings', this.renderTaskSettings.bind(this));
         this.eventBus.subscribe('closedAssignsPopup', this.handleCloseAssignsPopup.bind(this));
         this.eventBus.subscribe('assignSuccess', this.handleAssignSuccess.bind(this));
-        this.eventBus.subscribe('uploadFileSuccess', this.render);
+        this.eventBus.subscribe('uploadAttachSuccess', this.render);
+        this.eventBus.subscribe('deleteAttachSuccess', this.render);
         this.eventBus.subscribe('updatedTaskLabel', this.render);
 
 
@@ -67,6 +68,8 @@ export default class TaskSettingsView extends BaseView {
             ...this.root.querySelectorAll('.js-createChecklistItem'),
             ...this.root.querySelectorAll('.js-checklistItem'),
             ...this.root.querySelectorAll('.js-deleteChecklist'),
+            ...this.root.querySelectorAll('.js-downloadAttach'),
+            ...this.root.querySelectorAll('.js-deleteAttach'),
         ];
         taskSettingsElements.forEach((element) => {
             element.addEventListener('click', this.handleClick);
@@ -125,6 +128,25 @@ export default class TaskSettingsView extends BaseView {
                 this.eventBus.call('deleteChecklist', checklistID);
                 break;
             }
+
+            case classList.contains('js-downloadAttach'): {
+                event.stopPropagation();
+                const downloadButton = document.createElement('a');
+                downloadButton.href = event.target.dataset['fileUrl'];
+                downloadButton.download = event.target.dataset['attachName'];
+
+                document.body.appendChild(downloadButton);
+                downloadButton.click();
+                document.body.removeChild(downloadButton);
+                break;
+            }
+
+            case classList.contains('js-deleteAttach'): {
+                event.stopPropagation();
+                this.eventBus.call('deleteAttach', event.target.dataset['attachId']);
+                break;
+            }
+
             case classList.contains('js-createChecklistItem'):
                 const checklistElement = event.currentTarget.closest('.checklist');
                 const checklistID = checklistElement.dataset.checklistId;
@@ -202,7 +224,7 @@ export default class TaskSettingsView extends BaseView {
     handleFileInput(event) {
         event.stopPropagation();
         const file = event.target.files[0];
-        this.eventBus.call('uploadFile', file);
+        this.eventBus.call('uploadAttach', file);
     }
 
     /**

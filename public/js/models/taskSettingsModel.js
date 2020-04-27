@@ -17,6 +17,7 @@ import {
     taskPut,
 } from '../libs/apiService.js';
 import responseSwitchBuilder from '../libs/responseSwitchBuilder.js';
+import {taskFileDelete} from '../libs/apiService';
 
 /**
  * Task settings model
@@ -42,7 +43,8 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('addChecklistItem', this.addChecklistItem.bind(this));
         this.eventBus.subscribe('updateChecklistItem', this.updateChecklistItem.bind(this));
         this.eventBus.subscribe('updateAssign', this.updateAssign.bind(this));
-        this.eventBus.subscribe('uploadFile', this.uploadFile.bind(this));
+        this.eventBus.subscribe('uploadAttach', this.uploadAttach.bind(this));
+        this.eventBus.subscribe('deleteAttach', this.deleteAttach.bind(this));
 
 
         const errorResponseStatusMap = new Map([
@@ -218,13 +220,24 @@ export default class TaskSettingsModel {
      * @param {File} file
      * @return {Promise<void>}
      */
-    async uploadFile(file) {
+    async uploadAttach(file) {
         const fileForm = new FormData();
         fileForm.append('file', file);
 
         const uploadFileResponse = await taskFilesPost(this.taskData, fileForm);
-        await this.handleResponseStatus(uploadFileResponse, () => this.eventBus.call('uploadFileSuccess'));
+        await this.handleResponseStatus(uploadFileResponse, () => this.eventBus.call('uploadAttachSuccess'));
     }
+
+    /**
+     * Delete attach file
+     * @param {Number} fileID
+     * @return {Promise<void>}
+     */
+    async deleteAttach(fileID) {
+        const deleteFileResponse = await taskFileDelete(this.taskData, fileID);
+        await this.handleResponseStatus(deleteFileResponse, () => this.eventBus.call('deleteAttachSuccess'));
+    }
+
 
     /**
      * Saves task information

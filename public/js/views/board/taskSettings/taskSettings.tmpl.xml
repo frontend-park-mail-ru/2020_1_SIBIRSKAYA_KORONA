@@ -74,10 +74,23 @@
                     <div class="task-settings-controls__button--danger js-deleteTask">Удалить задачу</div>
                 </div>
 
-                <div class="task-files">
+                <div class="task-attachments">
+
                     <fest:for index="i" iterate="task.files" value="file">
-                        <fest:value>file.filename</fest:value>,
-                        <fest:value>file.url</fest:value>
+                        <div class="task-attachments__item">
+                            <div class="task-attachments__item--info">
+                                <fest:value>file.filename</fest:value>
+                            </div>
+                            <div class="task-attachments__item--controls">
+                                <div class="button--primary js-downloadAttach"
+                                     data-file-url="{file.url}"
+                                     data-attach-name="{file.filename}">Скачать</div>
+                                <div class="button--danger js-deleteAttach"
+                                     data-attach-id="{file.id}">Удалить
+                                </div>
+                            </div>
+                        </div>
+
                     </fest:for>
                 </div>
 

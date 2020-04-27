@@ -47,8 +47,10 @@ export default class TaskSettingsController extends ControllerChainLink {
             'saveTaskSettings',
             'deleteTask',
 
-            'uploadFile',
-            'uploadFileSuccess',
+            'uploadAttach',
+            'uploadAttachSuccess',
+            'deleteAttach',
+            'deleteAttachSuccess',
 
             'addComment',
             'unauthorized',
