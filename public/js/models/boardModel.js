@@ -1,4 +1,4 @@
-import {boardGet, columnsGet, columnsPost, taskPut, tasksGet, tasksPost} from '../libs/apiService.js';
+import {boardGet, columnsGet, columnsPost, socket, taskPut, tasksGet, tasksPost} from '../libs/apiService.js';
 
 /**
  * Board model
@@ -21,6 +21,15 @@ export default class BoardModel {
             members: [],
             columns: [],
         };
+        socket.subscribe('message', (event) => {
+            console.log('message:', event);
+        });
+        socket.subscribe('error', (event) => {
+            console.log('error:', event);
+        });
+        socket.subscribe('close', (event) => {
+            console.log('close:', event);
+        });
     }
 
     /**
