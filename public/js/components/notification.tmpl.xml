@@ -1,0 +1,16 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="notification">
+        <img class="notification-user-avatar" src="{data.avatar}"/>
+        <div>
+            <div class="notification-user-nickname">
+                <fest:value>data.nickname</fest:value>
+            </div>
+            <div class="notification-text">
+                <fest:value>data.text</fest:value>
+            </div>
+            <a class="notification-link" href="{data.href}">
+                Посмотреть
+            </a>
+        </div>
+    </div>
+</fest:template>

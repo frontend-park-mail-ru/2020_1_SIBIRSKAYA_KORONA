@@ -1,6 +1,6 @@
+import EventBus from '../libs/eventBus.js';
 import HeaderModel from '../models/headerModel.js';
 import HeaderView from '../views/header/headerView.js';
-import EventBus from '../libs/eventBus.js';
 
 /**
  * Header controller
@@ -36,7 +36,10 @@ export default class HeaderController {
         this.eventBus.subscribe('submitJoin', () => router.go('/join'));
 
         globalEventBus.subscribe('login', this.model.getUserData);
-        globalEventBus.subscribe('logout', this.model.onLogout);
         globalEventBus.subscribe('userDataChanged', this.model.onLogin);
+        globalEventBus.subscribe('logout', () => {
+            this.model.onLogout();
+            globalEventBus.call('enableNotifications', false);
+        });
     }
 }

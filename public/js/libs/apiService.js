@@ -1,7 +1,6 @@
 import {fetchDelete, fetchGet, fetchPost, fetchPut} from './httpUtils.js';
 
 const BACKEND_ADDRESS = `https://${IP_ADDRESS}:8080/`;
-const WEBSOCKET = `wss://${IP_ADDRESS}:8080/ws`;
 
 let CSRFToken;
 
@@ -566,68 +565,3 @@ export const taskFileDelete = (taskData, fileID) => {
     const apiUrl = new URL(apiUrlPart1 + apiUrlPart2, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
-
-
-/** ******************* WEBSOCKET ************************/
-
-const ApiWebsocket = () => {
-    let instance;
-    const messageSubscribers = [];
-    const closeSubscribers = [];
-    const errorSubscribers = [];
-
-    const createInstance = () => {
-        let socket;
-        try {
-            socket = new WebSocket(WEBSOCKET);
-        } catch (err) {
-            console.log(err);
-        }
-        socket.onmessage = (event) => {
-            messageSubscribers.forEach((handler) => {
-                handler(event);
-            });
-        };
-        socket.onclose = (event) => {
-            closeSubscribers.forEach((handler) => {
-                handler(event);
-            });
-        };
-        socket.onerror = (event) => {
-            errorSubscribers.forEach((handler) => {
-                handler(event);
-            });
-        };
-        instance = {
-            subscribe: (eventType, handler) => {
-                switch (eventType) {
-                    case 'message':
-                        messageSubscribers.push(handler);
-                        break;
-                    case 'close':
-                        closeSubscribers.push(handler);
-                        break;
-                    case 'error':
-                        errorSubscribers.push(handler);
-                        break;
-                    default:
-                        break;
-                }
-            },
-            send: (dataString) => {
-                socket.send(dataString);
-            },
-            id: Math.random(),
-        };
-        return instance;
-    };
-
-    if (!instance) {
-        instance = createInstance();
-    }
-
-    return instance;
-};
-
-
-export const socket = new ApiWebsocket();

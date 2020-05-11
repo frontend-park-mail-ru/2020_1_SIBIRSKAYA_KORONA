@@ -23,6 +23,7 @@ export default class LoginController {
         this.eventBus.subscribe('loginSuccess', (userData) => {
             router.go('/');
             globalEventBus.call('login');
+            globalEventBus.call('enableNotifications', true);
         });
     }
 }
