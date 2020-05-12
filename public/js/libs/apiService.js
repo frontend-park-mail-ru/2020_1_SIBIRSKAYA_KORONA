@@ -565,3 +565,34 @@ export const taskFileDelete = (taskData, fileID) => {
     const apiUrl = new URL(apiUrlPart1 + apiUrlPart2, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
+
+
+/** ******************* HEADER NOTIFICATIONS ************************/
+
+
+/**
+ * Get user notifications
+ * @return {Promise<Response>}
+ */
+export const notificationsGet = () => {
+    const apiUrl = new URL('notifications/', BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Put user notifications (is used to mark them read)
+ * @return {Promise<Response>}
+ */
+export const notificationsPut = () => {
+    const apiUrl = new URL('notifications/', BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, null);
+};
+
+/**
+ * Delete user notifications
+ * @return {Promise<Response>}
+ */
+export const notificationsDelete = () => {
+    const apiUrl = new URL('notifications/', BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};

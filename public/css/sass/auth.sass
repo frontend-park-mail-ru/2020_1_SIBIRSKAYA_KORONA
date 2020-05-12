@@ -55,13 +55,16 @@
 
 .auth-form__link
     color: #2b5df3
+    text-decoration: none
+    transition: 0.2s
+    &:hover
+        text-decoration: underline
 
 .auth-form__button--primary
     @extend .button--primary
 
 .auth-form__input-error
     @extend .input-error
-
 
 @media screen and (max-width: $phone-breakpoint)
     .auth-form-join, .auth-form-login

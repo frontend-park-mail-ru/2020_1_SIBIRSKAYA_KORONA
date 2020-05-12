@@ -1,4 +1,5 @@
-import {sessionDelete, settingsGet} from '../libs/apiService.js';
+import * as http from 'http-status-codes';
+import {notificationsDelete, notificationsGet, sessionDelete, settingsGet} from '../libs/apiService.js';
 
 /**
  * Main header model
@@ -11,13 +12,12 @@ export default class HeaderModel {
     constructor(eventBus) {
         this.eventBus = eventBus;
 
-        this.logout = this.logout.bind(this);
         this.onLogin = this.onLogin.bind(this);
         this.onLogout = this.onLogout.bind(this);
-        this.getUserData = this.getUserData.bind(this);
 
-        this.eventBus.subscribe('getData', this.getUserData);
-        this.eventBus.subscribe('submitLogout', this.logout);
+        this.eventBus.subscribe('getData', this.getUserData.bind(this));
+        this.eventBus.subscribe('submitLogout', this.logout.bind(this));
+        this.eventBus.subscribe('getNotifications', this.getNotifications.bind(this));
     }
 
     /**
@@ -75,6 +75,65 @@ export default class HeaderModel {
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
+            }
+        });
+    }
+
+    /**
+     * Get user notifications
+     */
+    getNotifications() {
+        notificationsGet().then((response) => {
+            switch (response.status) {
+                case http.OK:
+                    response.json().then((responseJson) => {
+                        this.eventBus.call('gotNotifications', responseJson);
+                    }).catch((error) => {
+                        console.log(error);
+                        this.eventBus.call('gotNotifications', []);
+                    });
+                    break;
+                case http.UNAUTHORIZED:
+                    this.eventBus.call('logout');
+                    break;
+                default:
+                    console.log('Бекендер молодец!!!', response.status);
+            }
+        });
+    }
+
+    /**
+     * Delete all user notifications
+     */
+    deleteNotifications() {
+        notificationsDelete().then((response) => {
+            switch (response.status) {
+                case http.OK:
+                    this.eventBus.call('gotNotifications', []);
+                    break;
+                case http.UNAUTHORIZED:
+                    this.eventBus.call('logout');
+                    break;
+                default:
+                    console.log('Бекендер молодец!!!', response.status);
+            }
+        });
+    }
+
+    /**
+     * Mark all user notifications read
+     */
+    readNotifications() {
+        notificationsDelete().then((response) => {
+            switch (response.status) {
+                case http.OK:
+                    this.getNotifications();
+                    break;
+                case http.UNAUTHORIZED:
+                    this.eventBus.call('logout');
+                    break;
+                default:
+                    console.log('Бекендер молодец!!!', response.status);
             }
         });
     }

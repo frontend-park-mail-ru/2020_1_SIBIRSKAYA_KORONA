@@ -61,17 +61,24 @@
 
         &__avatar
             @media screen and (max-width: $phone-breakpoint)
-                margin: 4px 0 0 0
+                margin: 0
             @media screen and (max-width: $iphone-5-breakpoint)
-                margin-right: 100px
+                margin-right: 80px
             height: 35px
             width: 35px
-            margin: 4px 10px 0 10px
+            margin: 0 8px
             cursor: pointer
 
             &--round
                 @extend .main-header-right__avatar
                 @extend .avatar-round
+
+        &__notifications
+            margin: 0 8px
+            height: 33px
+            width: 33px
+            cursor: pointer
+
 
 .authorized
     @media screen and (max-width: $tablet-breakpoint)

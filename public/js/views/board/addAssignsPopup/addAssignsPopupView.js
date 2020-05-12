@@ -2,7 +2,7 @@ import BaseView from '../../baseView.js';
 import template from './addAssignsPopup.tmpl.xml';
 
 /**
- * View of 'Add label' popup
+ * Add assigns popup view
  */
 export default class AddAssignsPopupView extends BaseView {
     /**

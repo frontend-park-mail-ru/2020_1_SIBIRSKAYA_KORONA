@@ -1,9 +1,10 @@
 import webSocket from '../libs/webSocketWrapper.js';
-import template from './notification.tmpl.xml';
+import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
+import notificationTemplate from './notification.tmpl.xml';
 
 const NOTIFICATION_LIFE_TIME = 4000;
 /**
- * Real time notifications
+ * Real time notifications. (Notifications in header aren't served here)
  */
 export default class Notifications {
     /**
@@ -12,7 +13,7 @@ export default class Notifications {
     constructor(globalEventBus) {
         this.socket = webSocket;
         this.root = document.querySelector('#notifications');
-        console.log(this.root);
+        this.enable = false;
         globalEventBus.subscribe('enableNotifications', this.enableNotifications.bind(this));
     }
 
@@ -22,11 +23,14 @@ export default class Notifications {
      */
     enableNotifications(enable) {
         console.log('Enable notifications', enable);
+        if (this.enable === enable) {
+            return;
+        }
         this.enable = enable;
-        if (this.enable && !this.socket.connected) {
+        if (this.enable) {
             this.socket.connect();
             this.socket.subscribe('message', this.newNotificationHandler.bind(this));
-        } else if (!this.enable) {
+        } else {
             this.socket.disconnect();
         }
     }
@@ -36,31 +40,66 @@ export default class Notifications {
      * @param {Event} event
      */
     newNotificationHandler(event) {
-        const message = JSON.parse(event.data);
-        console.log(message);
+        const msg = JSON.parse(event.data);
+        console.log(msg);
         let newNotificationData;
-        switch (message.eventType) {
-            case 'AssignOnTask':
-                console.log(message.metaData);
-                newNotificationData = {
+        switch (msg.eventType) {
+            case 'AssignOnTask': {
+                let taskHref = '/boards/' + msg.metaData.bid;
+                taskHref += '/columns/' + msg.metaData.cid;
+                taskHref += '/tasks/' + msg.metaData.tid;
+                if (msg.uid === msg.metaData?.user?.id) {
+                    // this means we are invitee
+                    newNotificationData = {
+                        user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
+                        link: {text: msg.metaData.entityData, href: taskHref},
+                        text: 'Назначил Вас исполнителем задачи',
+                    };
+                    this.renderNotification(newNotificationData, notificationTemplate);
+                } else {
+                    // this means somebody invited somebody
+                    newNotificationData = {
+                        inviter: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
+                        invitee: {nickname: msg.metaData.user?.nickname, avatar: msg.metaData.user?.avatar},
+                        link: {text: msg.metaData.entityData, href: taskHref},
+                        text: 'назначил исполнителем задачи',
+                    };
+                    this.renderNotification(newNotificationData, inviteNotificationTemplate);
+                }
+                break;
+            }
+            case 'InviteToBoard': {
+                if (msg.uid === msg.metaData?.user?.id) {
+                    const newNotificationData = {
+                        user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
+                        link: {text: msg.metaData.entityData, href: `/boards/${msg.metaData.bid}`},
+                        text: 'пригласил Вас в доску',
+                    };
+                    this.renderNotification(newNotificationData, notificationTemplate);
+                } else {
+                    newNotificationData = {
+                        inviter: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
+                        invitee: {nickname: msg.metaData.user?.nickname, avatar: msg.metaData.user?.avatar},
+                        link: {text: msg.metaData.entityData, href: `/boards/${msg.metaData.bid}`},
+                        text: 'пригласил в доску',
+                    };
+                    this.renderNotification(newNotificationData, inviteNotificationTemplate);
+                }
 
-                };
                 break;
-            case 'InviteToBoard':
-                newNotificationData = {};
-                break;
+            }
             default:
                 // We don`t need to render it because this message type handles in other place
                 return;
         }
-        this.render(newNotificationData);
     }
 
     /**
-     * Renders notification in popup
+     * Renders notification in popup, pass inviteNotification = true to render invite notification
      * @param {Object} notificationData
+     * @param {Function} template - default false, set to true for use inviteNotificationTemplate for render
      */
-    render(notificationData) {
+    renderNotification(notificationData, template) {
         const newNotification = document.createElement('div');
         newNotification.innerHTML = template(notificationData);
         this.root.append(newNotification);

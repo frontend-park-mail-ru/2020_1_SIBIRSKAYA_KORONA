@@ -9,7 +9,6 @@ class WebSocketWrapper {
      */
     constructor(webSocketURL) {
         this.url = webSocketURL;
-        this.connected = false;
         this.messageSubscribers = [];
         this.closeSubscribers = [];
         this.errorSubscribers = [];
@@ -19,24 +18,23 @@ class WebSocketWrapper {
      * Connect method, opens socket if it isn`t opened
      */
     connect() {
-        if (this.connected) {
+        console.log('Try to connect');
+        const connectionState = this.socket?.readyState;
+        if (connectionState === WebSocket.OPEN || connectionState === WebSocket.CONNECTING) {
+            console.log('Already connected');
             return;
         }
-        console.log('Try to connect');
         this.socket = new WebSocket(this.url);
         this.socket.onopen = (event) => {
             console.log('Socket connected');
-            this.connected = true;
         };
         this.socket.onmessage = (event) => {
             this.messageSubscribers.forEach((handler) => {
-                console.log('messageSubscriber');
                 handler(event);
             });
         };
         this.socket.onclose = (event) => {
             console.log('Socket disconnected by backend');
-            this.connected = false;
             this.closeSubscribers.forEach((handler) => {
                 handler(event);
             });
@@ -52,8 +50,15 @@ class WebSocketWrapper {
      * Close socket
      */
     disconnect() {
-        console.log('Socket disconnected');
+        const connectionState = this.socket?.readyState;
+        if (connectionState === WebSocket.CLOSED || connectionState === WebSocket.CLOSING) {
+            return;
+        }
         this.socket.close();
+        this.messageSubscribers = [];
+        this.closeSubscribers = [];
+        this.errorSubscribers = [];
+        console.log('Socket disconnected');
     }
 
     /**
@@ -87,12 +92,12 @@ class WebSocketWrapper {
 
     /**
      * Returns instance with encapsulated private data
-     * @return {Object} {connected: bool, connect: function, subscribe: function, send: function}
+     * @return {Object} {connect: function, subscribe: function, send: function}
      */
     getInstance() {
         return {
-            connected: this.connected,
             connect: this.connect.bind(this),
+            disconnect: this.disconnect.bind(this),
             subscribe: this.subscribe.bind(this),
             send: this.send.bind(this),
         };

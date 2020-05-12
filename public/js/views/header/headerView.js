@@ -1,5 +1,5 @@
-import template from './headerView.tmpl.xml';
 import BaseView from '../baseView.js';
+import template from './headerView.tmpl.xml';
 
 /**
  * Main header view
@@ -51,6 +51,7 @@ export default class HeaderView extends BaseView {
                 document.getElementById('submitSettings'),
                 document.getElementById('submitLogout'),
                 document.getElementById('submitBoards'),
+                document.getElementById('js-notifications'),
             ];
         } else {
             buttons = [
@@ -62,13 +63,21 @@ export default class HeaderView extends BaseView {
             button.addEventListener('click', this.handleButtonClick);
         });
     }
-
+    //
+    // 'openNotificationsPopup'
+    // 'closeNotificationPopup'
+    //
+    //
     /**
      * Handle user click on buttons
      * @param {Event} event - button click event
      */
     handleButtonClick(event) {
-        event.preventDefault();
-        this.eventBus.call(event.target.id);
+        if (event.target.id === 'js-notifications') {
+            this.eventBus.call('openNotificationsPopup');
+        } else {
+            event.preventDefault();
+            this.eventBus.call(event.target.id);
+        }
     }
 }
