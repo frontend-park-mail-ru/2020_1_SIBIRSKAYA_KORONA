@@ -1,5 +1,6 @@
 import * as http from 'http-status-codes';
 import {notificationsDelete, notificationsGet, sessionDelete, settingsGet} from '../libs/apiService.js';
+import {parseNotification} from '../libs/notificationsParser.js';
 
 /**
  * Main header model
@@ -48,12 +49,12 @@ export default class HeaderModel {
     logout() {
         sessionDelete().then((response) => {
             switch (response.status) {
-                case 200: // - OK (успешный запрос)
-                case 401: // - (В запросе куки нет)
+                case http.OK:
+                case http.UNAUTHORIZED:
                     this.onLogout();
                     this.eventBus.call('unauthorized');
                     break;
-                case 500: // - Internal Server Error (На сервере ошибка удаления куки из хранилища)
+                case http.INTERNAL_SERVER_ERROR:
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -67,13 +68,13 @@ export default class HeaderModel {
     getUserData() {
         settingsGet().then((response) => {
             switch (response.status) {
-                case 200: // - OK (успешный запрос)
+                case http.OK:
                     response.json().then((responseJson) => {
                         this.onLogin(responseJson);
                     });
                     break;
-                case 401:
-                case 500: // - Internal Server Error (Внутренная ошибка при маршалинге найденного пользователя)
+                case http.UNAUTHORIZED:
+                case http.INTERNAL_SERVER_ERROR:
                     this.eventBus.call('logout');
                     break;
                 default:
@@ -89,12 +90,16 @@ export default class HeaderModel {
         notificationsGet().then((response) => {
             switch (response.status) {
                 case http.OK:
+                    const notifications = [];
                     response.json().then((responseJson) => {
-                        this.eventBus.call('gotNotifications', responseJson);
+                        responseJson.forEach((notification) => {
+                            notifications.push(parseNotification(notification));
+                        });
+                        this.eventBus.call('gotNotifications', notifications);
                     }).catch((error) => {
                         console.log(error);
-                        this.eventBus.call('gotNotifications', []);
                     });
+
                     break;
                 case http.UNAUTHORIZED:
                     this.eventBus.call('logout');

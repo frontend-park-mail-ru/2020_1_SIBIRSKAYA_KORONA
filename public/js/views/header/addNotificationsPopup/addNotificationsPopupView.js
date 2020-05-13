@@ -22,8 +22,9 @@ export default class AddAssignsPopupView extends BaseView {
      * Triggers getting data from backend and set popup position
      */
     render() {
-        // this.root.style.left = clickCoords.x + 'px';
-        // this.root.style.top = clickCoords.y + 'px';
+        const headerHeight = document.querySelector('#header').getBoundingClientRect().height;
+        this.root.style.right = '0';
+        this.root.style.top = headerHeight + 'px';
         this.eventBus.call('getNotifications');
     }
 

@@ -575,7 +575,7 @@ export const taskFileDelete = (taskData, fileID) => {
  * @return {Promise<Response>}
  */
 export const notificationsGet = () => {
-    const apiUrl = new URL('notifications/', BACKEND_ADDRESS);
+    const apiUrl = new URL('notifications', BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
 
@@ -584,8 +584,8 @@ export const notificationsGet = () => {
  * @return {Promise<Response>}
  */
 export const notificationsPut = () => {
-    const apiUrl = new URL('notifications/', BACKEND_ADDRESS);
-    return fetchPut(apiUrl.href, null);
+    const apiUrl = new URL('notifications', BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, {});
 };
 
 /**
@@ -593,6 +593,6 @@ export const notificationsPut = () => {
  * @return {Promise<Response>}
  */
 export const notificationsDelete = () => {
-    const apiUrl = new URL('notifications/', BACKEND_ADDRESS);
+    const apiUrl = new URL('notifications', BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };

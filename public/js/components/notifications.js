@@ -1,6 +1,7 @@
 import webSocket from '../libs/webSocketWrapper.js';
 import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
 import notificationTemplate from './notification.tmpl.xml';
+import {parseNotification} from '../libs/notificationsParser.js';
 
 const NOTIFICATION_LIFE_TIME = 4000;
 /**
@@ -44,53 +45,17 @@ export default class Notifications {
         console.log(msg);
         let newNotificationData;
         switch (msg.eventType) {
-            case 'AssignOnTask': {
-                let taskHref = '/boards/' + msg.metaData.bid;
-                taskHref += '/columns/' + msg.metaData.cid;
-                taskHref += '/tasks/' + msg.metaData.tid;
-                if (msg.uid === msg.metaData?.user?.id) {
-                    // this means we are invitee
-                    newNotificationData = {
-                        user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
-                        link: {text: msg.metaData.entityData, href: taskHref},
-                        text: 'Назначил Вас исполнителем задачи',
-                    };
-                    this.renderNotification(newNotificationData, notificationTemplate);
-                } else {
-                    // this means somebody invited somebody
-                    newNotificationData = {
-                        inviter: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
-                        invitee: {nickname: msg.metaData.user?.nickname, avatar: msg.metaData.user?.avatar},
-                        link: {text: msg.metaData.entityData, href: taskHref},
-                        text: 'назначил исполнителем задачи',
-                    };
-                    this.renderNotification(newNotificationData, inviteNotificationTemplate);
-                }
+            case 'AssignOnTask':
+            case 'InviteToBoard':
+                newNotificationData = parseNotification(msg);
                 break;
-            }
-            case 'InviteToBoard': {
-                if (msg.uid === msg.metaData?.user?.id) {
-                    const newNotificationData = {
-                        user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
-                        link: {text: msg.metaData.entityData, href: `/boards/${msg.metaData.bid}`},
-                        text: 'пригласил Вас в доску',
-                    };
-                    this.renderNotification(newNotificationData, notificationTemplate);
-                } else {
-                    newNotificationData = {
-                        inviter: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
-                        invitee: {nickname: msg.metaData.user?.nickname, avatar: msg.metaData.user?.avatar},
-                        link: {text: msg.metaData.entityData, href: `/boards/${msg.metaData.bid}`},
-                        text: 'пригласил в доску',
-                    };
-                    this.renderNotification(newNotificationData, inviteNotificationTemplate);
-                }
-
-                break;
-            }
             default:
                 // We don`t need to render it because this message type handles in other place
-                return;
+        }
+        if (newNotificationData?.inviter && newNotificationData?.inviter) {
+            this.renderNotification(newNotificationData, inviteNotificationTemplate);
+        } else if (newNotificationData?.user) {
+            this.renderNotification(newNotificationData, notificationTemplate);
         }
     }
 
@@ -104,7 +69,7 @@ export default class Notifications {
         newNotification.innerHTML = template(notificationData);
         this.root.append(newNotification);
         setTimeout(() => {
-            this.root.removeChild(this.root.childNodes[0]);
+            newNotification.remove();
         }, NOTIFICATION_LIFE_TIME);
     }
 }
