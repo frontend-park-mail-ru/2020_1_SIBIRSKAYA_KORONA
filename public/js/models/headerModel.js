@@ -14,10 +14,13 @@ export default class HeaderModel {
 
         this.onLogin = this.onLogin.bind(this);
         this.onLogout = this.onLogout.bind(this);
+        this.getUserData = this.getUserData.bind(this);
+        this.logout = this.logout.bind(this);
+        this.getNotifications = this.getNotifications.bind(this);
 
-        this.eventBus.subscribe('getData', this.getUserData.bind(this));
-        this.eventBus.subscribe('submitLogout', this.logout.bind(this));
-        this.eventBus.subscribe('getNotifications', this.getNotifications.bind(this));
+        this.eventBus.subscribe('getData', this.getUserData);
+        this.eventBus.subscribe('submitLogout', this.logout);
+        this.eventBus.subscribe('getNotifications', this.getNotifications);
     }
 
     /**
