@@ -20,7 +20,6 @@ export default class HeaderController extends ControllerChainLink {
             'logout',
             'gotData',
             'unauthorized',
-            'gotNotifications',
             // view calls
             'getData',
             'submitLogin',
@@ -28,8 +27,12 @@ export default class HeaderController extends ControllerChainLink {
             'submitLogout',
             'submitBoards',
             'submitSettings',
+
             'openNotificationsPopup',
             'getNotifications',
+            'gotNotifications',
+            'readNotifications',
+            'deleteNotifications',
             'closeNotificationPopup',
         ];
         const eventBus = new EventBus(actualSignals.concat(Object.values(ChainLinkSignals)));

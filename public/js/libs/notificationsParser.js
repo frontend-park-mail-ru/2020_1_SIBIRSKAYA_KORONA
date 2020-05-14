@@ -1,9 +1,11 @@
 /**
  * Parse notification from backend
  * @param {Object} msg - notification message to parse
+ * @param {Object} config - {enableIsRead, enableDate} set to true for parse date and isRead flag, default false
  * @return {Object} - parsed notification
  */
-export const parseNotification = (msg) => {
+export const parseNotification = (msg, config = {enableIsRead: false, enableDate: false}) => {
+    let parsedNotificationData = {};
     switch (msg.eventType) {
         case 'AssignOnTask': {
             let taskHref = '/boards/' + msg.metaData.bid;
@@ -11,40 +13,49 @@ export const parseNotification = (msg) => {
             taskHref += '/tasks/' + msg.metaData.tid;
             if (msg.uid === msg.metaData?.user?.id) {
                 // this means we are invitee
-                return {
+                parsedNotificationData = {
                     user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
                     link: {text: msg.metaData.entityData, href: taskHref},
-                    text: 'Назначил Вас исполнителем задачи',
+                    text: 'назначил Вас исполнителем задачи',
                 };
             } else {
                 // this means somebody invited somebody
-                return {
+                parsedNotificationData = {
                     inviter: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
                     invitee: {nickname: msg.metaData.user?.nickname, avatar: msg.metaData.user?.avatar},
                     link: {text: msg.metaData.entityData, href: taskHref},
                     text: 'назначил исполнителем задачи',
                 };
             }
+            break;
         }
         case 'InviteToBoard': {
             if (msg.uid === msg.metaData?.user?.id) {
-                return {
+                parsedNotificationData = {
                     user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
                     link: {text: msg.metaData.entityData, href: `/boards/${msg.metaData.bid}`},
                     text: 'пригласил Вас в доску',
                 };
             } else {
-                return {
+                parsedNotificationData = {
                     inviter: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
                     invitee: {nickname: msg.metaData.user?.nickname, avatar: msg.metaData.user?.avatar},
                     link: {text: msg.metaData.entityData, href: `/boards/${msg.metaData.bid}`},
                     text: 'пригласил в доску',
                 };
             }
+            break;
         }
         default:
             // We don`t need to render it because this message type handles in other place
             return;
     }
+    if (config.enableDate) {
+        parsedNotificationData.isRead = msg.isRead;
+    }
+    if (config.enableIsRead) {
+        parsedNotificationData.createdAt = msg.createAt;
+    }
+    return parsedNotificationData;
 };
 

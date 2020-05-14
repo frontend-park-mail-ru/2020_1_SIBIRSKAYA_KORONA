@@ -80,6 +80,98 @@
             cursor: pointer
 
 
+.header-notifications
+    border-radius: 10px
+    box-shadow: 0 4px 16px #ccc
+    background-color: white
+    width: 400px
+    padding: 10px 0
+
+    &-controls
+        display: flex
+        justify-content: space-between
+        margin: 0 10px
+        &__button
+            &--primary
+                @extend .button--primary
+
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
+
+    &-list
+        display: flex
+        flex-flow: column-reverse
+        margin-top: 10px
+        max-height: 80vh
+        overflow-y: auto
+
+.header-notification
+    padding: 10px 5px 10px 10px
+    display: flex
+    position: relative
+    border-top: 1px solid #E0E0E0
+    &:hover
+        background-color: #e8eaf6
+
+    &__read
+        @extend .header-notification
+        background-color: #E0E0E0
+        border-top: 1px solid #BDBDBD
+
+    &-new-pointer
+        position: absolute
+        top: 5px
+        left: 5px
+        width: 10px
+        height: 10px
+        border-radius: 50%
+        background-color: #FFB300
+
+    &-text
+        margin: 0 5px
+        width: -webkit-fill-available
+
+    &-message
+        line-height: normal
+        margin-top: 5px
+
+    &-link
+        text-decoration: none
+        color: #2b5df3
+
+        &:hover
+            text-decoration: underline
+
+
+    &-user
+        &-nickname
+            font-size: 14pt
+            font-family: 'Scada', sans-serif
+
+        &-avatar
+            height: 50px
+            width: 50px
+            border-radius: 50%
+            object-fit: cover
+
+    &-inviter
+        &-nickname
+            @extend .header-notification-user-nickname
+
+    &-invitee
+        display: flex
+        flex-direction: column
+        justify-content: flex-end
+
+        &-nickname
+            display: flex
+            justify-content: flex-end
+            margin-top: 5px
+            @extend .header-notification-user-nickname
+
 .authorized
     @media screen and (max-width: $tablet-breakpoint)
         .main-header-center

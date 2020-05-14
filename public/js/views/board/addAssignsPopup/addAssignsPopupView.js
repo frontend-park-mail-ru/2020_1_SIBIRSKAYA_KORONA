@@ -24,6 +24,7 @@ export default class AddAssignsPopupView extends BaseView {
      */
     render(clickCoords) {
         if (clickCoords) {
+            this.root.removeAttribute('style');
             this.root.style.left = clickCoords.x + 'px';
             this.root.style.top = clickCoords.y + 'px';
         }

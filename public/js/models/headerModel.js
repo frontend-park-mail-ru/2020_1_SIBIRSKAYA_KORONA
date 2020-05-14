@@ -1,5 +1,11 @@
 import * as http from 'http-status-codes';
-import {notificationsDelete, notificationsGet, sessionDelete, settingsGet} from '../libs/apiService.js';
+import {
+    notificationsDelete,
+    notificationsGet,
+    notificationsPut,
+    sessionDelete,
+    settingsGet,
+} from '../libs/apiService.js';
 import {parseNotification} from '../libs/notificationsParser.js';
 
 /**
@@ -18,10 +24,14 @@ export default class HeaderModel {
         this.getUserData = this.getUserData.bind(this);
         this.logout = this.logout.bind(this);
         this.getNotifications = this.getNotifications.bind(this);
+        this.readNotifications = this.readNotifications.bind(this);
+        this.deleteNotifications = this.deleteNotifications.bind(this);
 
         this.eventBus.subscribe('getData', this.getUserData);
         this.eventBus.subscribe('submitLogout', this.logout);
         this.eventBus.subscribe('getNotifications', this.getNotifications);
+        this.eventBus.subscribe('readNotifications', this.readNotifications);
+        this.eventBus.subscribe('deleteNotifications', this.deleteNotifications);
     }
 
     /**
@@ -86,28 +96,28 @@ export default class HeaderModel {
     /**
      * Get user notifications
      */
-    getNotifications() {
-        notificationsGet().then((response) => {
-            switch (response.status) {
-                case http.OK:
-                    const notifications = [];
-                    response.json().then((responseJson) => {
-                        responseJson.forEach((notification) => {
-                            notifications.push(parseNotification(notification));
-                        });
-                        this.eventBus.call('gotNotifications', notifications);
-                    }).catch((error) => {
-                        console.log(error);
-                    });
-
-                    break;
-                case http.UNAUTHORIZED:
-                    this.eventBus.call('logout');
-                    break;
-                default:
-                    console.log('Бекендер молодец!!!', response.status);
-            }
-        });
+    async getNotifications() {
+        const response = await notificationsGet();
+        switch (response.status) {
+            case http.OK:
+                const notifications = [];
+                const responseJson = await response.json();
+                const parseConfig = {enableDate: true, enableIsRead: true};
+                responseJson.forEach((notification) => {
+                    const parsedNotification = parseNotification(notification, parseConfig);
+                    if (parsedNotification) {
+                        notifications.push(parsedNotification);
+                    }
+                });
+                console.log(notifications);
+                this.eventBus.call('gotNotifications', notifications);
+                break;
+            case http.UNAUTHORIZED:
+                this.eventBus.call('logout');
+                break;
+            default:
+                console.log('Бекендер молодец!!!', response.status);
+        }
     }
 
     /**
@@ -132,7 +142,7 @@ export default class HeaderModel {
      * Mark all user notifications read
      */
     readNotifications() {
-        notificationsDelete().then((response) => {
+        notificationsPut().then((response) => {
             switch (response.status) {
                 case http.OK:
                     this.getNotifications();

@@ -1,5 +1,5 @@
-import template from './addChecklistPopup.tmpl.xml';
 import BaseView from '../../baseView.js';
+import template from './addChecklistPopup.tmpl.xml';
 
 /**
  * View of 'Add label' popup
@@ -22,6 +22,7 @@ export default class AddChecklistPopupView extends BaseView {
      * @param {Object} clickCoords - {x, y}
      */
     render(clickCoords) {
+        this.root.removeAttribute('style');
         this.root.style.left = clickCoords.x + 'px';
         this.root.style.top = clickCoords.y + 'px';
         this.root.innerHTML = template();

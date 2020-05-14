@@ -1,6 +1,6 @@
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import '../css/sass/base.sass';
-import Notifications from './components/notifications.js';
+import Notifications from './notifications/notifications.js';
 import BoardController from './controllers/boardControl.js';
 import BoardsController from './controllers/boardsControl.js';
 import HeaderController from './controllers/headerControl.js';

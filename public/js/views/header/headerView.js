@@ -1,3 +1,4 @@
+import {ChainLinkSignals} from '../../libs/controllerChainLink.js';
 import BaseView from '../baseView.js';
 import template from './headerView.tmpl.xml';
 
@@ -58,11 +59,19 @@ export default class HeaderView extends BaseView {
                 document.getElementById('submitLogin'),
                 document.getElementById('submitJoin'),
             ];
+            const windowOverlay = taskSettings.querySelector('.window-overlay');
+            windowOverlay.addEventListener('click', (event) => {
+                if (event.target === event.currentTarget) {
+                    event.stopPropagation();
+                    this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
+                }
+            });
         }
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
         });
     }
+
     //
     // 'openNotificationsPopup'
     // 'closeNotificationPopup'
