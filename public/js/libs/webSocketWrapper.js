@@ -1,4 +1,4 @@
-const WEBSOCKET_URL = `wss://${IP_ADDRESS}:8080/ws`;
+const WEBSOCKET_URL = `wss://${IP_ADDRESS}:8080/api/ws`;
 
 /**
  * Class for work with socket, exports as instance
