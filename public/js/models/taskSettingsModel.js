@@ -18,6 +18,7 @@ import {
     taskPut,
 } from '../libs/apiService.js';
 import responseSwitchBuilder from '../libs/responseSwitchBuilder.js';
+import parseDate from '../libs/dateParser.js';
 
 /**
  * Task settings model
@@ -150,17 +151,7 @@ export default class TaskSettingsModel {
         if (!(await this.handleResponseStatus(commentsResponse, (body) => {
             taskData.comments = new Array(body.length);
             body.forEach((comment, i) => {
-                const date = new Date(comment.createdAt * 1000);
-                const parsedDate = {
-                    day: (date.getDate() > 9) ? date.getDate() : '0' + date.getDate(),
-                    month: (date.getMonth() > 9) ? date.getMonth() : '0' + date.getMonth(),
-                    year: date.getFullYear(),
-                    hours: (date.getHours() > 9) ? date.getHours() : '0' + date.getHours(),
-                    minutes: (date.getMinutes() > 9) ? date.getMinutes() : '0' + date.getMinutes(),
-                    seconds: (date.getSeconds() > 9) ? date.getSeconds() : '0' + date.getSeconds(),
-                };
-                let dateString = `${parsedDate.day}.${parsedDate.month}.${parsedDate.year}`;
-                dateString += ` ${parsedDate.hours}:${parsedDate.minutes}:${parsedDate.seconds}`;
+                const dateString = parseDate(comment.createdAt);
                 taskData.comments[i] = {
                     id: comment.id,
                     text: comment.text,

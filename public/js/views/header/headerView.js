@@ -1,4 +1,3 @@
-import {ChainLinkSignals} from '../../libs/controllerChainLink.js';
 import BaseView from '../baseView.js';
 import template from './headerView.tmpl.xml';
 
@@ -15,12 +14,14 @@ export default class HeaderView extends BaseView {
         this.root = document.getElementById('header');
 
         this.render = this.render.bind(this);
-        this.handleButtonClick = this.handleButtonClick.bind(this);
         this.renderUserData = this.renderUserData.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.setNotificationsCounter = this.setNotificationsCounter.bind(this);
 
         this.eventBus.subscribe('login', this.render);
         this.eventBus.subscribe('logout', this.renderUserData);
         this.eventBus.subscribe('gotData', this.renderUserData);
+        this.eventBus.subscribe('setNotificationsCounter', this.setNotificationsCounter);
     }
 
     /**
@@ -59,24 +60,12 @@ export default class HeaderView extends BaseView {
                 document.getElementById('submitLogin'),
                 document.getElementById('submitJoin'),
             ];
-            const windowOverlay = taskSettings.querySelector('.window-overlay');
-            windowOverlay.addEventListener('click', (event) => {
-                if (event.target === event.currentTarget) {
-                    event.stopPropagation();
-                    this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
-                }
-            });
         }
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
         });
     }
 
-    //
-    // 'openNotificationsPopup'
-    // 'closeNotificationPopup'
-    //
-    //
     /**
      * Handle user click on buttons
      * @param {Event} event - button click event
@@ -88,5 +77,19 @@ export default class HeaderView extends BaseView {
             event.preventDefault();
             this.eventBus.call(event.target.id);
         }
+    }
+
+    /**
+     * Sets notification count in header
+     * @param {Number} count - unread notifications count
+     */
+    setNotificationsCounter(count) {
+        const notificationCounterDiv = this.root.querySelector('.js-notificationCounter');
+        if (count > 0) {
+            notificationCounterDiv.classList.remove('display-none');
+        } else {
+            notificationCounterDiv.classList.add('display-none');
+        }
+        notificationCounterDiv.innerText = count;
     }
 }

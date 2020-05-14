@@ -29,6 +29,7 @@ export default class HeaderController extends ControllerChainLink {
             'submitSettings',
 
             'openNotificationsPopup',
+            'setNotificationsCounter',
             'getNotifications',
             'gotNotifications',
             'readNotifications',

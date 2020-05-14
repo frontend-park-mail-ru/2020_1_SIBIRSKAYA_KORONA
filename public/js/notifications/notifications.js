@@ -1,7 +1,7 @@
-import webSocket from '../libs/webSocketWrapper.js';
-import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
-import notificationTemplate from './notification.tmpl.xml';
 import {parseNotification} from '../libs/notificationsParser.js';
+import webSocket from '../libs/webSocketWrapper.js';
+import defaultNotificationTemplate from './defaultNotification.tmpl.xml';
+import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
 
 const NOTIFICATION_LIFE_TIME = 4000;
 /**
@@ -43,19 +43,21 @@ export default class Notifications {
     newNotificationHandler(event) {
         const msg = JSON.parse(event.data);
         console.log(msg);
-        let newNotificationData;
-        switch (msg.eventType) {
+        const newNotificationData = parseNotification(msg);
+        switch (newNotificationData?.type) {
             case 'AssignOnTask':
             case 'InviteToBoard':
-                newNotificationData = parseNotification(msg);
+                if (newNotificationData?.inviter && newNotificationData?.inviter) {
+                    this.renderNotification(newNotificationData, inviteNotificationTemplate);
+                } else {
+                    this.renderNotification(newNotificationData, defaultNotificationTemplate);
+                }
+                break;
+            case 'AddComment':
+                this.renderNotification(newNotificationData, defaultNotificationTemplate);
                 break;
             default:
-                // We don`t need to render it because this message type handles in other place
-        }
-        if (newNotificationData?.inviter && newNotificationData?.inviter) {
-            this.renderNotification(newNotificationData, inviteNotificationTemplate);
-        } else if (newNotificationData?.user) {
-            this.renderNotification(newNotificationData, notificationTemplate);
+                break;
         }
     }
 

@@ -21,6 +21,9 @@
                     <fest:value>data.link.text</fest:value>
                 </a>
             </div>
+            <div class="header-notification-comment">
+                <fest:value>data.comment</fest:value>
+            </div>
         </div>
     </div>
 </fest:template>

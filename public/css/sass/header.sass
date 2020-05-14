@@ -74,10 +74,29 @@
                 @extend .avatar-round
 
         &__notifications
-            margin: 0 8px
-            height: 33px
-            width: 33px
-            cursor: pointer
+            position: relative
+
+            &-counter
+                position: absolute
+                top: 0
+                right: 5px
+                width: 22px
+                height: 22px
+                background-color: #FFB300
+                color: black
+                font-size: 16px
+                letter-spacing: -1px
+                font-weight: bold
+                border-radius: 50%
+                display: flex
+                align-items: center
+                justify-content: center
+
+            &-icon
+                margin: 0 8px
+                height: 33px
+                width: 33px
+                cursor: pointer
 
 
 .header-notifications
@@ -91,6 +110,7 @@
         display: flex
         justify-content: space-between
         margin: 0 10px
+
         &__button
             &--primary
                 @extend .button--primary
@@ -113,6 +133,7 @@
     display: flex
     position: relative
     border-top: 1px solid #E0E0E0
+
     &:hover
         background-color: #e8eaf6
 
@@ -120,6 +141,18 @@
         @extend .header-notification
         background-color: #E0E0E0
         border-top: 1px solid #BDBDBD
+
+    &-date
+        position: absolute
+        top: 10px
+        right: 5px
+        font-family: 'Scada', sans-serif
+        color: #757575
+        font-size: 14px
+
+        &:hover
+            text-decoration: underline
+
 
     &-new-pointer
         position: absolute
@@ -134,9 +167,13 @@
         margin: 0 5px
         width: -webkit-fill-available
 
+    &-comment
+        margin-top: 5px
+        font-size: 15px
+
     &-message
         line-height: normal
-        margin-top: 5px
+        margin-top: 10px
 
     &-link
         text-decoration: none
@@ -144,7 +181,6 @@
 
         &:hover
             text-decoration: underline
-
 
     &-user
         &-nickname
@@ -169,7 +205,7 @@
         &-nickname
             display: flex
             justify-content: flex-end
-            margin-top: 5px
+            margin-top: 10px
             @extend .header-notification-user-nickname
 
 .authorized

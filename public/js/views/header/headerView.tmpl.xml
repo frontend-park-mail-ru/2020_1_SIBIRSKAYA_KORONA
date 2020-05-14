@@ -44,8 +44,11 @@
                             </fest:attribute>
                         </fest:attributes>
                     </img>
-                    <img id="js-notifications" width="35" height="35" class="main-header-right__notifications"
-                         src="/img/bell.svg"/>
+                    <div class="main-header-right__notifications">
+                        <img id="js-notifications" width="35" height="35" class="main-header-right__notifications-icon"
+                             src="/img/bell.svg"/>
+                        <div class="main-header-right__notifications-counter js-notificationCounter display-none"/>
+                    </div>
                     <div id="submitLogout" class="main-header-right__button--danger">Выйти</div>
                 </fest:when>
                 <fest:otherwise>

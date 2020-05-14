@@ -101,12 +101,14 @@ export default class TaskSettingsView extends BaseView {
             case classList.contains('task'):
                 this.eventBus.call(ChainLinkSignals.closeLastChainLink);
                 break;
+
             case classList.contains('js-addNewLabel'):
                 event.stopPropagation();
                 const {x, y} = event.currentTarget.getBoundingClientRect();
                 this.eventBus.call('openAddLabelPopup', {x, y});
                 this.handleCloseAssignsPopup();
                 break;
+
             case classList.contains('js-addAssign'):
                 if (!this.assignPopupOpened) {
                     this.assignPopupOpened = true;
@@ -117,11 +119,13 @@ export default class TaskSettingsView extends BaseView {
                     this.handleCloseAssignsPopup();
                 }
                 break;
+
             case classList.contains('js-addNewChecklist'):
                 event.stopPropagation();
                 this.eventBus.call('openAddChecklistPopup', {x: event.pageX, y: event.pageY});
                 this.handleCloseAssignsPopup();
                 break;
+
             case classList.contains('js-addNewChecklistItem'):
             case classList.contains('js-closeChecklistItemForm'): {
                 const checklistElement = event.currentTarget.closest('.checklist');
@@ -130,6 +134,7 @@ export default class TaskSettingsView extends BaseView {
                 checklistElement.querySelector('.js-inputNewItemTitle').focus();
                 break;
             }
+
             case classList.contains('js-deleteChecklist'): {
                 const checklistElement = event.currentTarget.closest('.checklist');
                 const checklistID = checklistElement.dataset.checklistId;
@@ -163,17 +168,21 @@ export default class TaskSettingsView extends BaseView {
                     this.eventBus.call('addChecklistItem', {checklistID, text, isDone: false});
                 }
                 break;
+
             case classList.contains('js-checklistItem'):
                 this.handleToggleCheckBox(event.target);
                 break;
+
             case classList.contains('js-saveTask'):
                 const description = this.root.querySelector('.js-inputDescription')?.innerText;
                 const title = this.root.querySelector('.js-inputTitle')?.value;
                 this.eventBus.call('saveTaskSettings', {title, description});
                 break;
+
             case classList.contains('js-deleteTask'):
                 this.eventBus.call('deleteTask');
                 break;
+
             case classList.contains('js-saveComment'):
                 const commentText = this.root.querySelector('.js-commentText').innerText;
                 if (commentText.length !== 0) {
@@ -189,6 +198,7 @@ export default class TaskSettingsView extends BaseView {
                     this.eventBus.call(ChainLinkSignals.closeLastChainLinkOrSelf);
                 }
                 break;
+
             case classList.contains('js-closeTaskButton'):
                 event.stopPropagation();
                 document.getElementById('popover-block').innerHTML = '';

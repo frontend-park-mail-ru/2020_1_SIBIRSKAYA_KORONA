@@ -1,5 +1,6 @@
 import BaseView from '../../baseView.js';
 import template from './addNotificationsPopup.tmpl.xml';
+import commentNotificationTemplate from './commentNotification.tmpl.xml';
 import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
 import defaultNotificationTemplate from './notification.tmpl.xml';
 
@@ -42,10 +43,21 @@ export default class AddAssignsPopupView extends BaseView {
         const notificationsList = this.root.querySelector('.js-notifications');
         notifications.forEach((notification) => {
             const notificationDiv = document.createElement('div');
-            if (notification?.inviter && notification?.inviter) {
-                notificationDiv.innerHTML = inviteNotificationTemplate(notification);
-            } else if (notification?.user) {
-                notificationDiv.innerHTML = defaultNotificationTemplate(notification);
+            switch (notification.type) {
+                case 'AssignOnTask':
+                case 'InviteToBoard':
+                    if (notification?.inviter && notification?.inviter) {
+                        notificationDiv.innerHTML = inviteNotificationTemplate(notification);
+                    } else {
+                        notificationDiv.innerHTML = defaultNotificationTemplate(notification);
+                    }
+                    break;
+                case 'AddComment':
+                    notificationDiv.innerHTML = commentNotificationTemplate(notification);
+                    break;
+                default:
+                    notificationDiv.innerHTML = defaultNotificationTemplate(notification);
+                    break;
             }
             notificationDiv.classList.add((notification.isRead) ? 'header-notification__read' : 'header-notification');
             notificationsList.append(notificationDiv);
@@ -82,7 +94,9 @@ export default class AddAssignsPopupView extends BaseView {
                 this.eventBus.call('readNotifications');
                 break;
             case targetClassList.contains('js-deleteNotifications'):
+                event.stopPropagation();
                 this.eventBus.call('deleteNotifications');
+                this.closeSelf();
                 break;
             default:
                 break;
