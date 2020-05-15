@@ -1,4 +1,5 @@
 import {boardsGet, boardsPost} from '../libs/apiService.js';
+import webSocket from '../libs/webSocketWrapper.js';
 
 /**
  * Main header model
@@ -13,7 +14,8 @@ export default class HeaderModel {
 
         this.getBoards = this.getBoards.bind(this);
         this.addNewBoard = this.addNewBoard.bind(this);
-
+        this.socket = webSocket;
+        this.socket.subscribe('message', this.liveUpdateHandler.bind(this));
         this.eventBus.subscribe('getBoards', this.getBoards);
         this.eventBus.subscribe('addBoard', this.addNewBoard);
     }
@@ -70,6 +72,17 @@ export default class HeaderModel {
                 break;
             default:
                 console.log('Бекендер молодец!!!');
+        }
+    }
+
+    /**
+     * Handles messages from websocket for live update
+     * @param {Event} event - websocket message event
+     */
+    liveUpdateHandler(event) {
+        const msg = JSON.parse(event.data);
+        if (msg.eventType === 'InviteToBoard' && window.location.pathname === '/boards') {
+            this.getBoards();
         }
     }
 }
