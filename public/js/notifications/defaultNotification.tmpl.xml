@@ -17,6 +17,11 @@
                     </a>
                 </div>
             </div>
+            <fest:if test="data.comment">
+                <div class="notification-comment">
+                    <fest:value>data.comment</fest:value>
+                </div>
+            </fest:if>
         </div>
     </div>
 </fest:template>

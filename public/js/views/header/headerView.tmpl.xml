@@ -44,8 +44,8 @@
                             </fest:attribute>
                         </fest:attributes>
                     </img>
-                    <div class="main-header-right__notifications">
-                        <img id="js-notifications" width="35" height="35" class="main-header-right__notifications-icon"
+                    <div class="main-header-right__notifications js-notifications" >
+                        <img width="35" height="35" class="main-header-right__notifications-icon"
                              src="/img/bell.svg"/>
                         <div class="main-header-right__notifications-counter js-notificationCounter display-none"/>
                     </div>

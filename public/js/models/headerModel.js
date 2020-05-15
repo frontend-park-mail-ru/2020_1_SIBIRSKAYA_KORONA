@@ -98,11 +98,16 @@ export default class HeaderModel {
      */
     socketMessageHandler(event) {
         const msg = JSON.parse(event.data);
-        if (this.notificationEvents.has(msg.eventType)) {
-            this.notificationCounter++;
-            this.eventBus.call('setNotificationsCounter', this.notificationCounter);
+        if (!this.notificationEvents.has(msg.eventType)) {
+            return;
         }
-        console.log(this.notificationCounter);
+        this.notificationCounter++;
+        this.eventBus.call('setNotificationsCounter', this.notificationCounter);
+        const parseConfig = {enableDate: true, enableIsRead: true};
+        const parsedNotification = parseNotification(msg, parseConfig);
+        this.eventBus.call('newNotificationReceived', parsedNotification);
+
+        // console.log(this.notificationCounter);
     }
 
     /**
@@ -138,6 +143,7 @@ export default class HeaderModel {
                     this.notificationCounter++;
                 }
             });
+            this.eventBus.call('setNotificationsCounter', this.notificationCounter);
         });
     }
 
@@ -155,7 +161,6 @@ export default class HeaderModel {
                     notifications.push(parsedNotification);
                 }
             });
-            console.log(notifications);
             this.eventBus.call('gotNotifications', notifications);
         });
     }

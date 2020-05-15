@@ -30,6 +30,7 @@ export default class HeaderController extends ControllerChainLink {
 
             'openNotificationsPopup',
             'setNotificationsCounter',
+            'newNotificationReceived', // new notification fromm websocket
             'getNotifications',
             'gotNotifications',
             'readNotifications',

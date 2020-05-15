@@ -1,8 +1,7 @@
 import BaseView from '../../baseView.js';
 import template from './addNotificationsPopup.tmpl.xml';
-import commentNotificationTemplate from './commentNotification.tmpl.xml';
+import defaultNotificationTemplate from './defaultNotification.tmpl.xml';
 import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
-import defaultNotificationTemplate from './notification.tmpl.xml';
 
 /**
  * Header notifications popup view
@@ -21,6 +20,7 @@ export default class AddAssignsPopupView extends BaseView {
         this.handleButtonClick = this.handleButtonClick.bind(this);
 
         this.eventBus.subscribe('gotNotifications', this.renderNotifications.bind(this));
+        this.eventBus.subscribe('newNotificationReceived', this.renderNotification.bind(this));
     }
 
     /**
@@ -42,28 +42,39 @@ export default class AddAssignsPopupView extends BaseView {
         this.root.innerHTML = template();
         const notificationsList = this.root.querySelector('.js-notifications');
         notifications.forEach((notification) => {
-            const notificationDiv = document.createElement('div');
-            switch (notification.type) {
-                case 'AssignOnTask':
-                case 'InviteToBoard':
-                    if (notification?.inviter && notification?.inviter) {
-                        notificationDiv.innerHTML = inviteNotificationTemplate(notification);
-                    } else {
-                        notificationDiv.innerHTML = defaultNotificationTemplate(notification);
-                    }
-                    break;
-                case 'AddComment':
-                    notificationDiv.innerHTML = commentNotificationTemplate(notification);
-                    break;
-                default:
-                    notificationDiv.innerHTML = defaultNotificationTemplate(notification);
-                    break;
-            }
-            notificationDiv.classList.add((notification.isRead) ? 'header-notification__read' : 'header-notification');
-            notificationsList.append(notificationDiv);
+            this.renderNotification(notification, notificationsList);
         });
         this.addEventListeners();
-        notificationsList.scrollTo(0, 0);
+    }
+
+    /**
+     * Appends notification in notification list
+     * @param {Object} notification - new notification data
+     * @param {Element} notificationsListNode - div where new notification should be appended
+     */
+    renderNotification(notification, notificationsListNode) {
+        notificationsListNode = notificationsListNode || this.root.querySelector('.js-notifications');
+        if (!notificationsListNode) {
+            return;
+        }
+        const notificationDiv = document.createElement('div');
+        switch (notification.type) {
+            case 'AssignOnTask':
+            case 'InviteToBoard':
+                if (notification?.inviter && notification?.inviter) {
+                    notificationDiv.innerHTML = inviteNotificationTemplate(notification);
+                } else {
+                    notificationDiv.innerHTML = defaultNotificationTemplate(notification);
+                }
+                break;
+            case 'AddComment':
+            default:
+                notificationDiv.innerHTML = defaultNotificationTemplate(notification);
+                break;
+        }
+        notificationDiv.classList.add((notification.isRead) ? 'header-notification__read' : 'header-notification');
+        notificationsListNode.append(notificationDiv);
+        notificationsListNode.scrollTo(0, 0);
     }
 
     /**

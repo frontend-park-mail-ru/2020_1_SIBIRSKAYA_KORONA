@@ -42,7 +42,6 @@ export default class Notifications {
      */
     newNotificationHandler(event) {
         const msg = JSON.parse(event.data);
-        console.log(msg);
         const newNotificationData = parseNotification(msg);
         switch (newNotificationData?.type) {
             case 'AssignOnTask':

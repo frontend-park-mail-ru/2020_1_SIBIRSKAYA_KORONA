@@ -20,7 +20,6 @@ class WebSocketWrapper {
     connect() {
         console.log('Try to connect');
         const connectionState = this.socket?.readyState;
-        console.log(connectionState);
         if (connectionState === WebSocket.OPEN || connectionState === WebSocket.CONNECTING) {
             console.log('Already connected');
             return;
@@ -30,8 +29,6 @@ class WebSocketWrapper {
             console.log('Socket connected');
         };
         this.socket.onmessage = (event) => {
-            console.log(event);
-            console.log(this.messageSubscribers);
             this.messageSubscribers.forEach((handler) => {
                 handler(event);
             });
@@ -73,9 +70,6 @@ class WebSocketWrapper {
     subscribe(eventType, handler) {
         switch (eventType) {
             case 'message':
-                if (this.messageSubscribers.has(handler)) {
-                    console.log('ZALUPA');
-                }
                 this.messageSubscribers.add(handler);
                 break;
             case 'close':

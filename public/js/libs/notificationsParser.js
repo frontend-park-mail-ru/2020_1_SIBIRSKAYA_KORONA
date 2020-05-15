@@ -55,7 +55,7 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
                 user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
                 link: {text: msg.metaData.entityData, href: taskHref},
                 text: 'прокомментировал задачу',
-                comment: msg.metaData?.about,
+                comment: msg.metaData?.text,
             };
             break;
         default:
@@ -66,7 +66,7 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
         parsedNotificationData.date = parseDate(msg.createAt);
     }
     if (config.enableIsRead) {
-        parsedNotificationData.isRead = msg.isRead;
+        parsedNotificationData.isRead = !!msg.isRead;
     }
     parsedNotificationData.type = msg.eventType;
     return parsedNotificationData;

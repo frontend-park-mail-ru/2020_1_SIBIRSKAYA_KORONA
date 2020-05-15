@@ -50,15 +50,15 @@ export default class HeaderView extends BaseView {
         let buttons = [];
         if (authorized) {
             buttons = [
-                document.getElementById('submitSettings'),
-                document.getElementById('submitLogout'),
-                document.getElementById('submitBoards'),
-                document.getElementById('js-notifications'),
+                document.querySelector('#submitSettings'),
+                document.querySelector('#submitLogout'),
+                document.querySelector('#submitBoards'),
+                document.querySelector('.js-notifications'),
             ];
         } else {
             buttons = [
-                document.getElementById('submitLogin'),
-                document.getElementById('submitJoin'),
+                document.querySelector('#submitLogin'),
+                document.querySelector('#submitJoin'),
             ];
         }
         buttons.forEach((button) => {
@@ -71,7 +71,7 @@ export default class HeaderView extends BaseView {
      * @param {Event} event - button click event
      */
     handleButtonClick(event) {
-        if (event.target.id === 'js-notifications') {
+        if (event.currentTarget.classList.contains('js-notifications')) {
             this.eventBus.call('openNotificationsPopup');
         } else {
             event.preventDefault();

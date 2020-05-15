@@ -21,9 +21,12 @@
                     <fest:value>data.link.text</fest:value>
                 </a>
             </div>
+        </div>
+        <fest:if test="data.comment">
             <div class="header-notification-comment">
                 <fest:value>data.comment</fest:value>
             </div>
-        </div>
+        </fest:if>
+
     </div>
 </fest:template>
