@@ -60,6 +60,7 @@
                     Удалить доску
                 </div>
             </div>
+            <div class="board-settings__label ">Пригласительная ссылка</div>
             <div class="board-settings-invite">
                 <input class="board-settings__input js-copyLink" id="js-inviteLink" readonly="true">
                     <fest:attributes>
