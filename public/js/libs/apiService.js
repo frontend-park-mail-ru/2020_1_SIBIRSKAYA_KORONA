@@ -230,13 +230,13 @@ export const tasksPost = (boardID, columnID, task = {position: 1, description: '
 /**
  * Search users by part of nickname
  * @param {Number} boardID
- * @param {String} nicknamePart
+ * @param {String} nickname - part of nickname
  * @param {Number} limit - result count limit
  * @return {Promise<Response>}
  */
-export const usersGet = (boardID, nicknamePart, limit) => {
-    const apiUrl = new URL(`/boards/${boardID}/search_for_invite?nickname=${nicknamePart}&limit=${limit}`,
-        BACKEND_ADDRESS);
+export const usersGet = (boardID, nickname, limit) => {
+    const apiUrl = new URL(`boards/${boardID}/search_for_invite?nickname=${nickname}&limit=${limit}`, BACKEND_ADDRESS);
+    console.log(apiUrl);
     return fetchGet(apiUrl.href);
 };
 
@@ -247,7 +247,7 @@ export const usersGet = (boardID, nicknamePart, limit) => {
  * @return {Promise<Response>}
  */
 export const postMember = (boardID, userID) => {
-    const apiUrl = new URL(`/boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, null);
 };
 
@@ -425,7 +425,7 @@ export const taskChecklistItemDelete = (taskData, checklistID, itemId) => {
  * @return {Promise<Response>}
  */
 export const labelsGet = (boardID) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
 
@@ -436,7 +436,7 @@ export const labelsGet = (boardID) => {
  * @return {Promise<Response>}
  */
 export const labelsPost = (boardID, labelData = {title: void 0, color: void 0}) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify(labelData));
 };
 
@@ -447,7 +447,7 @@ export const labelsPost = (boardID, labelData = {title: void 0, color: void 0}) 
  * @return {Promise<Response>}
  */
 export const labelGet = (boardID, labelID) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
 
@@ -459,7 +459,7 @@ export const labelGet = (boardID, labelID) => {
  * @return {Promise<Response>}
  */
 export const labelPut = (boardID, labelID, labelData = {title: void 0, color: void 0}) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify(labelData));
 };
 
@@ -470,7 +470,7 @@ export const labelPut = (boardID, labelID, labelData = {title: void 0, color: vo
  * @return {Promise<Response>}
  */
 export const labelDelete = (boardID, labelID) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
 

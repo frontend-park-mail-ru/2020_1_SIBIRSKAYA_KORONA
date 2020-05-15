@@ -39,6 +39,8 @@ export default class HeaderModel {
         this.eventBus.subscribe('readNotifications', this.readNotifications);
         this.eventBus.subscribe('deleteNotifications', this.deleteNotifications);
 
+        this.socket.subscribe('message', this.socketMessageHandler);
+
         this.notificationEvents = new Set(['AssignOnTask', 'InviteToBoard', 'AddComment']);
         this.notificationCounter = 0;
 
@@ -107,8 +109,6 @@ export default class HeaderModel {
      * Use api to get user data and settings from backend
      */
     async getUserData() {
-        this.socket.connect();
-        this.socket.subscribe('message', this.socketMessageHandler);
         settingsGet().then((response) => {
             switch (response.status) {
                 case http.OK:

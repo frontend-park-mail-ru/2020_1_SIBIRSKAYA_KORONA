@@ -9,9 +9,9 @@ class WebSocketWrapper {
      */
     constructor(webSocketURL) {
         this.url = webSocketURL;
-        this.messageSubscribers = [];
-        this.closeSubscribers = [];
-        this.errorSubscribers = [];
+        this.messageSubscribers = new Set();
+        this.closeSubscribers = new Set();
+        this.errorSubscribers = new Set();
     }
 
     /**
@@ -20,6 +20,7 @@ class WebSocketWrapper {
     connect() {
         console.log('Try to connect');
         const connectionState = this.socket?.readyState;
+        console.log(connectionState);
         if (connectionState === WebSocket.OPEN || connectionState === WebSocket.CONNECTING) {
             console.log('Already connected');
             return;
@@ -29,17 +30,21 @@ class WebSocketWrapper {
             console.log('Socket connected');
         };
         this.socket.onmessage = (event) => {
+            console.log(event);
+            console.log(this.messageSubscribers);
             this.messageSubscribers.forEach((handler) => {
                 handler(event);
             });
         };
         this.socket.onclose = (event) => {
-            console.log('Socket disconnected by backend');
+            console.log('Socket closed');
             this.closeSubscribers.forEach((handler) => {
                 handler(event);
             });
+            this.socket = null;
         };
         this.socket.onerror = (event) => {
+            console.log('WS ERROR', event);
             this.errorSubscribers.forEach((handler) => {
                 handler(event);
             });
@@ -50,32 +55,34 @@ class WebSocketWrapper {
      * Close socket
      */
     disconnect() {
+        console.log('Try to close socket');
         const connectionState = this.socket?.readyState;
         if (connectionState === WebSocket.CLOSED || connectionState === WebSocket.CLOSING) {
+            console.log('Already closed');
             return;
         }
         this.socket.close();
-        this.messageSubscribers = [];
-        this.closeSubscribers = [];
-        this.errorSubscribers = [];
-        console.log('Socket disconnected');
     }
 
     /**
      * Subscribes on event with handler
+     * Handlers are stored in set, and double subscribe with one handler is impossible
      * @param {String} eventType - websocket events
      * @param {Function} handler - event handler
      */
     subscribe(eventType, handler) {
         switch (eventType) {
             case 'message':
-                this.messageSubscribers.push(handler);
+                if (this.messageSubscribers.has(handler)) {
+                    console.log('ZALUPA');
+                }
+                this.messageSubscribers.add(handler);
                 break;
             case 'close':
-                this.closeSubscribers.push(handler);
+                this.closeSubscribers.add(handler);
                 break;
             case 'error':
-                this.errorSubscribers.push(handler);
+                this.errorSubscribers.add(handler);
                 break;
             default:
                 break;

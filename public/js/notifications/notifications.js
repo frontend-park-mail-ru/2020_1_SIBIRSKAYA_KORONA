@@ -16,6 +16,7 @@ export default class Notifications {
         this.root = document.querySelector('#notifications');
         this.enable = false;
         globalEventBus.subscribe('enableNotifications', this.enableNotifications.bind(this));
+        this.socket.subscribe('message', this.newNotificationHandler.bind(this));
     }
 
     /**
@@ -30,7 +31,6 @@ export default class Notifications {
         this.enable = enable;
         if (this.enable) {
             this.socket.connect();
-            this.socket.subscribe('message', this.newNotificationHandler.bind(this));
         } else {
             this.socket.disconnect();
         }
