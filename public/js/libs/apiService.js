@@ -167,6 +167,16 @@ export const boardPut = (boardID, newData) => {
     return fetchPut(apiUrl.href, JSON.stringify(newData));
 };
 
+/**
+ * Generate new invite link
+ * @param {Number} boardID
+ * @return {Promise<Response>}
+ */
+export const boardInviteLinkPost = (boardID) => {
+    const apiUrl = new URL(`boards/${boardID}/invite_link`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, null);
+};
+
 /** ********************* COLUMNS ***********************/
 
 /**

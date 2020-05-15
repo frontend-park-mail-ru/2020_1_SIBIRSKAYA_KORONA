@@ -23,6 +23,7 @@ export default class TaskSettingsController extends ControllerChainLink {
             'gotUsers',
 
             'inviteUser',
+            'updateInviteLink',
 
             'saveBoard',
             'deleteBoard',

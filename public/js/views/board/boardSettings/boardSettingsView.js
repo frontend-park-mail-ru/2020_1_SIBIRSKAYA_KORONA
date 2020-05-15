@@ -66,6 +66,8 @@ export default class BoardSettingsView extends BaseView {
             document.querySelector('.js-closeBoardSettingsButton'),
             document.querySelector('.js-saveBoard'),
             document.querySelector('.js-deleteBoard'),
+            document.querySelector('.js-generateLink'),
+            ...document.querySelectorAll('.js-copyLink'),
         ];
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
@@ -147,6 +149,18 @@ export default class BoardSettingsView extends BaseView {
                     this.eventBus.call('deleteBoard');
                     this.closeSelf();
                 }
+                break;
+
+            case target.classList.contains('js-copyLink'):
+                const copyText = document.getElementById('js-inviteLink');
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand('copy');
+                window.getSelection().empty();
+                break;
+            case target.classList.contains('js-generateLink'):
+                target.style.transform = 'rotate(360deg)';
+                this.eventBus.call('updateInviteLink');
                 break;
             default:
                 break;

@@ -60,6 +60,21 @@
                     Удалить доску
                 </div>
             </div>
+            <div class="board-settings-invite">
+                <input class="board-settings__input js-copyLink" id="js-inviteLink" readonly="true">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>board.inviteLink</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
+                <div class="board-settings-copy-button js-copyLink">
+                    <img src="/img/copy_icon.png" class="board-settings-copy-button-icon" title="Копировать"/>
+                </div>
+                <div class="board-settings-update-button js-generateLink">
+                    <img src="/img/update_icon.png" class="board-settings-update-button-icon" title="Обновить"/>
+                </div>
+            </div>
 
             <div class="container-2cols">
                 <div class="container-col">
@@ -92,19 +107,6 @@
                         <img class="board-settings-members__add-button js-findMember" src="/img/plus_icon.svg"/>
                     </div>
                 </div>
-                <!--<div>
-                    <div class="board__label">Метки</div>
-                    <div class="task-label-list">
-                        <fest:for iterate="board.labels" index="i" value="label">
-                            <div class="task-label-list__label-mini&#45;&#45;color-{label.color}">
-                                <fest:value>
-                                    label.title
-                                </fest:value>
-                            </div>
-                        </fest:for>
-                        <div class="button default" name="addNewLabelButton">+</div>
-                    </div>
-                </div>-->
             </div>
             <div class="js-search display-none">
                 <div class="search-form">
