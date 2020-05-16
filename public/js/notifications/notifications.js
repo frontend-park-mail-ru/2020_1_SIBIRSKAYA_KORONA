@@ -14,9 +14,9 @@ export default class Notifications {
     constructor(globalEventBus) {
         this.socket = webSocket;
         this.root = document.querySelector('#notifications');
-        this.enable = false;
         globalEventBus.subscribe('enableNotifications', this.enableNotifications.bind(this));
         this.socket.subscribe('message', this.newNotificationHandler.bind(this));
+        this.notificationSound = new Audio('/sounds/drill.mp3');
     }
 
     /**
@@ -25,11 +25,7 @@ export default class Notifications {
      */
     enableNotifications(enable) {
         console.log('Enable notifications', enable);
-        if (this.enable === enable) {
-            return;
-        }
-        this.enable = enable;
-        if (this.enable) {
+        if (enable) {
             this.socket.connect();
         } else {
             this.socket.disconnect();
@@ -66,6 +62,14 @@ export default class Notifications {
      * @param {Function} template - default false, set to true for use inviteNotificationTemplate for render
      */
     renderNotification(notificationData, template) {
+        if (this.notificationSound.duration > 0 && !this.notificationSound.paused) {
+            this.notificationSound.pause();
+            this.notificationSound.currentTime = 0;
+            this.notificationSound.play();
+        } else {
+            this.notificationSound.play();
+        }
+
         const newNotification = document.createElement('div');
         newNotification.innerHTML = template(notificationData);
         this.root.append(newNotification);

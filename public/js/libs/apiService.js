@@ -261,6 +261,17 @@ export const postMember = (boardID, userID) => {
     return fetchPost(apiUrl.href, null);
 };
 
+/**
+ * Add user to board by invite link
+ * @param {String} inviteHash - unique board hash
+ * @return {Promise<Response>}
+ */
+export const putMemberWithInviteLink = (inviteHash) => {
+    const apiUrl = new URL(`invite_to_board/${inviteHash}`, BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, null);
+};
+
+
 /** ******************* TASK SETTINGS ************************/
 
 /**

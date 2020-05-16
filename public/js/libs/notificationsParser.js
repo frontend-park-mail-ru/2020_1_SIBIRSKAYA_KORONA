@@ -1,4 +1,5 @@
 import parseDate from '../libs/dateParser.js';
+
 /**
  * Parse notification from backend
  * @param {Object} msg - notification message to parse
@@ -47,7 +48,7 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
             }
             break;
         }
-        case 'AddComment':
+        case 'AddComment': {
             let taskHref = '/boards/' + msg.metaData.bid;
             taskHref += '/columns/' + msg.metaData.cid;
             taskHref += '/tasks/' + msg.metaData.tid;
@@ -58,6 +59,19 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
                 comment: msg.metaData?.text,
             };
             break;
+        }
+        case 'TaskColumnChanged': {
+            let taskHref = '/boards/' + msg.metaData.bid;
+            taskHref += '/columns/' + msg.metaData.cid;
+            taskHref += '/tasks/' + msg.metaData.tid;
+            parsedNotificationData = {
+                user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
+                link: {text: msg.metaData.entityData, href: taskHref},
+                text: 'переместил в колонку "" задачу',
+                comment: msg.metaData?.text,
+            };
+            break;
+        }
         default:
             // We don`t need to render it because this message type handles in other place
             return;
