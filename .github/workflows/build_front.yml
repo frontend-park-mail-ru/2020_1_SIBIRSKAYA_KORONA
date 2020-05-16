@@ -49,4 +49,4 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           source: "./build"
 #            target: "/home/ubuntu/frontend/public/"
-          target: "/home/ubuntu/testing_frontend_deploy/"
+          target: "/home/ubuntu/testing_frontend_deploy/dist"
