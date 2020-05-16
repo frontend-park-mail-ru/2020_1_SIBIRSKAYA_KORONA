@@ -1,4 +1,5 @@
 import {boardGet, columnsGet, columnsPost, taskPut, tasksGet, tasksPost} from '../libs/apiService.js';
+import webSocket from '../libs/webSocketWrapper.js';
 
 /**
  * Board model
@@ -15,12 +16,9 @@ export default class BoardModel {
         eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
         eventBus.subscribe('addNewTask', this.addTask.bind(this));
         eventBus.subscribe('taskMoved', this.saveTask.bind(this));
-
-        this.boardData = {
-            title: 'BOARD NOT FOUND',
-            members: [],
-            columns: [],
-        };
+        this.boardData = {};
+        this.socket = webSocket;
+        this.socket.subscribe('message', this.liveUpdateHandler.bind(this));
     }
 
     /**
@@ -195,5 +193,27 @@ export default class BoardModel {
                 console.log('Бекендер молодец!!!');
                 break;
         }
+    }
+
+    /**
+     * Handles messages from websocket for live update
+     * @param {Event} event - websocket message event
+     */
+    liveUpdateHandler(event) {
+        const msg = JSON.parse(event.data);
+        switch (msg.eventType) {
+            case 'UpdateBoard':
+            case 'InviteToBoard':
+            case 'UpdateTask':
+            case 'AssignOnTask':
+                const updatedBoardUrl = `/boards/${msg.metaData.bid}`;
+                if (window.location.pathname === updatedBoardUrl) {
+                    this.getBoardData(this.boardData.id);
+                }
+                break;
+            default:
+                break;
+        }
+        console.log(msg);
     }
 }

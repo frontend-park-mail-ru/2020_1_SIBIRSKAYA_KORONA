@@ -1,5 +1,5 @@
-import template from './headerView.tmpl.xml';
 import BaseView from '../baseView.js';
+import template from './headerView.tmpl.xml';
 
 /**
  * Main header view
@@ -14,12 +14,14 @@ export default class HeaderView extends BaseView {
         this.root = document.getElementById('header');
 
         this.render = this.render.bind(this);
-        this.handleButtonClick = this.handleButtonClick.bind(this);
         this.renderUserData = this.renderUserData.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.setNotificationsCounter = this.setNotificationsCounter.bind(this);
 
         this.eventBus.subscribe('login', this.render);
         this.eventBus.subscribe('logout', this.renderUserData);
         this.eventBus.subscribe('gotData', this.renderUserData);
+        this.eventBus.subscribe('setNotificationsCounter', this.setNotificationsCounter);
     }
 
     /**
@@ -48,14 +50,15 @@ export default class HeaderView extends BaseView {
         let buttons = [];
         if (authorized) {
             buttons = [
-                document.getElementById('submitSettings'),
-                document.getElementById('submitLogout'),
-                document.getElementById('submitBoards'),
+                document.querySelector('#submitSettings'),
+                document.querySelector('#submitLogout'),
+                document.querySelector('#submitBoards'),
+                document.querySelector('.js-notifications'),
             ];
         } else {
             buttons = [
-                document.getElementById('submitLogin'),
-                document.getElementById('submitJoin'),
+                document.querySelector('#submitLogin'),
+                document.querySelector('#submitJoin'),
             ];
         }
         buttons.forEach((button) => {
@@ -68,7 +71,25 @@ export default class HeaderView extends BaseView {
      * @param {Event} event - button click event
      */
     handleButtonClick(event) {
-        event.preventDefault();
-        this.eventBus.call(event.target.id);
+        if (event.currentTarget.classList.contains('js-notifications')) {
+            this.eventBus.call('openNotificationsPopup');
+        } else {
+            event.preventDefault();
+            this.eventBus.call(event.target.id);
+        }
+    }
+
+    /**
+     * Sets notification count in header
+     * @param {Number} count - unread notifications count
+     */
+    setNotificationsCounter(count) {
+        const notificationCounterDiv = this.root.querySelector('.js-notificationCounter');
+        if (count > 0) {
+            notificationCounterDiv.classList.remove('display-none');
+        } else {
+            notificationCounterDiv.classList.add('display-none');
+        }
+        notificationCounterDiv.innerText = count;
     }
 }

@@ -46,7 +46,7 @@ export default class CreateLabelPopupView extends BaseView {
      */
     renderAddLabelPopup(boardLabelColors) {
         const popupDiv = document.getElementById('popup-block');
-
+        popupDiv.removeAttribute('style');
         popupDiv.style.left = this.position.left;
         popupDiv.style.top = this.position.top;
         popupDiv.innerHTML = template(boardLabelColors);

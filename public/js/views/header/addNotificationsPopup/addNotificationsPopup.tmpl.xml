@@ -1,0 +1,13 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="notifications">
+    <div class="header-notifications">
+        <div class="header-notifications-controls">
+            <div class="header-notifications-controls__button--secondary js-readNotifications">
+                Прочитать все
+            </div>
+            <div class="header-notifications-controls__button--danger js-deleteNotifications">
+                Удалить все
+            </div>
+        </div>
+        <div class="header-notifications-list js-notifications"/>
+    </div>
+</fest:template>

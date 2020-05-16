@@ -1,6 +1,6 @@
 import {fetchDelete, fetchGet, fetchPost, fetchPut} from './httpUtils.js';
 
-const BACKEND_ADDRESS = `https://${IP_ADDRESS}:8080/`;
+const BACKEND_ADDRESS = `https://${IP_ADDRESS}:8080/api/`;
 
 let CSRFToken;
 
@@ -167,6 +167,16 @@ export const boardPut = (boardID, newData) => {
     return fetchPut(apiUrl.href, JSON.stringify(newData));
 };
 
+/**
+ * Generate new invite link
+ * @param {Number} boardID
+ * @return {Promise<Response>}
+ */
+export const boardInviteLinkPost = (boardID) => {
+    const apiUrl = new URL(`boards/${boardID}/invite_link`, BACKEND_ADDRESS);
+    return fetchPost(apiUrl.href, null);
+};
+
 /** ********************* COLUMNS ***********************/
 
 /**
@@ -230,13 +240,13 @@ export const tasksPost = (boardID, columnID, task = {position: 1, description: '
 /**
  * Search users by part of nickname
  * @param {Number} boardID
- * @param {String} nicknamePart
+ * @param {String} nickname - part of nickname
  * @param {Number} limit - result count limit
  * @return {Promise<Response>}
  */
-export const usersGet = (boardID, nicknamePart, limit) => {
-    const apiUrl = new URL(`/boards/${boardID}/search_for_invite?nickname=${nicknamePart}&limit=${limit}`,
-        BACKEND_ADDRESS);
+export const usersGet = (boardID, nickname, limit) => {
+    const apiUrl = new URL(`boards/${boardID}/search_for_invite?nickname=${nickname}&limit=${limit}`, BACKEND_ADDRESS);
+    console.log(apiUrl);
     return fetchGet(apiUrl.href);
 };
 
@@ -247,7 +257,7 @@ export const usersGet = (boardID, nicknamePart, limit) => {
  * @return {Promise<Response>}
  */
 export const postMember = (boardID, userID) => {
-    const apiUrl = new URL(`/boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, null);
 };
 
@@ -425,7 +435,7 @@ export const taskChecklistItemDelete = (taskData, checklistID, itemId) => {
  * @return {Promise<Response>}
  */
 export const labelsGet = (boardID) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
 
@@ -436,7 +446,7 @@ export const labelsGet = (boardID) => {
  * @return {Promise<Response>}
  */
 export const labelsPost = (boardID, labelData = {title: void 0, color: void 0}) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, JSON.stringify(labelData));
 };
 
@@ -447,7 +457,7 @@ export const labelsPost = (boardID, labelData = {title: void 0, color: void 0}) 
  * @return {Promise<Response>}
  */
 export const labelGet = (boardID, labelID) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchGet(apiUrl.href);
 };
 
@@ -459,7 +469,7 @@ export const labelGet = (boardID, labelID) => {
  * @return {Promise<Response>}
  */
 export const labelPut = (boardID, labelID, labelData = {title: void 0, color: void 0}) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchPut(apiUrl.href, JSON.stringify(labelData));
 };
 
@@ -470,7 +480,7 @@ export const labelPut = (boardID, labelID, labelData = {title: void 0, color: vo
  * @return {Promise<Response>}
  */
 export const labelDelete = (boardID, labelID) => {
-    const apiUrl = new URL(`/boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
+    const apiUrl = new URL(`boards/${boardID}/labels/${labelID}`, BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };
 
@@ -563,5 +573,36 @@ export const taskFileDelete = (taskData, fileID) => {
     const apiUrlPart1 = `boards/${taskData.boardID}/columns/${taskData.columnID}/tasks/${taskData.taskID}`;
     const apiUrlPart2 = `/files/${fileID}`;
     const apiUrl = new URL(apiUrlPart1 + apiUrlPart2, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
+
+
+/** ******************* HEADER NOTIFICATIONS ************************/
+
+
+/**
+ * Get user notifications
+ * @return {Promise<Response>}
+ */
+export const notificationsGet = () => {
+    const apiUrl = new URL('notifications', BACKEND_ADDRESS);
+    return fetchGet(apiUrl.href);
+};
+
+/**
+ * Put user notifications (is used to mark them read)
+ * @return {Promise<Response>}
+ */
+export const notificationsPut = () => {
+    const apiUrl = new URL('notifications', BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, {});
+};
+
+/**
+ * Delete user notifications
+ * @return {Promise<Response>}
+ */
+export const notificationsDelete = () => {
+    const apiUrl = new URL('notifications', BACKEND_ADDRESS);
     return fetchDelete(apiUrl.href);
 };

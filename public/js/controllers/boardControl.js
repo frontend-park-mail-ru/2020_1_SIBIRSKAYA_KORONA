@@ -21,6 +21,8 @@ export default class BoardController {
             'addNewColumn',
             'addNewTask',
             'openBoardSettings',
+            'getBoardSettings',
+            'gotBoardSettings',
             'closeBoardSettings',
 
             'openCardSettings',

@@ -7,17 +7,20 @@ import {
     taskChecklistItemPost,
     taskChecklistItemPut,
     taskChecklistPost,
+    taskCommentsDelete,
     taskCommentsGet,
     taskCommentsPost,
-    taskCommentsDelete,
+    taskDelete,
+    taskFileDelete,
     taskFilesGet,
     taskFilesPost,
-    taskFileDelete,
-    taskDelete,
     taskGet,
     taskPut,
 } from '../libs/apiService.js';
+import parseDate from '../libs/dateParser.js';
 import responseSwitchBuilder from '../libs/responseSwitchBuilder.js';
+import webSocket from '../libs/webSocketWrapper.js';
+
 
 /**
  * Task settings model
@@ -34,7 +37,6 @@ export default class TaskSettingsModel {
 
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings.bind(this));
         this.eventBus.subscribe('getTaskAssigns', this.getTaskAssign.bind(this));
-
         this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this));
         this.eventBus.subscribe('deleteTask', this.deleteTask.bind(this));
         this.eventBus.subscribe('addComment', this.addTaskComment.bind(this));
@@ -47,6 +49,8 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('uploadAttach', this.uploadAttach.bind(this));
         this.eventBus.subscribe('deleteAttach', this.deleteAttach.bind(this));
 
+        this.socket = webSocket;
+        this.socket.subscribe('message', this.liveUpdateHandler.bind(this));
 
         const errorResponseStatusMap = new Map([
             [401, () => this.eventBus.call('unauthorized')],
@@ -55,7 +59,6 @@ export default class TaskSettingsModel {
             [500, () => this.eventBus.call('goToBoards')],
             ['default', () => this.eventBus.call('goToBoards')],
         ]);
-
         this.handleResponseStatus = responseSwitchBuilder(errorResponseStatusMap).bind(this);
     }
 
@@ -143,6 +146,8 @@ export default class TaskSettingsModel {
                 checklist.progress = Math.floor(itemsDone / checklist.items.length * 100) || 0;
                 checklist.progressColor = (checklist.progress < 33) ? '#eb5a46' :
                     (checklist.progress < 66) ? '#f2d600' : '#61bd4f';
+            } else {
+                checklist.items = [];
             }
         }
 
@@ -150,17 +155,7 @@ export default class TaskSettingsModel {
         if (!(await this.handleResponseStatus(commentsResponse, (body) => {
             taskData.comments = new Array(body.length);
             body.forEach((comment, i) => {
-                const date = new Date(comment.createdAt * 1000);
-                const parsedDate = {
-                    day: (date.getDate() > 9) ? date.getDate() : '0' + date.getDate(),
-                    month: (date.getMonth() > 9) ? date.getMonth() : '0' + date.getMonth(),
-                    year: date.getFullYear(),
-                    hours: (date.getHours() > 9) ? date.getHours() : '0' + date.getHours(),
-                    minutes: (date.getMinutes() > 9) ? date.getMinutes() : '0' + date.getMinutes(),
-                    seconds: (date.getSeconds() > 9) ? date.getSeconds() : '0' + date.getSeconds(),
-                };
-                let dateString = `${parsedDate.day}.${parsedDate.month}.${parsedDate.year}`;
-                dateString += ` ${parsedDate.hours}:${parsedDate.minutes}:${parsedDate.seconds}`;
+                const dateString = parseDate(comment.createdAt);
                 taskData.comments[i] = {
                     id: comment.id,
                     text: comment.text,
@@ -266,5 +261,28 @@ export default class TaskSettingsModel {
     async deleteTask() {
         const response = await taskDelete(this.taskData);
         this.handleResponseStatus(response, () => this.eventBus.call('closeSelf'));
+    }
+
+
+    /**
+     * Handles messages from websocket for live update
+     * @param {Event} event - websocket message event
+     */
+    liveUpdateHandler(event) {
+        const msg = JSON.parse(event.data);
+        switch (msg.eventType) {
+            case 'UpdateTask':
+            case 'AssignOnTask':
+            case 'AddComment':
+                let updatedTaskUrl = '/boards/' + msg.metaData.bid;
+                updatedTaskUrl += '/columns/' + msg.metaData.cid;
+                updatedTaskUrl += '/tasks/' + msg.metaData.tid;
+                if (window.location.pathname === updatedTaskUrl) {
+                    this.getTaskSettings();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
