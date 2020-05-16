@@ -44,7 +44,7 @@ jobs:
       - name: Transfer build files to server
         uses: appleboy/scp-action@v0.0.10
         with:
-          host: 89.208.197.150
+          host: ${{ secrets.HOST }}
           username: ubuntu
           password: ${{ secrets.PRIVATE_KEY }}
           source: "./build"
