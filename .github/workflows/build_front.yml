@@ -46,7 +46,7 @@ jobs:
         with:
           host: 89.208.197.150
           username: ubuntu
-          password: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.PRIVATE_KEY }}
           source: "./build"
 #            target: "/home/ubuntu/frontend/public/"
           target: "/home/ubuntu/testing_frontend_deploy/"
