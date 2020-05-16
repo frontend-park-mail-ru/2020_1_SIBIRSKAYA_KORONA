@@ -7,8 +7,10 @@
         apt:
           name: nginx
           state: present
-#      - name: "Copy nginx config"
-#        copy:
-#          src: files/drello_nginx.conf
-#          dest: /etc/nginx/sites-enabled/default
+      - name: "Copy nginx config"
+        copy:
+          src: files/drello_nginx.conf
+          dest: /etc/nginx/sites-enabled/default
+      - name: "Restart nginx service"
+        command: service nginx restart
 
