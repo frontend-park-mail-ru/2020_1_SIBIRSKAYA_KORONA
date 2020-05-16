@@ -1,6 +1,6 @@
 import ControllerChainLink, {ChainLinkSignals} from '../libs/controllerChainLink.js';
-import EventBus from '../libs/eventBus.js';
 import AddAssignsPopupView from '../views/board/addAssignsPopup/addAssignsPopupView.js';
+import EventBus from '../libs/eventBus.js';
 
 
 /**
