@@ -40,10 +40,10 @@ jobs:
 
       - name: Transfer build files to server
         uses: appleboy/scp-action@master
-          with:
-            host: 89.208.197.150
-            username: ubuntu
-            password: ${{ secrets.PRIVATE_KEY }}
-            source: "./dist"
+        with:
+          host: 89.208.197.150
+          username: ubuntu
+          password: ${{ secrets.PRIVATE_KEY }}
+          source: "./dist"
 #            target: "/home/ubuntu/frontend/public/"
-            target: "/home/ubuntu/testing_frontend_deploy/"
+          target: "/home/ubuntu/testing_frontend_deploy/"
