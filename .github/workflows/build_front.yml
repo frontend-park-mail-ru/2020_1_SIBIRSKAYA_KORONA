@@ -42,7 +42,7 @@ jobs:
           name: build
 
       - name: Transfer build files to server
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.0.10
         with:
           host: 89.208.197.150
           username: ubuntu
