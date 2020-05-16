@@ -1,0 +1,14 @@
+---
+  - name: "Install nginx"
+    hosts: webserver
+    become: yes
+    tasks:
+      - name: "Apt get nginx"
+        apt:
+          name: nginx
+          state: present
+#      - name: "Copy nginx config"
+#        copy:
+#          src: files/drello_nginx.conf
+#          dest: /etc/nginx/sites-enabled/default
+
