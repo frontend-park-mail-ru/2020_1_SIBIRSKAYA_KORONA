@@ -29,13 +29,10 @@ export default class ChangeLabelPopupView extends BaseView {
 
     /**
      * Method which triggers getting data from model and sets render position
-     * @param {Object} clickCoords - {x, y}
+     * @param {Object} position - {left, top}
      */
-    render(clickCoords) {
-        this.position = {
-            left: `${clickCoords.x / window.innerWidth * 100}%`,
-            top: `${clickCoords.y / window.innerHeight * 100}%`,
-        };
+    render(position) {
+        this.position = position;
         this.eventBus.call('getLabel');
     }
 
