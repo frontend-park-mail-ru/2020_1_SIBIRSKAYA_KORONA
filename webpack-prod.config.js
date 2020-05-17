@@ -9,6 +9,9 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 const path = require('path');
 
+const {LABEL_COLORS} = require('./public/js/config');
+
+
 module.exports = {
     mode: 'production',
     entry: ['@babel/polyfill', path.resolve(__dirname, 'public/js/index.js')],
@@ -58,6 +61,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'IP_ADDRESS': JSON.stringify('drello.works'),
+            'LABEL_COLORS': JSON.stringify(LABEL_COLORS),
         }),
         new CopyPlugin([
             {

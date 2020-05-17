@@ -25,7 +25,7 @@ export default class ChangeLabelPopupModel {
     }
 
     /**
-     * Returns list of all label colors of board
+     * Returns information about current label
      */
     async getLabel() {
         // TODO(Alexandr): check status

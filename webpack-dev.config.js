@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const address = require('ip').address;
 
 const IP_ADDRESS = address();
+const {LABEL_COLORS} = require('./public/js/config');
 
 module.exports = {
     mode: 'development',
@@ -74,6 +75,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'IP_ADDRESS': JSON.stringify(IP_ADDRESS),
+            'LABEL_COLORS': JSON.stringify(LABEL_COLORS),
         }),
         // new CleanWebpackPlugin(),
         new ServiceWorkerWebpackPlugin({
