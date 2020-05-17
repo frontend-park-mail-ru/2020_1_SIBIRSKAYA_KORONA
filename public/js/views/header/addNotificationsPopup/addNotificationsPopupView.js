@@ -1,8 +1,8 @@
 import BaseView from '../../baseView.js';
 import template from './addNotificationsPopup.tmpl.xml';
+import columnChangedNotificationTemplate from './columnChangedNotification.tmpl.xml';
 import defaultNotificationTemplate from './defaultNotification.tmpl.xml';
 import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
-import columnChangedNotificationTemplate from './columnChangedNotification.tmpl.xml';
 
 /**
  * Header notifications popup view
@@ -15,9 +15,9 @@ export default class AddAssignsPopupView extends BaseView {
     constructor(parentEventBus) {
         super(parentEventBus);
         this.root = document.getElementById('popup-block');
+
         this.render = this.render.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
-
         this.handleButtonClick = this.handleButtonClick.bind(this);
 
         this.eventBus.subscribe('gotNotifications', this.renderNotifications.bind(this));
@@ -40,7 +40,11 @@ export default class AddAssignsPopupView extends BaseView {
      * @param {Array} notifications
      */
     renderNotifications(notifications) {
-        this.root.innerHTML = template();
+        const settings = {
+            enableNotifications: JSON.parse(sessionStorage.getItem('enableNotifications')),
+            enableNotificationsSound: JSON.parse(sessionStorage.getItem('enableNotificationsSound')),
+        };
+        this.root.innerHTML = template(settings);
         const notificationsList = this.root.querySelector('.js-notifications');
         notifications.forEach((notification) => {
             this.renderNotification(notification, notificationsList);
@@ -93,6 +97,8 @@ export default class AddAssignsPopupView extends BaseView {
         const buttons = [
             this.root.querySelector('.js-readNotifications'),
             this.root.querySelector('.js-deleteNotifications'),
+            this.root.querySelector('.js-toggleNotifications'),
+            this.root.querySelector('.js-toggleSound'),
         ];
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
@@ -103,7 +109,7 @@ export default class AddAssignsPopupView extends BaseView {
      * @param {MouseEvent} event
      */
     handleButtonClick(event) {
-        const targetClassList = event.target.classList;
+        const targetClassList = event.currentTarget.classList;
         switch (true) {
             case targetClassList.contains('js-readNotifications'):
                 this.eventBus.call('readNotifications');
@@ -112,6 +118,18 @@ export default class AddAssignsPopupView extends BaseView {
                 event.stopPropagation();
                 this.eventBus.call('deleteNotifications');
                 this.closeSelf();
+                break;
+            case targetClassList.contains('js-toggleNotifications'):
+                this.eventBus.call('toggleNotifications');
+                event.currentTarget.classList.toggle('header-notifications-controls__button--selected');
+                const enableNotifications = JSON.parse(sessionStorage.getItem('enableNotifications'));
+                sessionStorage.setItem('enableNotifications', (!enableNotifications).toString());
+                break;
+            case targetClassList.contains('js-toggleSound'):
+                this.eventBus.call('toggleNotificationsSound');
+                event.currentTarget.classList.toggle('header-notifications-controls__button--selected');
+                const enableNotificationsSound = JSON.parse(sessionStorage.getItem('enableNotificationsSound'));
+                sessionStorage.setItem('enableNotificationsSound', (!enableNotificationsSound).toString());
                 break;
             default:
                 break;

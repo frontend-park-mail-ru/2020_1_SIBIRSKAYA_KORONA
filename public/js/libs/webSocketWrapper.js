@@ -38,7 +38,6 @@ class WebSocketWrapper {
             this.closeSubscribers.forEach((handler) => {
                 handler(event);
             });
-            this.socket = null;
         };
         this.socket.onerror = (event) => {
             this.errorSubscribers.forEach((handler) => {

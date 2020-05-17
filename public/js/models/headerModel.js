@@ -106,8 +106,6 @@ export default class HeaderModel {
         const parseConfig = {enableDate: true, enableIsRead: true};
         const parsedNotification = parseNotification(msg, parseConfig);
         this.eventBus.call('newNotificationReceived', parsedNotification);
-
-        // console.log(this.notificationCounter);
     }
 
     /**

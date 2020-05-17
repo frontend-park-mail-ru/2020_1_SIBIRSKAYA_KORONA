@@ -12,7 +12,6 @@ export default class Router {
         root.addEventListener('click', this.handleMouseClick.bind(this));
         window.addEventListener('popstate', (event) => {
             const currentPath = window.location.pathname;
-            console.log('pOPSTATE');
             this.go(currentPath, false);
         });
     }

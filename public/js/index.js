@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'login',
         'userDataChanged',
         'enableSocketConnection',
-        'enableNotifications',
-        'enableNotificationsSound',
+        'toggleNotifications',
+        'toggleNotificationsSound',
     ]);
 
     const headerController = new HeaderController(router, globalEventBus);
@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     notifications.enableSocketConnection(true);
     notifications.notificationSound.load();
+    sessionStorage.setItem('enableNotifications', 'true');
+    sessionStorage.setItem('enableNotificationsSound', 'true');
 
     headerController.view.render({});
     router.go(window.location.pathname);

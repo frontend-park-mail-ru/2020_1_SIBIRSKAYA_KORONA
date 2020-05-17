@@ -23,8 +23,8 @@ export default class Notifications {
         document.addEventListener('mousemove', () => this.notificationSound.load, {once: true});
 
         globalEventBus.subscribe('enableSocketConnection', this.enableSocketConnection.bind(this));
-        globalEventBus.subscribe('enableNotifications', this.enableNotifications.bind(this));
-        globalEventBus.subscribe('enableNotificationsSound', this.enableNotificationsSound.bind(this));
+        globalEventBus.subscribe('toggleNotifications', this.enableNotifications.bind(this));
+        globalEventBus.subscribe('toggleNotificationsSound', this.enableNotificationsSound.bind(this));
     }
 
     /**
@@ -42,18 +42,16 @@ export default class Notifications {
 
     /**
      * Sets enable notifications
-     * @param {Boolean} enable
      */
-    enableNotifications(enable) {
-        this.enable = enable;
+    enableNotifications() {
+        this.enable = !this.enable;
     }
 
     /**
      * Sets enable notifications sound
-     * @param {Boolean} enable
      */
-    enableNotificationsSound(enable) {
-        this.enableSound = enable;
+    enableNotificationsSound() {
+        this.enableSound = !this.enableSound;
     }
 
     /**

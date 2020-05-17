@@ -28,8 +28,6 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
                     link: {text: msg.metaData.entityData, href: taskHref},
                     text: 'назначил исполнителем задачи',
                 };
-                console.log(msg);
-                console.log(parsedNotificationData);
             }
             break;
         }
