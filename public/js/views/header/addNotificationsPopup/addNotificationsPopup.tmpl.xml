@@ -4,6 +4,12 @@
             <div class="header-notifications-controls__button--secondary js-readNotifications">
                 Прочитать все
             </div>
+            <div class="header-notifications-controls__button">
+                <img src="/img/disable_notifications.svg" class="header-notifications-controls__button-icon"/>
+            </div>
+            <div class="header-notifications-controls__button">
+                <img src="/img/disable_sound.png" class="header-notifications-controls__button-icon"/>
+            </div>
             <div class="header-notifications-controls__button--danger js-deleteNotifications">
                 Удалить все
             </div>

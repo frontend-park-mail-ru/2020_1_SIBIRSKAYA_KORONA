@@ -176,7 +176,7 @@ export default class TaskSettingsModel {
             return;
         }
 
-        this.taskData = Object.assign(this.taskData, taskData);
+        // this.taskData = Object.assign(this.taskData, taskData);
         this.eventBus.call('gotTaskSettings', taskData);
     }
 
@@ -274,11 +274,13 @@ export default class TaskSettingsModel {
             case 'UpdateTask':
             case 'AssignOnTask':
             case 'AddComment':
-                let updatedTaskUrl = '/boards/' + msg.metaData.bid;
-                updatedTaskUrl += '/columns/' + msg.metaData.cid;
-                updatedTaskUrl += '/tasks/' + msg.metaData.tid;
-                if (window.location.pathname === updatedTaskUrl) {
-                    this.getTaskSettings();
+                if (/^\/boards\/[0-9]+\/columns\/[0-9]+\/tasks\/[0-9]+\/?$/.test(window.location.pathname)) {
+                    console.log(window.location.pathname);
+                    if (this.taskData.taskID === msg.metaData.tid) {
+                        console.log('ZALUPA');
+                        this.taskData.columnID = msg.metaData.cid;
+                        this.getTaskSettings();
+                    }
                 }
                 break;
             default:

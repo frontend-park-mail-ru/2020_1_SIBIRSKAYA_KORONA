@@ -49,7 +49,7 @@ export default class HeaderController extends ControllerChainLink {
         this.eventBus.subscribe('submitJoin', () => router.go('/join'));
         this.eventBus.subscribe('unauthorized', () => {
             router.go('/login');
-            globalEventBus.call('enableNotifications', false);
+            globalEventBus.call('enableSocketConnection', false);
         });
 
         this.eventBus.subscribe('openNotificationsPopup', (button) => {

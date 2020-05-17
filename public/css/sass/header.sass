@@ -108,9 +108,22 @@
     &-controls
         display: flex
         justify-content: space-between
+        align-items: center
         margin: 0 10px
 
         &__button
+            width: 29px
+            height: 29px
+            border-radius: 50%
+            display: flex
+            align-items: center
+            justify-content: center
+            padding: 5px
+            &:hover
+                background: #e8eaf6
+            &--selected
+                background: #8C9EFF
+
             &--primary
                 @extend .button--primary
 
@@ -119,6 +132,10 @@
 
             &--danger
                 @extend .button--danger
+
+            &-icon
+                width: 100%
+                height: 100%
 
     &-list
         display: flex

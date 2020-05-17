@@ -243,7 +243,7 @@ export default class BoardModel {
             case 'UpdateBoard':
             case 'InviteToBoard':
             case 'UpdateTask':
-            case 'AssignOnTask':
+            // case 'AssignOnTask':
                 const updatedBoardUrl = `/boards/${msg.metaData.bid}`;
                 if (window.location.pathname === updatedBoardUrl || window.location.pathname === '') {
                     this.getBoardData(this.boardData.id);

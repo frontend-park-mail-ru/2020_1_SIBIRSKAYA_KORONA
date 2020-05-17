@@ -1,33 +1,24 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="notification">
         <div class="notification-inviter">
-            <img class="notification-user-avatar" src="{data.inviter.avatar}"/>
+            <img class="notification-user-avatar" src="{data.user.avatar}"/>
         </div>
         <div class="notification-text">
             <div class="notification-inviter-nickname">
                 @
-                <fest:value>data.inviter.nickname</fest:value>
+                <fest:value>data.user.nickname</fest:value>
             </div>
             <div class="notification-message">
                 <div class="notification-message-text">
-                    <fest:value>data.text</fest:value>
+                    Задача
                     <fest:space/>
                     <a class="notification-link" href="{data.link.href}">
                         <fest:value>data.link.text</fest:value>
                     </a>
+                    <fest:space/>
+                    <fest:value>data.text</fest:value>
                 </div>
             </div>
-            <fest:if test="data.invitee">
-                <div class="notification-invitee-nickname">
-                    @
-                    <fest:value>data.invitee.nickname</fest:value>
-                </div>
-            </fest:if>
         </div>
-        <fest:if test="data.invitee">
-            <div class="notification-invitee">
-                <img class="notification-user-avatar" src="{data.invitee.avatar}"/>
-            </div>
-        </fest:if>
     </div>
 </fest:template>

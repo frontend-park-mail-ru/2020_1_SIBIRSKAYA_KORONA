@@ -2,6 +2,7 @@ import BaseView from '../../baseView.js';
 import template from './addNotificationsPopup.tmpl.xml';
 import defaultNotificationTemplate from './defaultNotification.tmpl.xml';
 import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
+import columnChangedNotificationTemplate from './columnChangedNotification.tmpl.xml';
 
 /**
  * Header notifications popup view
@@ -66,6 +67,9 @@ export default class AddAssignsPopupView extends BaseView {
                 } else {
                     notificationDiv.innerHTML = defaultNotificationTemplate(notification);
                 }
+                break;
+            case 'TaskColumnChanged':
+                notificationDiv.innerHTML = columnChangedNotificationTemplate(notification);
                 break;
             case 'AddComment':
             default:

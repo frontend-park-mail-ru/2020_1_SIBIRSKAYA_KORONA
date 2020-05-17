@@ -41,7 +41,7 @@ export default class HeaderModel {
 
         this.socket.subscribe('message', this.socketMessageHandler);
 
-        this.notificationEvents = new Set(['AssignOnTask', 'InviteToBoard', 'AddComment']);
+        this.notificationEvents = new Set(['AssignOnTask', 'InviteToBoard', 'AddComment', 'TaskColumnChanged']);
         this.notificationCounter = 0;
 
         const errorResponseStatusMap = new Map([
@@ -153,6 +153,7 @@ export default class HeaderModel {
     async getNotifications() {
         const response = await notificationsGet();
         this.handleResponseStatus(response, (body) => {
+            // console.log(body);
             const notifications = [];
             const parseConfig = {enableDate: true, enableIsRead: true};
             body.forEach((notification) => {
@@ -161,6 +162,7 @@ export default class HeaderModel {
                     notifications.push(parsedNotification);
                 }
             });
+            // console.log(notifications);
             this.eventBus.call('gotNotifications', notifications);
         });
     }
