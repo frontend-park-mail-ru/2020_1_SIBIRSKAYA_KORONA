@@ -4,6 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+
 
 const path = require('path');
 
@@ -68,6 +70,9 @@ module.exports = {
         }),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'public/js/sw.js'),
+        }),
+        new CompressionPlugin({
+            algorithm: 'gzip',
         }),
     ],
 }

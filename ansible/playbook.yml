@@ -9,7 +9,7 @@
           state: present
       - name: "Copy nginx config"
         copy:
-          src: files/drello_nginx.conf
+          src: files/nginx_prod.conf
           dest: /etc/nginx/sites-enabled/default
       - name: "Restart nginx service"
         command: service nginx restart
