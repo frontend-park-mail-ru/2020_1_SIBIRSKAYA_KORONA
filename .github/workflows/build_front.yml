@@ -48,6 +48,5 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           source: "./build/*"
-#            target: "/home/ubuntu/frontend/public/"
-          target: "/home/ubuntu/testing_frontend_deploy/dist"
+          target: "/home/ubuntu/frontend/public/dist"
           strip_components: 1
