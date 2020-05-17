@@ -8,11 +8,10 @@ const fs = require('fs');
 const morgan = require('morgan');
 const address = require('ip').address;
 
-const isDev = true;
 const IP_ADDRESS = address();
 
 module.exports = {
-    mode: (isDev) ? 'development' : 'production',
+    mode: 'development',
     entry: ['@babel/polyfill', path.resolve(__dirname, 'public/js/index.js')],
     output: {
         filename: 'bundle.js',
@@ -22,7 +21,7 @@ module.exports = {
         extensions: ['.js'],
     },
 
-    devServer: isDev ? {
+    devServer: {
         port: 5555,
         https: true,
         host: IP_ADDRESS,
@@ -37,8 +36,8 @@ module.exports = {
         hot: true,
         contentBase: [path.resolve(__dirname, 'public')],
 
-    } : {},
-    devtool: isDev ? 'source-map' : '',
+    },
+    devtool:'source-map',
 
     module: {
         rules: [{
@@ -50,8 +49,8 @@ module.exports = {
                 {
                     loader: MiniCssExtractPlugin.loader,
                     options: {
-                        hmr: isDev,
-                        reloadAll: isDev,
+                        hmr: true,
+                        reloadAll: true,
                     },
                 },
                 'css-loader',
@@ -74,7 +73,7 @@ module.exports = {
             filename: 'main.css',
         }),
         new webpack.DefinePlugin({
-            'IP_ADDRESS': (isDev) ? JSON.stringify(IP_ADDRESS) : JSON.stringify('drello.works'),
+            'IP_ADDRESS': JSON.stringify(IP_ADDRESS),
         }),
         // new CleanWebpackPlugin(),
         new ServiceWorkerWebpackPlugin({

@@ -65,6 +65,12 @@ module.exports = {
                 to: path.resolve(__dirname, 'public/dist/img'),
             },
         ]),
+        new CopyPlugin([
+            {
+                from: path.resolve(__dirname, 'public/sounds'),
+                to: path.resolve(__dirname, 'public/dist/sounds'),
+            },
+        ]),
         new HtmlWebpackPlugin({
             template: 'public/index_template.html',
         }),
