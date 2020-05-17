@@ -80,8 +80,7 @@ export default class TaskSettingsModel {
     async getBoardSettings() {
         const boardResponse = await boardGet(this.boardId);
         this.handleResponseStatus(boardResponse, (body) => {
-            body.inviteLink = window.location.host + '/invite/' + body.invateLink;
-            delete body.invateLink;
+            body.inviteLink = 'https://' + window.location.host + '/invite/' + body.inviteLink;
             this.eventBus.call('gotBoardSettings', body);
         });
     }

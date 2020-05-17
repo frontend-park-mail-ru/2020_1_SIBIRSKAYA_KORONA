@@ -1,4 +1,12 @@
-import {boardGet, columnsGet, columnsPost, taskPut, tasksGet, tasksPost} from '../libs/apiService.js';
+import {
+    boardGet,
+    columnsGet,
+    columnsPost,
+    putMemberWithInviteLink,
+    taskPut,
+    tasksGet,
+    tasksPost,
+} from '../libs/apiService.js';
 import webSocket from '../libs/webSocketWrapper.js';
 
 /**
@@ -16,6 +24,7 @@ export default class BoardModel {
         eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
         eventBus.subscribe('addNewTask', this.addTask.bind(this));
         eventBus.subscribe('taskMoved', this.saveTask.bind(this));
+        eventBus.subscribe('inviteWithLink', this.inviteMemberWithLink.bind(this));
         this.boardData = {};
         this.socket = webSocket;
         this.socket.subscribe('message', this.liveUpdateHandler.bind(this));
@@ -196,6 +205,35 @@ export default class BoardModel {
     }
 
     /**
+     * Invites member to board with link
+     * @param {String} inviteHash
+     * @return {Promise<void>}
+     */
+    async inviteMemberWithLink(inviteHash) {
+        const response = await putMemberWithInviteLink(inviteHash);
+        switch (response.status) {
+            case 200:
+                response.json().then((responseJson) => {
+                    this.eventBus.call('redirectToBoard', responseJson.id);
+                });
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 403:
+            case 404:
+                this.eventBus.call('goToBoards');
+                break;
+            case 400:
+            case 500:
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                break;
+        }
+    }
+
+    /**
      * Handles messages from websocket for live update
      * @param {Event} event - websocket message event
      */
@@ -207,7 +245,7 @@ export default class BoardModel {
             case 'UpdateTask':
             case 'AssignOnTask':
                 const updatedBoardUrl = `/boards/${msg.metaData.bid}`;
-                if (window.location.pathname === updatedBoardUrl) {
+                if (window.location.pathname === updatedBoardUrl || window.location.pathname === '') {
                     this.getBoardData(this.boardData.id);
                 }
                 break;

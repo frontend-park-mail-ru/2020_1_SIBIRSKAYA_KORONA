@@ -16,11 +16,14 @@
         @media screen and (max-width: $phone-breakpoint)
             max-width: 50% !important
         @extend .header-block-left
-
+        overflow: hidden
+        text-overflow: ellipsis
+        max-width: 33%
         &__title
             @media screen and (max-width: $tablet-breakpoint)
                 font-size: 20px
             @extend .title
+            white-space: nowrap
             width: 33%
             font-size: 35px
             color: #eaeeff

@@ -31,6 +31,11 @@ export default class LoginView extends BaseView {
     addEventListeners() {
         const submitButton = document.getElementById('submit_button');
         submitButton.addEventListener('click', this.handleSubmit);
+        document.onkeydown = (event) => {
+            if (event.code === 'Enter') {
+                this.handleSubmit();
+            }
+        };
     }
 
     /**
@@ -45,11 +50,10 @@ export default class LoginView extends BaseView {
 
     /**
      * Handle user submit
-     * @param {Event} event - button click event
      */
-    handleSubmit(event) {
-        event.preventDefault();
+    handleSubmit() {
         this.eventBus.call('submit', this.getUserData());
+        document.onkeydown = null;
     }
 
     /**

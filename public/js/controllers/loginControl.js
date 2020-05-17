@@ -21,7 +21,7 @@ export default class LoginController {
         this.model = new LoginModel(this.eventBus);
 
         this.eventBus.subscribe('loginSuccess', (userData) => {
-            router.go('/');
+            router.redirectAfterAuth();
             globalEventBus.call('login');
             globalEventBus.call('enableNotifications', true);
         });

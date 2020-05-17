@@ -18,6 +18,7 @@ export default class BoardController {
             'gotBoardData',
             // TODO(Alexandr): 'gotBoardDataError',
             'addNewUser',
+            'inviteWithLink',
             'addNewColumn',
             'addNewTask',
             'openBoardSettings',
@@ -33,6 +34,7 @@ export default class BoardController {
 
             'unauthorized',
             'goToBoards',
+            'redirectToBoard',
         ]);
 
         this.childController = null;
@@ -40,6 +42,7 @@ export default class BoardController {
         this.model = new BoardModel(this.eventBus);
 
         this.router = router;
+        this.handleInvite = this.handleInvite.bind(this);
         this.triggerTaskAndBoard = this.triggerTaskAndBoard.bind(this);
         this.triggerBoardSettingsAndBoard = this.triggerBoardSettingsAndBoard.bind(this);
 
@@ -53,9 +56,13 @@ export default class BoardController {
             this.router.go(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
         });
 
-        const redirectBoard = () => router.go('/boards/' + this.view.boardID);
-        this.eventBus.subscribe('closeBoardSettings', redirectBoard);
-        this.eventBus.subscribe('closeTaskSettings', redirectBoard);
+        this.eventBus.subscribe('redirectToBoard', (boardId) => {
+            this.router.go(`/boards/${boardId}`);
+        });
+
+        const redirectToThisBoard = () => router.go('/boards/' + this.view.boardID);
+        this.eventBus.subscribe('closeBoardSettings', redirectToThisBoard);
+        this.eventBus.subscribe('closeTaskSettings', redirectToThisBoard);
     }
 
     /**
@@ -78,8 +85,16 @@ export default class BoardController {
         const columnId = Number(dataFromUrl.columnId);
         const taskId = Number(dataFromUrl.taskId);
 
-        this.view.render(dataFromUrl);
         this.childController = new TaskSettingsController(this.eventBus, this.router, boardId, columnId, taskId);
         this.childController.view.render();
+        this.view.render(dataFromUrl);
+    }
+
+    /**
+     * Invite link route handler
+     * @param {Object} dataFromUrl - contains inviteHash
+     */
+    handleInvite(dataFromUrl) {
+        this.eventBus.call('inviteWithLink', dataFromUrl.inviteHash);
     }
 }
