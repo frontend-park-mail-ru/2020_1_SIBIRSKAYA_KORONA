@@ -37,7 +37,7 @@ module.exports = {
         contentBase: [path.resolve(__dirname, 'public')],
 
     },
-    devtool:'source-map',
+    devtool: 'source-map',
 
     module: {
         rules: [{
