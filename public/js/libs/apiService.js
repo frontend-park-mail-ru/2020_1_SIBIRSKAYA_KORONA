@@ -246,7 +246,6 @@ export const tasksPost = (boardID, columnID, task = {position: 1, description: '
  */
 export const usersGet = (boardID, nickname, limit) => {
     const apiUrl = new URL(`boards/${boardID}/search_for_invite?nickname=${nickname}&limit=${limit}`, BACKEND_ADDRESS);
-    console.log(apiUrl);
     return fetchGet(apiUrl.href);
 };
 

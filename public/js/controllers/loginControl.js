@@ -23,7 +23,7 @@ export default class LoginController {
         this.eventBus.subscribe('loginSuccess', (userData) => {
             router.redirectAfterAuth();
             globalEventBus.call('login');
-            globalEventBus.call('enableNotifications', true);
+            globalEventBus.call('enableSocketConnection', true);
         });
     }
 }

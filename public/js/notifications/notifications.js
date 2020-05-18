@@ -1,5 +1,6 @@
 import {parseNotification} from '../libs/notificationsParser.js';
 import webSocket from '../libs/webSocketWrapper.js';
+import columnChangedNotificationTemplate from './columnChangedNotification.tmpl.xml';
 import defaultNotificationTemplate from './defaultNotification.tmpl.xml';
 import inviteNotificationTemplate from './inviteNotification.tmpl.xml';
 
@@ -12,19 +13,26 @@ export default class Notifications {
      * @param {EventBus} globalEventBus for enable/disable notifications
      */
     constructor(globalEventBus) {
-        this.socket = webSocket;
         this.root = document.querySelector('#notifications');
-        globalEventBus.subscribe('enableNotifications', this.enableNotifications.bind(this));
+        this.socket = webSocket;
         this.socket.subscribe('message', this.newNotificationHandler.bind(this));
+        this.enable = true;
+
+        this.enableSound = true;
         this.notificationSound = new Audio('/sounds/drill.mp3');
+        document.addEventListener('mousemove', () => this.notificationSound.load, {once: true});
+
+        globalEventBus.subscribe('enableSocketConnection', this.enableSocketConnection.bind(this));
+        globalEventBus.subscribe('toggleNotifications', this.enableNotifications.bind(this));
+        globalEventBus.subscribe('toggleNotificationsSound', this.enableNotificationsSound.bind(this));
     }
 
     /**
-     * Enables or disables realtime notifications
+     * Connects with socket or disconnects
      * @param {boolean} enable
      */
-    enableNotifications(enable) {
-        console.log('Enable notifications', enable);
+    enableSocketConnection(enable) {
+        console.log('Enable socket', enable);
         if (enable) {
             this.socket.connect();
         } else {
@@ -33,10 +41,27 @@ export default class Notifications {
     }
 
     /**
+     * Sets enable notifications
+     */
+    enableNotifications() {
+        this.enable = !this.enable;
+    }
+
+    /**
+     * Sets enable notifications sound
+     */
+    enableNotificationsSound() {
+        this.enableSound = !this.enableSound;
+    }
+
+    /**
      * Displays new notification
      * @param {Event} event
      */
     newNotificationHandler(event) {
+        if (!this.enable) {
+            return;
+        }
         const msg = JSON.parse(event.data);
         const newNotificationData = parseNotification(msg);
         switch (newNotificationData?.type) {
@@ -51,6 +76,9 @@ export default class Notifications {
             case 'AddComment':
                 this.renderNotification(newNotificationData, defaultNotificationTemplate);
                 break;
+            case 'TaskColumnChanged':
+                this.renderNotification(newNotificationData, columnChangedNotificationTemplate);
+                break;
             default:
                 break;
         }
@@ -62,11 +90,9 @@ export default class Notifications {
      * @param {Function} template - default false, set to true for use inviteNotificationTemplate for render
      */
     renderNotification(notificationData, template) {
-        if (this.notificationSound.duration > 0 && !this.notificationSound.paused) {
+        if (this.enableSound) {
             this.notificationSound.pause();
             this.notificationSound.currentTime = 0;
-            this.notificationSound.play();
-        } else {
             this.notificationSound.play();
         }
 

@@ -135,10 +135,8 @@ export default class BoardModel {
                     case 400:
                     case 403:
                     case 404:
-                        this.eventBus.call('goToBoards');
-                        break;
                     case 500:
-                        console.log('500');
+                        this.eventBus.call('goToBoards');
                         break;
                     default:
                         console.log('Бекендер молодец!!!');
@@ -162,10 +160,8 @@ export default class BoardModel {
                 case 400:
                 case 403:
                 case 404:
-                    this.eventBus.call('goToBoards');
-                    break;
                 case 500:
-                    console.log('500');
+                    this.eventBus.call('goToBoards');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -243,7 +239,6 @@ export default class BoardModel {
             case 'UpdateBoard':
             case 'InviteToBoard':
             case 'UpdateTask':
-            case 'AssignOnTask':
                 const updatedBoardUrl = `/boards/${msg.metaData.bid}`;
                 if (window.location.pathname === updatedBoardUrl || window.location.pathname === '') {
                     this.getBoardData(this.boardData.id);
@@ -252,6 +247,5 @@ export default class BoardModel {
             default:
                 break;
         }
-        console.log(msg);
     }
 }

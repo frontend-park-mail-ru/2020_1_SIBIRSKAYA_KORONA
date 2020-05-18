@@ -60,7 +60,10 @@ export default class BoardController {
             this.router.go(`/boards/${boardId}`);
         });
 
-        const redirectToThisBoard = () => router.go('/boards/' + this.view.boardID);
+        const redirectToThisBoard = () => {
+            this.childController = null;
+            router.go('/boards/' + this.view.boardID);
+        };
         this.eventBus.subscribe('closeBoardSettings', redirectToThisBoard);
         this.eventBus.subscribe('closeTaskSettings', redirectToThisBoard);
     }

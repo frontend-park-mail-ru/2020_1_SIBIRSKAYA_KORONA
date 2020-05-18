@@ -32,7 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'logout',
         'login',
         'userDataChanged',
-        'enableNotifications',
+        'enableSocketConnection',
+        'toggleNotifications',
+        'toggleNotificationsSound',
     ]);
 
     const headerController = new HeaderController(router, globalEventBus);
@@ -54,7 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         boardController.triggerTaskAndBoard);
     router.setRoute('^/invite/(?<inviteHash>\\w*)/?$', boardController.handleInvite);
 
-    notifications.enableNotifications(true);
+    notifications.enableSocketConnection(true);
+    notifications.notificationSound.load();
+    sessionStorage.setItem('enableNotifications', 'true');
+    sessionStorage.setItem('enableNotificationsSound', 'true');
 
     headerController.view.render({});
     router.go(window.location.pathname);

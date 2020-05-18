@@ -38,10 +38,8 @@ class WebSocketWrapper {
             this.closeSubscribers.forEach((handler) => {
                 handler(event);
             });
-            this.socket = null;
         };
         this.socket.onerror = (event) => {
-            console.log('WS ERROR', event);
             this.errorSubscribers.forEach((handler) => {
                 handler(event);
             });

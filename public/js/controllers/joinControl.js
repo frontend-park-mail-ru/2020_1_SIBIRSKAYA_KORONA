@@ -24,7 +24,7 @@ export default class JoinController {
         this.eventBus.subscribe('joinSuccess', (userData) => {
             router.redirectAfterAuth();
             globalEventBus.call('login');
-            globalEventBus.call('enableNotifications', true);
+            globalEventBus.call('enableSocketConnection', true);
             this.view.clearInputtedData();
         });
     }

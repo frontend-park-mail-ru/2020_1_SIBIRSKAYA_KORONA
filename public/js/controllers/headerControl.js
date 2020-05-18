@@ -36,6 +36,9 @@ export default class HeaderController extends ControllerChainLink {
             'readNotifications',
             'deleteNotifications',
             'closeNotificationPopup',
+
+            'toggleNotifications',
+            'toggleNotificationsSound',
         ];
         const eventBus = new EventBus(actualSignals.concat(Object.values(ChainLinkSignals)));
         super(eventBus, null);
@@ -49,7 +52,14 @@ export default class HeaderController extends ControllerChainLink {
         this.eventBus.subscribe('submitJoin', () => router.go('/join'));
         this.eventBus.subscribe('unauthorized', () => {
             router.go('/login');
-            globalEventBus.call('enableNotifications', false);
+            globalEventBus.call('enableSocketConnection', false);
+        });
+
+        this.eventBus.subscribe('toggleNotifications', (enable) => {
+            globalEventBus.call('toggleNotifications', enable);
+        });
+        this.eventBus.subscribe('toggleNotificationsSound', (enable) => {
+            globalEventBus.call('toggleNotificationsSound', enable);
         });
 
         this.eventBus.subscribe('openNotificationsPopup', (button) => {

@@ -41,10 +41,15 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
             } else {
                 parsedNotificationData = {
                     inviter: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
-                    invitee: {nickname: msg.metaData.user?.nickname, avatar: msg.metaData.user?.avatar},
                     link: {text: msg.metaData.entityData, href: `/boards/${msg.metaData.bid}`},
-                    text: 'пригласил в доску',
                 };
+                if (msg.metaData.user) {
+                    parsedNotificationData.text = 'пригласил в доску';
+                    parsedNotificationData.invitee.nickname = msg.metaData.user?.nickname;
+                    parsedNotificationData.invitee.avatar = msg.metaData.user?.avatar;
+                } else {
+                    parsedNotificationData.text = 'Присоединился по ссылке-приглашению к доске';
+                }
             }
             break;
         }
@@ -67,8 +72,7 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
             parsedNotificationData = {
                 user: {nickname: msg.makeUser.nickname, avatar: msg.makeUser.avatar},
                 link: {text: msg.metaData.entityData, href: taskHref},
-                text: 'переместил в колонку "" задачу',
-                comment: msg.metaData?.text,
+                text: `перемещена в колонку "${msg.metaData.text}"`,
             };
             break;
         }
