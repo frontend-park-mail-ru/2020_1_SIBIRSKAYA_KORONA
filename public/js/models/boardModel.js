@@ -1,4 +1,13 @@
-import {boardGet, columnsGet, columnsPost, taskPut, tasksGet, tasksPost} from '../libs/apiService.js';
+import {
+    boardGet,
+    columnsGet,
+    columnsPost,
+    putMemberWithInviteLink,
+    taskPut,
+    tasksGet,
+    tasksPost,
+} from '../libs/apiService.js';
+import webSocket from '../libs/webSocketWrapper.js';
 
 /**
  * Board model
@@ -15,12 +24,10 @@ export default class BoardModel {
         eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
         eventBus.subscribe('addNewTask', this.addTask.bind(this));
         eventBus.subscribe('taskMoved', this.saveTask.bind(this));
-
-        this.boardData = {
-            title: 'BOARD NOT FOUND',
-            members: [],
-            columns: [],
-        };
+        eventBus.subscribe('inviteWithLink', this.inviteMemberWithLink.bind(this));
+        this.boardData = {};
+        this.socket = webSocket;
+        this.socket.subscribe('message', this.liveUpdateHandler.bind(this));
     }
 
     /**
@@ -128,10 +135,8 @@ export default class BoardModel {
                     case 400:
                     case 403:
                     case 404:
-                        this.eventBus.call('goToBoards');
-                        break;
                     case 500:
-                        console.log('500');
+                        this.eventBus.call('goToBoards');
                         break;
                     default:
                         console.log('Бекендер молодец!!!');
@@ -155,10 +160,8 @@ export default class BoardModel {
                 case 400:
                 case 403:
                 case 404:
-                    this.eventBus.call('goToBoards');
-                    break;
                 case 500:
-                    console.log('500');
+                    this.eventBus.call('goToBoards');
                     break;
                 default:
                     console.log('Бекендер молодец!!!');
@@ -193,6 +196,55 @@ export default class BoardModel {
                 break;
             default:
                 console.log('Бекендер молодец!!!');
+                break;
+        }
+    }
+
+    /**
+     * Invites member to board with link
+     * @param {String} inviteHash
+     * @return {Promise<void>}
+     */
+    async inviteMemberWithLink(inviteHash) {
+        const response = await putMemberWithInviteLink(inviteHash);
+        switch (response.status) {
+            case 200:
+                response.json().then((responseJson) => {
+                    this.eventBus.call('redirectToBoard', responseJson.id);
+                });
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 403:
+            case 404:
+                this.eventBus.call('goToBoards');
+                break;
+            case 400:
+            case 500:
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+                break;
+        }
+    }
+
+    /**
+     * Handles messages from websocket for live update
+     * @param {Event} event - websocket message event
+     */
+    liveUpdateHandler(event) {
+        const msg = JSON.parse(event.data);
+        switch (msg.eventType) {
+            case 'UpdateBoard':
+            case 'InviteToBoard':
+            case 'UpdateTask':
+                const updatedBoardUrl = `/boards/${msg.metaData.bid}`;
+                if (window.location.pathname === updatedBoardUrl) {
+                    this.getBoardData(this.boardData.id);
+                }
+                break;
+            default:
                 break;
         }
     }

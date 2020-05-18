@@ -1,0 +1,27 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="notification">
+        <div class="notification-inviter">
+            <img class="notification-user-avatar" src="{data.user.avatar}"/>
+        </div>
+        <div class="notification-text">
+            <div class="notification-inviter-nickname">
+                @
+                <fest:value>data.user.nickname</fest:value>
+            </div>
+            <div class="notification-message">
+                <div class="notification-message-text">
+                    <fest:value>data.text</fest:value>
+                    <fest:space/>
+                    <a class="notification-link" href="{data.link.href}">
+                        <fest:value>data.link.text</fest:value>
+                    </a>
+                </div>
+            </div>
+            <fest:if test="data.comment">
+                <div class="notification-comment">
+                    <fest:value>data.comment</fest:value>
+                </div>
+            </fest:if>
+        </div>
+    </div>
+</fest:template>

@@ -1,0 +1,2 @@
+[webserver]
+89.208.197.150 ansible_user=ubuntu ansible_ssh_private_key_file=~/Programs/main_program/semestr_2/2020-1-SIBIRSKAYA-KORONA-Too4em2i.pem ansible_python_interpreter=/usr/bin/python3

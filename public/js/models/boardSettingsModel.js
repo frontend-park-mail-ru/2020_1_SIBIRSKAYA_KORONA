@@ -1,4 +1,4 @@
-import {boardDelete, boardGet, boardPut, postMember, usersGet} from '../libs/apiService.js';
+import {boardDelete, boardGet, boardInviteLinkPost, boardPut, postMember, usersGet} from '../libs/apiService.js';
 import responseSwitchBuilder from '../libs/responseSwitchBuilder.js';
 
 /**
@@ -20,13 +20,14 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('getBoardSettings', this.getBoardSettings);
         this.eventBus.subscribe('getUsers', this.searchUsers.bind(this));
         this.eventBus.subscribe('inviteUser', this.inviteUser.bind(this));
+        this.eventBus.subscribe('updateInviteLink', this.updateInviteLink.bind(this));
         this.eventBus.subscribe('saveBoard', this.saveBoard.bind(this));
         this.eventBus.subscribe('deleteBoard', this.deleteBoard.bind(this));
 
         const errorResponseStatusMap = new Map([
             [401, () => this.eventBus.call('unauthorized')],
             [400, () => this.eventBus.call('goToBoards')],
-            [403, () => alert('Удалить доску может только администратор.')],
+            [403, () => alert('Недостаточно прав!')],
             [500, () => this.eventBus.call('goToBoards')],
             ['default', () => this.eventBus.call('goToBoards')],
         ]);
@@ -78,6 +79,17 @@ export default class TaskSettingsModel {
      */
     async getBoardSettings() {
         const boardResponse = await boardGet(this.boardId);
-        this.handleResponseStatus(boardResponse, (body) => this.eventBus.call('gotBoardSettings', body));
+        this.handleResponseStatus(boardResponse, (body) => {
+            body.inviteLink = 'https://' + window.location.host + '/invite/' + body.inviteLink;
+            this.eventBus.call('gotBoardSettings', body);
+        });
+    }
+
+    /**
+     * Generate new invite link
+     */
+    async updateInviteLink() {
+        const response = await boardInviteLinkPost(this.boardId);
+        this.handleResponseStatus(response, () => this.getBoardSettings());
     }
 };

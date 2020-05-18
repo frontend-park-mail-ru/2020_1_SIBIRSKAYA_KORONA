@@ -14,23 +14,11 @@ export default class CreateLabelPopupModel {
         this.eventBus = eventBus;
         this.boardID = boardID;
 
-        this.getLabelColors = this.getLabelColors.bind(this);
         this.createLabel = this.createLabel.bind(this);
 
-        this.eventBus.subscribe('getLabelColors', this.getLabelColors);
         this.eventBus.subscribe('createLabel', this.createLabel);
     }
 
-    /**
-     * Returns list of all label colors of board
-     */
-    getLabelColors() {
-        // TODO(Alexandr): get task info with API
-        // TODO(Alexandr): add response status checks
-        const boardLabelColors = ['yellow', 'orange', 'red', 'purple', 'darkblue', 'black'];
-
-        this.eventBus.call('gotLabelColors', boardLabelColors);
-    }
 
     /**
      * Create label

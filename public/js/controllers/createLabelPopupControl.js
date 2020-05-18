@@ -18,9 +18,6 @@ export default class CreateLabelPopupController extends ControllerChainLink {
     constructor(parentEventBus, boardID) {
         const chainLinkSignalsArray = Object.values(ChainLinkSignals);
         const actualSignals = [
-            'getLabelColors',
-            'gotLabelColors',
-
             'createLabel',
         ];
 

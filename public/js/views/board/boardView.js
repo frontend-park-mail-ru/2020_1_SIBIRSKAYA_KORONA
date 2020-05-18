@@ -117,7 +117,7 @@ export default class BoardView extends BaseView {
         node.scrollIntoView({block: 'end', behavior: 'smooth'});
         node.querySelector('#inputNewTaskTitle').focus();
         const addButtonID = 'addTaskButton' + columnID;
-        document.getElementById(addButtonID).addEventListener('click', () => {
+        const handleSubmit = () => {
             const newTaskInput = document.getElementById('inputNewTaskTitle');
             if (newTaskInput.value) {
                 this.eventBus.call('addNewTask', {
@@ -126,8 +126,15 @@ export default class BoardView extends BaseView {
                     taskTitle: newTaskInput.value,
                     taskPosition: this.lastTaskInColumnPosition[columnPosition] + 1,
                 });
+                document.onkeypress = null;
             }
-        });
+        };
+        document.getElementById(addButtonID).addEventListener('click', handleSubmit);
+        document.onkeypress = (event) => {
+            if (event.code === 'Enter') {
+                handleSubmit();
+            }
+        };
 
         const closeButtonID = 'closeNewTaskFormButton' + columnID;
         document.getElementById(closeButtonID).addEventListener('click', (event) => {
@@ -149,8 +156,7 @@ export default class BoardView extends BaseView {
         node.scrollIntoView({inline: 'end', behavior: 'smooth'});
         document.querySelector('.column-list').scroll(100500, 0);
         node.querySelector('#inputNewColumnTitle').focus();
-
-        document.getElementById('addColumnButton').addEventListener('click', () => {
+        const handleSubmit = () => {
             const newColumnTitleInput = document.getElementById('inputNewColumnTitle');
             if (newColumnTitleInput.value) {
                 this.eventBus.call('addNewColumn', {
@@ -158,9 +164,15 @@ export default class BoardView extends BaseView {
                     columnTitle: newColumnTitleInput.value,
                     columnPosition: this.lastColumnIndex + 1,
                 });
+                document.onkeypress = null;
             }
-        });
-
+        };
+        document.getElementById('addColumnButton').addEventListener('click', handleSubmit);
+        document.onkeypress = (event) => {
+            if (event.code === 'Enter') {
+                handleSubmit();
+            }
+        };
         document.getElementById('closeNewColumnFormButton').addEventListener('click', (event) => {
             event.stopPropagation();
             node.classList.add('column-list-add-column-button');

@@ -1,19 +1,18 @@
 const webpack = require('webpack');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const CopyPlugin = require('copy-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+
 
 const path = require('path');
 const fs = require('fs');
 const morgan = require('morgan');
 const address = require('ip').address;
 
-const isDev = process.env.NODE_ENV === 'development';
 const IP_ADDRESS = address();
+const {LABEL_COLORS} = require('./public/js/config');
 
 module.exports = {
-    mode: (isDev) ? 'development' : 'production',
+    mode: 'development',
     entry: ['@babel/polyfill', path.resolve(__dirname, 'public/js/index.js')],
     output: {
         filename: 'bundle.js',
@@ -23,7 +22,7 @@ module.exports = {
         extensions: ['.js'],
     },
 
-    devServer: isDev ? {
+    devServer: {
         port: 5555,
         https: true,
         host: IP_ADDRESS,
@@ -36,10 +35,10 @@ module.exports = {
         publicPath: '/',
         historyApiFallback: true,
         hot: true,
-        contentBase: [path.resolve(__dirname, 'public/dist'), path.resolve(__dirname, 'public')],
+        contentBase: [path.resolve(__dirname, 'public')],
 
-    } : {},
-    devtool: isDev ? 'source-map' : '',
+    },
+    devtool: 'source-map',
 
     module: {
         rules: [{
@@ -51,8 +50,8 @@ module.exports = {
                 {
                     loader: MiniCssExtractPlugin.loader,
                     options: {
-                        hmr: isDev,
-                        reloadAll: isDev,
+                        hmr: true,
+                        reloadAll: true,
                     },
                 },
                 'css-loader',
@@ -75,18 +74,10 @@ module.exports = {
             filename: 'main.css',
         }),
         new webpack.DefinePlugin({
-            'IP_ADDRESS': (isDev) ? JSON.stringify(IP_ADDRESS) : JSON.stringify('drello.works'),
+            'IP_ADDRESS': JSON.stringify(IP_ADDRESS + ':8080'),
+            'LABEL_COLORS': JSON.stringify(LABEL_COLORS),
         }),
-        new CleanWebpackPlugin(),
-        // new CopyPlugin([
-        //     {
-        //         from: path.resolve(__dirname, 'public/index.html'),
-        //         to: path.resolve(__dirname, 'public/dist/index.html'),
-        //     }, {
-        //         from: path.resolve(__dirname, 'public/img'),
-        //         to: path.resolve(__dirname, 'public/dist/img'),
-        //     },
-        // ]),
+        // new CleanWebpackPlugin(),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'public/js/sw.js'),
         }),
