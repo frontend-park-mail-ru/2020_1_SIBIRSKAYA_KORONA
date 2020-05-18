@@ -1,5 +1,5 @@
+import template from './joinView.tmpl.xml';
 import BaseView from '../baseView.js';
-import './joinView.tmpl.js';
 
 /**
  * View of join page
@@ -23,7 +23,7 @@ export default class JoinView extends BaseView {
      * Render view method
      */
     render() {
-        this.root.innerHTML = window.fest['js/views/join/joinView.tmpl'](this.inputtedData);
+        this.root.innerHTML = template(this.inputtedData);
         this.addEventListeners();
     }
 
@@ -44,6 +44,12 @@ export default class JoinView extends BaseView {
         inputs.forEach((input) => {
             input.addEventListener('input', this.handleUserInput);
         });
+
+        document.onkeydown = (event) => {
+            if (event.code === 'Enter') {
+                this.handleSubmit();
+            }
+        };
     }
 
     /**
@@ -68,13 +74,12 @@ export default class JoinView extends BaseView {
 
     /**
      * Handle user submit
-     * @param {Event} event - button click event
      */
-    handleSubmit(event) {
-        event.preventDefault();
+    handleSubmit() {
         if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
             this.showError({show: false, field: 'inputPassword'});
             this.eventBus.call('submit', this.getUserData());
+            document.onkeydown = null;
         } else {
             this.showError({show: true, field: 'inputPassword', text: 'Пароли не совпадают'});
         }

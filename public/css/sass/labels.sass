@@ -1,0 +1,162 @@
+/*        LABELS BASE    */
+.task-label-base
+    display: inline-block
+    border-radius: 5px
+    padding: 10px
+    height: 1em
+    min-width: 1em
+    box-sizing: content-box
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+    user-select: none
+
+
+.task-label
+    &--color
+        &--yellow
+            @extend .task-label-base
+            transition: 0.2s
+            background: #f2d600
+
+            &.mod-selectable
+                &:hover
+                    background: #ffe837
+
+        &--orange
+            @extend .task-label-base
+            transition: 0.2s
+            background: #ff9f1a
+
+            &.mod-selectable
+                &:hover
+                    background: #fdaf43
+
+        &--red
+            @extend .task-label-base
+            transition: 0.2s
+            background: #eb5a46
+
+            &.mod-selectable
+                &:hover
+                    background: #f36d5b
+
+        &--purple
+            @extend .task-label-base
+            transition: 0.2s
+            background: #c377e0
+
+            &.mod-selectable
+                &:hover
+                    background: #ce88e8
+
+        &--darkblue
+            @extend .task-label-base
+            transition: 0.2s
+            background: #0079bf
+            color: #f8f8ff
+
+            &.mod-selectable
+                &:hover
+                    background: #2a97d6
+
+        &--black
+            @extend .task-label-base
+            transition: 0.2s
+            background: #344563
+            color: #f8f8ff
+
+            &.mod-selectable
+                &:hover
+                    background: #495771
+
+
+.task-label-list
+    display: flex
+    align-items: center
+    flex-direction: row
+    flex-wrap: wrap
+
+    &__label
+        @extend .task-label-base
+        margin-right: 4px
+        margin-bottom: 4px
+        max-width: 6em
+
+        &--size--mini
+            @extend .task-label-list__label
+            font-size: 14px
+            padding: 4px
+            max-width: 6em
+            margin: 2px
+
+
+/*       ADD LABEL POPUP          */
+
+.task-label-options
+    display: flex
+    flex-direction: column
+    max-height: 50vh
+    overflow-y: auto
+    padding-right: 10px
+    padding-left: 10px
+
+    &__item
+        @extend .container-row
+        margin-top: 3px
+        margin-bottom: 3px
+
+    &__label
+        flex-grow: 1
+        margin-right: 8px
+        max-width: 150px
+
+        &--active
+            &.task-label--color--yellow
+                box-shadow: -8px 0px #d9b51c
+
+            &.task-label--color--orange
+                box-shadow: -8px 0px #cd8313
+
+            &.task-label--color--red
+                box-shadow: -8px 0px #b04632
+
+            &.task-label--color--purple
+                box-shadow: -8px 0px #89609e
+
+            &.task-label--color--darkblue
+                box-shadow: -8px 0px #055a8c
+
+            &.task-label--color--black
+                box-shadow: -8px 0px #091e42
+
+
+/*       END ADD LABEL POPUP          */
+
+
+
+/*      CREATE OR CHANGE LABEL    */
+.label-color-palette
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+    &__label-color
+        @extend .task-label-base
+        height: 15px
+        width: 30px
+        margin: 5px
+        justify-content: center
+        text-align: center
+
+        &--active
+            box-shadow: -2px 2px #00000033
+
+            &:before
+                content: "\2713"
+
+
+/*       END CREATE OR CHANGE LABEL       */
+
+
+

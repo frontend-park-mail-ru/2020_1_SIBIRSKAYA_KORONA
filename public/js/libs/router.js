@@ -23,7 +23,13 @@ export default class Router {
      * No pushState is necessary when user go back in history. Default set to true.
      */
     go(URL, pushState = true) {
-        const oldURL = window.history.state && window.history.state.url;
+        const oldURL = window.history.state?.url;
+
+        if ((/^\/login\/?$/.test(URL) || /^\/join\/?$/.test(URL)) &&
+            (!/^\/login\/?$/.test(oldURL) && !/^\/join\/?$/.test(oldURL)) &&
+            !this.redirectUlrAfterAuthUrl) {
+            this.redirectUlrAfterAuthUrl = oldURL;
+        }
 
         let routeNotFound = true;
         for (const route of this.routes) {
@@ -39,6 +45,28 @@ export default class Router {
         }
         if (pushState && URL !== oldURL) {
             window.history.pushState({url: URL}, '', URL);
+        } else {
+            document.querySelector('#popup-block').innerHTML = '';
+            document.querySelector('#popover-block').innerHTML = '';
+        }
+    }
+
+    /**
+     * Go back in history
+     */
+    goBack() {
+        window.history.back();
+    }
+
+    /**
+     * Redirects after auth
+     */
+    redirectAfterAuth() {
+        if (this.redirectUlrAfterAuthUrl) {
+            this.go(this.redirectUlrAfterAuthUrl);
+            this.redirectUlrAfterAuthUrl = null;
+        } else {
+            this.go('/');
         }
     }
 

@@ -1,0 +1,28 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <fest:if test="!data.isRead">
+        <div class="header-notification-new-pointer"/>
+    </fest:if>
+    <div class="header-notification-date">
+        <fest:value>data.date</fest:value>
+    </div>
+    <div class="header-notification-user">
+        <img class="header-notification-user-avatar" src="{data.user.avatar}"/>
+    </div>
+    <div class="header-notification-text">
+        <div class="header-notification-inviter-nickname">
+            @
+            <fest:value>data.user.nickname</fest:value>
+        </div>
+        <div class="header-notification-message">
+            <div class="header-notification-message-text">
+                Задача
+                <fest:space/>
+                <a class="header-notification-link" href="{data.link.href}">
+                    <fest:value>data.link.text</fest:value>
+                </a>
+                <fest:space/>
+                <fest:value>data.text</fest:value>
+            </div>
+        </div>
+    </div>
+</fest:template>

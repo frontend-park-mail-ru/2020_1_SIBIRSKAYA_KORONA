@@ -1,6 +1,8 @@
+import template from './boardsView.tmpl.xml';
+import addBoardFormTemplate from './addBoardForm.tmpl.xml';
+
 import BaseView from '../baseView.js';
-import './addBoardForm.tmpl.js';
-import './boardsView.tmpl.js';
+
 
 /**
  * Main header view
@@ -33,7 +35,7 @@ export default class BoardsView extends BaseView {
      * @param {Object} data to render
      */
     renderData(data) {
-        this.root.innerHTML = window.fest['js/views/boards/boardsView.tmpl'](data);
+        this.root.innerHTML = template(data);
         this.addEventListeners();
     }
 
@@ -52,20 +54,27 @@ export default class BoardsView extends BaseView {
         fakeBoard.classList.remove('group-fake-board');
         fakeBoard.classList.add('group-mini-board');
         fakeBoard.removeEventListener('click', this.handleAddBoardButtonClick);
-        fakeBoard.innerHTML = window.fest['js/views/boards/addBoardForm.tmpl']({form: true});
-
+        fakeBoard.innerHTML = addBoardFormTemplate({form: true});
         const newBoardTitleInput = document.getElementById('inputNewBoardTitle');
-        document.getElementById('submitAddBoard').addEventListener('click', () => {
+        newBoardTitleInput.focus();
+        const handleSubmit = () => {
             if (newBoardTitleInput.value) {
                 this.eventBus.call('addBoard', newBoardTitleInput.value);
+                document.onkeypress = null;
             }
-        });
+        };
+        document.getElementById('submitAddBoard').addEventListener('click', handleSubmit);
+        document.onkeypress = (event) => {
+            if (event.code === 'Enter') {
+                handleSubmit();
+            }
+        };
         document.getElementById('closeForm').addEventListener('click', (event) => {
             event.stopPropagation();
             fakeBoard.classList.add('group-fake-board');
             fakeBoard.classList.remove('group-mini-board');
             fakeBoard.addEventListener('click', this.handleAddBoardButtonClick);
-            fakeBoard.innerHTML = window.fest['js/views/boards/addBoardForm.tmpl']({form: false});
+            fakeBoard.innerHTML = addBoardFormTemplate({form: false});
         });
     }
 }

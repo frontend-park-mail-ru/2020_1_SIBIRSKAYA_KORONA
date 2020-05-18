@@ -1,0 +1,48 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="settings">
+    <div class="header-notifications">
+        <div class="header-notifications-controls">
+            <div class="header-notifications-controls__button--secondary js-readNotifications">
+                Прочитать все
+            </div>
+            <div>
+                <fest:attributes>
+                    <fest:attribute name="class">
+                        <fest:choose>
+                            <fest:when test="!settings.enableNotifications">
+                                <fest:value>
+                                    "header-notifications-controls__button header-notifications-controls__button--selected js-toggleNotifications"
+                                </fest:value>
+                            </fest:when>
+                            <fest:otherwise>
+                                <fest:value>"header-notifications-controls__button js-toggleNotifications"</fest:value>
+                            </fest:otherwise>
+                        </fest:choose>
+                    </fest:attribute>
+                </fest:attributes>
+                <img src="/img/disable_notifications.svg" class="header-notifications-controls__button-icon"/>
+            </div>
+            <div>
+                <fest:attributes>
+                    <fest:attribute name="class">
+                        <fest:choose>
+                            <fest:when test="!settings.enableNotificationsSound">
+                                <fest:value>
+                                    "header-notifications-controls__button header-notifications-controls__button--selected js-toggleSound"
+                                </fest:value>
+                            </fest:when>
+                            <fest:otherwise>
+                                <fest:value>"header-notifications-controls__button js-toggleSound"</fest:value>
+                            </fest:otherwise>
+                        </fest:choose>
+                    </fest:attribute>
+                </fest:attributes>
+                <img src="/img/disable_sound.png" class="header-notifications-controls__button-icon"/>
+            </div>
+            <div class="header-notifications-controls__button--danger js-deleteNotifications">
+                Удалить все
+            </div>
+        </div>
+        <div class="header-notifications-list js-notifications"/>
+    </div>
+</fest:template>
+

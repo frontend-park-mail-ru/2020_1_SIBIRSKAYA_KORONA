@@ -3,12 +3,12 @@
 
         <div class="form-block">
             <div class="title-big">
-                Create label
+                Изменить метку
             </div>
         </div>
 
         <div class="form-block">
-            <input class="form-input" placeholder="Name" value="{label.title}"/>
+            <input class="form-input  js-inputLabelTitle" placeholder="Название" value="{label.title}"/>
         </div>
 
         <fest:script>var labelColors = [
@@ -24,20 +24,20 @@
         <div class="form-block">
             <div class="task-color-palette">
                 <fest:for iterate="labelColors" index="i" value="labelColor">
-                    <fest:if test="label.color === labelColor">
-                        <div class="task-label task-palette-color task-label-color-{labelColor} mod-selectable active"></div>
-                    </fest:if>
-                    <fest:if test="label.color !== labelColor">
-                        <div class="task-label task-palette-color task-label-color-{labelColor} mod-selectable"></div>
-                    </fest:if>
+                    <div class="label-color-palette__label-color task-label--color--{labelColor} mod-selectable js-chooseColor"
+                         data-label-color="{labelColor}"></div>
                 </fest:for>
             </div>
         </div>
 
-        <div class="form-block">
-            <div class="button primary">
-                Save
+        <div class="form-block controls-panel">
+            <div class="button--primary js-saveLabel">
+                <i class="fas fa-save"></i>
             </div>
+            <div class="button--danger js-deleteLabel">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
         </div>
 
     </div>

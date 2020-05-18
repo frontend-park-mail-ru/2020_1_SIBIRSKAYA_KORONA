@@ -1,0 +1,298 @@
+.task
+    @media screen and (max-width: $tablet-breakpoint)
+        margin: 0
+        padding-top: 0
+        width: unset
+        max-height: unset
+        bottom: 0
+        right: 0
+        left: 0
+    @extend .form
+    position: absolute
+    top: 8vh
+    display: flex
+    flex-direction: column
+    width: 700px
+    max-height: 80vh
+    overflow-y: auto
+
+    &-title
+        &__text
+            @extend .title
+            margin-left: 20px
+            font-size: 20pt
+
+        &__hr--width-2
+            @extend .hr-width-2
+
+    &-settings
+        margin: 0 auto 10px
+        @media screen and (max-width: $tablet-breakpoint)
+            margin: 0
+            width: unset
+            height: unset
+        width: 660px
+
+        &-comments
+
+        &-comment
+            display: flex
+            margin-bottom: 20px
+            &__author--avatar
+                height: 60px
+                width: 60px
+                border-radius: 50%
+                margin-right: 10px
+                object-fit: cover
+
+            &:hover
+                box-shadow: -2px 1px 2px 0px #cac6c6
+                border-radius: 30px 0 0 30px
+
+            &-data
+                width: 100%
+
+            &-controls
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+            &__text
+                margin-top: 10px
+
+            &__nickname
+                font-size: 14pt
+                font-family: 'Scada', sans-serif
+
+            &__delete-icon
+                position: absolute
+                right: 50px
+                width: 16px
+                height: 16px
+                cursor: pointer
+                margin-top: -1px
+
+                &:hover
+                    width: 18px
+                    height: 18px
+                    right: 49px
+
+            &__date
+                margin-right: 30px
+                font-family: 'Scada', sans-serif
+                color: #444746
+                font-size: 14px
+                letter-spacing: 1px
+
+
+        &-add-comment
+            width: 100%
+
+            &__button--secondary
+                margin-top: 20px
+                @extend .button--secondary
+
+
+        &-members
+            overflow: hidden
+            @extend .member-container
+            flex-wrap: wrap
+
+            &__member
+                height: 60px
+                width: 60px
+                border-radius: 50%
+                margin-right: 10px
+                margin-bottom: 10px
+                object-fit: cover
+
+            &__add-button
+                @extend .task-settings-members__member
+                border: 2px dashed #afaeae
+                transition: 0.2s
+
+                &--rotated
+                    transform: rotate(45deg)
+
+                &:hover
+                    border-style: solid
+                    cursor: pointer
+
+        &-labels__add-button
+            text-align: center
+            font-weight: bold
+            border: 2px dashed #afaeae
+            color: #656565
+            transition: 0.2s
+            &:hover
+                border-style: solid
+                cursor: pointer
+
+        &-controls
+            margin-top: 20px
+            flex-flow: wrap
+            @extend .controls-panel
+
+            &__button
+                @media screen and (max-width: $phone-breakpoint)
+                    margin: 0 auto 10px
+                    width: 70% !important
+                    display: flex
+                    justify-content: center
+                &--primary
+                    @extend .button--primary
+                    @extend .task-settings-controls__button
+
+                &--secondary
+                    @extend .button--secondary
+                    @extend .task-settings-controls__button
+
+                &--danger
+                    @extend .button--danger
+                    @extend .task-settings-controls__button
+
+        &__error
+            @extend .input-error
+
+        &__label
+            @extend .form-input-label
+            margin-top: 30px
+
+        &__input
+            @extend .form-input
+
+    &-attachments
+        margin-top: 20px
+        &__item
+            @extend .container-2cols
+            margin-top: 3px
+            transition: 0.1s
+            border-radius: 4px
+            padding: 4px
+
+            &:hover
+                background: #d4d5fa8a
+
+            &--info
+                @extend .container-row
+                flex-grow: 1
+            &--file-icon
+                font-size: 1.5rem
+                padding-left: 10px
+                padding-right: 10px
+            &--filename
+                padding-left: 5px
+                padding-right: 5px
+
+            &--controls
+                @extend .controls-panel
+                div
+                    margin-right: 10px
+
+
+    &-checklists
+        &-form
+            @extend .form
+            width: 300px
+
+            &__label
+                @extend .form-input-label
+
+    &-assigns
+        &-form
+            @extend .form
+
+            &__label
+                @extend .form-input-label
+
+        &-controls
+            display: flex
+            justify-content: flex-end
+            align-items: center
+
+.checklist
+    width: 100%
+
+    &-item
+        margin-bottom: 10px
+        height: 25px
+
+    &-add-item-form
+        &__input
+            @extend .form-input
+
+        &-controls
+            margin-top: 20px
+            display: flex
+            justify-content: center
+            @media screen and (max-width: $phone-breakpoint)
+                flex-flow: column
+
+            &__button
+                &--primary
+                    @extend .button--primary
+
+                &--secondary
+                    margin-left: 12px
+                    @media screen and (max-width: $phone-breakpoint)
+                        margin: 10px auto 10px
+                        width: 70% !important
+                        display: flex
+                        justify-content: center
+                    @extend .button--secondary
+
+                &--danger
+                    margin-left: 12px
+                    @media screen and (max-width: $phone-breakpoint)
+                        margin: 0 auto 10px
+                        width: 70% !important
+                        display: flex
+                        justify-content: center
+                    @extend .button--danger
+
+    &-title
+        margin-top: 30px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        @extend .form-input-label
+
+        &-percents
+            font-family: 'Scada', sans-serif
+            color: #444746
+            font-size: 14px
+            letter-spacing: 1px
+            font-weight: normal
+
+    &-progressbar
+        display: flex
+        justify-content: flex-start
+        height: 8px
+        border-radius: 4px
+        background: #cac6c654
+        margin: 10px 0
+
+        &-progress
+            border-radius: inherit
+            transition: width 0.4s cubic-bezier(0.42, 0, 0.47, 1.38), background 0.3s ease-out
+
+
+/*    MEMBERS POPUP    */
+.assign
+    height: 70px
+    &-members__member
+        height: 60px
+        width: 60px
+        border-radius: 50%
+        margin-right: 10px
+        object-fit: cover
+
+
+//flex-direction: column
+//justify-content: center
+
+
+
+/*    END MEMBERS POPUP    */
+
+

@@ -1,4 +1,5 @@
 import {boardsGet, boardsPost} from '../libs/apiService.js';
+import webSocket from '../libs/webSocketWrapper.js';
 
 /**
  * Main header model
@@ -13,7 +14,8 @@ export default class HeaderModel {
 
         this.getBoards = this.getBoards.bind(this);
         this.addNewBoard = this.addNewBoard.bind(this);
-
+        this.socket = webSocket;
+        this.socket.subscribe('message', this.liveUpdateHandler.bind(this));
         this.eventBus.subscribe('getBoards', this.getBoards);
         this.eventBus.subscribe('addBoard', this.addNewBoard);
     }
@@ -51,25 +53,36 @@ export default class HeaderModel {
      * Call api to add new board
      * @param {String} boardTitle - new board title
      */
-    addNewBoard(boardTitle) {
-        boardsPost(boardTitle).then((response) => {
-            switch (response.status) {
-                case 200: // Успешно создали доску
-                    response.json().then(this.getBoards);
-                    break;
-                case 400: // Невалидное тело
-                    console.log('Bad request');
-                    break;
-                case 401:
-                case 403: // В запросе отсутствует кука
-                    this.eventBus.call('unauthorized');
-                    break;
-                case 500:
-                    console.log('Server error');
-                    break;
-                default:
-                    console.log('Бекендер молодец!!!');
-            }
-        });
+    async addNewBoard(boardTitle) {
+        const response = await boardsPost(boardTitle);
+        switch (response.status) {
+            case 200: // Успешно создали доску
+                const newBoardID = (await response.json()).id;
+                this.eventBus.call('goToBoard', newBoardID);
+                break;
+            case 400: // Невалидное тело
+                console.log('Bad request');
+                break;
+            case 401:
+            case 403: // В запросе отсутствует кука
+                this.eventBus.call('unauthorized');
+                break;
+            case 500:
+                console.log('Server error');
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+        }
+    }
+
+    /**
+     * Handles messages from websocket for live update
+     * @param {Event} event - websocket message event
+     */
+    liveUpdateHandler(event) {
+        const msg = JSON.parse(event.data);
+        if (msg.eventType === 'InviteToBoard' && window.location.pathname === '/boards') {
+            this.getBoards();
+        }
     }
 }

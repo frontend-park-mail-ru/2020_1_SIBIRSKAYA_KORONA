@@ -1,0 +1,67 @@
+#notifications
+    position: absolute
+    bottom: 10px
+    right: 9px
+    z-index: 50
+    display: flex
+    flex-flow: column
+    width: 300px
+
+.notification
+    margin-top: 10px
+    padding: 5px
+    border-radius: 5px
+    background-color: #35353fc9
+    display: flex
+
+    &-text
+        color: #EEEEEE
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        margin: 5px
+        width: -webkit-fill-available
+
+    &-message
+        color: #E0E0E0
+        line-height: normal
+        margin-top: 10px
+
+    &-link
+        text-decoration: none
+        color: #BBDEFB
+
+        &:hover
+            text-decoration: underline
+
+    &-comment
+        margin-top: 5px
+        font-size: 15px
+
+    &-user
+        &-nickname
+            color: #FAFAFA
+            font-size: 14pt
+            font-family: 'Scada', sans-serif
+
+        &-avatar
+            height: 50px
+            width: 50px
+            border-radius: 50%
+            object-fit: cover
+
+    &-inviter
+        &-nickname
+            @extend .notification-user-nickname
+
+    &-invitee
+        display: flex
+        flex-direction: column
+        justify-content: flex-end
+
+        &-nickname
+            display: flex
+            justify-content: flex-end
+            margin-top: 10px
+            @extend .notification-user-nickname
+

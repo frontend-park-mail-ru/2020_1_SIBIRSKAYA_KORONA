@@ -9,8 +9,9 @@ export default class JoinController {
     /**
      * Controller constructor
      * @param {Object} router - for model to redirect on success registration
+     * @param {Object} globalEventBus - for trigger login global event
      */
-    constructor(router) {
+    constructor(router, globalEventBus) {
         this.eventBus = new EventBus([
             'submit',
             'userInput',
@@ -20,9 +21,11 @@ export default class JoinController {
         this.view = new JoinView(this.eventBus);
         this.model = new JoinModel(this.eventBus);
 
-        this.eventBus.subscribe('joinSuccess', () => {
+        this.eventBus.subscribe('joinSuccess', (userData) => {
+            router.redirectAfterAuth();
+            globalEventBus.call('login');
+            globalEventBus.call('enableSocketConnection', true);
             this.view.clearInputtedData();
-            router.go('/profile');
         });
     }
 }

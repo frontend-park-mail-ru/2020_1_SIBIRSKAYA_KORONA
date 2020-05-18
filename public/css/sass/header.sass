@@ -1,4 +1,5 @@
 .main-header
+    max-width: 100%
     background: #18255f
     padding: 10px 0
     @extend .header
@@ -16,6 +17,9 @@
             @extend .header__button--danger
 
     &-center
+        @media screen and (max-width: $tablet-breakpoint)
+            margin: 0 auto 0
+            width: 100%
         @extend .header-block-center
 
         &__title
@@ -35,26 +39,194 @@
         @extend .header-block-right
 
         &__button--primary
+            @media screen and (max-width: $tablet-breakpoint)
+                display: none !important
             @extend .header__button--primary
 
         &__button--secondary
+            @media screen and (max-width: $tablet-breakpoint)
+                display: none !important
             @extend .header__button--secondary
 
         &__button--danger
             @extend .header__button--danger
 
         &__nickname
+            @media screen and (max-width: $iphone-5-breakpoint)
+                display: none
             @extend .title
             color: white
             font-size: 14pt
             margin: 0 10px
 
         &__avatar
+            @media screen and (max-width: $phone-breakpoint)
+                margin: 0
+            @media screen and (max-width: $iphone-5-breakpoint)
+                margin-right: 80px
             height: 35px
             width: 35px
-            margin: 0 10px
+            margin: 0 8px
             cursor: pointer
 
             &--round
                 @extend .main-header-right__avatar
                 @extend .avatar-round
+
+        &__notifications
+            position: relative
+            cursor: pointer
+
+            &-counter
+                position: absolute
+                top: 0
+                right: 5px
+                width: 22px
+                height: 22px
+                background-color: #FFB300
+                color: black
+                font-size: 16px
+                letter-spacing: -1px
+                font-weight: bold
+                border-radius: 50%
+                display: flex
+                align-items: center
+                justify-content: center
+
+            &-icon
+                margin: 0 8px
+                height: 33px
+                width: 33px
+
+.header-notifications
+    border-radius: 10px
+    box-shadow: 0 4px 16px #ccc
+    background-color: white
+    width: 400px
+    padding: 10px 0
+
+    &-controls
+        display: flex
+        justify-content: space-between
+        align-items: center
+        margin: 0 10px
+
+        &__button
+            width: 29px
+            height: 29px
+            border-radius: 50%
+            display: flex
+            align-items: center
+            justify-content: center
+            padding: 5px
+            cursor: pointer
+            &:hover
+                background: #e8eaf6
+            &--selected
+                background: #8C9EFF
+                &:hover
+                    background: #c1cbff
+
+            &--primary
+                @extend .button--primary
+
+            &--secondary
+                @extend .button--secondary
+
+            &--danger
+                @extend .button--danger
+
+            &-icon
+                width: 100%
+                height: 100%
+
+    &-list
+        display: flex
+        flex-flow: column-reverse
+        margin-top: 10px
+        max-height: 86vh
+        overflow-y: auto
+
+.header-notification
+    padding: 10px 5px 10px 10px
+    display: flex
+    position: relative
+    border-top: 1px solid #E0E0E0
+
+    &:hover
+        background-color: #e8eaf6
+
+    &__read
+        @extend .header-notification
+        background-color: #E0E0E0
+        border-top: 1px solid #BDBDBD
+
+    &-date
+        position: absolute
+        top: 10px
+        right: 5px
+        font-family: 'Scada', sans-serif
+        color: #757575
+        font-size: 14px
+
+        &:hover
+            text-decoration: underline
+
+    &-new-pointer
+        position: absolute
+        top: 5px
+        left: 5px
+        width: 10px
+        height: 10px
+        border-radius: 50%
+        background-color: #FFB300
+
+    &-text
+        margin: 0 5px
+        width: -webkit-fill-available
+
+    &-comment
+        margin-top: 5px
+        font-size: 15px
+
+    &-message
+        line-height: normal
+        margin-top: 10px
+
+    &-link
+        text-decoration: none
+        color: #2b5df3
+
+        &:hover
+            text-decoration: underline
+
+    &-user
+        &-nickname
+            font-size: 14pt
+            font-family: 'Scada', sans-serif
+
+        &-avatar
+            height: 50px
+            width: 50px
+            border-radius: 50%
+            object-fit: cover
+
+    &-inviter
+        &-nickname
+            @extend .header-notification-user-nickname
+
+    &-invitee
+        display: flex
+        flex-direction: column
+        justify-content: flex-end
+
+        &-nickname
+            display: flex
+            justify-content: flex-end
+            margin-top: 10px
+            @extend .header-notification-user-nickname
+
+.authorized
+    @media screen and (max-width: $tablet-breakpoint)
+        .main-header-center
+            display: none !important

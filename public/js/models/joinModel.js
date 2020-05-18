@@ -69,6 +69,7 @@ export default class JoinModel {
             return;
         }
 
+        userInfo.password = btoa(userInfo.password);
         settingsPost(userInfo).then((response) => {
             switch (response.status) {
                 case 200: // - OK (Успешная регистрация)
