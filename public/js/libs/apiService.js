@@ -1,6 +1,6 @@
 import {fetchDelete, fetchGet, fetchPost, fetchPut} from './httpUtils.js';
 
-const BACKEND_ADDRESS = `https://${IP_ADDRESS}:8080/api/`;
+const BACKEND_ADDRESS = `https://${IP_ADDRESS}/api/`;
 
 let CSRFToken;
 

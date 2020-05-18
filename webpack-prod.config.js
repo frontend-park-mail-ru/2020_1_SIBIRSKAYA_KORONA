@@ -60,7 +60,7 @@ module.exports = {
             filename: 'main.[contenthash].css',
         }),
         new webpack.DefinePlugin({
-            'IP_ADDRESS': JSON.stringify('drello.works'),
+            'IP_ADDRESS': JSON.stringify('drello.works:443'),
             'LABEL_COLORS': JSON.stringify(LABEL_COLORS),
         }),
         new CopyPlugin([

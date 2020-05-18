@@ -74,7 +74,7 @@ module.exports = {
             filename: 'main.css',
         }),
         new webpack.DefinePlugin({
-            'IP_ADDRESS': JSON.stringify(IP_ADDRESS),
+            'IP_ADDRESS': JSON.stringify(IP_ADDRESS + ':8080'),
             'LABEL_COLORS': JSON.stringify(LABEL_COLORS),
         }),
         // new CleanWebpackPlugin(),
