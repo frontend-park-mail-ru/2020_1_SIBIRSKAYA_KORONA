@@ -44,6 +44,12 @@ export default class JoinView extends BaseView {
         inputs.forEach((input) => {
             input.addEventListener('input', this.handleUserInput);
         });
+
+        document.onkeydown = (event) => {
+            if (event.code === 'Enter') {
+                this.handleSubmit();
+            }
+        };
     }
 
     /**
@@ -68,13 +74,12 @@ export default class JoinView extends BaseView {
 
     /**
      * Handle user submit
-     * @param {Event} event - button click event
      */
-    handleSubmit(event) {
-        event.preventDefault();
+    handleSubmit() {
         if (this.inputtedData.inputPassword === this.inputtedData.inputPasswordRepeat) {
             this.showError({show: false, field: 'inputPassword'});
             this.eventBus.call('submit', this.getUserData());
+            document.onkeydown = null;
         } else {
             this.showError({show: true, field: 'inputPassword', text: 'Пароли не совпадают'});
         }

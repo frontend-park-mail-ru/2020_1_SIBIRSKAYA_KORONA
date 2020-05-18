@@ -19,37 +19,24 @@ export default class CreateLabelPopupView extends BaseView {
         this.labelData = {title: void 0, color: void 0};
 
         this.render = this.render.bind(this);
-        this.renderAddLabelPopup = this.renderAddLabelPopup.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.closeSelf = this.closeSelf.bind(this);
 
-
-        this.eventBus.subscribe('gotLabelColors', this.renderAddLabelPopup);
         this.eventBus.subscribe('createLabel', this.createLabel);
     }
 
     /**
-     * Method which triggers getting data from model and sets render position
-     * @param {Object} clickCoords - {x, y}
-     */
-    render(clickCoords) {
-        this.position = {
-            left: `${clickCoords.x / window.innerWidth * 100}%`,
-            top: `${clickCoords.y / window.innerHeight * 100}%`,
-        };
-        this.eventBus.call('getLabelColors');
-    }
-
-    /**
      * Real render view method with label data from model
-     * @param {Object} boardLabelColors - information about board label colors
+     * @param {Object} position - {left, top}
      */
-    renderAddLabelPopup(boardLabelColors) {
+    render(position) {
+        this.position = position;
         const popupDiv = document.getElementById('popup-block');
+
         popupDiv.removeAttribute('style');
         popupDiv.style.left = this.position.left;
         popupDiv.style.top = this.position.top;
-        popupDiv.innerHTML = template(boardLabelColors);
+        popupDiv.innerHTML = template();
 
         this.chooseColor('yellow');
 

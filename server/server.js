@@ -7,17 +7,15 @@ const express = require('express');
 const morgan = require('morgan');
 
 // INIT HTTPS SERVER
-const publicFolder = path.resolve(__dirname, '..', 'public');
-const distFolder = path.resolve(publicFolder, 'dist');
+const distFolder = path.resolve(__dirname, '..', 'public', 'dist');
 
 const appHttps = express();
 appHttps.use(morgan('dev'));
 appHttps.use(express.static(distFolder));
-appHttps.use(express.static(publicFolder));
 
 
 appHttps.get('*', (req, res) => {
-    res.sendFile(path.resolve(publicFolder, 'index.html'));
+    res.sendFile(path.resolve(distFolder, 'index.html'));
 });
 
 

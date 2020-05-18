@@ -1,4 +1,4 @@
-const WEBSOCKET_URL = `wss://${IP_ADDRESS}:8080/api/ws`;
+const WEBSOCKET_URL = `wss://${IP_ADDRESS}/api/ws`;
 
 /**
  * Class for work with socket, exports as instance
@@ -38,10 +38,8 @@ class WebSocketWrapper {
             this.closeSubscribers.forEach((handler) => {
                 handler(event);
             });
-            this.socket = null;
         };
         this.socket.onerror = (event) => {
-            console.log('WS ERROR', event);
             this.errorSubscribers.forEach((handler) => {
                 handler(event);
             });

@@ -1,6 +1,6 @@
 import {fetchDelete, fetchGet, fetchPost, fetchPut} from './httpUtils.js';
 
-const BACKEND_ADDRESS = `https://${IP_ADDRESS}:8080/api/`;
+const BACKEND_ADDRESS = `https://${IP_ADDRESS}/api/`;
 
 let CSRFToken;
 
@@ -246,7 +246,6 @@ export const tasksPost = (boardID, columnID, task = {position: 1, description: '
  */
 export const usersGet = (boardID, nickname, limit) => {
     const apiUrl = new URL(`boards/${boardID}/search_for_invite?nickname=${nickname}&limit=${limit}`, BACKEND_ADDRESS);
-    console.log(apiUrl);
     return fetchGet(apiUrl.href);
 };
 
@@ -260,6 +259,17 @@ export const postMember = (boardID, userID) => {
     const apiUrl = new URL(`boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
     return fetchPost(apiUrl.href, null);
 };
+
+/**
+ * Add user to board by invite link
+ * @param {String} inviteHash - unique board hash
+ * @return {Promise<Response>}
+ */
+export const putMemberWithInviteLink = (inviteHash) => {
+    const apiUrl = new URL(`invite_to_board/${inviteHash}`, BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, null);
+};
+
 
 /** ******************* TASK SETTINGS ************************/
 

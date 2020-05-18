@@ -5,33 +5,24 @@
     <div class="header-notification-date">
         <fest:value>data.date</fest:value>
     </div>
-    <div class="header-notification-inviter">
-        <img class="header-notification-user-avatar" src="{data.inviter.avatar}"/>
+    <div class="header-notification-user">
+        <img class="header-notification-user-avatar" src="{data.user.avatar}"/>
     </div>
     <div class="header-notification-text">
         <div class="header-notification-inviter-nickname">
             @
-            <fest:value>data.inviter.nickname</fest:value>
+            <fest:value>data.user.nickname</fest:value>
         </div>
         <div class="header-notification-message">
             <div class="header-notification-message-text">
-                <fest:value>data.text</fest:value>
+                Задача
                 <fest:space/>
                 <a class="header-notification-link" href="{data.link.href}">
                     <fest:value>data.link.text</fest:value>
                 </a>
+                <fest:space/>
+                <fest:value>data.text</fest:value>
             </div>
         </div>
-        <fest:if test="data.invitee">
-            <div class="header-notification-invitee-nickname">
-                @
-                <fest:value>data.invitee.nickname</fest:value>
-            </div>
-        </fest:if>
     </div>
-    <fest:if test="data.invitee">
-        <div class="header-notification-invitee">
-            <img class="header-notification-user-avatar" src="{data.invitee.avatar}"/>
-        </div>
-    </fest:if>
 </fest:template>

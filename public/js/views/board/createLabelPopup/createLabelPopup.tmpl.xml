@@ -1,4 +1,4 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="labelColors" xmlns:fesr="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="_" xmlns:fesr="http://fest.mail.ru">
     <div class="form pop-over">
 
         <div class="form-block">
@@ -13,7 +13,7 @@
 
         <div class="form-block">
             <div class="label-color-palette">
-                <fest:for iterate="labelColors" index="i" value="labelColor">
+                <fest:for iterate="LABEL_COLORS" index="i" value="labelColor">
                     <div class="label-color-palette__label-color task-label--color--{labelColor} mod-selectable js-chooseColor"
                     data-label-color="{labelColor}"></div>
                 </fest:for>

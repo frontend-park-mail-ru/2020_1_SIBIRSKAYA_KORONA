@@ -7,7 +7,6 @@ self.addEventListener('install', (event) => {
             .then((cache) => {
                 return cache.addAll([
                     ...assets,
-                    '/index.html',
                 ]);
             }),
     );

@@ -57,11 +57,18 @@ export default class BoardsView extends BaseView {
         fakeBoard.innerHTML = addBoardFormTemplate({form: true});
         const newBoardTitleInput = document.getElementById('inputNewBoardTitle');
         newBoardTitleInput.focus();
-        document.getElementById('submitAddBoard').addEventListener('click', () => {
+        const handleSubmit = () => {
             if (newBoardTitleInput.value) {
                 this.eventBus.call('addBoard', newBoardTitleInput.value);
+                document.onkeypress = null;
             }
-        });
+        };
+        document.getElementById('submitAddBoard').addEventListener('click', handleSubmit);
+        document.onkeypress = (event) => {
+            if (event.code === 'Enter') {
+                handleSubmit();
+            }
+        };
         document.getElementById('closeForm').addEventListener('click', (event) => {
             event.stopPropagation();
             fakeBoard.classList.add('group-fake-board');

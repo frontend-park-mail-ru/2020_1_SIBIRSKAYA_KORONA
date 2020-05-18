@@ -22,9 +22,9 @@ export default class JoinController {
         this.model = new JoinModel(this.eventBus);
 
         this.eventBus.subscribe('joinSuccess', (userData) => {
-            router.go('/');
+            router.redirectAfterAuth();
             globalEventBus.call('login');
-            globalEventBus.call('enableNotifications', true);
+            globalEventBus.call('enableSocketConnection', true);
             this.view.clearInputtedData();
         });
     }
