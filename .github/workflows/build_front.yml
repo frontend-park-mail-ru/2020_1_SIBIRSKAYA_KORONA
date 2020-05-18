@@ -2,10 +2,9 @@ name: Build and deploy frontend
 
 on:
   push:
-#    branches: [master]
-    branches: [master, nginx-ci]
+    branches: [deploy]
   pull_request:
-    branches: [master]
+    branches: [deploy]
 
 jobs:
 
