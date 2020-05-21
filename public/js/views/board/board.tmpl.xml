@@ -29,7 +29,8 @@
                 <div class="board-column" data-column-id="{column.id}">
                     <div class="board-column-header">
                         <div class="board-column-header__title">
-                            <input class="board-column-header__title-input" value="{column.title}"></input>
+                            <input class="board-column-header__title-input js-updateColumn" value="{column.title}"
+                                   data-column-id="{column.id}"></input>
                         </div>
                         <div class="board-column-header__delete-button js-deleteColumn"
                              data-column-id="{column.id}">

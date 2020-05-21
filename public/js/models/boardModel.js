@@ -2,6 +2,7 @@ import {
     boardGet,
     columnsGet,
     columnsPost,
+    columnsPut,
     columnsDelete,
     putMemberWithInviteLink,
     taskPut,
@@ -23,6 +24,7 @@ export default class BoardModel {
 
         eventBus.subscribe('getBoardData', this.getBoardData.bind(this));
         eventBus.subscribe('addNewColumn', this.addColumn.bind(this));
+        eventBus.subscribe('updateColumn', this.updateColumn.bind(this));
         eventBus.subscribe('deleteColumn', this.deleteColumn.bind(this));
         eventBus.subscribe('addNewTask', this.addTask.bind(this));
         eventBus.subscribe('taskMoved', this.saveTask.bind(this));
@@ -170,6 +172,34 @@ export default class BoardModel {
             }
         });
     }
+
+    /**
+     * Update column
+     * @param {object} columnData - {columnID, title?, position?}
+     */
+    async updateColumn(columnData = {columnID, title, position}) {
+        const boardID = this.boardData.id;
+        const updateResponse = await columnsPut(this.boardData.id, columnData.columnID, columnData);
+
+        switch (updateResponse.status) {
+            case 200: // - OK (Валидный запрос данных пользователя)
+                this.eventBus.call('getBoardData', boardID);
+                break;
+            case 401:
+                this.eventBus.call('unauthorized');
+                break;
+            case 400:
+            case 404:
+            case 500:
+                break;
+            case 403:
+                this.eventBus.call('goToBoards');
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+        }
+    }
+
 
     /**
      * Delete column from board

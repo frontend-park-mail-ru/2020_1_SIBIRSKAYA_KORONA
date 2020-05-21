@@ -208,6 +208,18 @@ export const columnsGet = (boardID) => {
 /**
  * @param {Number} boardID
  * @param {Number} columnID
+ * @param {Object} newData - {position, title}
+ * @description Get all board columns column
+ * @return {Promise<Response>}
+ */
+export const columnsPut = (boardID, columnID, newData = {position, title}) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}`, BACKEND_ADDRESS);
+    return fetchPut(apiUrl.href, JSON.stringify(newData));
+};
+
+/**
+ * @param {Number} boardID
+ * @param {Number} columnID
  * @description Delete column
  * @return {Promise<Response>}
  */

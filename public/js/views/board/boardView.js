@@ -64,6 +64,7 @@ export default class BoardView extends BaseView {
             ...document.getElementsByClassName('js-deleteColumn'),
             ...document.getElementsByClassName('js-addNewTask'),
         ];
+        const inputs = [...document.getElementsByClassName('js-updateColumn')];
 
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
@@ -71,6 +72,23 @@ export default class BoardView extends BaseView {
 
         tasks.forEach((task) => {
             task.addEventListener('mousedown', this.handleTaskDragStart);
+        });
+
+        inputs.forEach((input) => {
+            input.addEventListener('blur', (event) => {
+                const target = event.currentTarget;
+                const columnID = Number(target.getAttribute('data-column-id'));
+                const title = target.value;
+                this.eventBus.call('updateColumn', {columnID, title});
+            });
+
+            input.addEventListener('keydown', function(event) {
+                const target = event.currentTarget;
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    target.blur(); // will trigger blur event which saves column
+                }
+            });
         });
     }
 
@@ -89,10 +107,12 @@ export default class BoardView extends BaseView {
                 this.showNewColumnForm(target);
                 break;
 
-            case target.classList.contains('js-deleteColumn'):
+
+            case target.classList.contains('js-deleteColumn'): {
                 const columnID = Number(target.getAttribute('data-column-id'));
                 this.eventBus.call('deleteColumn', columnID);
                 break;
+            }
 
             case target.classList.contains('js-addNewUser'):
             case target.classList.contains('js-openBoardSettings'):
@@ -214,6 +234,7 @@ export default class BoardView extends BaseView {
         document.addEventListener('selectstart', this.preventDefault);
     }
 
+
     /**
      * Handle task move
      * @param {MouseEvent} event
@@ -289,3 +310,5 @@ export default class BoardView extends BaseView {
         this.dragTask = {};
     }
 }
+
+
