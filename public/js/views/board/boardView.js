@@ -47,6 +47,7 @@ export default class BoardView extends BaseView {
             this.lastTaskInColumnPosition[index] = (lastTask) ? lastTask.position : 1;
         });
 
+        boardData.minimizedLabels = JSON.parse(localStorage.getItem('minimizedLabels'));
         boardData.members = boardData.admins.concat(boardData.members || []);
         this.root.innerHTML = boardTemplate(boardData);
         this.addEventListeners();
@@ -57,6 +58,7 @@ export default class BoardView extends BaseView {
      */
     addEventListeners() {
         const tasks = [...document.getElementsByClassName('js-taskSettings')];
+        const labels = [...document.getElementsByClassName('js-minimizeLabels')];
         const buttons = [
             ...document.getElementsByClassName('js-openBoardSettings'),
             ...document.getElementsByClassName('js-addNewUser'),
@@ -71,7 +73,11 @@ export default class BoardView extends BaseView {
         });
 
         tasks.forEach((task) => {
-            task.addEventListener('mousedown', this.handleTaskDragStart);
+            task.addEventListener('mousedown', (event) => this.handleTaskDragStart(event, 'openTaskSettings'));
+        });
+
+        labels.forEach((label) => {
+            label.addEventListener('mousedown', (event) => this.handleTaskDragStart(event, 'minimizeLabels'));
         });
 
         inputs.forEach((input) => {
@@ -213,10 +219,14 @@ export default class BoardView extends BaseView {
     /**
      * Handle mouse down on task
      * @param {MouseEvent} event
+     * @param {string} eventType - 'openTaskSettings' or 'minimizeLabels'
      */
-    handleTaskDragStart(event) {
+    handleTaskDragStart(event, eventType) {
+        event.stopPropagation();
+
         const box = event.currentTarget.getBoundingClientRect();
         this.dragTask = {
+            eventType,
             element: event.currentTarget,
             shift: {
                 x: event.pageX - box.left + pageXOffset,
@@ -261,10 +271,32 @@ export default class BoardView extends BaseView {
         document.removeEventListener('mouseup', this.handleTaskDragEnd);
         document.removeEventListener('selectstart', this.preventDefault);
         if (event.pageX === this.dragTask.mouseDown.x && event.pageY === this.dragTask.mouseDown.y) {
-            this.eventBus.call('openTaskSettings',
-                this.boardID,
-                Number(this.dragTask.element.dataset.columnId),
-                Number(this.dragTask.element.dataset.taskId));
+            switch (this.dragTask.eventType) {
+                case 'openTaskSettings':
+                    this.eventBus.call('openTaskSettings',
+                        this.boardID,
+                        Number(this.dragTask.element.dataset.columnId),
+                        Number(this.dragTask.element.dataset.taskId));
+                    break;
+                case 'minimizeLabels': {
+                    const labels = document.getElementsByClassName('js-minimizeLabels');
+                    const labelsOpened = !labels[0].classList.contains('task-label-list__label--state--minified');
+
+                    if (labelsOpened) {
+                        for (const label of labels) {
+                            label.classList.add('task-label-list__label--state--minified');
+                            label.children[0].classList.add('task-label-list__label-title--state--hidden');
+                        }
+                    } else {
+                        for (const label of labels) {
+                            label.classList.remove('task-label-list__label--state--minified');
+                            label.children[0].classList.remove('task-label-list__label-title--state--hidden');
+                        }
+                    }
+
+                    localStorage.setItem('minimizedLabels', JSON.stringify(labelsOpened));
+                }
+            }
         } else {
             this.dragTask.element.style.display = 'none';
             const elem = document.elementFromPoint(event.clientX, event.clientY);

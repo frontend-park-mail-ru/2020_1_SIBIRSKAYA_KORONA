@@ -78,7 +78,6 @@
     flex-wrap: wrap
 
     &__label
-        @extend .task-label-base
         margin-right: 4px
         margin-bottom: 4px
         max-width: 6em
@@ -89,6 +88,21 @@
             padding: 4px
             max-width: 6em
             margin: 2px
+
+        &--state--minified
+            padding: 0
+            height: 10px
+            width: 30px
+
+    &__label-title
+        width: 100%
+        display: inline-block
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
+        &--state--hidden
+            display: none
+
 
 
 /*       ADD LABEL POPUP          */
