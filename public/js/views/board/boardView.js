@@ -61,7 +61,7 @@ export default class BoardView extends BaseView {
             ...document.getElementsByClassName('js-openBoardSettings'),
             ...document.getElementsByClassName('js-addNewUser'),
             ...document.getElementsByClassName('js-addNewColumn'),
-            ...document.getElementsByClassName('js-openColumnSettings'),
+            ...document.getElementsByClassName('js-deleteColumn'),
             ...document.getElementsByClassName('js-addNewTask'),
         ];
 
@@ -89,8 +89,9 @@ export default class BoardView extends BaseView {
                 this.showNewColumnForm(target);
                 break;
 
-            case target.classList.contains('js-openColumnSettings'):
-                this.eventBus.call('openColumnSettings');
+            case target.classList.contains('js-deleteColumn'):
+                const columnID = Number(target.getAttribute('data-column-id'));
+                this.eventBus.call('deleteColumn', columnID);
                 break;
 
             case target.classList.contains('js-addNewUser'):

@@ -205,6 +205,17 @@ export const columnsGet = (boardID) => {
     return fetchGet(apiUrl.href);
 };
 
+/**
+ * @param {Number} boardID
+ * @param {Number} columnID
+ * @description Delete column
+ * @return {Promise<Response>}
+ */
+export const columnsDelete = (boardID, columnID) => {
+    const apiUrl = new URL(`boards/${boardID}/columns/${columnID}`, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
+
 /** ********************* TASKS ***********************/
 
 /**

@@ -20,6 +20,7 @@ export default class BoardController {
             'addNewUser',
             'inviteWithLink',
             'addNewColumn',
+            'deleteColumn',
             'addNewTask',
             'openBoardSettings',
             'getBoardSettings',
