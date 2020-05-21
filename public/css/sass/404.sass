@@ -1,0 +1,35 @@
+.page-not-found
+  &__container
+    @extend .container-2cols
+    flex-grow: 1
+
+
+
+  &__logo
+    @media screen and (max-width: $phone-breakpoint)
+      width: 80vw
+      flex-grow: 1
+
+    min-width: $phone-breakpoint * 0.70
+    width: 40vw
+    padding: 20px 5vw
+
+  &__message
+    display: flex
+    flex-direction: column
+    justify-content: center
+    padding: 20px
+    flex-grow: 1
+
+  &__title
+    @extend .title
+    text-align: center
+    font-size: 30px
+
+
+
+    &--size--big
+      @extend .page-not-found__title
+      text-align: center
+
+      font-size: 72px

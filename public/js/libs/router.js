@@ -1,3 +1,6 @@
+import pageNotFoundTemplate from '../views/404.tmpl.xml';
+
+
 /**
  * Application router
  * Contains global event bus
@@ -41,7 +44,7 @@ export default class Router {
             }
         }
         if (routeNotFound) {
-            document.getElementById('application').innerHTML = 'PAGE NOT FOUND';
+            document.getElementById('application').innerHTML = pageNotFoundTemplate();
         }
         if (pushState && URL !== oldURL) {
             window.history.pushState({url: URL}, '', URL);
