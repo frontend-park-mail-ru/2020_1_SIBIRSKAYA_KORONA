@@ -285,12 +285,12 @@ export default class BoardView extends BaseView {
                     if (labelsOpened) {
                         for (const label of labels) {
                             label.classList.add('task-label-list__label--state--minified');
-                            label.children[0].classList.add('task-label-list__label-title--state--hidden');
+                            label.children[0].classList.add('display-none');
                         }
                     } else {
                         for (const label of labels) {
                             label.classList.remove('task-label-list__label--state--minified');
-                            label.children[0].classList.remove('task-label-list__label-title--state--hidden');
+                            label.children[0].classList.remove('display-none');
                         }
                     }
 
