@@ -258,7 +258,7 @@ export default class BoardSettingsView extends BaseView {
      */
     hideSearchForm() {
         document.querySelector('.js-findMember').classList.remove('board-settings-members__add-button--rotated');
-        document.querySelector('.js-findAdmin').classList.remove('board-settings-members__add-button--rotated');
+        // document.querySelector('.js-findAdmin').classList.remove('board-settings-members__add-button--rotated');
         const searchContainer = document.querySelector('.js-search');
         searchContainer.classList.add('display-none');
     }
