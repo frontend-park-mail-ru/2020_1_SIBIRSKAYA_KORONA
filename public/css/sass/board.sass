@@ -23,8 +23,11 @@
             @media screen and (max-width: $tablet-breakpoint)
                 font-size: 20px
             @extend .title
+            display: inline-block
+            text-overflow: ellipsis
+            overflow: hidden
             white-space: nowrap
-            width: 33%
+            width: 100%
             font-size: 35px
             color: #eaeeff
 
@@ -84,6 +87,12 @@
     width: 100%
     padding-top: 10px
     flex-grow: 1
+
+    &::-webkit-scrollbar
+        width: 6px
+        height: 12px
+        @media screen and (max-width: $tablet-breakpoint)
+            display: none
 
     &:after
         content: ""
@@ -160,11 +169,10 @@
             max-height: 20%
 
         &__title-input
+            letter-spacing: 0 !important
+            font-size: 20px !important
             @extend .form-input
             font-weight: 700
-
-            &:focus
-                @extend .form-input
 
 
         &__delete-button
@@ -177,7 +185,7 @@
             cursor: pointer
 
             &:hover
-                margin-right: 4px
+                padding-right: 10px
                 background: #d4d5fabf
 
 .task-list
