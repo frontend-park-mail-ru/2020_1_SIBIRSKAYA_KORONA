@@ -179,11 +179,10 @@ export default class BoardModel {
      */
     async updateColumn(columnData = {columnID, title, position}) {
         const boardID = this.boardData.id;
-        const updateResponse = await columnsPut(this.boardData.id, columnData.columnID, columnData);
+        const updateResponse = await columnsPut(boardID, columnData.columnID, columnData);
 
         switch (updateResponse.status) {
             case 200: // - OK (Валидный запрос данных пользователя)
-                this.eventBus.call('getBoardData', boardID);
                 break;
             case 401:
                 this.eventBus.call('unauthorized');

@@ -11,19 +11,9 @@
             <input class="form-input  js-inputLabelTitle" placeholder="Название" value="{label.title}"/>
         </div>
 
-        <fest:script>var labelColors = [
-            'yellow',
-            'orange',
-            'red',
-            'purple',
-            'darkblue',
-            'black',
-            ]
-        </fest:script>
-
         <div class="form-block">
-            <div class="task-color-palette">
-                <fest:for iterate="labelColors" index="i" value="labelColor">
+            <div class="label-color-palette">
+                <fest:for iterate="LABEL_COLORS" index="i" value="labelColor">
                     <div class="label-color-palette__label-color task-label--color--{labelColor} mod-selectable js-chooseColor"
                          data-label-color="{labelColor}"></div>
                 </fest:for>
