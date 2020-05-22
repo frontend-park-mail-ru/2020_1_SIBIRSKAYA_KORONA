@@ -284,6 +284,17 @@ export const postMember = (boardID, userID) => {
 };
 
 /**
+ * Remove user from board
+ * @param {Number} boardID
+ * @param {Number} userID
+ * @return {Promise<Response>}
+ */
+export const deleteMember = (boardID, userID) => {
+    const apiUrl = new URL(`boards/${boardID}/members/${userID}`, BACKEND_ADDRESS);
+    return fetchDelete(apiUrl.href);
+};
+
+/**
  * Add user to board by invite link
  * @param {String} inviteHash - unique board hash
  * @return {Promise<Response>}

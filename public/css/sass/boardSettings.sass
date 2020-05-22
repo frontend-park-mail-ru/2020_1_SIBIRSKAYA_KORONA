@@ -20,11 +20,86 @@
         overflow-x: auto
 
         &__member
+            user-select: none
             height: 60px
             width: 60px
             border-radius: 50%
-            margin-right: 10px
             object-fit: cover
+
+        &__options
+            display: flex
+            align-items: center
+            justify-content: center
+            height: fit-content
+            width: fit-content
+            border-radius: 33px
+            margin: 5px
+            cursor: pointer
+            transition: 0.2s
+            padding: 3px
+
+            &:hover
+                box-shadow: 0 0 6px 1px #8f8a8a82
+
+            &--active
+                @extend .board-settings-members__options
+                box-shadow: 0 0 6px 1px #8f8a8a82
+                justify-content: flex-start
+                width: fit-content
+
+            &--profile-info-and-actions
+                display: flex
+                flex-direction: row
+                align-items: center
+                width: fit-content
+                transition: 0.2s
+                color: #000000ff
+                font-size: 100%
+
+            &--profile-info
+                margin-left: 3px
+                margin-right: 3px
+                color: #000000ff
+                font-size: 100%
+                transition: 0.2s
+
+                &.visually-hidden
+                    margin: 0
+                    font-size: 0
+                    color: #00000000
+                    transition: 0.2s
+
+            &--delete-user-button
+                font-size: 14pt
+                width: 30px
+                height: 30px
+                padding: 8px
+                margin-right: 6px
+
+                display: flex
+                border-radius: 50%
+                align-items: center
+                justify-content: center
+                transition: 0.2s
+                cursor: pointer
+                background: #d4d5fabf
+                user-select: none
+
+                &:hover
+                    background: #b2b4fdbf
+
+                &.visually-hidden
+                    font-size: 0
+                    color: #00000000
+                    background: #00000000
+                    width: 0
+                    height: 0
+                    padding: 0
+                    margin: 0
+                    transition: 0.2s
+
+
+
 
         &__add-button
             height: 60px
@@ -75,6 +150,10 @@
     &__label
         margin-top: 30px
         @extend .form-input-label
+
+        &--members
+            @extend .board-settings__label
+            text-align: right
 
     &__input
         @extend .form-input
