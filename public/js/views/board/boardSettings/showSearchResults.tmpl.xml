@@ -20,10 +20,6 @@
                     </div>
                 </div>
                 <div class="search-result-row--controls">
-                    <div class="search-result-row--controls__button--secondary js-addNewAdmin"
-                         data-user-id="{user.id}">
-                        + Администратор
-                    </div>
                     <div class="search-result-row--controls__button--primary js-addNewMember"
                          data-user-id="{user.id}">
                         + Участник
