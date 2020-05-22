@@ -29,12 +29,13 @@
                 <div class="board-column" data-column-id="{column.id}">
                     <div class="board-column-header">
                         <div class="board-column-header__title">
-                            <fest:value>
-                                column.title
-                            </fest:value>
+                            <input class="board-column-header__title-input js-updateColumn" value="{column.title}"
+                                   data-column-id="{column.id}"></input>
                         </div>
-                        <div class="board-column-header__settings-button js-openColumnSettings"
-                             data-column-id="{column.id}"/>
+                        <div class="board-column-header__delete-button js-deleteColumn"
+                             data-column-id="{column.id}">
+                            <i class="far fa-trash-alt"/>
+                        </div>
                     </div>
 
                     <div class="task-list" data-column-id="{column.id}">
@@ -46,11 +47,27 @@
                                  data-task-position="{task.position}">
                                 <div class="task-label-list">
                                     <fest:for iterate="task.labels" index="k" value="label">
-                                        <div class="task-label-list__label--size--mini task-label--color--{label.color}">
-                                            <fest:value>
-                                                label.title
-                                            </fest:value>
-                                        </div>
+
+                                        <fest:if test="!board.minimizedLabels">
+                                            <div class="task-label-list__label--size--mini task-label--color--{label.color} mod-selectable js-minimizeLabels">
+                                                <div class="task-label-list__label-title">
+                                                    <fest:value>
+                                                        label.title
+                                                    </fest:value>
+                                                </div>
+                                            </div>
+                                        </fest:if>
+                                        <fest:if test="board.minimizedLabels">
+                                            <div class="task-label-list__label--size--mini task-label--color--{label.color} mod-selectable js-minimizeLabels task-label-list__label--state--minified">
+                                                <div class="task-label-list__label-title display-none">
+                                                    <fest:value>
+                                                        label.title
+                                                    </fest:value>
+                                                </div>
+                                            </div>
+                                        </fest:if>
+
+
                                     </fest:for>
                                 </div>
                                 <div class="task-mini__description">
