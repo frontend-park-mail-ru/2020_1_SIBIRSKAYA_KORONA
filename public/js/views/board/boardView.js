@@ -209,6 +209,28 @@ export default class BoardView extends BaseView {
     }
 
     /**
+     * Folds or unfolds labels on tasks
+     */
+    minimizeOrMaximizeLabels() {
+        const labels = document.getElementsByClassName('js-minimizeLabels');
+        const labelsOpened = !labels[0].classList.contains('task-label-list__label--state--minified');
+
+        if (labelsOpened) {
+            for (const label of labels) {
+                label.classList.add('task-label-list__label--state--minified');
+                label.children[0].classList.add('display-none');
+            }
+        } else {
+            for (const label of labels) {
+                label.classList.remove('task-label-list__label--state--minified');
+                label.children[0].classList.remove('display-none');
+            }
+        }
+
+        localStorage.setItem('minimizedLabels', JSON.stringify(labelsOpened));
+    }
+
+    /**
      * Is used to cancel text selection
      * @param {MouseEvent} event
      */
@@ -223,10 +245,13 @@ export default class BoardView extends BaseView {
      */
     handleTaskDragStart(event, eventType) {
         event.stopPropagation();
+        if (eventType === 'minimizeLabels') {
+            this.minimizeOrMaximizeLabels();
+            return;
+        }
 
         const box = event.currentTarget.getBoundingClientRect();
         this.dragTask = {
-            eventType,
             element: event.currentTarget,
             shift: {
                 x: event.pageX - box.left + pageXOffset,
@@ -271,32 +296,10 @@ export default class BoardView extends BaseView {
         document.removeEventListener('mouseup', this.handleTaskDragEnd);
         document.removeEventListener('selectstart', this.preventDefault);
         if (event.pageX === this.dragTask.mouseDown.x && event.pageY === this.dragTask.mouseDown.y) {
-            switch (this.dragTask.eventType) {
-                case 'openTaskSettings':
-                    this.eventBus.call('openTaskSettings',
-                        this.boardID,
-                        Number(this.dragTask.element.dataset.columnId),
-                        Number(this.dragTask.element.dataset.taskId));
-                    break;
-                case 'minimizeLabels': {
-                    const labels = document.getElementsByClassName('js-minimizeLabels');
-                    const labelsOpened = !labels[0].classList.contains('task-label-list__label--state--minified');
-
-                    if (labelsOpened) {
-                        for (const label of labels) {
-                            label.classList.add('task-label-list__label--state--minified');
-                            label.children[0].classList.add('display-none');
-                        }
-                    } else {
-                        for (const label of labels) {
-                            label.classList.remove('task-label-list__label--state--minified');
-                            label.children[0].classList.remove('display-none');
-                        }
-                    }
-
-                    localStorage.setItem('minimizedLabels', JSON.stringify(labelsOpened));
-                }
-            }
+            this.eventBus.call('openTaskSettings',
+                this.boardID,
+                Number(this.dragTask.element.dataset.columnId),
+                Number(this.dragTask.element.dataset.taskId));
         } else {
             this.dragTask.element.style.display = 'none';
             const elem = document.elementFromPoint(event.clientX, event.clientY);
