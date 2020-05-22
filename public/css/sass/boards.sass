@@ -95,7 +95,7 @@
                     @extend .button--danger
 
     &-template-board
-        @extend .group-mini-board
+        @extend .group-fake-board
         display: flex
         flex-direction: column
         align-items: center
@@ -103,12 +103,10 @@
         cursor: default
 
         &:hover
-            box-shadow: 0 0 17px 2px #8f8a8a82
             cursor: default
 
         &__text
             @extend .group-fake-board__text
-            color: #000000
 
         &__template-button
             display: inline-block

@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     notifications.enableSocketConnection(true);
     notifications.notificationSound.load();
-    sessionStorage.setItem('enableNotifications', 'true');
-    sessionStorage.setItem('enableNotificationsSound', 'true');
+    localStorage.setItem('enableNotifications', 'true');
+    localStorage.setItem('enableNotificationsSound', 'true');
 
     headerController.view.render({});
     router.go(window.location.pathname);

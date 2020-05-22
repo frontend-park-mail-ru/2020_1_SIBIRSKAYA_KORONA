@@ -41,8 +41,8 @@ export default class AddAssignsPopupView extends BaseView {
      */
     renderNotifications(notifications) {
         const settings = {
-            enableNotifications: JSON.parse(sessionStorage.getItem('enableNotifications')),
-            enableNotificationsSound: JSON.parse(sessionStorage.getItem('enableNotificationsSound')),
+            enableNotifications: JSON.parse(localStorage.getItem('enableNotifications')),
+            enableNotificationsSound: JSON.parse(localStorage.getItem('enableNotificationsSound')),
         };
         this.root.innerHTML = template(settings);
         const notificationsList = this.root.querySelector('.js-notifications');
@@ -122,14 +122,14 @@ export default class AddAssignsPopupView extends BaseView {
             case targetClassList.contains('js-toggleNotifications'):
                 this.eventBus.call('toggleNotifications');
                 event.currentTarget.classList.toggle('header-notifications-controls__button--selected');
-                const enableNotifications = JSON.parse(sessionStorage.getItem('enableNotifications'));
-                sessionStorage.setItem('enableNotifications', (!enableNotifications).toString());
+                const enableNotifications = JSON.parse(localStorage.getItem('enableNotifications'));
+                localStorage.setItem('enableNotifications', (!enableNotifications).toString());
                 break;
             case targetClassList.contains('js-toggleSound'):
                 this.eventBus.call('toggleNotificationsSound');
                 event.currentTarget.classList.toggle('header-notifications-controls__button--selected');
-                const enableNotificationsSound = JSON.parse(sessionStorage.getItem('enableNotificationsSound'));
-                sessionStorage.setItem('enableNotificationsSound', (!enableNotificationsSound).toString());
+                const enableNotificationsSound = JSON.parse(localStorage.getItem('enableNotificationsSound'));
+                localStorage.setItem('enableNotificationsSound', (!enableNotificationsSound).toString());
                 break;
             default:
                 break;
