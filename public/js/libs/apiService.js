@@ -177,6 +177,20 @@ export const boardInviteLinkPost = (boardID) => {
     return fetchPost(apiUrl.href, null);
 };
 
+/**
+ * Creates board by template
+ * @param {string} boardTemplate - template name
+ * @return {Promise<Response>}
+ */
+export const boardsTemplatePost = (boardTemplate) => {
+    // doesnt matter what ${boardTemplate} in api right now (27.05.2020)
+    const apiUrl = new URL(`boards/templates`, BACKEND_ADDRESS);
+    const body = {
+        template: boardTemplate,
+    };
+    return fetchPost(apiUrl.href, JSON.stringify(body), {'Content-Type': 'application/json'});
+};
+
 /** ********************* COLUMNS ***********************/
 
 /**

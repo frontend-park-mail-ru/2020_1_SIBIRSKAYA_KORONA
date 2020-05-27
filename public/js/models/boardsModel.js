@@ -1,4 +1,4 @@
-import {boardsGet, boardsPost} from '../libs/apiService.js';
+import {boardsGet, boardsPost, boardsTemplatePost} from '../libs/apiService.js';
 import webSocket from '../libs/webSocketWrapper.js';
 
 /**
@@ -18,6 +18,7 @@ export default class HeaderModel {
         this.socket.subscribe('message', this.liveUpdateHandler.bind(this));
         this.eventBus.subscribe('getBoards', this.getBoards);
         this.eventBus.subscribe('addBoard', this.addNewBoard);
+        this.eventBus.subscribe('addBoardByTemplate', this.addBoardByTemplate.bind(this));
     }
 
     /**
@@ -55,6 +56,32 @@ export default class HeaderModel {
      */
     async addNewBoard(boardTitle) {
         const response = await boardsPost(boardTitle);
+        switch (response.status) {
+            case 200: // Успешно создали доску
+                const newBoardID = (await response.json()).id;
+                this.eventBus.call('goToBoard', newBoardID);
+                break;
+            case 400: // Невалидное тело
+                console.log('Bad request');
+                break;
+            case 401:
+            case 403: // В запросе отсутствует кука
+                this.eventBus.call('unauthorized');
+                break;
+            case 500:
+                console.log('Server error');
+                break;
+            default:
+                console.log('Бекендер молодец!!!');
+        }
+    }
+
+    /**
+     * Creates board by template
+     * @param {string} templateName - template name
+     */
+    async addBoardByTemplate(templateName) {
+        const response = await boardsTemplatePost(templateName);
         switch (response.status) {
             case 200: // Успешно создали доску
                 const newBoardID = (await response.json()).id;
