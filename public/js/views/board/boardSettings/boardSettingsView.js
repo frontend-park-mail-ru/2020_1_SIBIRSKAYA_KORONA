@@ -148,10 +148,8 @@ export default class BoardSettingsView extends BaseView {
                 }
                 break;
             case target.classList.contains('js-deleteBoard'):
-                if (confirm('Доска будет удалена безвозвратно для всех участников!')) {
-                    this.eventBus.call('deleteBoard');
-                    this.closeSelf();
-                }
+                this.eventBus.call('deleteBoard');
+                this.closeSelf();
                 break;
 
             case target.classList.contains('js-copyLink'):
