@@ -65,7 +65,7 @@ export default class BoardSettingsView extends BaseView {
             ...document.querySelectorAll('.js-findMember'),
             // document.querySelector('.js-findAdmin'),
             document.querySelector('.js-closeBoardSettingsButton'),
-            document.querySelector('.js-saveBoard'),
+            ...document.querySelectorAll('.js-saveBoard'),
             ...document.querySelectorAll('.js-deleteBoard'),
             ...document.querySelectorAll('.js-generateLink'),
             ...document.querySelectorAll('.js-copyLink'),
