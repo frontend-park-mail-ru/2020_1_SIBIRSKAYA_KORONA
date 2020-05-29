@@ -94,17 +94,27 @@
 
 
         &-members
+            @extend .board-settings-members
             overflow: hidden
             @extend .member-container
             flex-wrap: wrap
 
             &__member
-                height: 60px
-                width: 60px
-                border-radius: 50%
-                margin-right: 10px
-                margin-bottom: 10px
-                object-fit: cover
+                @extend .board-settings-members__member
+
+            &__options
+                @extend .board-settings-members__options
+
+                &--active
+                    @extend .board-settings-members__options--active
+
+                &--profile-info-and-actions
+                    @extend .board-settings-members__options--profile-info-and-actions
+
+                &--profile-info
+                    @extend .board-settings-members__options--profile-info
+
+
 
             &__add-button
                 @extend .task-settings-members__member
@@ -281,12 +291,20 @@
 /*    MEMBERS POPUP    */
 .assign
     height: 70px
-    &-members__member
-        height: 60px
-        width: 60px
-        border-radius: 50%
-        margin-right: 10px
-        object-fit: cover
+    &-members
+        &__member
+            height: 60px
+            width: 60px
+            border-radius: 50%
+            margin-right: 10px
+            object-fit: cover
+
+        &__list
+            display: flex
+            flex-direction: column
+            max-height: 30vh
+            overflow-y: auto
+            margin-bottom: 10px
 
 
 //flex-direction: column

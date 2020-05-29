@@ -72,6 +72,7 @@ export default class TaskSettingsView extends BaseView {
             ...this.root.querySelectorAll('.js-downloadAttach'),
             ...this.root.querySelectorAll('.js-deleteComment'),
             ...this.root.querySelectorAll('.js-deleteAttach'),
+            ...this.root.querySelectorAll('.js-foldUnfoldUserInfo'),
         ];
         taskSettingsElements.forEach((element) => {
             element.addEventListener('click', this.handleClick);
@@ -206,6 +207,15 @@ export default class TaskSettingsView extends BaseView {
                 this.eventBus.call(ChainLinkSignals.closeCurrentLink);
                 break;
 
+            case classList.contains('js-foldUnfoldUserInfo'):
+                const infoIsUnfolded = classList.contains('task-settings-members__options--active');
+                if (infoIsUnfolded) {
+                    this.foldUserInfoWindow(event.currentTarget);
+                } else {
+                    this.unfoldUserInfoWindow(event.currentTarget);
+                }
+                break;
+
             default:
                 break;
         }
@@ -264,6 +274,47 @@ export default class TaskSettingsView extends BaseView {
      */
     handleAssignSuccess() {
         this.render();
+    }
+
+    /**
+     * Folds given userInfoWindow
+     * @param {HTMLElement} userInfoWindow
+     */
+    foldUserInfoWindow(userInfoWindow) {
+        userInfoWindow.classList.add('task-settings-members__options');
+        userInfoWindow.classList.remove('task-settings-members__options--active');
+
+        const toHide = [
+            userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions'),
+            ...userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions').children,
+        ];
+
+        for (const element of toHide) {
+            element.classList.add('visually-hidden');
+        }
+    }
+
+    /**
+     * Unfolds given userInfoWindow
+     * @param {HTMLElement} userInfoWindow
+     */
+    unfoldUserInfoWindow(userInfoWindow) {
+        const membersInfoWindows = document.getElementsByClassName('task-settings-members__options--active');
+        for (const membersInfoWindow of membersInfoWindows) {
+            this.foldUserInfoWindow(membersInfoWindow);
+        }
+
+        userInfoWindow.classList.add('task-settings-members__options--active');
+        userInfoWindow.classList.remove('task-settings-members__options');
+
+        const toShow = [
+            userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions'),
+            ...userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions').children,
+        ];
+
+        for (const element of toShow) {
+            element.classList.remove('visually-hidden');
+        }
     }
 
     /**
