@@ -44,11 +44,14 @@ export default class BoardsView extends BaseView {
      */
     addEventListeners() {
         document.getElementById('addBoard').addEventListener('click', this.handleAddBoardButtonClick);
-        document.getElementsByClassName('js-createBoardByTemplate')[0].addEventListener('click', (event) => {
-            event.stopPropagation();
-            const templateName = event.currentTarget.getAttribute('data-template-name');
-            this.eventBus.call('addBoardByTemplate', templateName);
-        });
+        const templateButtons = document.getElementsByClassName('js-createBoardByTemplate');
+        for (const button of templateButtons) {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const templateName = event.currentTarget.getAttribute('data-template-name');
+                this.eventBus.call('addBoardByTemplate', templateName);
+            });
+        }
     }
 
     /**
