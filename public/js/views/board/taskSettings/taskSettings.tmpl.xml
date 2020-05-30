@@ -52,20 +52,21 @@
                 </g>
             </svg>
 
-            <div class="task-title">
-                <input class="task-title__input js-inputTitle js-saveTaskTitle" type="text" autocomplete="off">
-                    <fest:attributes>
-                        <fest:attribute name="value">
-                            <fest:value>task.title</fest:value>
-                        </fest:attribute>
-                    </fest:attributes>
-                </input>
-                <div class="task-title__button--danger js-deleteTask" title="Удалить задачу">
-                    <i class="far fa-trash-alt"/>
-                </div>
-            </div>
 
             <div class="task-settings">
+                <div class="task-title">
+                    <input class="task-title__input js-inputTitle js-saveTaskTitle" type="text" autocomplete="off">
+                        <fest:attributes>
+                            <fest:attribute name="value">
+                                <fest:value>task.title</fest:value>
+                            </fest:attribute>
+                        </fest:attributes>
+                    </input>
+                    <div class="task-title__button--danger js-deleteTask" title="Удалить задачу">
+                        <i class="far fa-trash-alt"/>
+                    </div>
+                </div>
+
                 <div class="container-2cols">
 
                     <div class="task-settings-block">
