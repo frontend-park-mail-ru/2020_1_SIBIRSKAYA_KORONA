@@ -1,6 +1,5 @@
 # SIBIRSKAYA KORONA
-![Лого](./readmeImages/sibirskaya_korona.svg)
-<img src="./readmeImages/sibirskaya_korona.svg" alt="drawing" width="200"/>
+<img src="./readmeImages/sibirskaya_korona.svg" alt="Лого" width="200"/>
 
 
 
@@ -12,8 +11,7 @@
 ## Создавайте доски
 Добавляйте колонки и задачи для организации своей доски
 
-![Доска](./readmeImages/board.png)
-<img src="/readmeImages/board.png" alt="drawing" width="200"/>
+<img src="/readmeImages/board.png" alt="Доска" border-radius="10px"/>
 
 
 ##Изменяйте настройки доски
