@@ -50,7 +50,8 @@
 
                                         <fest:if test="!board.minimizedLabels">
                                             <div class="task-label-list__label--size--mini task-label--color--{label.color} mod-selectable js-minimizeLabels">
-                                                <div class="task-label-list__label-title">
+                                                <div class="task-label-list__label-title"
+                                                title="{label.title}">
                                                     <fest:value>
                                                         label.title
                                                     </fest:value>

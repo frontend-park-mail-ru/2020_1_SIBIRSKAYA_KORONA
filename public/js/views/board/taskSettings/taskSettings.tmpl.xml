@@ -105,7 +105,7 @@
 
                         <div class="task-label-list">
                             <fest:for iterate="task.labels" index="i" value="label">
-                                <div class="task-label-list__label task-label--color--{label.color}">
+                                <div class="task-label-list__label task-label--color--{label.color}" title="{label.title}">
                                     <fest:value>
                                         label.title
                                     </fest:value>
