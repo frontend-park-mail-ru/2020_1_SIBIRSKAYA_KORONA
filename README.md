@@ -47,7 +47,7 @@
 
 # Команда
 
-- [Гариленко Роман](https://github.com/gavroman)
+- [Гавриленко Роман](https://github.com/gavroman)
 - [Разумов Тимофей](https://github.com/TimRazumov)
 - [Четверов Антон](https://github.com/chtvrv) 
 - [Лебедев Александр](https://github.com/CheerfulMushroom)
