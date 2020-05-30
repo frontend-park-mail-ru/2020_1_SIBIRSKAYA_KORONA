@@ -8,6 +8,7 @@
         right: 0
         left: 0
     @extend .form
+    padding: 38px !important
     position: absolute
     top: 8vh
     display: flex
@@ -17,10 +18,22 @@
     overflow-y: auto
 
     &-title
+        display: flex
+        flex-direction: row
+
         &__text
             @extend .title
             margin-left: 20px
             font-size: 20pt
+
+        &__input
+            @extend .title
+            @extend .task-settings__input
+            font-size: 20pt !important
+
+        &__button--danger
+            @extend .button--danger
+            margin-left: 10px
 
         &__hr--width-2
             @extend .hr-width-2
@@ -33,7 +46,73 @@
             height: unset
         width: 660px
 
+        &-title-block
+            display: flex
+            flex-direction: row
+
         &-comments
+        &-block
+            display: flex
+            flex-direction: column
+            margin-top: 20px
+
+            &__input-with-controls
+                margin-top: 20px
+                display: flex
+                justify-content: center
+                @media screen and (max-width: $phone-breakpoint)
+                    flex-flow: column
+
+                &--input
+                    @extend .form-input
+
+                &--controls
+
+                &--button
+                    &--primary
+                        margin-left: 12px
+                        @media screen and (max-width: $phone-breakpoint)
+                            margin: 10px auto 10px
+                            width: 70% !important
+                            display: flex
+                            justify-content: center
+                        @extend .button--primary
+
+                    &--secondary
+                        margin-left: 12px
+                        @media screen and (max-width: $phone-breakpoint)
+                            margin: 10px auto 10px
+                            width: 70% !important
+                            display: flex
+                            justify-content: center
+                        @extend .button--secondary
+
+                    &--danger
+                        margin-left: 12px
+                        @media screen and (max-width: $phone-breakpoint)
+                            margin: 0 auto 10px
+                            width: 70% !important
+                            display: flex
+                            justify-content: center
+                        @extend .button--danger
+
+            &__title
+                position: relative
+                display: flex
+                flex-direction: row
+                margin-bottom: 10px
+
+                &--logo
+                    position: absolute
+                    @media screen and (max-width: $tablet-breakpoint)
+                        left: -1.5rem
+                    left: -2rem
+                    font-size: 14pt
+                    color: #3c3c3e
+                &--name
+                    margin-left: 8px
+                    font-size: 16pt
+                    font-weight: bold
 
         &-comment
             display: flex
@@ -113,6 +192,12 @@
 
                 &--profile-info
                     @extend .board-settings-members__options--profile-info
+                    @media screen and (max-width: $tablet-breakpoint)
+                        max-width : 40vw
+                        overflow: hidden
+                        display: inline-block
+                        text-overflow: ellipsis
+                        white-space: nowrap
 
 
 
@@ -169,13 +254,15 @@
             @extend .form-input-label
             margin-top: 30px
 
+
         &__input
             @extend .form-input
 
     &-attachments
         margin-top: 20px
         &__item
-            @extend .container-2cols
+            display: flex
+            justify-content: space-between
             margin-top: 3px
             transition: 0.1s
             border-radius: 4px

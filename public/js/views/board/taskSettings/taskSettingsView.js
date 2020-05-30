@@ -81,6 +81,23 @@ export default class TaskSettingsView extends BaseView {
         const fileInput = this.root.querySelector('.js-attachFile');
         fileInput.addEventListener('change', this.handleFileInput);
 
+        const taskTitleInput = this.root.querySelector('.js-saveTitle');
+        taskTitleInput.addEventListener('blur',
+            (event)=> {
+                const target = event.currentTarget;
+                const title = target.value;
+                this.eventBus.call('saveTaskSettings', {title});
+            },
+        );
+        taskTitleInput.addEventListener('keydown', function(event) {
+            const target = event.currentTarget;
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                target.blur(); // will trigger blur event which saves task
+            }
+        });
+
+
         const comments = [...this.root.querySelectorAll('.task-settings-comment')];
         comments.forEach((comment) => {
             const handler = () => {

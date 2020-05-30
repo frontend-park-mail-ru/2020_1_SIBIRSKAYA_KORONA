@@ -51,19 +51,29 @@
                     </g>
                 </g>
             </svg>
+
             <div class="task-title">
-                <div class="task-title__text">
-                    <fest:value>
-                        task.title
-                    </fest:value>
+                <input class="task-title__input js-inputTitle js-saveTitle" type="text" autocomplete="off">
+                    <fest:attributes>
+                        <fest:attribute name="value">
+                            <fest:value>task.title</fest:value>
+                        </fest:attribute>
+                    </fest:attributes>
+                </input>
+                <div class="task-title__button--danger js-deleteTask">
+                    <i class="far fa-trash-alt"/>
                 </div>
-                <div class="task-title__hr--width-2"/>
             </div>
 
             <div class="task-settings">
                 <div class="container-2cols">
-                    <div>
-                        <div class="task-settings__label">Участники</div>
+
+                    <div class="task-settings-block">
+                        <div class="task-settings-block__title">
+                            <i class="fas fa-user-friends task-settings-block__title--logo"/>
+                            <div class="task-settings-block__title--name">Участники</div>
+                        </div>
+
                         <div class="container-row">
                             <div class="task-settings-members">
                                 <fest:for iterate="task.members" index="i" value="member">
@@ -86,8 +96,12 @@
                         </div>
                     </div>
 
-                    <div>
-                        <div class="task-settings__label">Метки</div>
+                    <div class="task-settings-block">
+                        <div class="task-settings-block__title">
+                            <i class="fas fa-tags task-settings-block__title--logo"/>
+                            <div class="task-settings-block__title--name">Метки</div>
+                        </div>
+
                         <div class="task-label-list">
                             <fest:for iterate="task.labels" index="i" value="label">
                                 <div class="task-label-list__label task-label--color--{label.color}">
@@ -101,272 +115,288 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <div class="task-settings__label">Название</div>
-                <input class="task-settings__input js-inputTitle" type="text" autocomplete="off">
-                    <fest:attributes>
-                        <fest:attribute name="value">
-                            <fest:value>task.title</fest:value>
-                        </fest:attribute>
-                    </fest:attributes>
-                </input>
+                <div class="task-settings-block">
+                    <div class="task-settings-block__title">
+                        <i class="fas fa-align-left task-settings-block__title--logo"/>
+                        <div class="task-settings-block__title--name">Описание</div>
+                    </div>
 
-                <div class="task-settings__label">
-                    Описание
-                </div>
-                <div contenteditable="" class="task-settings__input js-inputDescription">
-                    <fest:value>
-                        task.description
-                    </fest:value>
+                    <div class="task-settings-block__input-with-controls">
+                        <div contenteditable="" class="task-settings__input js-inputDescription">
+                            <fest:value>
+                                task.description
+                            </fest:value>
+                        </div>
+                        <div class="task-settings-block__input-with-controls--button--primary js-saveTask">Сохранить</div>
+                    </div>
                 </div>
 
-                <div class="task-settings-controls">
-                    <div class="task-settings-controls__button--primary js-saveTask">Сохранить</div>
-                    <div class="task-settings-controls__button--secondary js-addNewChecklist">Добавить чеклист</div>
+<!--                <div class="task-settings-controls">-->
+<!--                    <input class="js-attachFile" id="fileInput" type="file"/>-->
+<!--                    <label class="task-settings-controls__button&#45;&#45;secondary" for="fileInput">-->
+<!--                        Прикрепить файл-->
+<!--                    </label>-->
+<!--                </div>-->
+
+                <div class="task-settings-block">
+                    <div class="task-settings-block__title">
+                        <i class="far fa-file task-settings-block__title--logo"/>
+                        <div class="task-settings-block__title--name">Файлы</div>
+                    </div>
+
                     <input class="js-attachFile" id="fileInput" type="file"/>
                     <label class="task-settings-controls__button--secondary" for="fileInput">
                         Прикрепить файл
                     </label>
-                    <div class="task-settings-controls__button--danger js-deleteTask">Удалить задачу</div>
-                </div>
 
-                <div class="task-attachments">
-                    <fest:for index="i" iterate="task.files" value="file">
-                        <div class="task-attachments__item">
-                            <div class="task-attachments__item--info">
-                                <fest:script>
-                                    const re = /(?:\.([^.]+))?$/;
-                                    const fileFormat = (re.exec(file.filename)[1] || '').toLowerCase();
-                                    var fileType = 'unknown';
-                                    switch (fileFormat) {
-                                        case 'jpg':
-                                        case 'jpeg':
-                                        case 'bmp':
-                                        case 'png':
-                                        case 'gif':
-                                        case 'svg':
-                                            fileType = 'image';
-                                            break;
+                    <div class="task-attachments">
+                        <fest:for index="i" iterate="task.files" value="file">
+                            <div class="task-attachments__item">
+                                <div class="task-attachments__item--info">
+                                    <fest:script>
+                                        const re = /(?:\.([^.]+))?$/;
+                                        const fileFormat = (re.exec(file.filename)[1] || '').toLowerCase();
+                                        var fileType = 'unknown';
+                                        switch (fileFormat) {
+                                            case 'jpg':
+                                            case 'jpeg':
+                                            case 'bmp':
+                                            case 'png':
+                                            case 'gif':
+                                            case 'svg':
+                                                fileType = 'image';
+                                                break;
 
-                                        case 'mp4':
-                                        case 'avi':
-                                        case 'webm':
-                                        case 'mov':
-                                            fileType = 'video';
-                                            break;
+                                            case 'mp4':
+                                            case 'avi':
+                                            case 'webm':
+                                            case 'mov':
+                                                fileType = 'video';
+                                                break;
 
-                                        case 'mp3':
-                                        case 'wav':
-                                        case 'aac':
-                                        case 'flac':
-                                            fileType = 'audio';
-                                            break;
+                                            case 'mp3':
+                                            case 'wav':
+                                            case 'aac':
+                                            case 'flac':
+                                                fileType = 'audio';
+                                                break;
 
-                                        case 'pdf':
-                                            fileType = 'pdf';
-                                            break;
+                                            case 'pdf':
+                                                fileType = 'pdf';
+                                                break;
 
-                                        case 'zip':
-                                        case 'tar':
-                                        case '7z':
-                                        case 'rar':
-                                            fileType = 'archive';
-                                            break;
+                                            case 'zip':
+                                            case 'tar':
+                                            case '7z':
+                                            case 'rar':
+                                                fileType = 'archive';
+                                                break;
 
-                                        case 'doc':
-                                        case 'docx':
-                                            fileType = 'word';
-                                            break;
+                                            case 'doc':
+                                            case 'docx':
+                                                fileType = 'word';
+                                                break;
 
-                                        case 'ppt':
-                                        case 'pptx':
-                                            fileType = 'power-point';
-                                            break;
+                                            case 'ppt':
+                                            case 'pptx':
+                                                fileType = 'power-point';
+                                                break;
 
-                                        case 'xls':
-                                        case 'xlsx':
-                                            fileType = 'excel';
-                                            break;
+                                            case 'xls':
+                                            case 'xlsx':
+                                                fileType = 'excel';
+                                                break;
 
-                                        case 'txt':
-                                            fileType = 'text';
-                                            break;
+                                            case 'txt':
+                                                fileType = 'text';
+                                                break;
 
-                                        default:
-                                            fileType = 'unknown';
-                                    }
-                                </fest:script>
+                                            default:
+                                                fileType = 'unknown';
+                                        }
+                                    </fest:script>
 
-                                <fest:choose>
-                                    <fest:when test="fileType === 'image'">
-                                        <i class="task-attachments__item--file-icon far fa-file-image"/>
-                                    </fest:when>
+                                    <fest:choose>
+                                        <fest:when test="fileType === 'image'">
+                                            <i class="task-attachments__item--file-icon far fa-file-image"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'video'">
-                                        <i class="task-attachments__item--file-icon far fa-file-video"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'video'">
+                                            <i class="task-attachments__item--file-icon far fa-file-video"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'audio'">
-                                        <i class="task-attachments__item--file-icon far fa-file-audio"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'audio'">
+                                            <i class="task-attachments__item--file-icon far fa-file-audio"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'pdf'">
-                                        <i class="task-attachments__item--file-icon far fa-file-pdf"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'pdf'">
+                                            <i class="task-attachments__item--file-icon far fa-file-pdf"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'archive'">
-                                        <i class="task-attachments__item--file-icon far fa-file-archive"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'archive'">
+                                            <i class="task-attachments__item--file-icon far fa-file-archive"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'word'">
-                                        <i class="task-attachments__item--file-icon far fa-file-word"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'word'">
+                                            <i class="task-attachments__item--file-icon far fa-file-word"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'power-point'">
-                                        <i class="task-attachments__item--file-icon far fa-file-powerpoint"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'power-point'">
+                                            <i class="task-attachments__item--file-icon far fa-file-powerpoint"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'excel'">
-                                        <i class="task-attachments__item--file-icon far fa-file-excel"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'excel'">
+                                            <i class="task-attachments__item--file-icon far fa-file-excel"/>
+                                        </fest:when>
 
-                                    <fest:when test="fileType === 'text'">
-                                        <i class="task-attachments__item--file-icon far fa-file-alt"/>
-                                    </fest:when>
+                                        <fest:when test="fileType === 'text'">
+                                            <i class="task-attachments__item--file-icon far fa-file-alt"/>
+                                        </fest:when>
 
 
-                                    <fest:otherwise>
-                                        <i class="task-attachments__item--file-icon far fa-file"/>
-                                    </fest:otherwise>
-                                </fest:choose>
+                                        <fest:otherwise>
+                                            <i class="task-attachments__item--file-icon far fa-file"/>
+                                        </fest:otherwise>
+                                    </fest:choose>
 
-                                <div class="task-attachments__item--filename">
-                                    <fest:value>file.filename</fest:value>
+                                    <div class="task-attachments__item--filename">
+                                        <fest:value>file.filename</fest:value>
+                                    </div>
+                                </div>
+                                <div class="task-attachments__item--controls">
+                                    <div class="button--primary js-downloadAttach"
+                                         data-file-url="{file.url}"
+                                         data-attach-name="{file.filename}">
+                                        <i class="fas fa-download"/>
+                                    </div>
+                                    <div class="button--danger js-deleteAttach"
+                                         data-attach-id="{file.id}">
+                                        <i class="fas fa-trash-alt"/>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="task-attachments__item--controls">
-                                <div class="button--primary js-downloadAttach"
-                                     data-file-url="{file.url}"
-                                     data-attach-name="{file.filename}">
-                                    <i class="fas fa-download"/>
-                                </div>
-                                <div class="button--danger js-deleteAttach"
-                                     data-attach-id="{file.id}">
-                                    <i class="fas fa-trash-alt"/>
-                                </div>
-                            </div>
-                        </div>
-                    </fest:for>
+                        </fest:for>
+                    </div>
                 </div>
 
-                <div class="task-checklists">
-                    <fest:for iterate="task.checklists" index="i" value="checklist">
-                        <div class="checklist" data-checklist-id="{checklist.id}">
+                <div class="task-settings-block">
+                    <div class="task-settings-block__title">
+                        <i class="fas fa-tasks task-settings-block__title--logo"/>
+                        <div class="task-settings-block__title--name">Чеклисты</div>
+                    </div>
+                    <div class="task-settings-controls__button--secondary js-addNewChecklist">Создать</div>
+                    <div class="task-checklists">
+                        <fest:for iterate="task.checklists" index="i" value="checklist">
+                            <div class="checklist" data-checklist-id="{checklist.id}">
 
-                            <div class="checklist-title">
-                                <fest:value>checklist.name</fest:value>
+                                <div class="checklist-title">
+                                    <fest:value>checklist.name</fest:value>
+                                    <fest:if test="checklist.items.length">
+                                        <div class="checklist-title-percents">
+                                            <fest:value>checklist.progress</fest:value>%
+                                        </div>
+                                    </fest:if>
+                                </div>
+
                                 <fest:if test="checklist.items.length">
-                                    <div class="checklist-title-percents">
-                                        <fest:value>checklist.progress</fest:value>%
+                                    <div class="checklist-progressbar">
+                                        <div class="checklist-progressbar-progress"
+                                             style="width: {checklist.progress}%; background: {checklist.progressColor} "/>
                                     </div>
                                 </fest:if>
-                            </div>
-
-                            <fest:if test="checklist.items.length">
-                                <div class="checklist-progressbar">
-                                    <div class="checklist-progressbar-progress"
-                                         style="width: {checklist.progress}%; background: {checklist.progressColor} "/>
-                                </div>
-                            </fest:if>
-                            <div class="task-settings-checklist-items">
-                                <fest:for iterate="checklist.items" index="j" value="item">
-                                    <div class="checklist-item">
-                                        <label class="checkbox-container">
-                                            <input type="checkbox" class="js-checklistItem" data-item-id="{item.id}">
-                                                <fest:attributes>
-                                                    <fest:if test="item.done">
-                                                        <fest:attribute name="checked"/>
-                                                    </fest:if>
-                                                </fest:attributes>
-                                            </input>
-                                            <div class="custom-label">
-                                                <fest:value>item.text</fest:value>
-                                            </div>
-                                            <div class="custom-checkbox"/>
-                                        </label>
-                                    </div>
-                                </fest:for>
-                            </div>
-
-                            <div class="checklist-add-item-form js-checklist-add-item-form display-none">
-                                <div class="checklist-add-item-form-controls">
-                                    <input class="checklist-add-item-form__input js-inputNewItemTitle" type="text"
-                                           autocomplete="off"
-                                           placehilder="Новый элемент"/>
-                                    <div class="checklist-add-item-form-controls__button--secondary js-createChecklistItem">
-                                        Добавить
-                                    </div>
-                                    <div class="checklist-add-item-form-controls__button--danger js-closeChecklistItemForm">
-                                        Закрыть
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="task-settings-controls js-checklist-controls">
-                                <div class="task-settings-controls__button--secondary js-addNewChecklistItem">
-                                    Добавить элемент
-                                </div>
-                                <div class="task-settings-controls__button--danger js-deleteChecklist">
-                                    Удалить чеклист
-                                </div>
-                            </div>
-                        </div>
-                    </fest:for>
-                </div>
-
-                <fest:if test="task.comments.length !== 0">
-                    <div class="task-settings__label">
-                        Комментарии
-                    </div>
-                </fest:if>
-                <div class="task-settings-comments">
-                    <fest:for iterate="task.comments" index="i" value="comment">
-                        <div class="task-settings-comment">
-                            <div class="task-settings-comment__author--avatar">
-                                <!--<a href="{comment.url}">-->
-                                <img class="task-settings-comment__author--avatar" src="{comment.avatar}"/>
-                                <!--</a>-->
-                            </div>
-                            <div class="task-settings-comment-data">
-                                <div class="container-2cols">
-                                    <div class="task-settings-comment__nickname">
-                                        <fest:value>comment.nickname</fest:value>
-                                    </div>
-                                    <div class="task-settings-comment-controls display-none">
-                                        <div class="task-settings-comment__date">
-                                            <fest:value>comment.date</fest:value>
+                                <div class="task-settings-checklist-items">
+                                    <fest:for iterate="checklist.items" index="j" value="item">
+                                        <div class="checklist-item">
+                                            <label class="checkbox-container">
+                                                <input type="checkbox" class="js-checklistItem" data-item-id="{item.id}">
+                                                    <fest:attributes>
+                                                        <fest:if test="item.done">
+                                                            <fest:attribute name="checked"/>
+                                                        </fest:if>
+                                                    </fest:attributes>
+                                                </input>
+                                                <div class="custom-label">
+                                                    <fest:value>item.text</fest:value>
+                                                </div>
+                                                <div class="custom-checkbox"/>
+                                            </label>
                                         </div>
-                                        <fest:if test="comment.deletable">
-                                            <div class="task-settings-comment__delete-icon js-deleteComment"
-                                                 data-comment-id="{comment.id}">
-                                                <fest:get name="delete-button"/>
-                                            </div>
-                                        </fest:if>
+                                    </fest:for>
+                                </div>
+
+                                <div class="checklist-add-item-form js-checklist-add-item-form display-none">
+                                    <div class="checklist-add-item-form-controls">
+                                        <input class="checklist-add-item-form__input js-inputNewItemTitle" type="text"
+                                               autocomplete="off"
+                                               placehilder="Новый элемент"/>
+                                        <div class="checklist-add-item-form-controls__button--secondary js-createChecklistItem">
+                                            Добавить
+                                        </div>
+                                        <div class="checklist-add-item-form-controls__button--danger js-closeChecklistItemForm">
+                                            Закрыть
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="task-settings-comment__text">
-                                    <fest:value>comment.text</fest:value>
+                                <div class="task-settings-controls js-checklist-controls">
+                                    <div class="task-settings-controls__button--secondary js-addNewChecklistItem">
+                                        Добавить элемент
+                                    </div>
+                                    <div class="task-settings-controls__button--danger js-deleteChecklist">
+                                        Удалить чеклист
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </fest:for>
-                </div>
-                <div class="task-settings-add-comment">
-                    <div class="task-settings__label">
-                        Ваш комментарий
+                        </fest:for>
                     </div>
-                    <div contenteditable="" class="task-settings__input js-commentText" placeholder="Ваш комментарий"/>
-                    <div class="task-settings-add-comment__button--secondary js-saveComment">Добавить</div>
+                </div>
+
+                <div class="task-settings-block">
+                    <div class="task-settings-block__title">
+                        <i class="far fa-comments task-settings-block__title--logo"/>
+                        <div class="task-settings-block__title--name">Комментарии</div>
+                    </div>
+
+                    <div class="task-settings-comments">
+                        <fest:for iterate="task.comments" index="i" value="comment">
+                            <div class="task-settings-comment">
+                                <div class="task-settings-comment__author--avatar">
+                                    <!--<a href="{comment.url}">-->
+                                    <img class="task-settings-comment__author--avatar" src="{comment.avatar}"/>
+                                    <!--</a>-->
+                                </div>
+                                <div class="task-settings-comment-data">
+                                    <div class="container-2cols">
+                                        <div class="task-settings-comment__nickname">
+                                            <fest:value>comment.nickname</fest:value>
+                                        </div>
+                                        <div class="task-settings-comment-controls display-none">
+                                            <div class="task-settings-comment__date">
+                                                <fest:value>comment.date</fest:value>
+                                            </div>
+                                            <fest:if test="comment.deletable">
+                                                <div class="task-settings-comment__delete-icon js-deleteComment"
+                                                     data-comment-id="{comment.id}">
+                                                    <fest:get name="delete-button"/>
+                                                </div>
+                                            </fest:if>
+                                        </div>
+                                    </div>
+                                    <div class="task-settings-comment__text">
+                                        <fest:value>comment.text</fest:value>
+                                    </div>
+                                </div>
+                            </div>
+                        </fest:for>
+                    </div>
+                    <div class="task-settings-add-comment">
+                        <div class="task-settings-block__input-with-controls">
+                            <div contenteditable="" class="task-settings-block__input-with-controls--input js-commentText" placeholder="Ваш комментарий"/>
+                            <div class="task-settings-block__input-with-controls--button--secondary js-saveComment">Добавить</div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
