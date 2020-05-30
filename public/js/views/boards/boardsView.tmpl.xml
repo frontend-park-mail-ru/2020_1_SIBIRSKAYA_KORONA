@@ -26,8 +26,10 @@
                         Шаблоны досок
                     </div>
                     <div class="group-template-board__templates-list">
-                    <div class="group-template-board__template-button">План на неделю</div>
-                    <div class="group-template-board__template-button">Управление проектом</div>
+                    <div class="group-template-board__template-button js-createBoardByTemplate"
+                    data-template-name="week_plan">План на неделю</div>
+                    <div class="group-template-board__template-button js-createBoardByTemplate"
+                    data-template-name="product_management">Управление проектом</div>
                     </div>
                 </div>
             </div>

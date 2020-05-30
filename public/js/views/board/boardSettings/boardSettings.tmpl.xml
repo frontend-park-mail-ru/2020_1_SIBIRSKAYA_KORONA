@@ -47,21 +47,25 @@
             <div class="board-settings__label ">Название доски</div>
             <input autocomplete="off" class="board-settings__input" id="js-boardTitleInput">
                 <fest:attributes>
+                    <fest:if test="!board.isAdmin">
+                        <fest:attribute name="readonly"/>
+                    </fest:if>
                     <fest:attribute name="value">
                         <fest:value>board.title</fest:value>
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div class="board-settings-controls">
-                <div class="board-settings-controls__button--primary js-saveBoard">
-                    Сохранить
-                </div>
             <fest:if test="board.isAdmin">
-                <div class="board-settings-controls__button--danger js-deleteBoard">
-                    Удалить доску
+                <div class="board-settings-controls">
+                    <div class="board-settings-controls__button--primary js-saveBoard">
+                        Сохранить
+                    </div>
+                    <div class="board-settings-controls__button--danger js-deleteBoard">
+                        Удалить доску
+                    </div>
                 </div>
             </fest:if>
-            </div>
+
             <div class="board-settings__label ">Пригласительная ссылка</div>
             <div class="board-settings-invite">
                 <input class="board-settings__input js-copyLink" id="js-inviteLink" readonly="true">
@@ -94,7 +98,8 @@
                                          title="{admin.nickname}"/>
                                     <div class="board-settings-members__options--profile-info-and-actions visually-hidden">
                                         <div class="board-settings-members__options--profile-info visually-hidden">
-                                            @<fest:value>admin.nickname</fest:value>
+                                            @
+                                            <fest:value>admin.nickname</fest:value>
                                         </div>
                                     </div>
                                 </div>
@@ -114,12 +119,13 @@
                                          title="{member.nickname}"/>
                                     <div class="board-settings-members__options--profile-info-and-actions visually-hidden">
                                         <div class="board-settings-members__options--profile-info visually-hidden">
-                                            @<fest:value>member.nickname</fest:value>
+                                            @
+                                            <fest:value>member.nickname</fest:value>
                                         </div>
                                         <fest:if test="board.isAdmin">
                                             <div class="board-settings-members__options--delete-user-button visually-hidden js-deleteMember"
                                                  data-user-id="{member.id}"
-                                            title="Удалить участника">
+                                                 title="Удалить участника">
                                                 <i class="fas fa-user-slash"/>
                                             </div>
                                         </fest:if>

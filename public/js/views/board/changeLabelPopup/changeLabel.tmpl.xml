@@ -21,10 +21,12 @@
         </div>
 
         <div class="form-block controls-panel">
-            <div class="button--primary js-saveLabel">
+            <div class="button--primary js-saveLabel"
+                title="Сохранить метку">
                 <i class="fas fa-save"></i>
             </div>
-            <div class="button--danger js-deleteLabel">
+            <div class="button--danger js-deleteLabel"
+                 title="Удалить метку">
                 <i class="fas fa-trash-alt"></i>
             </div>
 

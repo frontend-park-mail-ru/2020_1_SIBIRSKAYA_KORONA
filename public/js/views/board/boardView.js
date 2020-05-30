@@ -80,6 +80,11 @@ export default class BoardView extends BaseView {
             label.addEventListener('mousedown', (event) => this.handleTaskDragStart(event, 'minimizeLabels'));
         });
 
+        [...document.getElementsByClassName('js-stopPropagationMouseDown')].forEach((element)=>{
+            element.addEventListener('mousedown', (event) => event.stopPropagation());
+        });
+
+
         inputs.forEach((input) => {
             input.addEventListener('blur', (event) => {
                 const target = event.currentTarget;

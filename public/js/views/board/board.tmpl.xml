@@ -75,7 +75,7 @@
                                         task.title
                                     </fest:value>
                                 </div>
-                                <div class="task-mini-members">
+                                <div class="task-mini-members js-stopPropagationMouseDown">
                                     <fest:for iterate="task.members" index="k" value="taskMember">
                                         <a href="{taskMember.url}">
                                             <img class="task-mini-members__member" src="{taskMember.avatar}"

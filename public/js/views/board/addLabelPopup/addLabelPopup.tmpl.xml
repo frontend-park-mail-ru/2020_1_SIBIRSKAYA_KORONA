@@ -18,7 +18,8 @@
                         </div>
 
                         <div class="button--secondary js-openChangeLabelPopup"
-                             data-label-id="{label.id}">
+                             data-label-id="{label.id}"
+                            title="Изменить метку">
                             <i class="far fa-edit"></i>
                         </div>
                     </div>

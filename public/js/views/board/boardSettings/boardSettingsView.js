@@ -65,7 +65,7 @@ export default class BoardSettingsView extends BaseView {
             ...document.querySelectorAll('.js-findMember'),
             // document.querySelector('.js-findAdmin'),
             document.querySelector('.js-closeBoardSettingsButton'),
-            document.querySelector('.js-saveBoard'),
+            ...document.querySelectorAll('.js-saveBoard'),
             ...document.querySelectorAll('.js-deleteBoard'),
             ...document.querySelectorAll('.js-generateLink'),
             ...document.querySelectorAll('.js-copyLink'),
@@ -148,10 +148,8 @@ export default class BoardSettingsView extends BaseView {
                 }
                 break;
             case target.classList.contains('js-deleteBoard'):
-                if (confirm('Доска будет удалена безвозвратно для всех участников!')) {
-                    this.eventBus.call('deleteBoard');
-                    this.closeSelf();
-                }
+                this.eventBus.call('deleteBoard');
+                this.closeSelf();
                 break;
 
             case target.classList.contains('js-copyLink'):

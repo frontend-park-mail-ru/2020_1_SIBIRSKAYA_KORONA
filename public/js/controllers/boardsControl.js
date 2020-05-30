@@ -15,6 +15,7 @@ export default class BoardsController {
             'getBoards',
             'gotBoards',
             'addBoard',
+            'addBoardByTemplate',
             'goToBoard',
             'unauthorized',
         ]);

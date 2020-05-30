@@ -8,6 +8,7 @@
         right: 0
         left: 0
     @extend .form
+    padding: 38px !important
     position: absolute
     top: 8vh
     display: flex
@@ -17,10 +18,22 @@
     overflow-y: auto
 
     &-title
+        display: flex
+        flex-direction: row
+
         &__text
             @extend .title
             margin-left: 20px
             font-size: 20pt
+
+        &__input
+            @extend .title
+            @extend .task-settings__input
+            font-size: 20pt !important
+
+        &__button--danger
+            @extend .button--danger
+            margin-left: 10px
 
         &__hr--width-2
             @extend .hr-width-2
@@ -33,7 +46,85 @@
             height: unset
         width: 660px
 
+        &-title-block
+            display: flex
+            flex-direction: row
+
         &-comments
+        &-block
+            display: flex
+            flex-direction: column
+            margin-top: 20px
+
+            &__input-with-controls
+                margin-top: 20px
+                display: flex
+                justify-content: center
+                @media screen and (max-width: $phone-breakpoint)
+                    flex-flow: column
+
+                &--input
+                    @extend .form-input
+
+
+
+
+                &--button
+                    &--primary
+                        margin-left: 12px
+                        @media screen and (max-width: $phone-breakpoint)
+                            margin: 10px auto 10px
+                            width: 70% !important
+                            display: flex
+                            justify-content: center
+                        @extend .button--primary
+
+                    &--secondary
+                        margin-left: 12px
+                        @media screen and (max-width: $phone-breakpoint)
+                            margin: 10px auto 10px
+                            width: 70% !important
+                            display: flex
+                            justify-content: center
+                        @extend .button--secondary
+
+                    &--danger
+                        margin-left: 12px
+                        @media screen and (max-width: $phone-breakpoint)
+                            margin: 0 auto 10px
+                            width: 70% !important
+                            display: flex
+                            justify-content: center
+                        @extend .button--danger
+
+            &__title
+                position: relative
+                display: flex
+                flex-direction: row
+                margin-bottom: 10px
+                align-items: center
+
+                &--logo
+                    position: absolute
+                    @media screen and (max-width: $tablet-breakpoint)
+                        left: -1.5rem
+                    left: -2rem
+                    font-size: 14pt
+                    color: #3c3c3e
+                &--name
+                    margin-left: 8px
+                    font-size: 16pt
+                    font-weight: bold
+
+                &--controls
+                    display: flex
+                    flex-direction: row
+                    align-items: baseline
+
+                &--button--secondary
+                    @extend .button--secondary
+                    @extend .task-settings-controls__button
+                    margin-left: 10px
 
         &-comment
             display: flex
@@ -94,17 +185,33 @@
 
 
         &-members
+            @extend .board-settings-members
             overflow: hidden
             @extend .member-container
             flex-wrap: wrap
 
             &__member
-                height: 60px
-                width: 60px
-                border-radius: 50%
-                margin-right: 10px
-                margin-bottom: 10px
-                object-fit: cover
+                @extend .board-settings-members__member
+
+            &__options
+                @extend .board-settings-members__options
+
+                &--active
+                    @extend .board-settings-members__options--active
+
+                &--profile-info-and-actions
+                    @extend .board-settings-members__options--profile-info-and-actions
+
+                &--profile-info
+                    @extend .board-settings-members__options--profile-info
+                    @media screen and (max-width: $tablet-breakpoint)
+                        max-width : 40vw
+                        overflow: hidden
+                        display: inline-block
+                        text-overflow: ellipsis
+                        white-space: nowrap
+
+
 
             &__add-button
                 @extend .task-settings-members__member
@@ -159,13 +266,15 @@
             @extend .form-input-label
             margin-top: 30px
 
+
         &__input
             @extend .form-input
 
     &-attachments
-        margin-top: 20px
+        //margin-top: 20px
         &__item
-            @extend .container-2cols
+            display: flex
+            justify-content: space-between
             margin-top: 3px
             transition: 0.1s
             border-radius: 4px
@@ -254,9 +363,22 @@
     &-title
         margin-top: 30px
         display: flex
+        flex-direction: row
         align-items: center
         justify-content: space-between
         @extend .form-input-label
+
+        &--title-and-controls
+            display: flex
+            flex-direction: row
+            align-items: center
+
+        &--controls
+            margin-left: 10px
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            align-items: baseline
 
         &-percents
             font-family: 'Scada', sans-serif
@@ -281,12 +403,20 @@
 /*    MEMBERS POPUP    */
 .assign
     height: 70px
-    &-members__member
-        height: 60px
-        width: 60px
-        border-radius: 50%
-        margin-right: 10px
-        object-fit: cover
+    &-members
+        &__member
+            height: 60px
+            width: 60px
+            border-radius: 50%
+            margin-right: 10px
+            object-fit: cover
+
+        &__list
+            display: flex
+            flex-direction: column
+            max-height: 30vh
+            overflow-y: auto
+            margin-bottom: 10px
 
 
 //flex-direction: column
