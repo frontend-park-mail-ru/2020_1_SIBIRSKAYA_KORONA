@@ -60,7 +60,7 @@
                         </fest:attribute>
                     </fest:attributes>
                 </input>
-                <div class="task-title__button--danger js-deleteTask">
+                <div class="task-title__button--danger js-deleteTask" title="Удалить задачу">
                     <i class="far fa-trash-alt"/>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                                     </div>
                                 </fest:for>
                                 <img class="task-settings-members__add-button js-addAssign"
-                                     src="/img/plus_icon.svg"/>
+                                     src="/img/plus_icon.svg" title="Добавить участника"/>
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                     </fest:value>
                                 </div>
                             </fest:for>
-                            <div class="task-label-list__label task-settings-labels__add-button js-addNewLabel">
+                            <div class="task-label-list__label task-settings-labels__add-button js-addNewLabel" title="Добавить метку">
                                 <i class="fas fa-plus"/>
                             </div>
                         </div>
@@ -134,23 +134,21 @@
                     </div>
                 </div>
 
-<!--                <div class="task-settings-controls">-->
-<!--                    <input class="js-attachFile" id="fileInput" type="file"/>-->
-<!--                    <label class="task-settings-controls__button&#45;&#45;secondary" for="fileInput">-->
-<!--                        Прикрепить файл-->
-<!--                    </label>-->
-<!--                </div>-->
 
                 <div class="task-settings-block">
                     <div class="task-settings-block__title">
                         <i class="far fa-file task-settings-block__title--logo"/>
-                        <div class="task-settings-block__title--name">Файлы</div>
+                        <div class="task-settings-block__title--controls">
+                            <div class="task-settings-block__title--name">Файлы</div>
+                            <input class="js-attachFile" id="fileInput" type="file"/>
+                            <label class="task-settings-block__title--button--secondary" for="fileInput" title="Прикрепить файл">
+                                <i class="fas fa-plus" style="font-size:10pt; margin-right:6px;"/>
+                                <i class="far fa-file"/>
+                            </label>
+                        </div>
                     </div>
 
-                    <input class="js-attachFile" id="fileInput" type="file"/>
-                    <label class="task-settings-controls__button--secondary" for="fileInput">
-                        Прикрепить файл
-                    </label>
+
 
                     <div class="task-attachments">
                         <fest:for index="i" iterate="task.files" value="file">
@@ -269,11 +267,13 @@
                                 <div class="task-attachments__item--controls">
                                     <div class="button--primary js-downloadAttach"
                                          data-file-url="{file.url}"
-                                         data-attach-name="{file.filename}">
+                                         data-attach-name="{file.filename}"
+                                         title="Скачать файл">
                                         <i class="fas fa-download"/>
                                     </div>
                                     <div class="button--danger js-deleteAttach"
-                                         data-attach-id="{file.id}">
+                                         data-attach-id="{file.id}"
+                                         title="Удалить файл">
                                         <i class="fas fa-trash-alt"/>
                                     </div>
                                 </div>
@@ -285,15 +285,25 @@
                 <div class="task-settings-block">
                     <div class="task-settings-block__title">
                         <i class="fas fa-tasks task-settings-block__title--logo"/>
-                        <div class="task-settings-block__title--name">Чеклисты</div>
+                        <div class="task-settings-block__title--controls">
+                            <div class="task-settings-block__title--name">Чеклисты</div>
+                            <div class="task-settings-block__title--button--secondary js-addNewChecklist" title="Создать чеклист">
+                                <i class="fas fa-plus" style="font-size:10pt; margin-right:6px;"/>
+                                <i class="fas fa-list-ul"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="task-settings-controls__button--secondary js-addNewChecklist">Создать</div>
                     <div class="task-checklists">
                         <fest:for iterate="task.checklists" index="i" value="checklist">
                             <div class="checklist" data-checklist-id="{checklist.id}">
 
                                 <div class="checklist-title">
-                                    <fest:value>checklist.name</fest:value>
+                                    <div class="checklist-title--title-and-controls">
+                                        <fest:value>checklist.name</fest:value>
+                                        <div class="checklist-title--controls button--danger js-deleteChecklist" title="Удалить чеклист">
+                                            <i class="far fa-trash-alt"/>
+                                        </div>
+                                    </div>
                                     <fest:if test="checklist.items.length">
                                         <div class="checklist-title-percents">
                                             <fest:value>checklist.progress</fest:value>%
@@ -341,11 +351,9 @@
                                     </div>
                                 </div>
                                 <div class="task-settings-controls js-checklist-controls">
-                                    <div class="task-settings-controls__button--secondary js-addNewChecklistItem">
-                                        Добавить элемент
-                                    </div>
-                                    <div class="task-settings-controls__button--danger js-deleteChecklist">
-                                        Удалить чеклист
+                                    <div class="task-settings-controls__button--secondary js-addNewChecklistItem" title="Добавить задачу">
+                                        <i class="fas fa-plus" style="font-size:10pt; margin-right:6px;"/>
+                                        <i class="far fa-check-square"/>
                                     </div>
                                 </div>
                             </div>

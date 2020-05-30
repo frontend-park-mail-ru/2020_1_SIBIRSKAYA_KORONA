@@ -66,7 +66,8 @@
                 &--input
                     @extend .form-input
 
-                &--controls
+
+
 
                 &--button
                     &--primary
@@ -101,6 +102,7 @@
                 display: flex
                 flex-direction: row
                 margin-bottom: 10px
+                align-items: center
 
                 &--logo
                     position: absolute
@@ -113,6 +115,16 @@
                     margin-left: 8px
                     font-size: 16pt
                     font-weight: bold
+
+                &--controls
+                    display: flex
+                    flex-direction: row
+                    align-items: baseline
+
+                &--button--secondary
+                    @extend .button--secondary
+                    @extend .task-settings-controls__button
+                    margin-left: 10px
 
         &-comment
             display: flex
@@ -259,7 +271,7 @@
             @extend .form-input
 
     &-attachments
-        margin-top: 20px
+        //margin-top: 20px
         &__item
             display: flex
             justify-content: space-between
@@ -351,9 +363,22 @@
     &-title
         margin-top: 30px
         display: flex
+        flex-direction: row
         align-items: center
         justify-content: space-between
         @extend .form-input-label
+
+        &--title-and-controls
+            display: flex
+            flex-direction: row
+            align-items: center
+
+        &--controls
+            margin-left: 10px
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            align-items: baseline
 
         &-percents
             font-family: 'Scada', sans-serif
