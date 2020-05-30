@@ -59,7 +59,7 @@ export default class TaskSettingsView extends BaseView {
             this.root.querySelector('.window-overlay'),
             this.root.querySelector('.js-addNewLabel'),
             this.root.querySelector('.js-addAssign'),
-            this.root.querySelector('.js-saveTask'),
+            this.root.querySelector('.js-saveTaskDescription'),
             this.root.querySelector('.js-deleteTask'),
             this.root.querySelector('.js-saveComment'),
             this.root.querySelector('.js-addNewChecklist'),
@@ -81,12 +81,11 @@ export default class TaskSettingsView extends BaseView {
         const fileInput = this.root.querySelector('.js-attachFile');
         fileInput.addEventListener('change', this.handleFileInput);
 
-        const taskTitleInput = this.root.querySelector('.js-saveTitle');
+        const taskTitleInput = this.root.querySelector('.js-saveTaskTitle');
         taskTitleInput.addEventListener('blur',
             (event)=> {
-                const target = event.currentTarget;
-                const title = target.value;
-                this.eventBus.call('saveTaskSettings', {title});
+                const title = event.currentTarget?.value;
+                this.eventBus.call('saveTaskTitle', {title});
             },
         );
         taskTitleInput.addEventListener('keydown', function(event) {
@@ -191,10 +190,9 @@ export default class TaskSettingsView extends BaseView {
                 this.handleToggleCheckBox(event.target);
                 break;
 
-            case classList.contains('js-saveTask'):
+            case classList.contains('js-saveTaskDescription'):
                 const description = this.root.querySelector('.js-inputDescription')?.innerText;
-                const title = this.root.querySelector('.js-inputTitle')?.value;
-                this.eventBus.call('saveTaskSettings', {title, description});
+                this.eventBus.call('saveTaskDescription', {description});
                 break;
 
             case classList.contains('js-deleteTask'):
