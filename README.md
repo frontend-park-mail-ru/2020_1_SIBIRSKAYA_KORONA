@@ -11,7 +11,7 @@
 ## Создавайте доски
 Добавляйте колонки и задачи для организации своей доски
 
-<img src="/readmeImages/board.png" alt="Доска" border-radius="10px"/>
+<img src="/readmeImages/board.png" alt="Доска" style="border-radius: 10px"/>
 
 
 ##Изменяйте настройки доски
