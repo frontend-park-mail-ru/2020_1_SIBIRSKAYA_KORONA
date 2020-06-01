@@ -21,6 +21,17 @@
                     </div>
                     <img class="group-fake-board__icon" src="/img/plus_icon.svg"/>
                 </div>
+                <div class="group-template-board">
+                    <div class="group-template-board__text">
+                        Шаблоны досок
+                    </div>
+                    <div class="group-template-board__templates-list">
+                    <div class="group-template-board__template-button js-createBoardByTemplate"
+                    data-template-name="week_plan">План на неделю</div>
+                    <div class="group-template-board__template-button js-createBoardByTemplate"
+                    data-template-name="product_management">Управление проектом</div>
+                    </div>
+                </div>
             </div>
 
             <div class="boards-title">

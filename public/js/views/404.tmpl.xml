@@ -1,0 +1,14 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="board">
+    <div class="page-not-found__container">
+        <div class="page-not-found__message">
+            <div class="page-not-found__title--size--big">Опа</div>
+            <div class="page-not-found__title">Кажется вы заблудились.</div>
+            <div class="page-not-found__title">
+                <a href="/boards">Путь к доскам</a>
+            </div>
+
+        </div>
+        <img class="page-not-found__logo" src="/img/sibirskaya_korona.svg" ></img>
+
+    </div>
+</fest:template>

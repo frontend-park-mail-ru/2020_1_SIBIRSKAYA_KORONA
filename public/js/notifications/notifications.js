@@ -20,6 +20,7 @@ export default class Notifications {
 
         this.enableSound = true;
         this.notificationSound = new Audio('/sounds/drill.mp3');
+        this.notificationSound.volume = 0.1;
         document.addEventListener('mousemove', () => this.notificationSound.load, {once: true});
 
         globalEventBus.subscribe('enableSocketConnection', this.enableSocketConnection.bind(this));

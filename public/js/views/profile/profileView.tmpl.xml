@@ -46,8 +46,8 @@
                         Файл должен быть картинкой
                     </div>
                     <div class="profile-settings__label">Аватар</div>
-                    <img class="profile-settings__avatar--round" alt="MyName"
-                         title="MyName">
+                    <img class="profile-settings__avatar--round" alt="data.nickname"
+                         title="My handsome look :)">
                         <fest:attributes>
                             <fest:attribute name="src">
                                 <fest:value>data.avatar</fest:value>

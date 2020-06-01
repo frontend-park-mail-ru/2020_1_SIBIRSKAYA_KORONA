@@ -45,6 +45,8 @@ export default class TaskSettingsController extends ControllerChainLink {
             'closeAddChecklistPopup',
 
             'saveTaskSettings',
+            'saveTaskTitle',
+            'saveTaskDescription',
             'deleteTask',
 
             'addComment',

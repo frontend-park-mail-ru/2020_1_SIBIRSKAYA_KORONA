@@ -45,8 +45,10 @@ export const parseNotification = (msg, config = {enableIsRead: false, enableDate
                 };
                 if (msg.metaData.user) {
                     parsedNotificationData.text = 'пригласил в доску';
-                    parsedNotificationData.invitee.nickname = msg.metaData.user?.nickname;
-                    parsedNotificationData.invitee.avatar = msg.metaData.user?.avatar;
+                    parsedNotificationData.invitee = {
+                        nickname: msg.metaData.user?.nickname,
+                        avatar: msg.metaData.user?.avatar,
+                    };
                 } else {
                     parsedNotificationData.text = 'Присоединился по ссылке-приглашению к доске';
                 }
