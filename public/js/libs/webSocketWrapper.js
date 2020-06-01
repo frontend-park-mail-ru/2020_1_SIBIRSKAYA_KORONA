@@ -12,6 +12,7 @@ class WebSocketWrapper {
         this.messageSubscribers = new Set();
         this.closeSubscribers = new Set();
         this.errorSubscribers = new Set();
+        this.socketTimer = null;
     }
 
     /**
@@ -26,6 +27,7 @@ class WebSocketWrapper {
         }
         this.socket = new WebSocket(this.url);
         this.socket.onopen = (event) => {
+            this.socketTimer = setInterval( ()=> this.socket.send(''), 10000);
             console.log('Socket connected');
         };
         this.socket.onmessage = (event) => {
@@ -35,6 +37,9 @@ class WebSocketWrapper {
         };
         this.socket.onclose = (event) => {
             console.log('Socket closed');
+            clearInterval(this.socketTimer);
+            this.socketTimer = null;
+
             this.closeSubscribers.forEach((handler) => {
                 handler(event);
             });

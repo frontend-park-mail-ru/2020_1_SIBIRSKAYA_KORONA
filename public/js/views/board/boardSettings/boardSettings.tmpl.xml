@@ -47,19 +47,25 @@
             <div class="board-settings__label ">Название доски</div>
             <input autocomplete="off" class="board-settings__input" id="js-boardTitleInput">
                 <fest:attributes>
+                    <fest:if test="!board.isAdmin">
+                        <fest:attribute name="readonly"/>
+                    </fest:if>
                     <fest:attribute name="value">
                         <fest:value>board.title</fest:value>
                     </fest:attribute>
                 </fest:attributes>
             </input>
-            <div class="board-settings-controls">
-                <div class="board-settings-controls__button--primary js-saveBoard">
-                    Сохранить
+            <fest:if test="board.isAdmin">
+                <div class="board-settings-controls">
+                    <div class="board-settings-controls__button--primary js-saveBoard">
+                        Сохранить
+                    </div>
+                    <div class="board-settings-controls__button--danger js-deleteBoard">
+                        Удалить доску
+                    </div>
                 </div>
-                <div class="board-settings-controls__button--danger js-deleteBoard">
-                    Удалить доску
-                </div>
-            </div>
+            </fest:if>
+
             <div class="board-settings__label ">Пригласительная ссылка</div>
             <div class="board-settings-invite">
                 <input class="board-settings__input js-copyLink" id="js-inviteLink" readonly="true">
@@ -72,40 +78,64 @@
                 <div class="board-settings-copy-button js-copyLink">
                     <img src="/img/copy_icon.png" class="board-settings-copy-button-icon" title="Копировать"/>
                 </div>
-                <div class="board-settings-update-button js-generateLink">
-                    <img src="/img/update_icon.png" class="board-settings-update-button-icon" title="Обновить"/>
-                </div>
+                <fest:if test="board.isAdmin">
+                    <div class="board-settings-update-button js-generateLink">
+                        <img src="/img/update_icon.png" class="board-settings-update-button-icon" title="Обновить"/>
+                    </div>
+                </fest:if>
             </div>
 
             <div class="container-2cols">
                 <div class="container-col">
-                    <div class="board-settings__label">Администраторы</div>
+                    <div class="board-settings__label">Администратор</div>
                     <div class="container-row">
                         <div class="board-settings-members">
                             <fest:for iterate="board.admins" index="i" value="admin">
-                                <a href="{admin.url}">
+                                <div class="board-settings-members__options js-foldUnfoldUserInfo"
+                                     data-user-id="{admin.id}">
                                     <img class="board-settings-members__member" src="{admin.avatar}"
                                          alt="{admin.nickname}"
                                          title="{admin.nickname}"/>
-                                </a>
+                                    <div class="board-settings-members__options--profile-info-and-actions visually-hidden">
+                                        <div class="board-settings-members__options--profile-info visually-hidden">
+                                            @
+                                            <fest:value>admin.nickname</fest:value>
+                                        </div>
+                                    </div>
+                                </div>
                             </fest:for>
                         </div>
-                        <img class="board-settings-members__add-button js-findAdmin" src="/img/plus_icon.svg"/>
                     </div>
                 </div>
                 <div class="container-col">
-                    <div class="board-settings__label">Участники</div>
+                    <div class="board-settings__label--members">Участники</div>
                     <div class="container-row">
                         <div class="board-settings-members">
                             <fest:for iterate="board.members" index="i" value="member">
-                                <a href="{member.url}">
+                                <div class="board-settings-members__options js-foldUnfoldUserInfo"
+                                     data-user-id="{member.id}">
                                     <img class="board-settings-members__member" src="{member.avatar}"
                                          alt="{member.nickname}"
                                          title="{member.nickname}"/>
-                                </a>
+                                    <div class="board-settings-members__options--profile-info-and-actions visually-hidden">
+                                        <div class="board-settings-members__options--profile-info visually-hidden">
+                                            @
+                                            <fest:value>member.nickname</fest:value>
+                                        </div>
+                                        <fest:if test="board.isAdmin">
+                                            <div class="board-settings-members__options--delete-user-button visually-hidden js-deleteMember"
+                                                 data-user-id="{member.id}"
+                                                 title="Удалить участника">
+                                                <i class="fas fa-user-slash"/>
+                                            </div>
+                                        </fest:if>
+                                    </div>
+                                </div>
                             </fest:for>
                         </div>
-                        <img class="board-settings-members__add-button js-findMember" src="/img/plus_icon.svg"/>
+                        <fest:if test="board.isAdmin">
+                            <img class="board-settings-members__add-button js-findMember" src="/img/plus_icon.svg"/>
+                        </fest:if>
                     </div>
                 </div>
             </div>

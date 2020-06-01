@@ -1,8 +1,8 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="labels">
         <div class="task-checklists-form pop-over">
-            <div class="task-checklists-form__label">Новый чеклист</div>
+            <div class="task-checklists-form__label">Новый чек-лист</div>
             <input class="task-settings__input js-inputChecklistName" type="text" autocomplete="off"
-                   placeholder="Чеклист"/>
+                   placeholder="Чек-лист"/>
 
             <div class="task-settings-controls">
                 <div class="task-settings-controls__button--primary js-createChecklist">Создать</div>

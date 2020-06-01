@@ -1,4 +1,13 @@
-import {boardDelete, boardGet, boardInviteLinkPost, boardPut, postMember, usersGet} from '../libs/apiService.js';
+import {
+    boardDelete,
+    boardGet,
+    boardInviteLinkPost,
+    boardPut,
+    postMember,
+    deleteMember,
+    usersGet,
+    settingsGet,
+} from '../libs/apiService.js';
 import responseSwitchBuilder from '../libs/responseSwitchBuilder.js';
 
 /**
@@ -23,13 +32,15 @@ export default class TaskSettingsModel {
         this.eventBus.subscribe('updateInviteLink', this.updateInviteLink.bind(this));
         this.eventBus.subscribe('saveBoard', this.saveBoard.bind(this));
         this.eventBus.subscribe('deleteBoard', this.deleteBoard.bind(this));
+        this.eventBus.subscribe('deleteMember', this.deleteMember.bind(this));
 
         const errorResponseStatusMap = new Map([
+            [400, () => {}],
             [401, () => this.eventBus.call('unauthorized')],
-            [400, () => this.eventBus.call('goToBoards')],
-            [403, () => alert('Недостаточно прав!')],
-            [500, () => this.eventBus.call('goToBoards')],
-            ['default', () => this.eventBus.call('goToBoards')],
+            [403, () => console.log('Недостаточно прав!')],
+            [404, () => {}],
+            [500, () => {}],
+            ['default', () => {}],
         ]);
 
         this.handleResponseStatus = responseSwitchBuilder(errorResponseStatusMap).bind(this);
@@ -75,11 +86,36 @@ export default class TaskSettingsModel {
     }
 
     /**
+     * Delete member from board
+     * @param {Number} userID - removes member from board
+     * @return {Promise<void>}
+     */
+    async deleteMember(userID) {
+        const response = await deleteMember(this.boardId, userID);
+        this.handleResponseStatus(response, () => this.eventBus.call('deletedMember', userID));
+    }
+
+    /**
      * Returns board data
      */
     async getBoardSettings() {
+        let currentUserInfo = {};
+
+        const currentUserResponse = await settingsGet();
+        this.handleResponseStatus(currentUserResponse, (body) => {
+            currentUserInfo = body;
+        });
+
         const boardResponse = await boardGet(this.boardId);
         this.handleResponseStatus(boardResponse, (body) => {
+            body.isAdmin = false;
+            for (const admin of body.admins) {
+                if (admin?.id === currentUserInfo.id) {
+                    body.isAdmin = true;
+                    break;
+                }
+            }
+
             body.inviteLink = 'https://' + window.location.host + '/invite/' + body.inviteLink;
             this.eventBus.call('gotBoardSettings', body);
         });

@@ -1,35 +1,37 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="members">
     <div class="task-assigns-form pop-over">
         <div class="task-assigns-form__label">Участники</div>
-        <fest:for iterate="members" index="j" value="member">
-            <div class="assign">
-                <label class="checkbox-container assign">
-                    <input type="checkbox" class="js-assign" data-user-id="{member.id}">
-                        <fest:attributes>
-                            <fest:if test="member.assigned">
-                                <fest:attribute name="checked"/>
-                            </fest:if>
-                        </fest:attributes>
-                    </input>
-                    <div class="custom-checkbox"/>
-                    <img class="assign-members__member" src="{member.avatar}"
-                         alt="{member.nickname}"
-                         title="{member.nickname}"/>
-                    <div class="search-result-row__user">
-                        <div class="search-result-row__name">
-                            <div class="search-result-row__nickname">
-                                @
-                                <fest:value>member.nickname</fest:value>
+        <div class="assign-members__list">
+            <fest:for iterate="members" index="j" value="member">
+                <div class="assign">
+                    <label class="checkbox-container assign">
+                        <input type="checkbox" class="js-assign" data-user-id="{member.id}">
+                            <fest:attributes>
+                                <fest:if test="member.assigned">
+                                    <fest:attribute name="checked"/>
+                                </fest:if>
+                            </fest:attributes>
+                        </input>
+                        <div class="custom-checkbox"/>
+                        <img class="assign-members__member" src="{member.avatar}"
+                             alt="{member.nickname}"
+                             title="{member.nickname}"/>
+                        <div class="search-result-row__user">
+                            <div class="search-result-row__name">
+                                <div class="search-result-row__nickname">
+                                    @
+                                    <fest:value>member.nickname</fest:value>
+                                </div>
+                                <fest:script>
+                                    var fullName = member.name + ' ' + member.surname;
+                                </fest:script>
+                                <fest:value>fullName</fest:value>
                             </div>
-                            <fest:script>
-                                var fullName = member.name + ' ' + member.surname;
-                            </fest:script>
-                            <fest:value>fullName</fest:value>
                         </div>
-                    </div>
-                </label>
-            </div>
-        </fest:for>
+                    </label>
+                </div>
+            </fest:for>
+        </div>
         <div class="task-assigns-controls">
             <div class="task-settings-controls__button--danger js-closeAssignsForm">Закрыть</div>
         </div>

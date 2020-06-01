@@ -37,7 +37,9 @@ export default class TaskSettingsModel {
 
         this.eventBus.subscribe('getTaskSettings', this.getTaskSettings.bind(this));
         this.eventBus.subscribe('getTaskAssigns', this.getTaskAssign.bind(this));
-        this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this));
+        this.eventBus.subscribe('saveTaskSettings', this.saveTaskSettings.bind(this, true));
+        this.eventBus.subscribe('saveTaskTitle', this.saveTaskSettings.bind(this, false));
+        this.eventBus.subscribe('saveTaskDescription', this.saveTaskSettings.bind(this, true));
         this.eventBus.subscribe('deleteTask', this.deleteTask.bind(this));
         this.eventBus.subscribe('addComment', this.addTaskComment.bind(this));
         this.eventBus.subscribe('deleteComment', this.deleteTaskComment.bind(this));
@@ -246,12 +248,17 @@ export default class TaskSettingsModel {
 
     /**
      * Saves task information
+     * @param {Boolean} callRerender - call rerender after getting tasks
      * @param {Object} taskData
      * @return {Promise<void>}
      */
-    async saveTaskSettings(taskData) {
+    async saveTaskSettings(callRerender, taskData ) {
         const response = await taskPut(this.taskData, taskData);
-        this.handleResponseStatus(response, () => this.getTaskSettings());
+        this.handleResponseStatus(response, () => {
+            if (callRerender) {
+                this.getTaskSettings();
+            }
+        });
     }
 
     /**

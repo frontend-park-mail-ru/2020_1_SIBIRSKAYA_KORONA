@@ -3,8 +3,12 @@ module.exports = {
         'yellow',
         'orange',
         'red',
-        'purple',
+        'lime',
+        'green',
+        'aqua',
         'darkblue',
+        'pink',
+        'purple',
         'black',
     ],
 };

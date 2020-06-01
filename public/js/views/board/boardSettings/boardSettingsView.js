@@ -21,6 +21,7 @@ export default class BoardSettingsView extends BaseView {
 
         this.eventBus.subscribe('gotBoardSettings', this.renderBoardSettings.bind(this));
         this.eventBus.subscribe('gotUsers', this.renderUsersSearchResult.bind(this));
+        this.eventBus.subscribe('deletedMember', this.handleDeletedMember.bind(this));
     }
 
     /**
@@ -61,13 +62,15 @@ export default class BoardSettingsView extends BaseView {
         });
 
         const buttons = [
-            document.querySelector('.js-findMember'),
-            document.querySelector('.js-findAdmin'),
+            ...document.querySelectorAll('.js-findMember'),
+            // document.querySelector('.js-findAdmin'),
             document.querySelector('.js-closeBoardSettingsButton'),
-            document.querySelector('.js-saveBoard'),
-            document.querySelector('.js-deleteBoard'),
-            document.querySelector('.js-generateLink'),
+            ...document.querySelectorAll('.js-saveBoard'),
+            ...document.querySelectorAll('.js-deleteBoard'),
+            ...document.querySelectorAll('.js-generateLink'),
             ...document.querySelectorAll('.js-copyLink'),
+            ...document.querySelectorAll('.js-foldUnfoldUserInfo'),
+            ...document.querySelectorAll('.js-deleteMember'),
         ];
         buttons.forEach((button) => {
             button.addEventListener('click', this.handleButtonClick);
@@ -145,10 +148,8 @@ export default class BoardSettingsView extends BaseView {
                 }
                 break;
             case target.classList.contains('js-deleteBoard'):
-                if (confirm('Доска будет удалена безвозвратно для всех участников!')) {
-                    this.eventBus.call('deleteBoard');
-                    this.closeSelf();
-                }
+                this.eventBus.call('deleteBoard');
+                this.closeSelf();
                 break;
 
             case target.classList.contains('js-copyLink'):
@@ -162,8 +163,77 @@ export default class BoardSettingsView extends BaseView {
                 target.style.transform = 'rotate(360deg)';
                 this.eventBus.call('updateInviteLink');
                 break;
+            case target.classList.contains('js-foldUnfoldUserInfo'):
+                const infoIsUnfolded = target.classList.contains('board-settings-members__options--active');
+                if (infoIsUnfolded) {
+                    this.foldUserInfoWindow(target);
+                } else {
+                    this.unfoldUserInfoWindow(target);
+                }
+                break;
+
+            case target.classList.contains('js-deleteMember'):
+                const memberID = Number(target.dataset.userId);
+                this.eventBus.call('deleteMember', memberID);
+                break;
+
             default:
                 break;
+        }
+    }
+
+    /**
+     * Removes user from view
+     * @param {Number} userID
+     */
+    handleDeletedMember(userID) {
+        const currentUsers = document.getElementsByClassName('board-settings-members__options');
+        for (const user of currentUsers) {
+            if (userID === Number(user.dataset.userId)) {
+                user.parentNode.removeChild(user);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Folds given userInfoWindow
+     * @param {HTMLElement} userInfoWindow
+     */
+    foldUserInfoWindow(userInfoWindow) {
+        userInfoWindow.classList.add('board-settings-members__options');
+        userInfoWindow.classList.remove('board-settings-members__options--active');
+
+        const toHide = [
+            userInfoWindow.querySelector('.board-settings-members__options--profile-info-and-actions'),
+            ...userInfoWindow.querySelector('.board-settings-members__options--profile-info-and-actions').children,
+        ];
+
+        for (const element of toHide) {
+            element.classList.add('visually-hidden');
+        }
+    }
+
+    /**
+     * Unfolds given userInfoWindow
+     * @param {HTMLElement} userInfoWindow
+     */
+    unfoldUserInfoWindow(userInfoWindow) {
+        const membersInfoWindows = document.getElementsByClassName('board-settings-members__options--active');
+        for (const membersInfoWindow of membersInfoWindows) {
+            this.foldUserInfoWindow(membersInfoWindow);
+        }
+
+        userInfoWindow.classList.add('board-settings-members__options--active');
+        userInfoWindow.classList.remove('board-settings-members__options');
+
+        const toShow = [
+            userInfoWindow.querySelector('.board-settings-members__options--profile-info-and-actions'),
+            ...userInfoWindow.querySelector('.board-settings-members__options--profile-info-and-actions').children,
+        ];
+
+        for (const element of toShow) {
+            element.classList.remove('visually-hidden');
         }
     }
 
@@ -186,7 +256,7 @@ export default class BoardSettingsView extends BaseView {
      */
     hideSearchForm() {
         document.querySelector('.js-findMember').classList.remove('board-settings-members__add-button--rotated');
-        document.querySelector('.js-findAdmin').classList.remove('board-settings-members__add-button--rotated');
+        // document.querySelector('.js-findAdmin').classList.remove('board-settings-members__add-button--rotated');
         const searchContainer = document.querySelector('.js-search');
         searchContainer.classList.add('display-none');
     }

@@ -25,7 +25,7 @@ export default class EventBus {
                 // console.log(`Signal ${signal} already bound`);
             }
         } else {
-            console.log(`No such signal '${signal}' in event bus`);
+            // console.log(`No such signal '${signal}' in event bus`);
         }
     }
 
@@ -40,10 +40,10 @@ export default class EventBus {
             if (this.signalHandlers.get(signal)) {
                 return this.signalHandlers.get(signal)(...args);
             } else {
-                console.log('No handler for signal '+ signal);
+                // console.log('No handler for signal '+ signal);
             }
         } else {
-            console.log(`No such signal '${signal}' in event bus`);
+            // console.log(`No such signal '${signal}' in event bus`);
         }
     }
 }

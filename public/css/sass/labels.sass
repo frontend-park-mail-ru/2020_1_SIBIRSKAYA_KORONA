@@ -10,6 +10,8 @@
     overflow: hidden
     white-space: nowrap
     user-select: none
+    color: #f8f8ff
+    font-weight: 600
 
 
 .task-label
@@ -21,7 +23,7 @@
 
             &.mod-selectable
                 &:hover
-                    background: #ffe837
+                    background: #ffe100
 
         &--orange
             @extend .task-label-base
@@ -41,6 +43,42 @@
                 &:hover
                     background: #f36d5b
 
+        &--green
+            @extend .task-label-base
+            transition: 0.2s
+            background: #61bd4f
+
+            &.mod-selectable
+                &:hover
+                    background: #7dca6e
+
+        &--aqua
+            @extend .task-label-base
+            transition: 0.2s
+            background: #00c2e0
+
+            &.mod-selectable
+                &:hover
+                    background: #08ceec
+
+        &--lime
+            @extend .task-label-base
+            transition: 0.2s
+            background: #51e898
+
+            &.mod-selectable
+                &:hover
+                    background: #53f19d
+
+        &--pink
+            @extend .task-label-base
+            transition: 0.2s
+            background: #ff78cb
+
+            &.mod-selectable
+                &:hover
+                    background: #ff87d1
+
         &--purple
             @extend .task-label-base
             transition: 0.2s
@@ -54,7 +92,6 @@
             @extend .task-label-base
             transition: 0.2s
             background: #0079bf
-            color: #f8f8ff
 
             &.mod-selectable
                 &:hover
@@ -64,7 +101,6 @@
             @extend .task-label-base
             transition: 0.2s
             background: #344563
-            color: #f8f8ff
 
             &.mod-selectable
                 &:hover
@@ -78,10 +114,9 @@
     flex-wrap: wrap
 
     &__label
-        @extend .task-label-base
         margin-right: 4px
         margin-bottom: 4px
-        max-width: 6em
+        max-width: 12em
 
         &--size--mini
             @extend .task-label-list__label
@@ -89,6 +124,19 @@
             padding: 4px
             max-width: 6em
             margin: 2px
+
+        &--state--minified
+            padding: 0
+            height: 10px
+            width: 30px
+
+    &__label-title
+        width: 100%
+        display: inline-block
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
+
 
 
 /*       ADD LABEL POPUP          */
@@ -112,23 +160,36 @@
         max-width: 150px
 
         &--active
-            &.task-label--color--yellow
-                box-shadow: -8px 0px #d9b51c
+            &.task-label--color
+                &--yellow
+                    box-shadow: -8px 0px #d9b51c
 
-            &.task-label--color--orange
-                box-shadow: -8px 0px #cd8313
+                &--orange
+                    box-shadow: -8px 0px #cd8313
 
-            &.task-label--color--red
-                box-shadow: -8px 0px #b04632
+                &--red
+                    box-shadow: -8px 0px #b04632
 
-            &.task-label--color--purple
-                box-shadow: -8px 0px #89609e
+                &--green
+                    box-shadow: -8px 0px #478a3a
 
-            &.task-label--color--darkblue
-                box-shadow: -8px 0px #055a8c
+                &--aqua
+                    box-shadow: -8px 0px #009fb7
 
-            &.task-label--color--black
-                box-shadow: -8px 0px #091e42
+                &--lime
+                    box-shadow: -8px 0px #44c380
+
+                &--pink
+                    box-shadow: -8px 0px #c75e9f
+
+                &--purple
+                    box-shadow: -8px 0px #89609e
+
+                &--darkblue
+                    box-shadow: -8px 0px #055a8c
+
+                &--black
+                    box-shadow: -8px 0px #091e42
 
 
 /*       END ADD LABEL POPUP          */
@@ -140,6 +201,7 @@
     display: flex
     flex-direction: row
     flex-wrap: wrap
+    max-width: 350px
 
     &__label-color
         @extend .task-label-base

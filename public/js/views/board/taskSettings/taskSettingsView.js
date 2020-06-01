@@ -59,7 +59,7 @@ export default class TaskSettingsView extends BaseView {
             this.root.querySelector('.window-overlay'),
             this.root.querySelector('.js-addNewLabel'),
             this.root.querySelector('.js-addAssign'),
-            this.root.querySelector('.js-saveTask'),
+            this.root.querySelector('.js-saveTaskDescription'),
             this.root.querySelector('.js-deleteTask'),
             this.root.querySelector('.js-saveComment'),
             this.root.querySelector('.js-addNewChecklist'),
@@ -72,6 +72,7 @@ export default class TaskSettingsView extends BaseView {
             ...this.root.querySelectorAll('.js-downloadAttach'),
             ...this.root.querySelectorAll('.js-deleteComment'),
             ...this.root.querySelectorAll('.js-deleteAttach'),
+            ...this.root.querySelectorAll('.js-foldUnfoldUserInfo'),
         ];
         taskSettingsElements.forEach((element) => {
             element.addEventListener('click', this.handleClick);
@@ -79,6 +80,22 @@ export default class TaskSettingsView extends BaseView {
 
         const fileInput = this.root.querySelector('.js-attachFile');
         fileInput.addEventListener('change', this.handleFileInput);
+
+        const taskTitleInput = this.root.querySelector('.js-saveTaskTitle');
+        taskTitleInput.addEventListener('blur',
+            (event)=> {
+                const title = event.currentTarget?.value;
+                this.eventBus.call('saveTaskTitle', {title});
+            },
+        );
+        taskTitleInput.addEventListener('keydown', function(event) {
+            const target = event.currentTarget;
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                target.blur(); // will trigger blur event which saves task
+            }
+        });
+
 
         const comments = [...this.root.querySelectorAll('.task-settings-comment')];
         comments.forEach((comment) => {
@@ -173,10 +190,9 @@ export default class TaskSettingsView extends BaseView {
                 this.handleToggleCheckBox(event.target);
                 break;
 
-            case classList.contains('js-saveTask'):
+            case classList.contains('js-saveTaskDescription'):
                 const description = this.root.querySelector('.js-inputDescription')?.innerText;
-                const title = this.root.querySelector('.js-inputTitle')?.value;
-                this.eventBus.call('saveTaskSettings', {title, description});
+                this.eventBus.call('saveTaskDescription', {description});
                 break;
 
             case classList.contains('js-deleteTask'):
@@ -204,6 +220,15 @@ export default class TaskSettingsView extends BaseView {
                 document.getElementById('popover-block').innerHTML = '';
                 document.getElementById('popup-block').innerHTML = '';
                 this.eventBus.call(ChainLinkSignals.closeCurrentLink);
+                break;
+
+            case classList.contains('js-foldUnfoldUserInfo'):
+                const infoIsUnfolded = classList.contains('task-settings-members__options--active');
+                if (infoIsUnfolded) {
+                    this.foldUserInfoWindow(event.currentTarget);
+                } else {
+                    this.unfoldUserInfoWindow(event.currentTarget);
+                }
                 break;
 
             default:
@@ -264,6 +289,47 @@ export default class TaskSettingsView extends BaseView {
      */
     handleAssignSuccess() {
         this.render();
+    }
+
+    /**
+     * Folds given userInfoWindow
+     * @param {HTMLElement} userInfoWindow
+     */
+    foldUserInfoWindow(userInfoWindow) {
+        userInfoWindow.classList.add('task-settings-members__options');
+        userInfoWindow.classList.remove('task-settings-members__options--active');
+
+        const toHide = [
+            userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions'),
+            ...userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions').children,
+        ];
+
+        for (const element of toHide) {
+            element.classList.add('visually-hidden');
+        }
+    }
+
+    /**
+     * Unfolds given userInfoWindow
+     * @param {HTMLElement} userInfoWindow
+     */
+    unfoldUserInfoWindow(userInfoWindow) {
+        const membersInfoWindows = document.getElementsByClassName('task-settings-members__options--active');
+        for (const membersInfoWindow of membersInfoWindows) {
+            this.foldUserInfoWindow(membersInfoWindow);
+        }
+
+        userInfoWindow.classList.add('task-settings-members__options--active');
+        userInfoWindow.classList.remove('task-settings-members__options');
+
+        const toShow = [
+            userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions'),
+            ...userInfoWindow.querySelector('.task-settings-members__options--profile-info-and-actions').children,
+        ];
+
+        for (const element of toShow) {
+            element.classList.remove('visually-hidden');
+        }
     }
 
     /**
