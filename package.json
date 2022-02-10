@@ -59,7 +59,7 @@
     "ip": "^1.1.5",
     "jsdoc": "^3.6.3",
     "lint-staged": "^10.2.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^8.0.2",
     "serviceworker-webpack-plugin": "^1.0.1",
     "webpack": "^4.42.1",
